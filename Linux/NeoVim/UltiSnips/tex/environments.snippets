@@ -1,0 +1,34 @@
+snippet img "Insert Image"
+\begin{figure}[H]
+	\begin{center}
+		\includegraphics[width=\textwidth]{${1:url}}
+	\end{center}
+	\caption{${2:caption}}
+	\label{fig:${3:label}}
+\end{figure}$0
+endsnippet
+
+snippet env "Environment"
+\begin{$1}
+	$2
+\end{$1}
+$0
+endsnippet
+
+snippet sys "Equation system request 'amsmath'"
+\begin{equation*}
+    \left\{
+        \begin{aligned}
+	    $1\\\
+	    $2
+        \end{aligned}
+    \right.
+\end{equation*}$0
+endsnippet
+
+snippet cases "Cases Environment requests 'amsmath'"
+$\begin{cases}
+    $1 \\\
+    $2 
+\end{cases}$$0
+endsnippet
