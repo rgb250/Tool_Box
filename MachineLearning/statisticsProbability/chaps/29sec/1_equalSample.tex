@@ -1,0 +1,45 @@
+\paragraph{Theorem ANOVA}
+$
+\begin{cases}
+	\text{Model is given by } \forall (i,j)\in\inter{1}{m}\times\inter{1}{n}Y_{ij}=\mu_{i}+\epsilon_{ij}\\
+	\left(\epsilon_{ij}\right)_{(i,j)\in\inter{1}{m}\times\inter{1}{n}}\text{ are independent and normally distributed}
+\end{cases}\\
+\Rightarrow
+\begin{cases}
+	\hat{\mu_{i}}=\overline{Y}_{i\bullet} = \dfrac{1}{n}\su{{j=1}}{n}Y_{ij}\\
+	\hat{\sigma^{2}} = \frac{1}{nm}SS_{W} = \frac{1}{mn}\su{ {i=1}}{m}\su{{j=1}}{n}\left( Y_{ij}-\overline{Y}_{i\bullet} \right)^{2}
+\end{cases}
+$
+
+\paragraph{Lemma}
+$
+\begin{cases}
+	\overline{Y}_{\bullet\bullet}=\dfrac{1}{nm}\su{{i=1}}{m}\su{{j=1}}{n}Y_{ij}\\
+	SS_{T}=\dfrac{1}{nm}\su{{i=1}}{m}\su{{j=1}}{n}\left(Y_{ij}-\overline{Y}_{\bullet\bullet}\right)^{2}\\
+	SS_{W}=\dfrac{1}{nm}\su{{i=1}}{m}\su{{j=1}}{n}\left(Y_{ij}-\overline{Y}_{i\bullet}\right)\\
+	SS_{B}=\dfrac{1}{nm}\su{{i=1}}{m}\su{{j=1}}{n}\left(Y_{i\bullet}-\overline{Y}_{\bullet\bullet}\right)^{2}\\
+\end{cases}
+\Rightarrow
+SS_{T}=SS_{W}+SS_{B}
+$
+\paragraph{ANOVA model}
+Consider ANOVA model:
+$
+\begin{cases}
+\forall (i,j)\in\inter{1}{m}\times\inter{1}{n}Y_{ij}=\mu_{i}+\epsilon_{ij}\\
+Y_{ij}\hookrightarrow\mathbb{N}(\mu_{i},\sigma^{2})
+\end{cases}
+\Rightarrow
+\begin{cases}
+	\text{(a) the random variable }\frac{SS_{W}}{\sigma^{2}}\hookrightarrow \chi^{2}\left(m(n-1)\right)\\
+	\text{(a) the statics }SS_{W}\text{ and }SS_{B}\text{ are independent}\\
+	H_{0}:\forall (i,j)\in\inter{1}{m}^{2} \mu_{i}=\mu_{j}\text{ it is True}
+\end{cases}
+\Rightarrow
+\begin{cases}
+	\text{the random variable }\frac{SS_{B}}{\sigma^{2}}\hookrightarrow\chi^{2}(m-1)\\
+	\text{the statics }\frac{SS_{B}m(n-1)}{\sigma^{2}(m-1)}\hookrightarrow F(m-1,m(n-1))\\
+	\text{the random variable }\frac{SS_{T}}{\sigma^{2}}\hookrightarrow \chi^{2}(nm-1)
+\end{cases}
+$
+

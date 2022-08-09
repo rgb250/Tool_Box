@@ -1,0 +1,14 @@
+The logistic distribution is used in modeling demographic data. It is also
+used as an alternative to the Weibull distribution in life-testing.
+\paragraph{Definition}
+\begin{center}
+	$f(x)=\dfrac{\pi}{\sigma\sqrt{3}}\dfrac{e^{-\frac{\pi}{\sqrt{3}}\left( \frac{x-\mu}{\sigma} \right)}}{\left( 1+e^{-\frac{\pi}{\sqrt{3}}\left( \frac{x-\mu}{\sigma} \right)} \right)^{2}}\Rightarrow X\hookrightarrow LOG(\mu,\sigma)$
+\end{center}
+\paragraph{Properties}
+\begin{center}
+	$\begin{cases}
+		\E{X}=\mu\\
+		\V{X}=\sigma^{2}\\
+		M(t)=e^{\mu t}\Gamma\left( 1+\dfrac{\sqrt{3}}{\pi}\sigma t \right)\Gamma\left(1-\dfrac{\sqrt{3}}{\pi}\sigma t\right), |t|<\dfrac{\pi}{\sigma\sqrt{3}}
+	\end{cases}$
+\end{center}

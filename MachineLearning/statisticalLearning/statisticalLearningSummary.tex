@@ -1,0 +1,243 @@
+\documentclass[a4paper, 10pt]{book}  %livre
+
+% Permet l'encodage avec le Unicode Transformation Format-8-bit
+\usepackage[utf8]{inputenc}
+% Permet la gestion des caractères accentués ainsi que la stabilité des impressions en P.D.F.
+\usepackage[T1]{fontenc}
+% Permet la stabilisation de l'écriture
+\usepackage{lmodern}
+% Permet d'utiliser les liens hypertexte sans altérer la bibliothèque KOMA
+\usepackage{scrhack}
+\KOMAoptions{hyperref=false}
+% Utilise les règles gramaticales anglaise
+\usepackage[english]{babel}
+%Utilisation de lien hypertexte:
+\usepackage{hyperref}
+%%Utilise les règles typographique de la bibliothéques KOMA
+%\setkomafont{author}{\scshape}
+\usepackage{blindtext}
+
+% Package pour avoir plus d'arguments dans ses commandes.
+\usepackage{xargs}
+
+%Bibliothèque mathématiques pour la police.
+\usepackage{amsfonts}
+%Bibliothèques mathématiques générale.
+\usepackage{amsmath}
+\usepackage{amssymb}
+% Package écriture en gras math mode
+\usepackage{bm}
+%Pour les listes indexées alphabétiquement
+\usepackage{enumitem}
+%Pour appliquer \mathbb à des nombres
+\usepackage{bbm}
+%Package pour l'indexation de matrices
+\usepackage{blkarray}
+%\usepackage{dsfont}
+%Bibliothèque pour l'affichage de nombre avec la typographie définie
+\usepackage{numprint}
+\newcommand{\np}[1]{\numprint{#1}}
+% Pour la notation scientifique
+\usepackage{siunitx}
+\sisetup{locale= FR,exponent-product=.}
+\DeclareSIUnit\year{ann\'{e}ee}
+%Positionnement des images
+\usepackage{float}
+\usepackage{subcaption}
+%Utilisation des couleurs
+\usepackage{xcolor}
+% Package pour le soulignement
+\usepackage{color,soulutf8}
+\setulcolor{red}
+% Package pour les annotations
+\usepackage{todonotes}
+%\usepackage[pygments]{pythontex} % Pour utiliser Python
+%\usepackage{fvextra} % Utile pour la mise en forme du code source inséré
+%Package pour la programmation
+\usepackage{listings}
+% Package pour les scripts en Python
+%\lstset{language=Python,
+%\lstset{
+%backgroundcolor=\color{white},
+%    basicstyle=\small\ttfamily,
+%    breakatwhitespace=false,
+%    breaklines=true,
+%    captionpos=b,                                    % sets the caption-position to bottom
+%    commentstyle=\color{teal},
+%    escapeinside={\%*}{*)},
+%    keepspaces=true,
+%    keywordstyle=\color{violet},
+%    numbers=left,
+%    numberstyle=\tiny\color{darkgray},
+%    showspaces=false,
+%    showstringspaces=false,
+%    showtabs=false,
+%    stepnumber=1,
+%    stringstyle=\color{purple},
+%    otherkeywords={0,1,2,3,4,5,6,7,8,9},
+%    }
+
+
+%Définition de couleurs:
+\definecolor{bleudefrance}{rgb}{.19, .55, .91}
+\definecolor{pakistangreen}{rgb}{.0, .4, .0}
+\definecolor{rossocorsa}{rgb}{0.83, 0.0, 0.0}
+\definecolor{persimmon}{rgb}{0.93, 0.35, 0.0}
+% Annotation auteur
+\newcommand{\Moi}[1]{\todo[color = teal!40]{#1}}
+\newcommand{\Cnsl}[1]{\todo[color = pakistangreen!40]{#1}}
+\newcommand{\MeG}[1]{\todo[color = rossocorsa!40]{#1}}
+%Notation récurrante:
+\newcommandx{\hb}[1]{\widehat{\beta_{#1}}}
+\newcommandx{\prth}[3]{\left( #1_{#2} \right)_{1\leq #2 \leq #3}}
+\newcommandx{\prtH}[4]{\left( #1_{#2} \right)_{#3\leq #2 \leq #4}}
+% Encadrement des résultats
+\newcommand{\enc}[1]{\fcolorbox{rossocorsa}{white}{#1}}
+\newcommand{\encB}[1]{\fcolorbox{bleudefrance}{white}{#1}}
+\newcommand{\encV}[1]{\fcolorbox{pakistangreen}{white}{#1}}
+\newcommand{\encN}[1]{\fcolorbox{black}{white}{#1}}
+% Soulignement couleur
+\newcommandx{\sN}[1]{\setulcolor{black}\ul{#1}}
+\newcommandx{\sR}[1]{\setulcolor{rossocorsa}\ul{#1}}
+\newcommandx{\sB}[1]{\setulcolor{bleudefrance}\ul{#1}}
+\newcommandx{\sV}[1]{\setulcolor{pakistangreen}\ul{#1}}
+\newcommandx{\sT}[1]{\setulcolor{teal}\ul{#1}}
+\newcommandx{\sO}[1]{\setulcolor{persimmon}\ul{#1}}
+% Text de couleur
+\newcommandx{\tR}[1]{\textcolor{rossocorsa}{#1}}
+\newcommandx{\tB}[1]{\textcolor{bleudefrance}{#1}}
+\newcommandx{\tV}[1]{\textcolor{pakistangreen}{#1}}
+\newcommandx{\tT}[1]{\textcolor{teal}{#1}}
+\newcommandx{\tO}[1]{\textcolor{persimmon}{#1}}
+% Écriture intervalle
+\newcommandx{\inter}[2]{\left[\![#1, #2]\!\right]}
+% Écriture intégrale
+\newcommandx{\Su}[2]{{\displaystyle \int_{#1}^{#2}}}
+% Écriture somme sigma
+\newcommandx{\su}[2]{{\displaystyle \sum_{#1}^{#2}}}
+% Écriture produit pi
+\newcommandx{\prd}[2]{{\displaystyle \prod_{#1}^{#2}}}
+% Écriture P(X)
+\newcommandx{\prob}[1]{\mathbb{P}\left(#1\right)}
+% Écriture P({X})
+\newcommandx{\Prob}[1]{\mathbb{P}\left(\left\{#1 \right\}\right)}
+% Écriture P_{\{Y\}}({X})
+\newcommandx{\ProbC}[2]{\mathbb{P}_{\left\{#1\right\}}\left(\left\{#2\right\}\right)}
+% Ecriture Esperance et Variance
+\newcommandx{\E}[1]{\mathbb{E}\left(#1\right)}
+\newcommandx{\V}[1]{\mathbb{V}\left(#1\right)}
+%Symbole de la norme
+\newcommandx{\norm}[1]{\left\lVert#1\right\rVert}
+%Symbole du produit scalaire:
+\newcommandx{\sP}[2]{\langle\left. #1\right\vert #2 \rangle}
+
+
+%%%%%%%%% PYTHON %%%%%%%
+% Default fixed font does not support bold face
+\DeclareFixedFont{\ttb}{T1}{txtt}{bx}{n}{12} % for bold
+\DeclareFixedFont{\ttm}{T1}{txtt}{m}{n}{12}  % for normal
+
+% Custom colors
+\definecolor{deepblue}{rgb}{0,0,0.5}
+\definecolor{deepred}{rgb}{0.6,0,0}
+\definecolor{deepgreen}{rgb}{0,0.5,0}
+
+% Python style for highlighting
+\newcommand\pythonstyle{\lstset{
+language=Python,
+backgroundcolor=\color{white},
+basicstyle=\small\ttfamily,
+breakatwhitespace=false,
+breaklines=true,
+captionpos=b,                                    % sets the caption-position to bottom
+commentstyle=\color{teal},
+emph={MyClass,__init__},          % Custom highlighting
+escapeinside={\%*}{*)},
+keepspaces=true,
+keywordstyle=\color{violet},
+numbers=left,
+numberstyle=\tiny\color{darkgray},
+showspaces=false,
+showstringspaces=false,
+showtabs=false,
+stepnumber=1,
+stringstyle=\color{purple},
+otherkeywords={0,1,2,3,4,5,6,7,8,9},
+}}
+
+% Python environment
+\lstnewenvironment{python}[1][]
+{
+\pythonstyle
+\lstset{#1}
+}
+{}
+
+% Python for external files
+\newcommand\pythonexternal[2][]{{
+\pythonstyle
+\lstinputlisting[#1]{#2}}}
+
+% Python for inline
+\newcommand\pythoninline[1]{{\pythonstyle\lstinline!#1!}}
+
+
+
+%%%%%%%%% R %%%%%%%
+
+% R style for highlighting
+\newcommand\rstyle{\lstset{
+language=R,
+backgroundcolor=\color{white},
+basicstyle=\small\ttfamily,
+breakatwhitespace=false,
+breaklines=true,
+captionpos=b,                                    % sets the caption-position to bottom
+commentstyle=\color{teal},
+emph={MyClass,__init__},          % Custom highlighting
+%escapeinside={\%*}{*)},
+keepspaces=true,
+keywordstyle=\color{bleudefrance},
+numbers=left,
+numberstyle=\tiny\color{darkgray},
+rulecolor=\color{black},
+showspaces=false,
+showstringspaces=false,
+showtabs=false,
+stepnumber=1,
+stringstyle=\color{pakistangreen},
+otherkeywords={0,1,2,3,4,5,6,7,8,9},
+}}
+
+% R environment
+\lstnewenvironment{rcode}[1][]
+{
+\rstyle
+\lstset{#1}
+}
+{}
+
+% R for external files
+\newcommand\rexternal[2][]{{
+\rstyle
+\lstinputlisting[#1]{#2}}}
+
+% R for inline
+\newcommand\rinline[1]{{\rstyle\lstinline!#1!}}
+
+\title{Abstract of the introduction to \emph{Statistical Learning}}
+\author{Siger}
+
+\begin{document}
+
+\maketitle
+
+Si Dieu est infini, alors je suis une partie de Dieu sinon je serai sa limite\ldots
+
+\tableofcontents
+
+\chapter{Introduction to Statistical Learning}
+\input{./chap/1_introductionToStatisticalLearning.tex}
+\chapter{Deep Learning}
+\input{./chap/2_deepLearning.tex}
+\end{document}

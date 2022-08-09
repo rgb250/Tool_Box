@@ -1,0 +1,38 @@
+\paragraph{Definition}
+A discrete bivariate random variable $(X, Y )$ is said to have the 
+bivariate binomial distribution with parameters $n, p_{1}, p_{2}$ if its
+joint probability density is of the form
+\begin{center}
+	$f(x,y)=
+	\begin{cases}	
+		\dfrac{n!}{x!y!(n-x-y)}p_{1}^{x}p_{2}^{y}(1-p_{1}-p_{2})^{n-x-y}\Leftarrow (x,y)\in\mathbb{N}^{2}\\
+		0\Leftarrow (x,y)\not\in\mathbb{N}^{2} 
+	\end{cases}$	
+	$\Rightarrow \left( X,Y \right)\hookrightarrow BIN(n,p_{1},p_{2})
+	$
+\end{center}
+where $0<p_{1}, p_{2}, p_{1}+p_{2}<1, x+y\leq n$ and $n\geq 0$
+\paragraph{Properties}
+\begin{center}
+	$
+	\begin{cases}
+	\E{X}=np_{1}\\
+	\E{Y}=np_{2}\\
+	\V{X}=np_{1}(1-p_{1})\\
+	\V{Y}=np_{2}(1-p_{2})\\
+	Cov{X,Y}=-np_{1}p_{2}\\
+	M(s,t)=(1-p_{1}-p_{2}+p_{1}e^{s}+p_{2}e^{t})^{n}
+	\end{cases}
+	$
+\end{center}
+\paragraph{Conditional Properties}
+\begin{center}
+	$
+	\begin{cases}
+	\Ec{X=x}{Y}=\dfrac{p_{2}(n-x)}{1-p_{1}}\\
+	\Ec{Y=y}{X}=\dfrac{p_{1}(n-y)}{1-p_{2}}\\
+	\Vc{X=x}{Y}=\dfrac{p_{2}(1-p_{1}-p_{2})(n-x)}{(1-p_{1})^{2}}\\
+	\Vc{Y=y}{X}=\dfrac{p_{1}(1-p_{1}-p_{2})(n-y)}{(1-p_{2})^{2}}
+	\end{cases}
+	$
+\end{center}

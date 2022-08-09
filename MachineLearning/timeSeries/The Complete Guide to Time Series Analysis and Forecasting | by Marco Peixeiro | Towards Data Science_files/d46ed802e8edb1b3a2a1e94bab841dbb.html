@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html><head><title>SARIMA_stock.py – Medium</title><meta name="description" content="You can't perform that action at this time. You signed in with another tab or window. You signed out in another tab or window. Reload to refresh your session. Reload to refresh your session."><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta name="twitter:widgets:csp" content="on"><meta name="robots" content="noindex"><!-- base href="https://towardsdatascience.com/media/d46ed802e8edb1b3a2a1e94bab841dbb" --><style>body {text-rendering: optimizeLegibility; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; font-family: "ff-tisa-web-pro", Georgia, Cambria, "Times New Roman", Times, serif; font-weight: 400; color: #333332; font-size: 18px; line-height: 1.4; margin: 0; background-color: white; overflow: hidden;}iframe {max-width: 100%;}</style></head><body><style>.gist .gist-file { margin-bottom: 0 !important; }.gist { text-rendering: auto; }</style><script src="d46ed802e8edb1b3a2a1e94bab841dbb_data/ee23ca16ad9516e5feb0de8b77748e9e.js" charset="utf-8"></script><link rel="stylesheet" href="be7454ed23a1bd0a1bfe020c52084ba0_data/gist-embed-24bb8e840bfabd0d17bac31daf27f75b.css"><div id="gist97638680" class="gist">
+    <div class="gist-file">
+      <div class="gist-data">
+        <div class="js-gist-file-update-container js-task-list-container file-box">
+  <div id="file-sarima_stock-py" class="file my-2">
+    
+
+  <div itemprop="text" class="Box-body p-0 blob-wrapper data type-python  ">
+      
+<table class="highlight tab-size js-file-line-container" data-tab-size="8" data-paste-markdown-skip="">
+      <tbody><tr>
+        <td id="file-sarima_stock-py-L1" class="blob-num js-line-number" data-line-number="1"></td>
+        <td id="file-sarima_stock-py-LC1" class="blob-code blob-code-inner js-file-line"><span class="pl-c">#Set initial values and some bounds</span></td>
+      </tr>
+      <tr>
+        <td id="file-sarima_stock-py-L2" class="blob-num js-line-number" data-line-number="2"></td>
+        <td id="file-sarima_stock-py-LC2" class="blob-code blob-code-inner js-file-line"><span class="pl-s1">ps</span> <span class="pl-c1">=</span> <span class="pl-en">range</span>(<span class="pl-c1">0</span>, <span class="pl-c1">5</span>)</td>
+      </tr>
+      <tr>
+        <td id="file-sarima_stock-py-L3" class="blob-num js-line-number" data-line-number="3"></td>
+        <td id="file-sarima_stock-py-LC3" class="blob-code blob-code-inner js-file-line"><span class="pl-s1">d</span> <span class="pl-c1">=</span> <span class="pl-c1">1</span></td>
+      </tr>
+      <tr>
+        <td id="file-sarima_stock-py-L4" class="blob-num js-line-number" data-line-number="4"></td>
+        <td id="file-sarima_stock-py-LC4" class="blob-code blob-code-inner js-file-line"><span class="pl-s1">qs</span> <span class="pl-c1">=</span> <span class="pl-en">range</span>(<span class="pl-c1">0</span>, <span class="pl-c1">5</span>)</td>
+      </tr>
+      <tr>
+        <td id="file-sarima_stock-py-L5" class="blob-num js-line-number" data-line-number="5"></td>
+        <td id="file-sarima_stock-py-LC5" class="blob-code blob-code-inner js-file-line"><span class="pl-v">Ps</span> <span class="pl-c1">=</span> <span class="pl-en">range</span>(<span class="pl-c1">0</span>, <span class="pl-c1">5</span>)</td>
+      </tr>
+      <tr>
+        <td id="file-sarima_stock-py-L6" class="blob-num js-line-number" data-line-number="6"></td>
+        <td id="file-sarima_stock-py-LC6" class="blob-code blob-code-inner js-file-line"><span class="pl-v">D</span> <span class="pl-c1">=</span> <span class="pl-c1">1</span></td>
+      </tr>
+      <tr>
+        <td id="file-sarima_stock-py-L7" class="blob-num js-line-number" data-line-number="7"></td>
+        <td id="file-sarima_stock-py-LC7" class="blob-code blob-code-inner js-file-line"><span class="pl-v">Qs</span> <span class="pl-c1">=</span> <span class="pl-en">range</span>(<span class="pl-c1">0</span>, <span class="pl-c1">5</span>)</td>
+      </tr>
+      <tr>
+        <td id="file-sarima_stock-py-L8" class="blob-num js-line-number" data-line-number="8"></td>
+        <td id="file-sarima_stock-py-LC8" class="blob-code blob-code-inner js-file-line"><span class="pl-s1">s</span> <span class="pl-c1">=</span> <span class="pl-c1">5</span></td>
+      </tr>
+      <tr>
+        <td id="file-sarima_stock-py-L9" class="blob-num js-line-number" data-line-number="9"></td>
+        <td id="file-sarima_stock-py-LC9" class="blob-code blob-code-inner js-file-line">
+</td>
+      </tr>
+      <tr>
+        <td id="file-sarima_stock-py-L10" class="blob-num js-line-number" data-line-number="10"></td>
+        <td id="file-sarima_stock-py-LC10" class="blob-code blob-code-inner js-file-line"><span class="pl-c">#Create a list with all possible combinations of parameters</span></td>
+      </tr>
+      <tr>
+        <td id="file-sarima_stock-py-L11" class="blob-num js-line-number" data-line-number="11"></td>
+        <td id="file-sarima_stock-py-LC11" class="blob-code blob-code-inner js-file-line"><span class="pl-s1">parameters</span> <span class="pl-c1">=</span> <span class="pl-en">product</span>(<span class="pl-s1">ps</span>, <span class="pl-s1">qs</span>, <span class="pl-v">Ps</span>, <span class="pl-v">Qs</span>)</td>
+      </tr>
+      <tr>
+        <td id="file-sarima_stock-py-L12" class="blob-num js-line-number" data-line-number="12"></td>
+        <td id="file-sarima_stock-py-LC12" class="blob-code blob-code-inner js-file-line"><span class="pl-s1">parameters_list</span> <span class="pl-c1">=</span> <span class="pl-en">list</span>(<span class="pl-s1">parameters</span>)</td>
+      </tr>
+      <tr>
+        <td id="file-sarima_stock-py-L13" class="blob-num js-line-number" data-line-number="13"></td>
+        <td id="file-sarima_stock-py-LC13" class="blob-code blob-code-inner js-file-line"><span class="pl-en">len</span>(<span class="pl-s1">parameters_list</span>)</td>
+      </tr>
+      <tr>
+        <td id="file-sarima_stock-py-L14" class="blob-num js-line-number" data-line-number="14"></td>
+        <td id="file-sarima_stock-py-LC14" class="blob-code blob-code-inner js-file-line">
+</td>
+      </tr>
+      <tr>
+        <td id="file-sarima_stock-py-L15" class="blob-num js-line-number" data-line-number="15"></td>
+        <td id="file-sarima_stock-py-LC15" class="blob-code blob-code-inner js-file-line"><span class="pl-c"># Train many SARIMA models to find the best set of parameters</span></td>
+      </tr>
+      <tr>
+        <td id="file-sarima_stock-py-L16" class="blob-num js-line-number" data-line-number="16"></td>
+        <td id="file-sarima_stock-py-LC16" class="blob-code blob-code-inner js-file-line"><span class="pl-k">def</span> <span class="pl-en">optimize_SARIMA</span>(<span class="pl-s1">parameters_list</span>, <span class="pl-s1">d</span>, <span class="pl-v">D</span>, <span class="pl-s1">s</span>):</td>
+      </tr>
+      <tr>
+        <td id="file-sarima_stock-py-L17" class="blob-num js-line-number" data-line-number="17"></td>
+        <td id="file-sarima_stock-py-LC17" class="blob-code blob-code-inner js-file-line">    <span class="pl-s">"""</span></td>
+      </tr>
+      <tr>
+        <td id="file-sarima_stock-py-L18" class="blob-num js-line-number" data-line-number="18"></td>
+        <td id="file-sarima_stock-py-LC18" class="blob-code blob-code-inner js-file-line"><span class="pl-s">        Return dataframe with parameters and corresponding AIC</span></td>
+      </tr>
+      <tr>
+        <td id="file-sarima_stock-py-L19" class="blob-num js-line-number" data-line-number="19"></td>
+        <td id="file-sarima_stock-py-LC19" class="blob-code blob-code-inner js-file-line"><span class="pl-s">        </span></td>
+      </tr>
+      <tr>
+        <td id="file-sarima_stock-py-L20" class="blob-num js-line-number" data-line-number="20"></td>
+        <td id="file-sarima_stock-py-LC20" class="blob-code blob-code-inner js-file-line"><span class="pl-s">        parameters_list - list with (p, q, P, Q) tuples</span></td>
+      </tr>
+      <tr>
+        <td id="file-sarima_stock-py-L21" class="blob-num js-line-number" data-line-number="21"></td>
+        <td id="file-sarima_stock-py-LC21" class="blob-code blob-code-inner js-file-line"><span class="pl-s">        d - integration order</span></td>
+      </tr>
+      <tr>
+        <td id="file-sarima_stock-py-L22" class="blob-num js-line-number" data-line-number="22"></td>
+        <td id="file-sarima_stock-py-LC22" class="blob-code blob-code-inner js-file-line"><span class="pl-s">        D - seasonal integration order</span></td>
+      </tr>
+      <tr>
+        <td id="file-sarima_stock-py-L23" class="blob-num js-line-number" data-line-number="23"></td>
+        <td id="file-sarima_stock-py-LC23" class="blob-code blob-code-inner js-file-line"><span class="pl-s">        s - length of season</span></td>
+      </tr>
+      <tr>
+        <td id="file-sarima_stock-py-L24" class="blob-num js-line-number" data-line-number="24"></td>
+        <td id="file-sarima_stock-py-LC24" class="blob-code blob-code-inner js-file-line"><span class="pl-s">    """</span></td>
+      </tr>
+      <tr>
+        <td id="file-sarima_stock-py-L25" class="blob-num js-line-number" data-line-number="25"></td>
+        <td id="file-sarima_stock-py-LC25" class="blob-code blob-code-inner js-file-line">    </td>
+      </tr>
+      <tr>
+        <td id="file-sarima_stock-py-L26" class="blob-num js-line-number" data-line-number="26"></td>
+        <td id="file-sarima_stock-py-LC26" class="blob-code blob-code-inner js-file-line">    <span class="pl-s1">results</span> <span class="pl-c1">=</span> []</td>
+      </tr>
+      <tr>
+        <td id="file-sarima_stock-py-L27" class="blob-num js-line-number" data-line-number="27"></td>
+        <td id="file-sarima_stock-py-LC27" class="blob-code blob-code-inner js-file-line">    <span class="pl-s1">best_aic</span> <span class="pl-c1">=</span> <span class="pl-en">float</span>(<span class="pl-s">'inf'</span>)</td>
+      </tr>
+      <tr>
+        <td id="file-sarima_stock-py-L28" class="blob-num js-line-number" data-line-number="28"></td>
+        <td id="file-sarima_stock-py-LC28" class="blob-code blob-code-inner js-file-line">    </td>
+      </tr>
+      <tr>
+        <td id="file-sarima_stock-py-L29" class="blob-num js-line-number" data-line-number="29"></td>
+        <td id="file-sarima_stock-py-LC29" class="blob-code blob-code-inner js-file-line">    <span class="pl-k">for</span> <span class="pl-s1">param</span> <span class="pl-c1">in</span> <span class="pl-en">tqdm_notebook</span>(<span class="pl-s1">parameters_list</span>):</td>
+      </tr>
+      <tr>
+        <td id="file-sarima_stock-py-L30" class="blob-num js-line-number" data-line-number="30"></td>
+        <td id="file-sarima_stock-py-LC30" class="blob-code blob-code-inner js-file-line">        <span class="pl-k">try</span>: <span class="pl-s1">model</span> <span class="pl-c1">=</span> <span class="pl-s1">sm</span>.<span class="pl-s1">tsa</span>.<span class="pl-s1">statespace</span>.<span class="pl-v">SARIMAX</span>(<span class="pl-s1">data</span>.<span class="pl-v">CLOSE</span>, <span class="pl-s1">order</span><span class="pl-c1">=</span>(<span class="pl-s1">param</span>[<span class="pl-c1">0</span>], <span class="pl-s1">d</span>, <span class="pl-s1">param</span>[<span class="pl-c1">1</span>]),</td>
+      </tr>
+      <tr>
+        <td id="file-sarima_stock-py-L31" class="blob-num js-line-number" data-line-number="31"></td>
+        <td id="file-sarima_stock-py-LC31" class="blob-code blob-code-inner js-file-line">                                               <span class="pl-s1">seasonal_order</span><span class="pl-c1">=</span>(<span class="pl-s1">param</span>[<span class="pl-c1">2</span>], <span class="pl-v">D</span>, <span class="pl-s1">param</span>[<span class="pl-c1">3</span>], <span class="pl-s1">s</span>)).<span class="pl-en">fit</span>(<span class="pl-s1">disp</span><span class="pl-c1">=</span><span class="pl-c1">-</span><span class="pl-c1">1</span>)</td>
+      </tr>
+      <tr>
+        <td id="file-sarima_stock-py-L32" class="blob-num js-line-number" data-line-number="32"></td>
+        <td id="file-sarima_stock-py-LC32" class="blob-code blob-code-inner js-file-line">        <span class="pl-k">except</span>:</td>
+      </tr>
+      <tr>
+        <td id="file-sarima_stock-py-L33" class="blob-num js-line-number" data-line-number="33"></td>
+        <td id="file-sarima_stock-py-LC33" class="blob-code blob-code-inner js-file-line">            <span class="pl-k">continue</span></td>
+      </tr>
+      <tr>
+        <td id="file-sarima_stock-py-L34" class="blob-num js-line-number" data-line-number="34"></td>
+        <td id="file-sarima_stock-py-LC34" class="blob-code blob-code-inner js-file-line">            </td>
+      </tr>
+      <tr>
+        <td id="file-sarima_stock-py-L35" class="blob-num js-line-number" data-line-number="35"></td>
+        <td id="file-sarima_stock-py-LC35" class="blob-code blob-code-inner js-file-line">        <span class="pl-s1">aic</span> <span class="pl-c1">=</span> <span class="pl-s1">model</span>.<span class="pl-s1">aic</span></td>
+      </tr>
+      <tr>
+        <td id="file-sarima_stock-py-L36" class="blob-num js-line-number" data-line-number="36"></td>
+        <td id="file-sarima_stock-py-LC36" class="blob-code blob-code-inner js-file-line">        </td>
+      </tr>
+      <tr>
+        <td id="file-sarima_stock-py-L37" class="blob-num js-line-number" data-line-number="37"></td>
+        <td id="file-sarima_stock-py-LC37" class="blob-code blob-code-inner js-file-line">        <span class="pl-c">#Save best model, AIC and parameters</span></td>
+      </tr>
+      <tr>
+        <td id="file-sarima_stock-py-L38" class="blob-num js-line-number" data-line-number="38"></td>
+        <td id="file-sarima_stock-py-LC38" class="blob-code blob-code-inner js-file-line">        <span class="pl-k">if</span> <span class="pl-s1">aic</span> <span class="pl-c1">&lt;</span> <span class="pl-s1">best_aic</span>:</td>
+      </tr>
+      <tr>
+        <td id="file-sarima_stock-py-L39" class="blob-num js-line-number" data-line-number="39"></td>
+        <td id="file-sarima_stock-py-LC39" class="blob-code blob-code-inner js-file-line">            <span class="pl-s1">best_model</span> <span class="pl-c1">=</span> <span class="pl-s1">model</span></td>
+      </tr>
+      <tr>
+        <td id="file-sarima_stock-py-L40" class="blob-num js-line-number" data-line-number="40"></td>
+        <td id="file-sarima_stock-py-LC40" class="blob-code blob-code-inner js-file-line">            <span class="pl-s1">best_aic</span> <span class="pl-c1">=</span> <span class="pl-s1">aic</span></td>
+      </tr>
+      <tr>
+        <td id="file-sarima_stock-py-L41" class="blob-num js-line-number" data-line-number="41"></td>
+        <td id="file-sarima_stock-py-LC41" class="blob-code blob-code-inner js-file-line">            <span class="pl-s1">best_param</span> <span class="pl-c1">=</span> <span class="pl-s1">param</span></td>
+      </tr>
+      <tr>
+        <td id="file-sarima_stock-py-L42" class="blob-num js-line-number" data-line-number="42"></td>
+        <td id="file-sarima_stock-py-LC42" class="blob-code blob-code-inner js-file-line">        <span class="pl-s1">results</span>.<span class="pl-en">append</span>([<span class="pl-s1">param</span>, <span class="pl-s1">model</span>.<span class="pl-s1">aic</span>])</td>
+      </tr>
+      <tr>
+        <td id="file-sarima_stock-py-L43" class="blob-num js-line-number" data-line-number="43"></td>
+        <td id="file-sarima_stock-py-LC43" class="blob-code blob-code-inner js-file-line">        </td>
+      </tr>
+      <tr>
+        <td id="file-sarima_stock-py-L44" class="blob-num js-line-number" data-line-number="44"></td>
+        <td id="file-sarima_stock-py-LC44" class="blob-code blob-code-inner js-file-line">    <span class="pl-s1">result_table</span> <span class="pl-c1">=</span> <span class="pl-s1">pd</span>.<span class="pl-v">DataFrame</span>(<span class="pl-s1">results</span>)</td>
+      </tr>
+      <tr>
+        <td id="file-sarima_stock-py-L45" class="blob-num js-line-number" data-line-number="45"></td>
+        <td id="file-sarima_stock-py-LC45" class="blob-code blob-code-inner js-file-line">    <span class="pl-s1">result_table</span>.<span class="pl-s1">columns</span> <span class="pl-c1">=</span> [<span class="pl-s">'parameters'</span>, <span class="pl-s">'aic'</span>]</td>
+      </tr>
+      <tr>
+        <td id="file-sarima_stock-py-L46" class="blob-num js-line-number" data-line-number="46"></td>
+        <td id="file-sarima_stock-py-LC46" class="blob-code blob-code-inner js-file-line">    <span class="pl-c">#Sort in ascending order, lower AIC is better</span></td>
+      </tr>
+      <tr>
+        <td id="file-sarima_stock-py-L47" class="blob-num js-line-number" data-line-number="47"></td>
+        <td id="file-sarima_stock-py-LC47" class="blob-code blob-code-inner js-file-line">    <span class="pl-s1">result_table</span> <span class="pl-c1">=</span> <span class="pl-s1">result_table</span>.<span class="pl-en">sort_values</span>(<span class="pl-s1">by</span><span class="pl-c1">=</span><span class="pl-s">'aic'</span>, <span class="pl-s1">ascending</span><span class="pl-c1">=</span><span class="pl-c1">True</span>).<span class="pl-en">reset_index</span>(<span class="pl-s1">drop</span><span class="pl-c1">=</span><span class="pl-c1">True</span>)</td>
+      </tr>
+      <tr>
+        <td id="file-sarima_stock-py-L48" class="blob-num js-line-number" data-line-number="48"></td>
+        <td id="file-sarima_stock-py-LC48" class="blob-code blob-code-inner js-file-line">    </td>
+      </tr>
+      <tr>
+        <td id="file-sarima_stock-py-L49" class="blob-num js-line-number" data-line-number="49"></td>
+        <td id="file-sarima_stock-py-LC49" class="blob-code blob-code-inner js-file-line">    <span class="pl-k">return</span> <span class="pl-s1">result_table</span></td>
+      </tr>
+      <tr>
+        <td id="file-sarima_stock-py-L50" class="blob-num js-line-number" data-line-number="50"></td>
+        <td id="file-sarima_stock-py-LC50" class="blob-code blob-code-inner js-file-line">
+</td>
+      </tr>
+      <tr>
+        <td id="file-sarima_stock-py-L51" class="blob-num js-line-number" data-line-number="51"></td>
+        <td id="file-sarima_stock-py-LC51" class="blob-code blob-code-inner js-file-line"><span class="pl-s1">result_table</span> <span class="pl-c1">=</span> <span class="pl-en">optimize_SARIMA</span>(<span class="pl-s1">parameters_list</span>, <span class="pl-s1">d</span>, <span class="pl-v">D</span>, <span class="pl-s1">s</span>)</td>
+      </tr>
+      <tr>
+        <td id="file-sarima_stock-py-L52" class="blob-num js-line-number" data-line-number="52"></td>
+        <td id="file-sarima_stock-py-LC52" class="blob-code blob-code-inner js-file-line">
+</td>
+      </tr>
+      <tr>
+        <td id="file-sarima_stock-py-L53" class="blob-num js-line-number" data-line-number="53"></td>
+        <td id="file-sarima_stock-py-LC53" class="blob-code blob-code-inner js-file-line"><span class="pl-c">#Set parameters that give the lowest AIC (Akaike Information Criteria)</span></td>
+      </tr>
+      <tr>
+        <td id="file-sarima_stock-py-L54" class="blob-num js-line-number" data-line-number="54"></td>
+        <td id="file-sarima_stock-py-LC54" class="blob-code blob-code-inner js-file-line"><span class="pl-s1">p</span>, <span class="pl-s1">q</span>, <span class="pl-v">P</span>, <span class="pl-v">Q</span> <span class="pl-c1">=</span> <span class="pl-s1">result_table</span>.<span class="pl-s1">parameters</span>[<span class="pl-c1">0</span>]</td>
+      </tr>
+      <tr>
+        <td id="file-sarima_stock-py-L55" class="blob-num js-line-number" data-line-number="55"></td>
+        <td id="file-sarima_stock-py-LC55" class="blob-code blob-code-inner js-file-line">
+</td>
+      </tr>
+      <tr>
+        <td id="file-sarima_stock-py-L56" class="blob-num js-line-number" data-line-number="56"></td>
+        <td id="file-sarima_stock-py-LC56" class="blob-code blob-code-inner js-file-line"><span class="pl-s1">best_model</span> <span class="pl-c1">=</span> <span class="pl-s1">sm</span>.<span class="pl-s1">tsa</span>.<span class="pl-s1">statespace</span>.<span class="pl-v">SARIMAX</span>(<span class="pl-s1">data</span>.<span class="pl-v">CLOSE</span>, <span class="pl-s1">order</span><span class="pl-c1">=</span>(<span class="pl-s1">p</span>, <span class="pl-s1">d</span>, <span class="pl-s1">q</span>),</td>
+      </tr>
+      <tr>
+        <td id="file-sarima_stock-py-L57" class="blob-num js-line-number" data-line-number="57"></td>
+        <td id="file-sarima_stock-py-LC57" class="blob-code blob-code-inner js-file-line">                                       <span class="pl-s1">seasonal_order</span><span class="pl-c1">=</span>(<span class="pl-v">P</span>, <span class="pl-v">D</span>, <span class="pl-v">Q</span>, <span class="pl-s1">s</span>)).<span class="pl-en">fit</span>(<span class="pl-s1">disp</span><span class="pl-c1">=</span><span class="pl-c1">-</span><span class="pl-c1">1</span>)</td>
+      </tr>
+      <tr>
+        <td id="file-sarima_stock-py-L58" class="blob-num js-line-number" data-line-number="58"></td>
+        <td id="file-sarima_stock-py-LC58" class="blob-code blob-code-inner js-file-line">
+</td>
+      </tr>
+      <tr>
+        <td id="file-sarima_stock-py-L59" class="blob-num js-line-number" data-line-number="59"></td>
+        <td id="file-sarima_stock-py-LC59" class="blob-code blob-code-inner js-file-line"><span class="pl-en">print</span>(<span class="pl-s1">best_model</span>.<span class="pl-en">summary</span>())</td>
+      </tr>
+</tbody></table>
+
+
+  </div>
+
+  </div>
+</div>
+
+      </div>
+      <div class="gist-meta">
+        <a href="https://gist.github.com/marcopeix/ee23ca16ad9516e5feb0de8b77748e9e/raw/e173017f74d2d9be9758c456e923b1d154c5d264/SARIMA_stock.py" style="float:right">view raw</a>
+        <a href="https://gist.github.com/marcopeix/ee23ca16ad9516e5feb0de8b77748e9e#file-sarima_stock-py">SARIMA_stock.py</a>
+        hosted with ❤ by <a href="https://github.com/">GitHub</a>
+      </div>
+    </div>
+</div>
+<script>var height = -1; var delayMs = 200; if (document) {document.domain = document.domain;}function notifyResize(height) {height = height ? height : document.documentElement.offsetHeight; var resized = false; if (window.donkey && donkey.resize) {donkey.resize(height);var elements = document.getElementsByClassName("gist-data"); for (var i = 0; i < elements.length; i++) {elements[i].style.overflow = "visible"}resized = true;}if (parent && parent._resizeIframe) {var obj = {iframe: window.frameElement, height: height}; parent._resizeIframe(obj); resized = true;}if (window.location && window.location.hash === "#amp=1" && window.parent && window.parent.postMessage) {window.parent.postMessage({sentinel: "amp", type: "embed-size", height: height}, "*");}if (window.webkit && window.webkit.messageHandlers && window.webkit.messageHandlers.resize) {window.webkit.messageHandlers.resize.postMessage(height); resized = true;}return resized;}function maybeResize() {try {if (document.documentElement.offsetHeight != height && notifyResize()) {height = document.documentElement.offsetHeight;}delayMs = Math.min(delayMs * 2, 1000000); setTimeout(maybeResize, delayMs);} catch(error) {console.log('maybeResize error: ', error)}}maybeResize();</script></body></html>

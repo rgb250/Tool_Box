@@ -1,0 +1,15 @@
+\paragraph{Reasoning}
+We create $\prth{c}{i}{K}$ in the range of $X$ and then construct
+$K+1$ new variables such as:
+$
+\begin{cases}
+	C_{0}(X)=I(X<c_{1})\\
+	\forall i\in\inter{2}{K-1} C_{i}(X)=I(c_{i}\leq X\leq c_{i+1})\\
+	C_{K}(X)=I(c_{K}\leq X)
+\end{cases}
+$
+where $I(.)$ is an \emph{indicator function} that returns a 1 if the
+condition is \emph{True} an returns 0 otherwise.
+$$
+y_{i}=\beta_{0}+\su{{r=1}}{K}\beta_{r}C_{r}(x_{i})
+$$

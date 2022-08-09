@@ -1,0 +1,193 @@
+\paragraph{Regression Trees}
+\subparagraph{Predication via Stratification of the feature space }
+\begin{itemize}
+	\item \tB{We divide the predictor space (the set of possible 
+		values for $\prth{X}{i}{p}$) into $J$ distinct and non
+		overlapping regions $\prth{R}{i}{J}$.}
+	\item For every observation that falls into the region
+		$R_{j}$ we make the same prediction, which is simply
+		the mean of the response values for the training 
+		observation in $R_{j}$
+\end{itemize}
+Theoretically the regions could have any shape, however we choose to
+divide the predictor space into high-dimensional rectangles (boxes).
+\tB{The goal is to find $\prth{R}{i}{J}$ that minimize the RSS given by
+:}
+\begin{center}
+\encV{
+$\su{{i=1}}{J}\su{{i\in R_{j}}}{}\left(y_{i}-\hat{y}_{R_{j}}\right)^{2}$}
+\end{center}
+where $\hat{y}_{R}$, is the mean response for the training observations
+within the $j^{th}$ box.
+It is computationally infeasible to consider every possible partition
+of the feature space into $J$ boxes.\\
+For this reason, we take an approach which is:
+\begin{itemize}
+	\item \textbf{\emph{top-down}}: \sB{it begins at the top of the
+		tree} (at which point all observations belong to a 
+		single region) \sB{and then successively splits the 
+		predictor space.}
+	\item \textbf{\emph{greedy}}: at each step of the tree-building
+		process, the best split is made at that particular step
+\end{itemize}
+It is known as \tR{\emph{recursive binary splitting}}\\
+
+We select the predictor $X_{j}$ and the cutpoint $s$ such that 
+splitting the predictor space into the regions $\left\{X|X_{j}<s\right\}$ (``\emph{the region of predictor space in which} $X_{j}$ \emph{takes
+on a value less than} $s$'') and $\left\{X|X_{j}>s\right\}$ leads to the greatest possible 
+reduction in RSS.
+For any $j$ and $s$ we define the pair of half-planes:
+$
+\begin{cases}
+	R_{1}(j,s)=\left\{ X|X_{j}<s \right\}\\
+	R_{1}(j,s)=\left\{ X|X_{j}>s \right\}
+\end{cases}
+$ and we seek the value of $j$ and $s$ that minimize:
+\begin{center}
+	$\su{{i:x_{i}\in R_{1}(j,s)}}{}\left( y_{i}-\hat{y}_{R_{1}} \right)^{2} + \su{{i:x_{i}\in R_{2}(j,s)}}{}\left( y_{i}-\hat{y}_{R_{2}} \right)^{2}$
+\end{center}
+where $\hat{y}_{R_{1}} = ave\left(y_{i}|x_{i}\in R_{1}(j,s)\right)$ is the mean response for the training 
+observations in $R_{1}(j,s)$  
+
+\subparagraph{Tree Pruning}
+A smaller tree with fewer splits (fewer regions $\prth{R}{i}{J}$) might
+lead to lower variance and better interpretation at the cost of a 
+little bias.\\ A better strategy is to grow a very large tree $T_{0}$,
+and then \emph{prune} it back in order to obtain a \emph{subtree}.\\
+Rather than considering every possible subtree, \sB{we consider a
+sequence of trees indexed by a nonnegative tuning parameter $\alpha$}.
+
+\paragraph{Algorithm: Building a Regression Tree}
+\begin{enumerate}
+	\item \tB{Use recursive binary splitting} to grow a large tree on 
+		the training data, \sB{stopping only when each terminal
+		node has fewer than some minimum number of observations}
+	\item Apply cost complexity pruning to the large tree in order
+		to obtain a sequence of subtrees, as a function of 
+		$\alpha$
+	\item \tB{Use $K$-fold cross-validation to choose $\alpha$}.
+		That is divide the training observations into $K$-folds.
+		\begin{enumerate}[label=\Alph*]
+			\item \sB{Repeat steps 1 and 2 on all but $k^{
+				th}$ fold} of the training data.
+			\item Evaluate the mean squared prediction 
+				error on the data in the left-out 
+				$k^{th}$, as a function of $\alpha$
+		\end{enumerate}
+		Average the results for each value of $\alpha$, and
+		pick $\alpha$ to minimize the average error.
+	\item Return the subtree from Step 2 that correspond to the
+		chosen value of $\alpha$
+\end{enumerate}
+
+For each value of $\alpha$ there corresponds a subtree $T\subset T_{0}$
+such that:
+\begin{center}
+	$
+	\su{{m=1}}{|T|}\su{{i:x_{i}\in R_{m}}}{}\left( y_{i}-\hat{y}_{Rm} \right)^{2} + \alpha|T|
+	$
+\end{center}
+is as small as possible. $|T|$ indicates the number of terminal nodes 
+of the tree $T$.
+
+\begin{lstlisting}
+import sklearn
+from sklearn import tree
+
+X = [[0, 0], [2, 2]] 
+y = [0.5, 2.5]
+reg = tree.DecisionTreeRegressor()
+reg = reg.fit(X, y) 
+print(reg.score(X, y))
+\end{lstlisting}
+
+\paragraph{Classification Trees}
+The classification error rate is simply the fraction of the training
+observations in that region that do not belong to the most common 
+class:
+$E=1-\max\limits_{k}(\hat{p}_{mk})$
+Here \tB{$\hat{p}_{mk}$ represents the proportion of training 
+observation in the $m^{th}$ region are from the $k^{th}$ class}, $\hat{p}_{mk}=\dfrac{1}{N_{m}}
+\su{{x_{i}\in R_{m}}}{}I(y_{i}=k)$.\\
+It turns out that classification error is not sufficiently sensitive 
+for tree-growing, and in practice 2 other measures are preferable.\\
+The Gini index is defined by
+$$
+G=\su{{k=1}}{K}\hat{p}_{mk}(1-\hat{p}_{mk})
+$$\\
+The entropy given by:
+$$
+D = -\su{{k=1}}{K}\hat{p}_{mk}\ln\left( \hat{p}_{mk} \right)
+$$\\
+The entropy will take on a value near zero if the $\hat{p}_{mk}$'s are
+all near zero or near one.\\ Therefore, like the Gini index, the 
+entropy will take on a small value if the $m^{th}$ node is pure.\\
+
+Any of these three approaches might be used when \emph{pruning} the
+tree, but the classification error rate is preferable if prediction
+accuracy of the final pruned tree is the goal.
+
+\begin{lstlisting}
+import sklearn
+from sklearn import tree
+
+X = [[0, 0], [2, 2]] 
+y = [0.5, 2.5]
+reg = tree.DecisionTreeRegressor()
+reg = reg.fit(X, y) 
+print(reg.score(X, y))
+\end{lstlisting}
+\paragraph{Advantages and Disadvantages of Trees}
+\begin{itemize}
+	\item[\tV{+}] They are very easy to explain to people.
+		easily interpreted.
+	\item[\tV{+}] Trees can be displayed graphically, and are 
+		easily interpreted
+	\item[\tV{+}] Trees can easily handle qualitative predictors 
+		without the need to create dummy variables.
+	\item[\tR{-}] Trees generally do not have the same level of
+		predictive accuracy as some of the other regression
+		and classification approaches.
+	\item[\tR{-}] Trees can be non-robust, a small change in the 
+		data can cause a large change in the final estimated
+		tree.
+\end{itemize}
+
+\paragraph{PRIM: Bump Hunting}
+The Patient Rule Introduction Method (PRIM) also finds boxes in the feature space, but seeks boxes
+in which the response average is high. Hence it looks for maxima in the target function.
+PRIM also differs from tree-based partitioning methods in that the box definition are not 
+described by a binary tree.
+\subparagraph{Patient Rule Induction Method}
+\begin{enumerate}
+	\item Start with all of the training data, and a maximal box containing all of the data
+	\item Consider shrinking the box by compressing one face, so as to peel off the 
+		proportion $\alpha$ of observations having either the highest values of a 
+		predictor $X_{j}$ or the lowest. Choose the peeling that produces the highest
+		response mean in the remaining box. (Typically $\alpha=0.05$ or 0.10) 
+	\item Repeat step 2 until some minimal number of observation remain in the box.
+	\item Expand the box along any face, as long as the resulting box mean increases.
+	\item Step 1-4 give a sequence of boxes, with different numbers of observation in each
+		box. Use cross-validation to choose a member of the sequence. Call the box $B_{1}$
+	\item Remove the data in box $B_{1}$ from the dataset and repeat steps $2-5$ to obtain
+		a second box, and continue to get as many boxes as desired.
+\end{enumerate}
+
+\paragraph{MARS: Multivariate Adaptive Regression Splines}
+MARS is an adaptive procedure for regression, and is well suited for high-dimensional problems.
+MARS uses expansions in piecewise linear basis functions of the form $(x-t)_{+}$, $(t-x)_{+}$
+\begin{center}
+	$(x-t)_{+} = \begin{cases} x-t \Leftarrow x>t\\ 0\Leftarrow x\leq t\end{cases}$ and 
+$(t-x)_{+} = \begin{cases} t-x \Leftarrow x<t\\ 0\Leftarrow x\geq t\end{cases}$
+\end{center}
+Therefore, the collection of basis function is: 
+$$ \mathcal{C}=\left\{(X_{j}-t)_{+}, (t-X_{j})_{+}|\in\left\{x_{ij}\right\}_{1\leq i\leq N}\right\}_{1\leq j\leq p}$$
+Thus the model has the form 
+$$ f(X)=\beta_{0}+\su{{m=1}}{M}\beta_{m}h_{m}(X)$$
+where each $h_{m}(X)$ is a function in $\mathcal{C}$ or a product of 2 or more such functions.\\
+One could use cross-validation to estimate the optimal value of $\lambda$, bu for computational
+savings the MARS procedure instead uses generalized cross-validation:
+$$ GCV(\lambda) = \dfrac{\su{{i=1}}{N}\left(y_{i}-\hat{f}_{\lambda}(x_{i})\right)^{2}}{
+\left(1-\frac{M(\lambda)}{N}\right)^{2}}$$
+The $M(\lambda)$ is the effective number of parameters in the model: this accounts both for the
+number of parameters used in selecting the optimal positions of the knots. 

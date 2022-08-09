@@ -1,0 +1,17 @@
+It is sometimes difficult to compute moments from the definition, a moment
+generating function is a real valued function from which one can generate 
+all the moment of a given random variable.
+\paragraph{Definition}
+Let $X$ be a random variable whose probability density function is $f(x)$.
+A real valued function $M:\mathbb{R}\rightarrow\mathbb{R}$ defined by:
+\begin{center}
+	\enc{$M(t) = \E{e^{tX}}$}
+\end{center}
+if this expected value exists for all $t$ in the interval $-h<t<h$ for some
+$h>0$
+\paragraph{Factorial moment generating function}
+FMGF of $X$ is denoted by $G(t)$ and defined as:
+\begin{center}
+	$G(t)=E(t^{X})$
+\end{center}
+$G(t)= M(\ln(t))$

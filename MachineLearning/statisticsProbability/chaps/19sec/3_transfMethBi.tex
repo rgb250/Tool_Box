@@ -1,0 +1,23 @@
+\paragraph{Essential theorem to method of bivariate case}
+Let $X$ and $Y$ be $2$ continuous random variables with joint density $f(x, y)$. Let $U=P(X,Y)$ and $V = Q(X,Y)$ be functions of $X$
+and $Y$ . If the functions $P(x,y)$ and $Q(x,y)$ have single valued inverses, say
+$X=R(U,V)$ and $Y=S(U,V)$, then the joint density $g(u,v)$ of $U$ and $V$ is given by
+\begin{center}
+	$g(u,v)=|J|f\left(R(u,v),S(u,v)\right)$
+\end{center}
+where $J=
+\begin{vmatrix}
+	\dfrac{\partial x}{\partial u} & \dfrac{\partial x}{\partial v}\\
+	\dfrac{\partial y}{\partial u} & \dfrac{\partial y}{\partial v}
+\end{vmatrix}
+=\dfrac{\partial x}{\partial u}\dfrac{\partial y}{\partial v}-\dfrac{\partial x}{\partial v}\dfrac{\partial y}{\partial u}$
+\paragraph{Density functions}
+Let the joint density of the random variables $X$ and $Y$ be $Y$
+$f(x, y)$. Then probability density functions of $X + Y$ , $XY$ , and $\dfrac{X}{Y}$ are given by
+\begin{center}
+$\begin{cases} 
+	h_{X+Y}(v) = \Su{ {-\infty}}{\infty}f(u,v-u)du\\
+	h_{XY}(v) = \Su{ {-\infty}}{\infty}\dfrac{1}{|u|}f(u,\frac{v}{u})du\\
+	h_{X+Y}(v) = \Su{ {-\infty}}{\infty}|u|f(u,vu)du
+\end{cases}$
+\end{center}

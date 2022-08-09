@@ -1,0 +1,39 @@
+Unlike the previous bivariate distributions, the conditional distributions of bivariate Poisson distribution are not Poisson.
+\paragraph{Definition}
+A discrete bivariate random variable $(X, Y )$ is said to have
+the bivariate Poisson distribution with parameters $\lambda{1},\lambda_{2},\lambda_{3}$ if its joint probability density is of the
+form
+\begin{center}
+	$f(x,y)=
+	\begin{cases}	
+		\dfrac{e^{-\lambda_{1}-\lambda_{ 2}+\lambda_{3}(\lambda_{1}-\lambda_{3})^{x}(\lambda_{2}-\lambda_{3})^{y}}}{x!y!}\psi(x,y)\Leftarrow (x,y)\in\mathbb{N}^{2}\\
+		0\Leftarrow (x,y)\not\in\mathbb{N}^{2} 
+	\end{cases}$	
+	$\Rightarrow \left( X,Y \right)\hookrightarrow POI(p_{1},p_{2})
+	$
+\end{center}
+where $\psi(x,y):=\su{ {r=0}}{ {min(x,y)}}\dfrac{x^{(r)}y^{(r)}\lambda_{3}^{r}}{(\lambda_{1}-\lambda_{3})^{r}(\lambda_{2}-\lambda_{3})^{r}r!}$ and $0<p_{1},p_{2}, p_{1}+p_{2}<1$ and $x+y\leq 1$
+\paragraph{Properties}
+\begin{center}
+	$
+	\begin{cases}
+		\E{X}=\lambda_{1}\\
+		\E{Y}=\lambda_{2}\\
+		\V{X}=\lambda_{1}\\
+		\V{Y}=\lambda_{2}\\
+		Cov{X,Y}=\lambda_{3}\\
+		M(s,t)=e^{-\lambda_{1}-\lambda_{2}-\lambda_{3}+\lambda_{1}e^{s}+\lambda_{2}e^{t}+\lambda_{3}e^{s+t}}
+	\end{cases}
+	$
+\end{center}
+\paragraph{Conditional Properties}
+\begin{center}
+	$
+	\begin{cases}
+		\Ec{X=x}{Y}=\lambda_{2}-\lambda_{3}+\dfrac{\lambda_{3}}{\lambda_{1}}x\\
+		\Ec{Y=y}{X}=\lambda_{1}-\lambda_{3}+\dfrac{\lambda_{3}}{\lambda_{2}}y\\
+		\Vc{X=x}{Y}=\lambda_{2}-\lambda_{3}+\dfrac{\lambda_{3}(\lambda_{1}-\lambda_{3})}{\lambda_{1}^{2}}x\\
+		\Vc{Y=y}{X}=\lambda_{1}-\lambda_{3}+\dfrac{\lambda_{3}(\lambda_{2}-\lambda_{3})}{\lambda_{2}^{2}}y
+	\end{cases}
+	$
+\end{center}

@@ -1,0 +1,21 @@
+Let $\omega_{m}$ with $m\in\inter{1}{M}$ be unit \emph{p}-vectors of unknown parameters.
+The projection pursuit regression (PPR):
+$$ f(X) = \su{{m=1}}{M}g_{m}(\omega_{m}^{T}X)$$
+This is an additive model, bu in the derived features $V_{m}=\omega_{m}^{T}X$ rather than the
+inputs themeselves.
+The functions $g_{m}$ are unspecified an are estimated along with the directions $\omega_{m}$
+using some flexible smoothing method. The function $g_{m}(\omega_{m}^{T}X)$ is called a ridge
+function in $\mathbb{R}^{p}$
+The scalar variable $V_{m}=\omega_{m}X$ is the projection of $X$ onto the unit vector $\omega_{m}$
+an we seek $\omega_{m}$ so that the model fits well, hence the name ``projection pursuit''.
+\begin{figure}[H]
+	\begin{center}
+		\includegraphics[width=\textwidth]{./chap/1chap/99sec/images/1_ridge_fct.PNG}
+	\end{center}
+	\caption{
+	Perspective plots of 2 ridge functions.\\ Left: $g(V)=\dfrac{1}{1+e^{-5(V-0.5)}}$,
+	where $V=\frac{X_{1}+X_{2}}{\sqrt(2)}$\\ Right: $g(V)=(V+0.1)\sin\left(\dfrac{1}{
+	\frac{1}{3}+0.1}\right)$, where $V=X_{1}$}
+	\label{fig:1_ridge_fct}
+\end{figure}
+

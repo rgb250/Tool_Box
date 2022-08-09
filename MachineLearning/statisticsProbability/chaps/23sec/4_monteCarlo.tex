@@ -1,0 +1,13 @@
+In general, computing the distribution of a function of a random variable using the change
+of variables formula can be difficult. One simple but powerful alternative is to generate 
+$S$ samples from distribution, one popular method for higher dimensional distributions, is
+called Markov chain Monte Carlo or MCMC.
+Given the samples we can approximate the distribution of $f(X)$ by using the empirical 
+distribution of $\left\{f(x_{s})\right\}^{S}_{s=1}$
+We can varying many quantities such as:
+\begin{itemize}
+	\item $\E{X} \rightarrow \overline{x} = \dfrac{1}{S}\su{{s=1}}{S}x_{S}$ 
+	\item $\V{X} \rightarrow \dfrac{1}{S}\su{{s=1}}{S}(x_{s}-\overline{x})^{2}$
+	\item $\Prob{X\leq c} \rightarrow \dfrac{1}{S}Card(\left\{x_{s}\leq c\right\})$
+	\item $ median(X) \rightarrow median(\left\{x_{i}\right\}_{1\leq i\leq S})$
+\end{itemize}

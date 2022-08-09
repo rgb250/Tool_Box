@@ -1,0 +1,31 @@
+\paragraph{Definition}
+Let $\prth{X}{i}{1}{n}$ be a random sample from $X\hookrightarrow f(x;
+\theta)$.\\
+A \emph{pivotal quantity} $Q$ is a function of $\prth{X}{i}{1}{n}$ and
+$\theta$ \emph{whose pdf is independent of the parameter} $\theta$
+
+\paragraph{Location-scale family}
+$
+g:\mathbb{R}\rightarrow\mathbb{R}\text{ a pdf}\\
+\Rightarrow
+\mathcal{F}=\left\{f(x;\mu;\sigma)=\frac{1}{\sigma}g\left(\frac{x-\mu}{\sigma}\right)|(\mu,\sigma)\in\mathbb{R}\times\mathbb{R}_{+}^{*}\right\}
+$ is called the \emph{location-scale family} with standard probability
+function density $f(x;\theta)$\\
+The parameter $\mu$ is called the \emph{location parameter} and the 
+parameter $\sigma$ is called the \emph{scale parameter}.\\
+$\sigma = 1 \Rightarrow \mathcal{F}$ is called \emph{location} family\\
+$\mu = 0 \Rightarrow \mathcal{F}$ is called \emph{scale} family
+
+\paragraph{Remark}
+Let be $\hat{\mu}\text{ and }\hat{\sigma}$ respectively the maximum
+likelihood of $\mu\text{ and }\sigma$:\\
+Density $\in$ \emph{location} family $\Rightarrow \hat{\mu}-\mu\text{ is the pivot for }\mu$\\
+Density $\in$ \emph{scale} family $\Rightarrow
+	\frac{\hat{\sigma}}{\sigma}\text{ is the pivot for }\sigma $\\ 
+Density $\in$ \emph{location-scale} family $\Rightarrow
+\begin{cases}
+	\frac{\hat{\mu}-\mu}{\hat{\sigma}}\text{ is the pivot for }\mu\\
+	\frac{\hat{\sigma}}{\sigma}\text{ is the pivot for }\sigma
+\end{cases}
+$ 
+

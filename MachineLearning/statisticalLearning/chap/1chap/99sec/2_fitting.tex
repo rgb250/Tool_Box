@@ -1,0 +1,75 @@
+The neural network model has unknown parameters often called \emph{weights} and we seek values
+for them that make the model fit the training data well. We denote the complete set of of 
+weights by $$\theta=
+\begin{cases}
+	\left\{(\alpha_{0m},\alpha_{m})|m\in\inter{1}{M}\right\}\\
+	\left\{(\beta_{0k},\beta_{k})|k\in\inter{1}{K}\right\}
+\end{cases}
+$$
+A aour measure of fit we use:
+$$
+\begin{cases}
+	R(\theta)=\su{{k=1}}{K}\su{{i=1}}{N}\left(y_{ik}-f_{k}(x_{i})\right)^{2}\text{ 
+	regression}\\
+	R(\theta)=-\su{{k=1}}{K}\su{{i=1}}{N}y_{ik}\log\left(f_{k}(x_{i})\right)\text{ 
+	classification}
+\end{cases}
+$$
+\tB{The generic approach to minimizing $R(\theta)$ is by gradient descent called 
+\emph{back-propagation} in this setting.}\\
+Here is back-propagation in detail for squared error loss.\\
+Let $z_{mi}=\sigma(\alpha_{0m}+
+\alpha_{m}^{T}x_{i})$ and let $z_{i}=(z_{1i},\cdots,z_{Mi})$
+with derivatives:
+$$
+\begin{cases}
+	\dfrac{\partial R_{i}}{\partial\beta_{km}} = -2\left(y_{ik}-f_{k}(x_{i})\right)
+	g_{k}^{'}\left(\beta_{k}^{T}z_{i}\right)z_{mi}\\
+	\dfrac{\partial R_{i}}{\partial\alpha_{ml}} = -\su{{k=1}}{K}2\left(y_{ik}-f_{k}(x_{i})
+	\right)g_{k}^{'}\left(\beta_{k}^{T}z_{i}\right)\beta_{km}\sigma^{'}\left(\alpha_{m}^{T}
+	x_{i}\right)x_{il}
+\end{cases}
+$$
+Given these derivatives, a gradient descent update at the $(r+1)^{st}$ iteration has the form:
+\begin{center}
+\encB{$
+\begin{cases}
+	\beta_{km}^{(r+1)} = \beta_{km}^{(r)} - \gamma_{r}\su{{i=1}}{N}\dfrac{\partial R_{i}}{
+	\partial\beta_{km}^{(r)}}\\
+	\alpha_{lm}^{(r+1)} = \alpha_{lm}^{(r)} - \gamma_{r}\su{{i=1}}{N}\dfrac{\partial R_{i}}{
+	\partial\alpha_{lm}^{(r)}}
+\end{cases}
+$}
+\end{center}
+where $\gamma_{r}$ is the \tB{\textit{learning rate}}. Now we write derivatives as:
+$$
+\begin{cases}
+	\dfrac{\partial R_{i}}{\partial\beta_{km}}=\delta_{ki}z_{mi}\\
+	\dfrac{\partial R_{i}}{\partial\alpha_{ml}}=s_{mi}x_{il}
+\end{cases}
+$$
+The quantities $\delta_{ki}$ and $s_{mi}$ are ``errors'' from the current model at the output
+and hidden layer units, respectively. These errors satisfy:
+\begin{center}
+	\enc{
+$
+s_{mi}=\sigma^{'}\left(\alpha_{m}^{T}x_{i}\right)\su{{k=1}}{K}\beta_{km}\delta_{ki}$}
+\end{center}
+known as the \tR{\emph{back-propagation equations}}.
+
+
+\subparagraph{Python Code}
+\begin{python}
+import pandas as pd
+import sklearn
+from sklearn.model_selection import train_test_split
+from sklearn.neural_network import MLPClassifier,
+    MLPRegressor
+
+y, X = df.iloc[:, 0], df.iloc[:, 1:]
+clf = MLPClassifier(
+   random_state=1,
+   max_iter=300)
+clf.fit(X_train, y_train)
+print(clf.score(X_test, y_test))
+\end{python}

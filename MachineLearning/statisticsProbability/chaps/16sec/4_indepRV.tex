@@ -1,0 +1,15 @@
+The random variables $X$ and $Y$ are (stochastically) independent if and only if
+\begin{center}
+	$\forall (x,y)\in R_{X}\times R_{Y}, f(x,y)=f_{1}(x)f_{2}(y)$
+\end{center}
+
+\paragraph{Conditionally independent}
+Usually, in a set of variables, the unconditional independence is rare, because most 
+variables can influence most variables, however the influence is mediated via other 
+variables rather than being direct. We therefore say $X$ and $Y$ are conditionnally
+independent given $Z$ if
+\begin{center}
+	$\probC{Z}{X} = \probC{Z}{X}\probC{Z}{Y}$\\
+	or\\
+	$f_{x,y}(x,y|z) = f_{x}(x|z)\times f_{y}(y|z)$
+\end{center}

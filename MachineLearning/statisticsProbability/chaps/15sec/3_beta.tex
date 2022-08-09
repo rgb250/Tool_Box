@@ -1,0 +1,32 @@
+It is a versatile distribution and as such it is used in modeling the 
+behavior of random variables that are positive but bounded in possible 
+values.
+\paragraph{Beta}
+\subparagraph{Theorem}
+Let $(\alpha,\beta)\in\mathbb{R}_{+}^{2}$ then,
+\begin{center}
+$B(\alpha,\beta)=\frac{\Gamma(\alpha)\Gamma(\beta)}{\Gamma(\alpha+\beta)}$\\
+where $\Gamma(z)=\Su{0}{\infty}x^{z-1}e^{-x}dx$ is the gamma function
+\end{center}
+\subparagraph{Beta distribution}
+\begin{center}
+	$f(x)=\begin{cases}\frac{1}{B(\alpha,\beta)}x^{\alpha-1}(1-x)^{\beta-1}\text{, if }0<x<1\\0\text{ otherwise}\end{cases}X\hookrightarrow BETA(\alpha, \beta)$
+\end{center}
+\subparagraph{Beta properties}
+\begin{center}
+	$\begin{cases}\E{X}=\frac{\alpha}{\alpha+\beta}\\
+	\V{X}=\frac{\alpha\beta}{\left(\alpha+\beta\right)^{2}(\alpha+\beta+1)}\end{cases}$
+\end{center}
+\paragraph{Generalized Beta}
+\subparagraph{Theorem}
+\begin{center}
+	$f(x)=\begin{cases}f(x)=\frac{1}{B(\alpha,\beta)}\frac{(x-a)^{\alpha -1}(b-x)^{\beta -1}}{(b-a)^{\alpha + \beta - 1}}\text{ if }a<x<b\\
+		0\text{ otherwise}\end{cases} \Rightarrow X\hookrightarrow GBETA(\alpha, \beta, a, b)$
+\end{center}
+\subparagraph{Proprieties}
+\begin{center}
+$\begin{cases}
+	\E{X}=(b-a)\frac{\alpha}{\alpha + \beta}+a\\
+	\V{X}=(b-a)^{2}\frac{\alpha\beta}{\alpha +\beta +1}
+\end{cases}$
+\end{center}

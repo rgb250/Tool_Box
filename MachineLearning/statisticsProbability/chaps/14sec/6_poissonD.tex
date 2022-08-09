@@ -1,0 +1,28 @@
+\paragraph{Use case}
+To express the probability of a given number of events occurring in a fixed interval
+of time or space if these events occur with a known constant mean rate.
+
+\paragraph{Definition}
+\begin{center}
+	$\forall x\in \mathbb{N}, f(x)= \frac{e^{-\lambda}\lambda^{x}}{x!}\Rightarrow 
+	X\hookrightarrow\mathcal{P}(\lambda)$
+\end{center}
+$\lambda\in\mathbb{R}_{+}^{*}$
+
+\paragraph{Assumptions}
+\begin{itemize}
+	\item $k$ is the number of times an event occurs in an interval and 
+		$k\in\mathbb{N}$
+	\item Events are mutually independent.
+	\item The average rate is constant.
+	\item 2 events cannot occur at exactly the same instant.
+\end{itemize}
+
+\paragraph{Theorem}
+\begin{center}
+$\begin{cases}
+	\mu_{X}=\lambda\\
+	\sigma_{X}^{2} = \lambda\\
+	M(t)=e^{\lambda(e^{t}-1)}
+\end{cases}$
+\end{center}

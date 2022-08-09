@@ -1,0 +1,23 @@
+\paragraph{Logistic regression, LDA, QDA and KNN}
+\subparagraph{Logistic regression VS LDA}
+The only difference between the 2 approaches lies in fact that 
+\sB{$\beta_{0}\text{ and }\beta_{1}$ are estimated using maximum 
+likelihood, whereas $c_{0}\text{ and }c_{1}$ are computed using the
+estimated mean and variance from a normal distribution}.\\
+For $p=1~predictor$ we have :
+\begin{align*}
+	ln\left(\dfrac{p_{1}(x)}{1-p_{1}(x)}\right) &= c_{0} + c_{1}x\text{ LDA}\\
+	ln\left(\dfrac{p_{1}(x)}{1-p_{1}(x)}\right) &= \beta_{0} + \beta_{1}x\text{ Logistic regression}\\
+\end{align*}
+\tB{It is generally felt that logistic regression is a safer, more robust bet than the LDA model,
+relying on fewer assumptions.}
+
+\subparagraph{KNN}
+KNN is a completely non-parametric approach: no assumptions are made
+about the shape of the decision boundary. Therefore, \sB{we can expect this
+approach to dominate LDA and Logistic regression when th decision 
+boundary is highly non-linear}.
+
+\subparagraph{QDA}
+\tB{It is a compromise between the non-parametric KNN method and the 
+linear LDA and Logistic regression approaches.}

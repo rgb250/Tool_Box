@@ -1,0 +1,13 @@
+\paragraph{One-Versus-One Classification}
+Suppose that we would like to perform classification using SVMs, and
+there are $K>2$ classes.\\
+We classify a test observation using each of the $\binom{K}{2}$ 
+classifier and we tally the number of times that the test observation
+is assigned to each of the $K$ classes. The final classification is 
+performed by assigning the test observation to the class to which it
+was most frequently assigned in these $\binom{K}{2}$ pairwise
+classifications.
+
+\paragraph{One-Versus-All Classification}
+We fit $K$ SVMs, each time comparing one of the $K$ classes to the 
+remaining $K-1$ classes.

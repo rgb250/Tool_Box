@@ -1,0 +1,25 @@
+The central limit therorem (Lindeberg-Levy Theorem) states that for any
+population distribution, the distribution of the standardized sample mean
+is approximately standard normal with better approximations obtained with
+the larger sample size.
+\paragraph{Central Limit Theorem}
+\begin{center}
+	$\begin{cases}\prth{X}{i}{1}{n}\hookrightarrow ?(\mu,\sigma^{2})\\ n\rightarrow\infty\end{cases} \Rightarrow \dfrac{\overline{X}-\mu}{\frac{\sigma}{\sqrt{n}}}$
+\end{center}
+\paragraph{Convergence in distribution}
+Consider $X$ with its cumulative density function $F$ and $\prth{X}{i}{1}{n}\text{ with their cdf }\left( F_{i} \right)_{1\leq i\leq n}$:
+\begin{center}
+	$\lm{n}{\infty}F_{n}(x)=F(x)\Rightarrow X_{n}\text{ "converges in distribution" to }X$
+\end{center}
+\paragraph{Lévy Continuity Theorem}
+\begin{center}
+	$
+	\begin{cases}	
+		\prth{X}{i}{1}{n}\text{RV}\\
+		\prth{F}{i}{1}{n}\text{distribution functions}\\
+		\left( M_{X_{i}} \right)_{1\leq i\leq n}\text{moment generating function}
+	\end{cases}$
+	$\forall t\in [-h,h]\lm{n}{\infty}M_{X_{n}}(t)=M_{X}(t)\Rightarrow
+	\lm{n}{\infty}F_{n}(x)=F(x)
+	$
+\end{center}

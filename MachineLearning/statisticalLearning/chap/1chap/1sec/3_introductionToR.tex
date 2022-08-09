@@ -1,0 +1,65 @@
+\paragraph{Basic command}
+R uses function to perform operations.\\
+\begin{itemize}
+  \item \emph{?funcname} will always cause R to open a new help file
+    window
+  \item \emph{ls()} allows us to look at a list of the objects such
+    as data and functions that we have saved.
+  \item \emph{rm()} can be used to delete any that we don't want.
+  \item \emph{matrix()} can be used to create matrix of number. Example
+  : \textit{matrix(c(1,2,3,4), 2, 2, byrow=TRUE)}
+  \item \emph{rnorm()} function generates a vector of random normal
+    variables. Example: \textit{rnorm(50, mean=50, sd=.1)}
+  \item \emph{cor()} compute the correlation between 2 sets of numbers.
+    Example: \textit{cor(x,y)}
+  \item \emph{set.seed()} function takes an (arbitrary) integer 
+    argument and allows to reproduce the exact same set of random
+    numbers.
+ \end{itemize}
+ \paragraph{Graphics}
+ \begin{itemize}
+   \item \emph{plot()} function is the primary way to plot a data.
+     Example: \textit{plot(x, y, xlab=``xName'', ylab=``yName'',
+     main=``Plot of X vs Y'')}
+   \item \emph{pdf()} is used to create pdf and \emph{dev.off()}
+     indicates that we are done creating the plot.\\Example:\textit{
+     pdf(``Figure.pdf'')\\plot(x, y, col=``green'')\\dev.off()}
+   \item \emph{seq()} is used to create a sequence of numbers.
+     Example: \textit{seq(-pi, pi, length=50)}
+   \item \emph{contour()} function produces a contour plot in order to
+     represent 3-dimensional data.\\Example: \textit{y=x\\
+     f=outer(x,y,function(x,y)cos(y)/(1+x\^ 2))\\contour(x,y,f)\\
+   contour(x,y,f,nlevels=45,add=T)\\fa=(f-t(f))/2\\contour(x,y,fa,
+ nlevels=15)}
+ \item \emph{image()} function works the same way as \emph{contour()},
+   except that it produces a color-coded plot whose colors depend on
+   the $z$ value.
+ \item \emph{persp()} can be used to produce a 3-dimensional plot. The
+   \emph{theta} and \emph{phi} control the angles at which the plot is
+   viewed.\\\textit{image(x,y,fa)\\persp(x,y,fa)\\persp(x,y,fa,
+   theta=30)\\persp(x,y,fa,theta=30,phi=20)}
+ \end{itemize}
+ \paragraph{Indexing Data}
+ For a matrix of length $4\times 4$:\\
+ $A[c(1,3),c(2,4)]$, $A[,1:2]$
+ \paragraph{Loading Data}
+ \begin{itemize}
+   \item \emph{read.table()} is one of the primary ways to data
+     importing.
+   \item \emph{write.table()} to export data.
+ \end{itemize}
+ \paragraph{Additional Graphical and Numerical Summaries}
+ \begin{itemize}
+   \item \emph{attach()} function in order to make the variables in
+     this data frame available by name.
+   \item \emph{as.foctor()} function converts quantitative variables
+     into qualitative variables
+   \item \emph{hist()} function can be used to plot a histogram
+   \item \emph{identify()} provides interactive method for identifying
+     the value for a particular variable for point on a plot.
+   \item \emph{summary()} produces a numerical summary of each variable
+     in a particular data set.
+   \item \emph{savehistory()} allows to save a record of all of the
+     commands that we typed in the most recent session.
+   \item \emph{loadhistory()} allows to load history of previous time.
+ \end{itemize}

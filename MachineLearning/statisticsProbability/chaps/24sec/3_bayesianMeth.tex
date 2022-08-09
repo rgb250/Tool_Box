@@ -1,0 +1,57 @@
+\paragraph{Prior distribution}
+Let $\prth{X}{i}{1}{n}$ be a random sample from a distribution with 
+density $f(x/\theta)$, where $\theta$ is the unknown parameter to be
+estimated. \tB{The probability density function of the random variable 
+$\theta$ is called the prior distribution of $\theta$} and usually 
+denoted by $h(\theta)$
+
+\paragraph{Posterior distribution}
+Let $\prth{X}{i}{1}{n}$ be a random sample from a distribution with
+density $f(x/\theta)$, where $\theta$ is the unknown parameter to be
+estimated. \tB{The conditional density, $k\left(\theta;\prth{x}{i}{1}{
+n}\right)$, of $\theta$ given the sample $\prth{x}{i}{1}{n}$ is called
+the posterior distribution of $\theta$.}
+
+\paragraph{Squared and Absolute Error Loss}
+Let $\prth{X}{i}{1}{n}$ be a random sample from a distribution with 
+density $f(x/\theta)$, where $\theta$ is the unknown parameter to be
+estimated. Let $\hat{\theta}$ of $\theta$:
+$
+\begin{cases}
+	\mathcal{L}_{2}\left(\theta\right) = \left(\hat{\theta}-\theta\right)^{2}\text{ Squared error loss}\\
+	\mathcal{L}_{1}\left(\theta\right) = \left|\hat{\theta}-\theta\right|\text{ Absolute error loss}
+\end{cases}
+$
+
+\paragraph{Risk}
+Let $\prth{X}{i}{1}{n}$ be a random sample from a distribution with 
+density $f(x/\theta)$, where $\theta$ is the unknown parameter to be
+estimated. Let $\hat{\theta}$ be an estimator of $\theta$ and let 
+$\mathcal{L}\left(\hat{\theta}\right)$ be a given loss function. The 
+expected value of this loss function with respect to the population 
+distribution $f(x/\theta)$, that is
+$R_{\mathcal{L}}(\theta)=\Su{}{}\mathcal{L}\left(\hat{\theta}\right)f(x/\theta)dx$\\
+In Bayesian estimation of parameter one chooses an estimate 
+$\hat{theta}$ for $\theta$ such that:
+$k\left(\hat{\theta}/\prth{x}{i}{1}{n}\right)$ is maximum subject to a
+loss function.\\
+Mathematically this equivalent to minimizing the integral:
+$\Su{\Omega}{}\mathcal{L}\left(\hat{\theta},\theta\right)k\left(\theta/\prth{x}{i}{1}{n}\right)d\theta$
+where $\Omega$ denotes the support of the prior density $h(\theta)$ of
+$\theta$.
+
+\paragraph{Estimator for squared error}
+Let $\prth{X}{i}{1}{n}$ be a random sample from a distribution with 
+density $f(x/\theta)$, where $\theta$ is the unknown parameter to be
+estimated. If the loss function is squared error, then the Bayes'
+estimator $\hat{\theta}$ of parameter $\theta$ is given by:
+$$\hat{\theta}=\E{\theta/\prth{x}{i}{1}{n}}$$
+where the expectation is taken with respect to density $k\left(\theta/\prth{x}{i}{1}{n}\right)$
+
+\paragraph{Estimator for absolute error}
+Let $\prth{X}{i}{1}{n}$ be a random sample from a distribution with 
+density $f(x/\theta)$, where $\theta$ is the unknown parameter to be
+estimated. If the loss function is absolute error, then the Bayes'
+estimator $\hat{\theta}$ of parameter $\theta$ is given by:
+$$\hat{\theta}=\text{ median of }k\left(\theta/\prth{x}{i}{1}{n}\right)$$
+where $k\left(\theta/\prth{x}{i}{1}{n}\right)$ is the posterior distribution.

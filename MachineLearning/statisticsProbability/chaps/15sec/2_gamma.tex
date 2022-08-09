@@ -1,0 +1,67 @@
+\paragraph{Gamma distribution}
+The \emph{gamma} function $\Gamma(z)$ is a generalization of the notion of 
+factorial, for $z\in\mathbb{R}_{+}^{*}$:\\
+\begin{center}
+	$\Gamma(z)=\Su{0}{\infty}x^{z-1}e^{-x}dx$
+\end{center}
+\subparagraph{Definition}
+
+\begin{center}
+	$f(x)\begin{cases}\frac{1}{\Gamma(\alpha)\theta^{\alpha}}x^{\alpha-1}e^{-\frac{x}{\theta}}\Rightarrow x\in\mathbb{R}_{+}^{*}\\0 \Leftarrow \overline{x\in\mathbb{R}_{+}^{*}}\end{cases}\Rightarrow X\hookrightarrow \mathcal{G}(\theta, \alpha)$
+\end{center}
+\subparagraph{Theorem}
+$X\hookrightarrow\mathcal{\theta, \alpha}\Rightarrow
+\begin{cases}
+	\E{X}=\theta\alpha\\
+	\V{X}=\theta^{2}\alpha\\
+	M(t)=\left( \frac{1}{1-\theta t}^{\alpha}\right)\text{ if }t<\frac{1}{\theta} 
+\end{cases}
+$
+\paragraph{Exponential distribution}
+\subparagraph{Definition}
+\begin{center}
+	$f(x)=
+	\begin{cases}
+		\frac{1}{\theta}e^{-\frac{x}{\theta}}\Leftarrow x >0\\
+		0\Leftarrow x\leq 0
+	\end{cases}$
+\end{center}
+Most of the information about an exponential distribution can be obtained 
+from the gamma distribution
+%\subparagraph{}<++>
+\paragraph{Chi-square distribution with $r$ degrees of freedom}
+\subparagraph{Definition}
+\begin{center}
+	$f(x)=
+	\begin{cases}
+		\frac{1}{\Gamma{\frac{r}{2}}2^{\frac{r}{2}}}e^{-\frac{x}{2}}\Leftarrow x\in\mathbb{R}_{+}^{*}\\
+		0\Leftarrow x\leq 0
+	\end{cases} \Rightarrow X\hookrightarrow \chi_{2}(r)$
+\end{center}
+\paragraph{$n\text{-Erlang}$}
+\subparagraph{Definition}
+\begin{center}
+	$f(x)=
+	\begin{cases}
+		\lambda e^{-\lambda x}\frac{(\lambda x)^{n-1}}{(n-1)!}\Leftarrow x\in\mathbb{R}_{+}^{*}\\
+		0\Leftarrow x\leq 0
+	\end{cases} \Rightarrow X\hookrightarrow \emph{n-Erlang}(\lambda)$
+\end{center}
+with $\lambda > 0$
+\paragraph{Unified distribution}
+\subparagraph{Definition}
+\begin{center}
+	$f(x)=
+	\begin{cases}
+		\dfrac{\alpha}{\theta^{\alpha^{\psi}}\Gamma\left( \alpha^{\psi}+1\right)}x^{\alpha -1}e^{\frac{-x^{-\left( \alpha^{\psi }- \alpha -1\right)}}{\theta}}\Leftarrow x\in\mathbb{R}_{+}^{*}\\
+		0\Leftarrow x\leq 0
+	\end{cases} \Rightarrow X\hookrightarrow \emph{n-Erlang}(\lambda)$
+\end{center}
+with $\lambda > 0$
+\subparagraph{Weibull distribution}
+For $\alpha = 1$ we get Weibull distribution\\
+\begin{center}
+$\begin{cases}\E{X}=\theta^{\frac{1}{\alpha}}\Gamma\left(1+\frac{1}{\alpha}\right)\\
+	\V{X}=\theta^{\frac{2}{\alpha}}\left(\Gamma\left(1+\frac{2}{\alpha}\right)-\left(1+\frac{1}{\alpha}\right)^{2}\right)\end{cases}$
+\end{center}
+The Weibull distribution provides probabilistic models for life-length data of components or systems.

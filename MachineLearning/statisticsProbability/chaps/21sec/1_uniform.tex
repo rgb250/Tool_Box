@@ -1,0 +1,37 @@
+\paragraph{Definition}
+A continuous bivariate random variable $(X, Y )$ is said to have
+the bivariate uniform distribution with parameters on the rectangle $[a,b]\times[c,d]$ if its joint probability density is of the
+form
+\begin{center}
+	$f(x,y)=
+	\begin{cases}	
+		\dfrac{1+\alpha\left( \frac{2x-2a}{b-a}-1 \right)\left( \frac{2y-2c}{d-c}-1 \right)}{(b-a)(d-c))}\Leftarrow (x,y)\in [a,b]\times[c,d]\\
+		0\Leftarrow (x,y)\not\in [a,b]\times[c,d] 
+	\end{cases}$	
+	$\Rightarrow \left( X,Y \right)\hookrightarrow POI(p_{1},p_{2})
+	$
+\end{center}
+where $\alpha\in [0,1]$
+\paragraph{Properties}
+\begin{center}
+	$
+	\begin{cases}
+		\E{X}=\dfrac{b+a}{2}\\
+		\E{Y}=\dfrac{d+c}{2}\\
+		\V{X}=\dfrac{(b-a)^{2}}{12}\\
+		\V{Y}=\dfrac{(d-c)^{2}}{12}\\
+		Cov(X,Y)=\dfrac{1}{36}\alpha(b-a)(d-c)
+	\end{cases}
+	$
+\end{center}
+\paragraph{Conditional Properties}
+\begin{center}
+	$
+	\begin{cases}
+		\Ec{X=x}{Y}=\dfrac{d+c}{2}+\dfrac{\alpha}{6(b-a)}(c^{2}+4cd+d^{2})\left( \dfrac{2x-2a}{b-a}-1 \right)\\
+		\Ec{Y=y}{X}=\dfrac{b+a}{2}+\dfrac{\alpha}{6(b-a)}(a^{2}+4ab+b^{2})\left( \dfrac{2y-2c}{d-c}-1 \right)\\
+		\Vc{X=x}{Y}=\dfrac{1}{36}\left( \dfrac{d-c}{b-a} \right)^{2}\left[ \alpha^{2}(a+b)(4x-a-b)+3(b-a)^{2}-4\alpha^{2}x^{2} \right]\\
+		\Vc{Y=y}{X}=\dfrac{1}{36}\left( \dfrac{b-a}{d-c} \right)^{2}\left[ \alpha^{2}(c+d)(4y-c-d)+3(d-c)^{2}-4\alpha^{2}y^{2} \right]
+	\end{cases}
+	$
+\end{center}
