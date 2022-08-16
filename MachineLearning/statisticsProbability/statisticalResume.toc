@@ -1,0 +1,365 @@
+\babel@toc {french}{}
+\contentsline {part}{\numberline {I}Mathematical background}{7}%
+\contentsline {chapter}{\numberline {1}Probability's points of view}{9}%
+\contentsline {section}{\numberline {1.1}Frequentist's point of view}{9}%
+\contentsline {subsection}{\numberline {1.1.1}Tools}{9}%
+\contentsline {paragraph}{\nonumberline Introduction}{9}%
+\contentsline {paragraph}{\nonumberline Sampling distribution of an estimator}{9}%
+\contentsline {subparagraph}{\nonumberline Boostrap}{9}%
+\contentsline {paragraph}{\nonumberline Hypothesis Testing}{9}%
+\contentsline {paragraph}{\nonumberline \emph {p-value}}{9}%
+\contentsline {paragraph}{\nonumberline Confidence intervals}{9}%
+\contentsline {paragraph}{\nonumberline Multiple comparisons}{10}%
+\contentsline {section}{\numberline {1.2}Bayesian's point of view}{10}%
+\contentsline {subsection}{\numberline {1.2.1}Tools}{10}%
+\contentsline {paragraph}{\nonumberline Summarizing posterior distributions}{10}%
+\contentsline {subparagraph}{\nonumberline MAP}{10}%
+\contentsline {subparagraph}{\nonumberline Credible Intervals}{11}%
+\contentsline {paragraph}{\nonumberline Bayesian model selection}{11}%
+\contentsline {subparagraph}{\nonumberline Baysian Occam's razor}{11}%
+\contentsline {subparagraph}{\nonumberline Computing the marginal likelihood (evidence)}{11}%
+\contentsline {subparagraph}{\nonumberline Bayes Factors}{12}%
+\contentsline {subparagraph}{\nonumberline Jeffreys-Lindley paradox}{13}%
+\contentsline {paragraph}{\nonumberline Priors}{13}%
+\contentsline {subparagraph}{\nonumberline Uninformative priors}{13}%
+\contentsline {subparagraph}{\nonumberline Jeffreys priors}{14}%
+\contentsline {subparagraph}{\nonumberline Robust priors}{14}%
+\contentsline {subparagraph}{\nonumberline Mixture of conjugate priors}{14}%
+\contentsline {paragraph}{\nonumberline Hierarchical Bayes}{14}%
+\contentsline {paragraph}{\nonumberline Empirical Bayes}{14}%
+\contentsline {paragraph}{\nonumberline Bayesian decision theory}{15}%
+\contentsline {subparagraph}{\nonumberline Bayes estimators for common loss functions}{15}%
+\contentsline {paragraph}{\nonumberline Hypothesis Testing}{16}%
+\contentsline {paragraph}{\nonumberline Posterior belief}{16}%
+\contentsline {paragraph}{\nonumberline Bayesian credible interval}{17}%
+\contentsline {paragraph}{\nonumberline Credible interval tests}{17}%
+\contentsline {paragraph}{\nonumberline Posterior Sign tests}{18}%
+\contentsline {paragraph}{\nonumberline Bayes Factors}{18}%
+\contentsline {subparagraph}{\nonumberline Prerequisites}{18}%
+\contentsline {subparagraph}{\nonumberline Definition}{18}%
+\contentsline {subparagraph}{\nonumberline Interpreting}{19}%
+\contentsline {paragraph}{\nonumberline Multiple comparisons}{19}%
+\contentsline {subparagraph}{\nonumberline Density Ratios}{19}%
+\contentsline {subparagraph}{\nonumberline Posterior Estimates}{19}%
+\contentsline {chapter}{\numberline {2}Conditional probability and Bayes' theorem}{21}%
+\contentsline {section}{\numberline {2.1}Conditional Probability}{21}%
+\contentsline {paragraph}{\nonumberline Definition of a conditional probability:}{21}%
+\contentsline {section}{\numberline {2.2}Bayes' Theorem}{21}%
+\contentsline {paragraph}{\nonumberline Law of Total Probability}{21}%
+\contentsline {paragraph}{\nonumberline Bayes'Theorem}{21}%
+\contentsline {chapter}{\numberline {3}Distribution Functions}{23}%
+\contentsline {section}{\numberline {3.1}Distribution Function of Discrete Variables}{23}%
+\contentsline {paragraph}{\nonumberline Definition of probability density function (pdf):}{23}%
+\contentsline {paragraph}{\nonumberline Definition of cumulative density function (cdf):}{23}%
+\contentsline {section}{\numberline {3.2}Distribution Function of Continuous Variables}{23}%
+\contentsline {paragraph}{\nonumberline Definition probability density function:}{23}%
+\contentsline {paragraph}{\nonumberline Definition cumulative density function:}{23}%
+\contentsline {section}{\numberline {3.3}Percentile for Continuous Random Variables}{24}%
+\contentsline {paragraph}{\nonumberline Definition}{24}%
+\contentsline {paragraph}{\nonumberline Mode definition}{24}%
+\contentsline {chapter}{\numberline {4}Moments of Random Variables and Chebychev Inequality}{25}%
+\contentsline {section}{\numberline {4.1}Moments of Random Variables}{25}%
+\contentsline {paragraph}{\nonumberline $n^{th}$ moments of a random variable:}{25}%
+\contentsline {section}{\numberline {4.2}Expected Value of Random Variables}{25}%
+\contentsline {paragraph}{\nonumberline Expected value:}{25}%
+\contentsline {section}{\numberline {4.3}Variance of Random Variables}{25}%
+\contentsline {paragraph}{\nonumberline Definition of Variance :}{25}%
+\contentsline {section}{\numberline {4.4}Chebychev Inequality}{26}%
+\contentsline {paragraph}{\nonumberline Theorem}{26}%
+\contentsline {section}{\numberline {4.5}Moment Generating Funcions}{26}%
+\contentsline {paragraph}{\nonumberline Definition}{26}%
+\contentsline {paragraph}{\nonumberline Factorial moment generating function}{27}%
+\contentsline {chapter}{\numberline {5}Important Discrete Distributions}{29}%
+\contentsline {section}{\numberline {5.1}Bernoulli Distribution}{29}%
+\contentsline {paragraph}{\nonumberline Definition}{29}%
+\contentsline {paragraph}{\nonumberline Theorem}{29}%
+\contentsline {section}{\numberline {5.2}Binomial Distribution}{29}%
+\contentsline {paragraph}{\nonumberline Definition}{29}%
+\contentsline {paragraph}{\nonumberline Theorem}{29}%
+\contentsline {section}{\numberline {5.3}Geometric Distribution}{29}%
+\contentsline {paragraph}{\nonumberline Definition}{29}%
+\contentsline {paragraph}{\nonumberline Theorem}{29}%
+\contentsline {paragraph}{\nonumberline Memoryless property}{30}%
+\contentsline {section}{\numberline {5.4}Negative Binomial Distribution}{30}%
+\contentsline {paragraph}{\nonumberline Definition}{30}%
+\contentsline {paragraph}{\nonumberline Theorem}{30}%
+\contentsline {section}{\numberline {5.5}Hypergeometric Distribution}{30}%
+\contentsline {paragraph}{\nonumberline Definition}{30}%
+\contentsline {paragraph}{\nonumberline Theorem}{30}%
+\contentsline {section}{\numberline {5.6}Poisson Distribution}{30}%
+\contentsline {paragraph}{\nonumberline Use case}{30}%
+\contentsline {paragraph}{\nonumberline Definition}{31}%
+\contentsline {paragraph}{\nonumberline Assumptions}{31}%
+\contentsline {paragraph}{\nonumberline Theorem}{31}%
+\contentsline {section}{\numberline {5.7}Riemann Zeta Distribution}{31}%
+\contentsline {paragraph}{\nonumberline Definition}{31}%
+\contentsline {paragraph}{\nonumberline Theorem}{31}%
+\contentsline {section}{\numberline {5.8}Pareto Distribution}{31}%
+\contentsline {paragraph}{\nonumberline Definition}{31}%
+\contentsline {paragraph}{\nonumberline Theorem}{32}%
+\contentsline {chapter}{\numberline {6}Important Continuous Distributions}{33}%
+\contentsline {section}{\numberline {6.1}Uniform Distribution}{33}%
+\contentsline {paragraph}{\nonumberline Definition}{33}%
+\contentsline {paragraph}{\nonumberline Theorem}{33}%
+\contentsline {paragraph}{\nonumberline Theorem}{33}%
+\contentsline {section}{\numberline {6.2}Gamma Distribution}{33}%
+\contentsline {paragraph}{\nonumberline Gamma distribution}{33}%
+\contentsline {subparagraph}{\nonumberline Definition}{33}%
+\contentsline {subparagraph}{\nonumberline Theorem}{33}%
+\contentsline {paragraph}{\nonumberline Exponential distribution}{34}%
+\contentsline {subparagraph}{\nonumberline Definition}{34}%
+\contentsline {paragraph}{\nonumberline Chi-square distribution with $r$ degrees of freedom}{34}%
+\contentsline {subparagraph}{\nonumberline Definition}{34}%
+\contentsline {paragraph}{\nonumberline $n\text {-Erlang}$}{34}%
+\contentsline {subparagraph}{\nonumberline Definition}{34}%
+\contentsline {paragraph}{\nonumberline Unified distribution}{34}%
+\contentsline {subparagraph}{\nonumberline Definition}{34}%
+\contentsline {subparagraph}{\nonumberline Weibull distribution}{34}%
+\contentsline {section}{\numberline {6.3}Beta Distribution}{35}%
+\contentsline {paragraph}{\nonumberline Beta}{35}%
+\contentsline {subparagraph}{\nonumberline Theorem}{35}%
+\contentsline {subparagraph}{\nonumberline Beta distribution}{35}%
+\contentsline {subparagraph}{\nonumberline Beta properties}{35}%
+\contentsline {paragraph}{\nonumberline Generalized Beta}{35}%
+\contentsline {subparagraph}{\nonumberline Theorem}{35}%
+\contentsline {subparagraph}{\nonumberline Proprieties}{35}%
+\contentsline {section}{\numberline {6.4}Normal Distribution}{35}%
+\contentsline {paragraph}{\nonumberline Normal Distribution}{35}%
+\contentsline {subparagraph}{\nonumberline Definition}{35}%
+\contentsline {paragraph}{\nonumberline Properties}{36}%
+\contentsline {paragraph}{\nonumberline Chi Squared}{36}%
+\contentsline {subparagraph}{\nonumberline Definition}{36}%
+\contentsline {paragraph}{\nonumberline Generalization of normal distribution}{36}%
+\contentsline {section}{\numberline {6.5}Lognormal Distribution}{36}%
+\contentsline {paragraph}{\nonumberline Definition}{36}%
+\contentsline {paragraph}{\nonumberline Properties}{36}%
+\contentsline {section}{\numberline {6.6}Inverse Gaussian Distribution}{36}%
+\contentsline {paragraph}{\nonumberline Definition}{36}%
+\contentsline {paragraph}{\nonumberline Properties}{37}%
+\contentsline {section}{\numberline {6.7}Logistic Distribution}{37}%
+\contentsline {paragraph}{\nonumberline Definition}{37}%
+\contentsline {paragraph}{\nonumberline Properties}{37}%
+\contentsline {chapter}{\numberline {7}2 Random Variables}{39}%
+\contentsline {section}{\numberline {7.1}Bivariate Discrete Random Variables}{39}%
+\contentsline {paragraph}{\nonumberline Joint probability density function}{39}%
+\contentsline {paragraph}{\nonumberline Marginal probability density function}{39}%
+\contentsline {paragraph}{\nonumberline Joint cumulative probability distribution function}{39}%
+\contentsline {section}{\numberline {7.2}Bivariate Continuous Random Variables}{39}%
+\contentsline {paragraph}{\nonumberline Marginal probability density function}{39}%
+\contentsline {paragraph}{\nonumberline Joint cumulative probability distribution function}{39}%
+\contentsline {section}{\numberline {7.3}Conditional Distributions}{40}%
+\contentsline {paragraph}{\nonumberline Conditional probability density function}{40}%
+\contentsline {section}{\numberline {7.4}Independence of Random Variables}{40}%
+\contentsline {paragraph}{\nonumberline Conditionally independent}{40}%
+\contentsline {chapter}{\numberline {8}Product Moments of Bivariate Random Variabless}{41}%
+\contentsline {section}{\numberline {8.1}Covariance of Bivariate Random Variables}{41}%
+\contentsline {paragraph}{\nonumberline Product Moment}{41}%
+\contentsline {paragraph}{\nonumberline Covariance}{41}%
+\contentsline {subparagraph}{\nonumberline Definition}{41}%
+\contentsline {subparagraph}{\nonumberline Properties}{41}%
+\contentsline {section}{\numberline {8.2}Independence of Random Variables}{41}%
+\contentsline {paragraph}{\nonumberline Properties}{41}%
+\contentsline {section}{\numberline {8.3}Variance of Linear Combination Random Variables}{41}%
+\contentsline {subparagraph}{\nonumberline Properties}{41}%
+\contentsline {section}{\numberline {8.4}Correlation and Independence}{42}%
+\contentsline {paragraph}{\nonumberline Correlation coefficient}{42}%
+\contentsline {paragraph}{\nonumberline Property}{43}%
+\contentsline {section}{\numberline {8.5}Moment Generating Function}{43}%
+\contentsline {paragraph}{\nonumberline Moment generating function}{43}%
+\contentsline {paragraph}{\nonumberline Property}{43}%
+\contentsline {chapter}{\numberline {9}Conditional Expectation of Bivariate Random Variables}{45}%
+\contentsline {section}{\numberline {9.1}Conditional Expected Values}{45}%
+\contentsline {paragraph}{\nonumberline Conditional expectation}{45}%
+\contentsline {paragraph}{\nonumberline Properties}{45}%
+\contentsline {section}{\numberline {9.2}Conditional Variance}{45}%
+\contentsline {paragraph}{\nonumberline Definition}{45}%
+\contentsline {section}{\numberline {9.3}Regression Curve and Scedastic Curves}{45}%
+\contentsline {paragraph}{\nonumberline Regression function of $Y$ on $X$}{45}%
+\contentsline {paragraph}{\nonumberline Linear regression}{45}%
+\contentsline {paragraph}{\nonumberline Scedastic function}{46}%
+\contentsline {chapter}{\numberline {10}Functions of Random Variables and Their Distribution}{47}%
+\contentsline {section}{\numberline {10.1}Transformation Method for Univariate Case}{47}%
+\contentsline {paragraph}{\nonumberline Essential theorem for transforming}{47}%
+\contentsline {section}{\numberline {10.2}Transformation Method Bivariate Case}{47}%
+\contentsline {paragraph}{\nonumberline Essential theorem to method of bivariate case}{47}%
+\contentsline {paragraph}{\nonumberline Density functions}{47}%
+\contentsline {section}{\numberline {10.3}Convolution Method for Sums of Random Variables}{48}%
+\contentsline {paragraph}{\nonumberline Definition of convolution}{48}%
+\contentsline {section}{\numberline {10.4}Moment Method for Sums of Random Variables}{48}%
+\contentsline {chapter}{\numberline {11}Some Special Discrete Bivariate Distributions}{49}%
+\contentsline {section}{\numberline {11.1}Bivariate Bernoulli Distribution}{49}%
+\contentsline {paragraph}{\nonumberline Definition}{49}%
+\contentsline {paragraph}{\nonumberline Properties}{49}%
+\contentsline {paragraph}{\nonumberline Conditional Properties}{49}%
+\contentsline {section}{\numberline {11.2}Bivariate Binomial Distribution}{49}%
+\contentsline {paragraph}{\nonumberline Definition}{49}%
+\contentsline {paragraph}{\nonumberline Properties}{50}%
+\contentsline {paragraph}{\nonumberline Conditional Properties}{50}%
+\contentsline {section}{\numberline {11.3}Bivariate Geometric Distribution}{50}%
+\contentsline {paragraph}{\nonumberline Definition}{50}%
+\contentsline {paragraph}{\nonumberline Properties}{50}%
+\contentsline {paragraph}{\nonumberline Conditional Properties}{51}%
+\contentsline {section}{\numberline {11.4}Bivariate Negative Binomial Distribution}{51}%
+\contentsline {paragraph}{\nonumberline Definition}{51}%
+\contentsline {paragraph}{\nonumberline Properties}{51}%
+\contentsline {paragraph}{\nonumberline Conditional Properties}{52}%
+\contentsline {section}{\numberline {11.5}Bivariate Hypergeometric Distribution}{52}%
+\contentsline {paragraph}{\nonumberline Definition}{52}%
+\contentsline {paragraph}{\nonumberline Properties}{52}%
+\contentsline {paragraph}{\nonumberline Conditional Properties}{53}%
+\contentsline {section}{\numberline {11.6}Bivariate Poisson Distribution}{53}%
+\contentsline {paragraph}{\nonumberline Definition}{53}%
+\contentsline {paragraph}{\nonumberline Properties}{53}%
+\contentsline {paragraph}{\nonumberline Conditional Properties}{53}%
+\contentsline {chapter}{\numberline {12}Some Special Continuous Bivariate Distributions}{55}%
+\contentsline {section}{\numberline {12.1}Bivariate Uniform Distribution}{55}%
+\contentsline {paragraph}{\nonumberline Definition}{55}%
+\contentsline {paragraph}{\nonumberline Properties}{55}%
+\contentsline {paragraph}{\nonumberline Conditional Properties}{55}%
+\contentsline {section}{\numberline {12.2}Bivariate Cauchy Distribution}{56}%
+\contentsline {section}{\numberline {12.3}Bivariate Gamma Distribution}{56}%
+\contentsline {section}{\numberline {12.4}Bivariate Beta Distribution}{56}%
+\contentsline {section}{\numberline {12.5}Bivariate Normal Distribution}{56}%
+\contentsline {section}{\numberline {12.6}Bivariate Logistic Distribution}{56}%
+\contentsline {chapter}{\numberline {13}Sequences of Random Variables and Order Statistics}{57}%
+\contentsline {section}{\numberline {13.1}Distribution of Sample Mean and Variance}{57}%
+\contentsline {paragraph}{\nonumberline Property}{57}%
+\contentsline {section}{\numberline {13.2}Law of Large Numbers}{58}%
+\contentsline {paragraph}{\nonumberline Markov inequality}{58}%
+\contentsline {paragraph}{\nonumberline Theorem weak law of large numbers:}{58}%
+\contentsline {paragraph}{\nonumberline Convergence in probability}{58}%
+\contentsline {paragraph}{\nonumberline Convergence almost surely}{58}%
+\contentsline {paragraph}{\nonumberline Properties}{58}%
+\contentsline {section}{\numberline {13.3}Central Limit Theorem}{58}%
+\contentsline {paragraph}{\nonumberline Central Limit Theorem}{58}%
+\contentsline {paragraph}{\nonumberline Convergence in distribution}{59}%
+\contentsline {paragraph}{\nonumberline Lévy Continuity Theorem}{59}%
+\contentsline {section}{\numberline {13.4}Order Statistics}{59}%
+\contentsline {paragraph}{\nonumberline Order Statistics}{59}%
+\contentsline {section}{\numberline {13.5}Sample Percentiles}{59}%
+\contentsline {paragraph}{\nonumberline Sample Median}{59}%
+\contentsline {chapter}{\numberline {14}Sampling Distributions associated with the Normal population}{61}%
+\contentsline {section}{\numberline {14.1}Monte Carlo approximation}{61}%
+\contentsline {section}{\numberline {14.2}Chi-Square distribution}{61}%
+\contentsline {paragraph}{\nonumberline Definition}{61}%
+\contentsline {paragraph}{\nonumberline Properties}{62}%
+\contentsline {subparagraph}{\nonumberline Population}{62}%
+\contentsline {subparagraph}{\nonumberline Sample}{62}%
+\contentsline {subparagraph}{\nonumberline Sample variance}{62}%
+\contentsline {subparagraph}{\nonumberline Gamma}{62}%
+\contentsline {section}{\numberline {14.3}Student's t-distribution}{63}%
+\contentsline {paragraph}{\nonumberline Definition}{63}%
+\contentsline {paragraph}{\nonumberline Properties}{63}%
+\contentsline {subparagraph}{\nonumberline Expected value and Variance}{63}%
+\contentsline {subparagraph}{\nonumberline Normal and Chi-Squared distribution}{63}%
+\contentsline {subparagraph}{\nonumberline Normal variable sample}{63}%
+\contentsline {section}{\numberline {14.4}Snedecor's F-distribution}{64}%
+\contentsline {paragraph}{\nonumberline Definition}{64}%
+\contentsline {paragraph}{\nonumberline Properties}{64}%
+\contentsline {subparagraph}{\nonumberline Expected value and Variance}{64}%
+\contentsline {subparagraph}{\nonumberline Inverse}{64}%
+\contentsline {subparagraph}{\nonumberline Chi-squared and $F$-distributions}{64}%
+\contentsline {subparagraph}{\nonumberline Quotient of Inverses}{65}%
+\contentsline {chapter}{\numberline {15}Some Techniques for finding point Estimators of Parameters}{67}%
+\contentsline {section}{\numberline {15.1}Moment Method}{67}%
+\contentsline {paragraph}{\nonumberline Parameter space}{67}%
+\contentsline {paragraph}{\nonumberline Estimators}{67}%
+\contentsline {paragraph}{\nonumberline Moment method}{67}%
+\contentsline {section}{\numberline {15.2}Maximum Likelihood Method}{68}%
+\contentsline {paragraph}{\nonumberline Definition}{68}%
+\contentsline {paragraph}{\nonumberline Method}{68}%
+\contentsline {paragraph}{\nonumberline Theorem}{68}%
+\contentsline {paragraph}{\nonumberline Fisher information}{68}%
+\contentsline {paragraph}{\nonumberline Theorem}{69}%
+\contentsline {section}{\numberline {15.3}Bayesian Method}{69}%
+\contentsline {paragraph}{\nonumberline Prior distribution}{69}%
+\contentsline {paragraph}{\nonumberline Posterior distribution}{69}%
+\contentsline {paragraph}{\nonumberline Squared and Absolute Error Loss}{69}%
+\contentsline {paragraph}{\nonumberline Risk}{69}%
+\contentsline {paragraph}{\nonumberline Estimator for squared error}{69}%
+\contentsline {paragraph}{\nonumberline Estimator for absolute error}{70}%
+\contentsline {section}{\numberline {15.4}Information Theory}{70}%
+\contentsline {paragraph}{\nonumberline Entropy}{70}%
+\contentsline {paragraph}{\nonumberline KL Divergence}{70}%
+\contentsline {paragraph}{\nonumberline Equality}{70}%
+\contentsline {paragraph}{\nonumberline Inequality}{70}%
+\contentsline {paragraph}{\nonumberline Mutual Information}{71}%
+\contentsline {subparagraph}{\nonumberline Definition}{71}%
+\contentsline {subparagraph}{\nonumberline Pointwise Mutual Information}{71}%
+\contentsline {subparagraph}{\nonumberline Maximal Information Coefficient}{71}%
+\contentsline {chapter}{\numberline {16}Criteria for evaluating the Goodness of Estimators}{73}%
+\contentsline {section}{\numberline {16.1}The Unbiased Estimator}{73}%
+\contentsline {paragraph}{\nonumberline The Unbiased Estimator}{73}%
+\contentsline {section}{\numberline {16.2}The relatively Efficient Estimator}{73}%
+\contentsline {paragraph}{\nonumberline Efficiency of estimators}{73}%
+\contentsline {section}{\numberline {16.3}The Minimun Variance Unbiased Estimator}{73}%
+\contentsline {paragraph}{\nonumberline Definition}{73}%
+\contentsline {paragraph}{\nonumberline Definition (2)}{73}%
+\contentsline {paragraph}{\nonumberline Minoration of an unbiased estimator}{74}%
+\contentsline {paragraph}{\nonumberline Theorem}{74}%
+\contentsline {paragraph}{\nonumberline Cramér-Rao lower bound}{74}%
+\contentsline {section}{\numberline {16.4}Sufficient Estimator}{74}%
+\contentsline {paragraph}{\nonumberline Definition}{74}%
+\contentsline {paragraph}{\nonumberline Theorem}{75}%
+\contentsline {paragraph}{\nonumberline Theorem}{75}%
+\contentsline {paragraph}{\nonumberline Necessary estimator}{75}%
+\contentsline {section}{\numberline {16.5}Consistent Estimator}{75}%
+\contentsline {paragraph}{\nonumberline Consistent sequence of estimators}{75}%
+\contentsline {paragraph}{\nonumberline Theorem}{75}%
+\contentsline {paragraph}{\nonumberline Limit of a sequence variance}{75}%
+\contentsline {part}{\numberline {II}Tests}{77}%
+\contentsline {chapter}{\numberline {17}Some Techniques for finding Interval Estimators of Parameters}{79}%
+\contentsline {section}{\numberline {17.1}Interval Estimators and Confidence Intervals for Parameters}{79}%
+\contentsline {paragraph}{\nonumberline Interval estimator \& Interval estimate}{79}%
+\contentsline {paragraph}{\nonumberline Confidence interval}{79}%
+\contentsline {section}{\numberline {17.2}Pivotal Quantity Method}{79}%
+\contentsline {paragraph}{\nonumberline Definition}{79}%
+\contentsline {paragraph}{\nonumberline Location-scale family}{79}%
+\contentsline {paragraph}{\nonumberline Remark}{79}%
+\contentsline {section}{\numberline {17.3}Confidence Interval for Population Mean}{80}%
+\contentsline {section}{\numberline {17.4}Confidence Interval for Population Variance}{80}%
+\contentsline {section}{\numberline {17.5}Confidence Interval for Parameter of some Distribution not belonging to the Location-Scale Family}{80}%
+\contentsline {section}{\numberline {17.6}Approximate Confidence Interval for Parameter with MLE}{80}%
+\contentsline {section}{\numberline {17.7}The Statistical or General Method}{80}%
+\contentsline {section}{\numberline {17.8}Criteria for Evaluating Confidence Intervals}{80}%
+\contentsline {chapter}{\numberline {18}Test of Statistical Hypotheses}{81}%
+\contentsline {section}{\numberline {18.1}Introduction}{81}%
+\contentsline {paragraph}{\nonumberline Statistical hypothesis}{81}%
+\contentsline {paragraph}{\nonumberline Simple and Composite hypotheses}{81}%
+\contentsline {paragraph}{\nonumberline Null and alternative hypothesis}{81}%
+\contentsline {paragraph}{\nonumberline Hypothesis test}{81}%
+\contentsline {section}{\numberline {18.2}Tests}{81}%
+\contentsline {paragraph}{\nonumberline Z-test}{81}%
+\contentsline {paragraph}{\nonumberline T-test}{81}%
+\contentsline {paragraph}{\nonumberline Test Method}{82}%
+\contentsline {section}{\numberline {18.3}A method of Finding Tests}{82}%
+\contentsline {paragraph}{\nonumberline The likelihood ratio test statistics}{82}%
+\contentsline {section}{\numberline {18.4}Methods of Evaluating Tests}{82}%
+\contentsline {paragraph}{\nonumberline Significance level}{82}%
+\contentsline {paragraph}{\nonumberline P-value}{83}%
+\contentsline {paragraph}{\nonumberline Probability of type II error}{83}%
+\contentsline {paragraph}{\nonumberline The power function}{83}%
+\contentsline {paragraph}{\nonumberline A test of level $\delta $}{83}%
+\contentsline {paragraph}{\nonumberline Test of size $\delta $}{83}%
+\contentsline {paragraph}{\nonumberline Uniformly most powerful}{83}%
+\contentsline {paragraph}{\nonumberline Theorem Neyman-Perarson}{83}%
+\contentsline {section}{\numberline {18.5}Some Examples of Likelihood Ratio Tests}{83}%
+\contentsline {chapter}{\numberline {19}Simple Linear Regression and Correlation Analysis}{85}%
+\contentsline {section}{\numberline {19.1}Least Squared Method}{85}%
+\contentsline {paragraph}{\nonumberline Unbiased estimators}{85}%
+\contentsline {section}{\numberline {19.2}Normal Regression Analysis}{85}%
+\contentsline {paragraph}{\nonumberline Likelihood estimators}{85}%
+\contentsline {paragraph}{\nonumberline Distributions of the estimators}{85}%
+\contentsline {section}{\numberline {19.3}The Correlation Analysis}{85}%
+\contentsline {paragraph}{\nonumberline Correlation coefficient}{85}%
+\contentsline {chapter}{\numberline {20}Analysis of Variance}{87}%
+\contentsline {section}{\numberline {20.1}One-way Analysis of Variance with Equal Sample Sizes}{87}%
+\contentsline {paragraph}{\nonumberline Theorem ANOVA}{87}%
+\contentsline {paragraph}{\nonumberline Lemma}{87}%
+\contentsline {paragraph}{\nonumberline ANOVA model}{87}%
+\contentsline {section}{\numberline {20.2}One-way Analysis of Variance with Unequal Sample Sizes}{87}%
+\contentsline {section}{\numberline {20.3}Pair Wise Comparisons}{88}%
+\contentsline {section}{\numberline {20.4}Test for Homogeneity of Variances}{88}%
+\contentsline {chapter}{\numberline {21}Goodness of Fits Tests}{89}%
+\contentsline {section}{\numberline {21.1}Chi-Squared test}{89}%
+\contentsline {section}{\numberline {21.2}Kolmogorov-Smirnov test}{89}%

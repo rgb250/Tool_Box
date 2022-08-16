@@ -1,0 +1,37 @@
+\paragraph{Definition}
+A discrete bivariate random variable $(X, Y )$ is said to have
+the bivariate hypergeometric distribution with parameters $r, n_{1}, n_{2}, n_{3}$ if its joint probability density is of the
+form
+\begin{center}
+	$f(x,y)=
+	\begin{cases}	
+		\dfrac{ {n_{1}\choose x}{n_{2}\choose y}{n_{3}\choose r-x-y}}{ {n_{1}+n_{2}+n_{3}\choose r}}\Leftarrow (x,y)\in\inter{0}{r}^{2}\\
+		0\Leftarrow (x,y)\not\in\inter{0}{r}^{2} 
+	\end{cases}$	
+	$\Rightarrow \left( X,Y \right)\hookrightarrow HYP(p_{1},p_{2})
+	$
+\end{center}
+where $0<p_{1},p_{2}, p_{1}+p_{2}<1$
+\paragraph{Properties}
+\begin{center}
+	$
+	\begin{cases}
+		\E{X}=\dfrac{rn_{1}}{n_{1}+n_{2}+n_{3}}\\
+		\E{Y}=\dfrac{rn_{2}}{n_{1}+n_{2}+n_{3}}\\
+		\V{X}=\dfrac{rn_{1}(n_{2}+n_{3})}{\left(n_{1}+n_{2}+n_{3}\right)^{2}}\left(\dfrac{n_{1}+n_{2}+n_{3}-r}{n_{1}+n_{2}+n_{3}-1}\right)\\
+	\V{Y}=\dfrac{rn_{2}(n_{1}+n_{3})}{\left(n_{1}+n_{2}+n_{3}\right)^{2}}\left(\dfrac{n_{1}+n_{2}+n_{3}-r}{n_{1}+n_{2}+n_{3}-1}\right)\\
+	Cov(X,Y)=-\dfrac{rn_{1}n_{2}}{\left(n_{1}+n_{2}+n_{3}\right)^{2}}\left(\dfrac{n_{1}+n_{2}+n_{3}-r}{n_{1}+n_{2}+n_{3}-1}\right)\\
+	\end{cases}
+	$
+\end{center}
+\paragraph{Conditional Properties}
+\begin{center}
+	$
+	\begin{cases}
+		\Ec{X=x}{Y}=\dfrac{n_{2}(r-x)}{n_{2}+n_{3}}\\
+	\Ec{Y=y}{X}=\dfrac{n_{1}(r-y)}{n_{1}+n_{3}}\\
+	\Vc{X=x}{Y}=\dfrac{n_{2}n_{3}}{n_{2}+n_{3}-1}\left( \dfrac{n_{1}+n_{2}+n_{3}-x}{n_{2}+n_{3}} \right)\left( \dfrac{x-n_{1}}{n_{2}+n_{3}} \right)\\
+	\Vc{Y=y}{X}=\dfrac{n_{1}n_{3}}{n_{1}+n_{3}-1}\left( \dfrac{n_{1}+n_{2}+n_{3}-y}{n_{1}+n_{3}} \right)\left( \dfrac{y-n_{1}}{n_{1}+n_{3}} \right)
+	\end{cases}
+	$
+\end{center}

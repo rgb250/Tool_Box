@@ -1,0 +1,51 @@
+\begin{tabular}{|c|c|c|}
+	\hline
+	& $H_{0}$ is true & $H_{0}$ is false\\
+	\hline
+	Accept $H_{0}$ & Correct Decision & Type $II$ Error\\
+	\hline
+	Reject $H_{0}$ & Type $I$ Error & Correct Decision\\
+	\hline
+\end{tabular}
+
+\paragraph{Significance level}
+It is denoted by $\alpha = \Prob{\text{Type I Error}}$ corresponds to
+the probability of getting a test statistic as extreme as, or more 
+extreme than the observed one. This probability is computed on the 
+basis that the $H_{0}$ is true.
+
+\paragraph{P-value}
+Is the probability of getting a big test statistic, assuming the null
+hypothesis to be right.
+\paragraph{Probability of type II error}
+It is denoted by $\beta = \ProbC{H_{0}\text{ is false}}{\text{Accept }H_{0}} = \ProbC{H_{\alpha}\text{ is true}}{\text{Accept }H_{0}}$ 
+
+\paragraph{The power function}
+It is the function $\pi : \Omega\rightarrow [0,1]$ defined by:
+$
+\pi(\theta)=
+\begin{cases}
+	\Prob{\text{Type I Error}}\\
+	1-\Prob{\text{Type II Error}}
+\end{cases}
+$
+
+\paragraph{A test of level $\delta$} Given $\delta\in[0,1]$
+$\max_{\theta\in\Omega_{0}}\pi(\theta)\leq\delta$
+\paragraph{Test of size $\delta$} Given $\delta\in[0,1]$
+$\max_{\theta\in\Omega_{0}}\pi(\theta)=\delta$
+\paragraph{Uniformly most powerful} 
+Let $T$ be a test procedure for testing the null hypothesis.
+For any test $W$ of level $\delta,\\ \forall\theta\in\Omega_{0}, \pi_{T}(\theta)\geq\pi_{W}(\theta)$ 
+
+\paragraph{Theorem Neyman-Perarson}
+$
+\begin{cases}
+	X\hookrightarrow f(x;\theta)\\
+	\prth{X}{i}{1}{n}\text{ sample from }X\\
+	L\left(\theta;\prth{x}{i}{1}{n}=\prd{{i=1}}{n}f(x_{i};\theta)\right)\text{ likelihood function of the sample }
+\end{cases}\\
+\Rightarrow
+C=\left\{\prth{x}{i}{1}{n}|\frac{L\left(\theta_{0},\prth{x}{i}{1}{n}\right)}{L\left(\theta_{\alpha},\prth{x}{i}{1}{n}\right)}\right\}\leq k
+$ for $k\in\mathbb{R}_{+}^{*}$ is best of its size for testing:\\
+$H_{0}: \theta = \theta_{0}$ against $H_{a}:\theta = \theta_{a}$

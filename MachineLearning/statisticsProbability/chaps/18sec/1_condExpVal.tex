@@ -1,0 +1,20 @@
+\paragraph{Conditional expectation}
+The conditional mean of $X$ given $Y=y$ is defined as:
+\begin{center}
+\enc{
+$
+\E{X|y}=
+\begin{cases}
+\su{{x\in R_{X}}}{}xg(x/y)\Leftarrow X\text{ discrete}\\
+\Su{{-\infty}}{\infty}xg(x/y)dx\Leftarrow X\text{ continuous}
+\end{cases}
+$}
+\end{center}
+
+\paragraph{Properties}
+\begin{center}
+	$\begin{cases}
+		\mathbb{E}_{X}\left( \Ec{{y|x}}{{Y|X}} \right)=\Ec{y}{Y}\\
+	\E{Y|\left\{ X=x \right\}}=\mu_{Y}+\rho\dfrac{\sigma_{Y}}{\sigma_{X}}(x-\mu_{X})
+	\end{cases}$	
+\end{center}

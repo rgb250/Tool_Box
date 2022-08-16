@@ -1,0 +1,36 @@
+\paragraph{Consistent sequence of estimators}
+$
+\begin{cases}
+	X\hookrightarrow f(x;\theta)\text{ a population}\\
+	\prth{X}{i}{1}{n}\text{ a sample from }X\\
+	\left\{\theta_{n}\right\}\text{ a sequence of estimators}\\
+	\forall\epsilon>0,\lm{n}{\infty}\Prob{\left|\hat{\theta}_{n}-\theta\right|\geq \epsilon}=0
+\end{cases}\\
+\Rightarrow
+\left\{\theta_{n}\right\}
+$ is said to be \emph{consistent} for $\theta$
+
+\paragraph{Theorem}
+$
+\begin{cases}
+	X\hookrightarrow f(x;\theta)\text{ a population}\\
+	\prth{X}{i}{1}{n}\text{ a sample from }X\\
+	\left\{\theta_{n}\right\}\text{ a sequence of estimators}\\
+	\forall n\in\mathbb{N},\V{\hat{\theta}_{n}}<\infty\\
+	\lm{n}{\infty}\E{\left[\hat{\theta}_{n}-\theta\right]^{2}}=0
+\end{cases}
+\Rightarrow
+\forall\epsilon >0 \lm{n}{\infty}\Prob{\left|\hat{\theta}_{n}-\theta\right|\geq \epsilon} = 0
+$
+
+\paragraph{Limit of a sequence variance}
+$
+\begin{cases}
+	X\hookrightarrow f(x;\theta)\\
+	\prth{X}{i}{1}{n}\text{ be a random sample from }X\\
+	\left\{\hat{\theta}_{n}\right\}\text{ a sequence of estimators of }\theta\text{ based on the sample}\\
+	\forall n\in\mathbb{N},\V{\hat{\theta}_{n}}\leq \infty
+\end{cases}\\
+\Rightarrow
+\lm{n}{\infty}\E{\left[\hat{\theta}_{n}-\theta\right]^{2}}=0
+$

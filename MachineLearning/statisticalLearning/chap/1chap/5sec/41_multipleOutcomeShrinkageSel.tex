@@ -1,0 +1,16 @@
+Canonical correlation analysis (CCA) is \tB{a data reduction technique developped for the
+multiple output case}. Similar to PCA, CCA finds a sequence of uncorrelated linear
+combinations $\bm{X}v_{m} \text{for} m\in\inter{1}{M}$ of the $\bm{x}_{j}$ and a 
+corresponding sequence of uncorrelated linear combinations $\bm{Y}u_{m}$ of the respons
+$\bm{y}_{k}$ such that the correlations :
+$$ Corr^{2}\left( \bm{Y}u_{m}, \bm{X}v_{m} \right)$$ are succesively maximized.
+\subparagraph{Reduced-rank regression}
+Given an error covariance $Cov(\epsilon)=\Sigma$, we solve the following:
+$$ \hat{\bm{B}}^{rr}(m) =\min\limits_{{rank(\bm{B})=m}}\su{{i=1}}{N}\left( y_{i}-
+\bm{B}^{T}x_{i}\right)^{T}\Sigma^{-1}\left( y_{i} - \bm{B}^{T}x_{i}\right) $$
+With $\Sigma$ replaced by the estimate $\dfrac{\bm{Y}^{T}\bm{Y}}{N}$ that the solution
+is given by a CCA of $\bm{Y}$ and $\bm{X}$:
+$$ \hat{\bm{B}}^{rr}(m) = \hat{\bm{B}}\bm{U}_{m}\bm{U}_{m}^{-}$$ where $\bm{U}_{m}$ is
+the $K\times m$ sub-matrix of $\bm{U}$ consisting of the first $m$ columns and $\bm{U}$
+is the $K\times M$ matrix of left canonical vectors $u_{1}, u_{2}\cdots u_{M}$.
+$\bm{U}^{-}_{m}$

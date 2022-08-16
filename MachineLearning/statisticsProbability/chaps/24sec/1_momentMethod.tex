@@ -1,0 +1,43 @@
+\paragraph{Parameter space}
+Let $X$ be a population with the density function $f(x;\theta)$, where
+$\theta$ is an unknown parameter. The set of all admissible values of 
+$\theta$ is called a parameter space and it is denoted by $\Omega$ that
+is:
+$$
+\Omega = \left\{\theta\in\mathbb{R}^{n}|f(x;\theta)\text{ is a pdf}\right\}
+$$
+
+\paragraph{Estimators}
+Let $X\hookrightarrow f(x;\theta)$ and $\prth{X}{i}{1}{n}$ be a random
+sample from population $X$. Any statistic that can be used to guess
+the parameter $\theta$ is called an estimator of $\theta$. The 
+numerical value of this statistic is called an estimate of $\theta$.\\
+The estimator of the parameter $\theta$ is denoted by $\hat{\theta}$
+
+\paragraph{Moment method}
+Let $\prth{X}{i}{1}{n}$ be a random sample from a population $X$ with
+probability density function $f\left(x;\prth{\theta}{j}{1}{m}\right)$
+where $\prth{\theta}{j}{1}{m}$ are $m$ unknown parameters.\\
+Let:
+$\E{X^{k}}=\Su{-\infty}{\infty}x^{k}f\left(x;\prth{\theta}{j}{1}{m}\right)dx$ is the $k^{\text{th}}$ population moment about 0. Further, let
+$M_{k}=\dfrac{1}{n}\su{{i=1}}{n}X_{i}^{k}$ be the $k^{\text{th}}$ 
+sample moment about 0.\\
+Then we find the estimator for the parameters $\prth{\theta}{j}{1}{m}$
+by equating the first $m$ population moments (if they exist) to the
+first $m$ sample moments that is:
+$$
+\left\{
+\begin{array}{cc}
+	\E{X}&= M_{1}\\
+	\E{X^{2}}&= M_{2}\\
+	\E{X^{3}}&= M_{3}\\
+	&.\\
+	&.\\
+	&.\\
+	\E{X^{m}}&= M_{m}
+
+\end{array}
+\right.
+$$
+The motivation of moment method comes from the fact that the sample 
+moments are in some sense estimates for the population moments.

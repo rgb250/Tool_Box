@@ -1,0 +1,16 @@
+\paragraph{Definition}
+Suppose that there are $n_{1}$ objects in class $1$ and $n_{2}$ objects in
+class $2$. A collection of $r$ objects is selected from these $n$ objects
+at random and without replacement. We are interested in finding out the 
+probability that exactly $x$ of these $r$ objects are from class $1$.
+\begin{center}
+	$\forall x\in \inter{0}{r}, f(x)= \frac{{n_{1}\choose x}{n_{2}\choose r-x}}{{n_{1}+n_{2}\choose r}}\Rightarrow X\hookrightarrow\mathcal{HP}(n_{1}, n_{2}, r)$
+\end{center}
+$p$ denotes the probability of success in a single Bernoulli trial
+\paragraph{Theorem}
+\begin{center}
+$\begin{cases}
+	\mu_{X}=r\frac{n_{1}}{n_{1}+n_{2}}\\
+	\sigma_{X}^{2} = r\left(\frac{n_{1}}{n_{1}+n_{2}}\right)\left(\frac{n_{2}}{n_{1}+n_{2}}\right)\left(\frac{n_{1}+n_{2}-r}{n_{1}+n_{2}-1}\right)
+\end{cases}$
+\end{center}

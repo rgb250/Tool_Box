@@ -1,0 +1,50 @@
+For a random sample,
+\begin{center}
+	$
+	\begin{cases}
+		\overline{X}=\dfrac{1}{n}\su{ {i=1}}{n}X_{i}\text{ sample mean}\\
+		S^{2}= \dfrac{1}{n-1}\su{ {i=1}}{n}\left( X_{i}-\overline{X} \right)^{2}\text{ sample variance}
+	\end{cases}
+	$
+\end{center}
+are called statistics.
+\paragraph{Property}
+\begin{center}
+	$\prth{X}{i}{1}{n}\text{: mutually independent RV, with}\left(f_{i}(x_{i})\right)_{1\leq i\leq n}\text{ and }\left(\E{u_{i}\left( X_{i} \right)}\right)_{1\leq i\leq n}
+	$
+	$\Rightarrow\E{\prd{ {i=1}}{n}u_{i}\left( X_{i} \right)}=\prd{ {i=1}}{n}\E{u_{i}\left( X_{i} \right)}$ 
+\end{center}
+\begin{center}
+	$\prth{X}{i}{1}{n}\text{: mutually independent RV, with}\prth{\mu}{i}{1}{n}\text{ and }\prth{\sigma^{2}}{i}{1}{n}
+	$
+	$\Rightarrow
+	\begin{cases}
+		\mu_{Y}=\su{ {i=1}}{n}a_{i}\mu_{i}\Leftarrow Y=\su{ {i=1}}{n}a_{i}X_{i}\\
+		\sigma_{Y}^{2}=\su{ {i=1}}{n}a_{i}^{2}\sigma_{i}^{2}\Leftarrow Y=\su{ {i=1}}{n}a_{i}X_{i}
+	\end{cases}
+	$
+\end{center}
+\begin{center}
+	$\prth{X}{i}{1}{n}\text{: mutually independent RV, with}\prth{M_{X_{i}}(t)}{i}{1}{n}
+	$
+	$\left( \Rightarrow Y=\su{ {i=1}}{n}a_{i}X_{i}\Rightarrow M_{Y}(t)=\prd{ {i=1}}{n}M_{X_{i}}(a_{i}t) \right)$
+\end{center}
+\begin{center}
+	$\prth{X}{i}{1}{n}\text{: mutually independent RV, with}\left( \chi^{2}(r_{i}) \right)_{1\leq i\leq n}
+	$
+	$\Rightarrow\left(  Y=\su{ {i=1}}{n}X_{i}\Rightarrow Y=\chi^{2}\left( \su{ {i=1}}{n}r_{i} \right)\right)$
+\end{center}
+\begin{center}
+	$\prth{Z}{i}{1}{n}\text{: mutually independent RV and follow a standard normal distribution}
+	$
+	$\Rightarrow\su{ {i=1}}{n}Z_{i}\hookrightarrow \chi^{2}(n)$
+\end{center}
+\begin{center}
+	$\prth{X}{i}{1}{n}\text{: mutually independent RV and follow a normal distribution}
+	$
+	$\Rightarrow
+	\begin{cases}
+		\dfrac{(n-1)S_{n}^{2}}{\sigma^{2}}\hookrightarrow\chi^{2}(n-1)\\
+		\overline{X_{n}}\&S_{n}^{2}: independent
+	\end{cases}$
+\end{center}

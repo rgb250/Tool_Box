@@ -1,0 +1,16 @@
+X denotes the number of trials needed to observe the $r^{th}$ successes
+$\Prob{X=x}=\Prob{\text{first }x-1\text{ trials contain: }r-1\text{ failures and }r-1\text{ successes}}\times\Prob{r^{th}\text{ success in }x^{th}\text{ trial}}$
+where $p$ is the probability of success in a single Bernoulli trial.
+\paragraph{Definition}
+\begin{center}
+	$\forall x\in \left[ r,\infty \right[, f(x)= {x-1\choose r-1}p^{r}(1-p)^{x-r}p\Rightarrow X\hookrightarrow\mathcal{NEG}(r,n)$
+\end{center}
+$p$ denotes the probability of success in a single Bernoulli trial
+\paragraph{Theorem}
+\begin{center}
+$\begin{cases}
+	\mu_{X}=\frac{r}{p}\\
+	\sigma_{X}^{2} = \frac{r(1-p)}{p^{2}}\\
+	M_{X}(t)=\left(\frac{pe^{t}}{1-(1-p)e^{t}}\right)\text{ if }t<-\ln(1-p)
+\end{cases}$
+\end{center}

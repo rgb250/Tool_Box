@@ -1,0 +1,15 @@
+\paragraph{Marginal probability density function}
+Let for all $(x,y)\in R_{X}\times R_{Y}$: $f(x,y)$ be the joint probability density of $X$ and $Y$
+\begin{center}
+$\begin{cases}
+	f_{1}(x)=\Su{{-\infty}}{\infty}f(x,y)dy\text{is the marginal probability density of }X\\
+	f_{2}(y)=\Su{{-\infty}}{\infty}f(x,y)dx\text{is the marginal probability density of }Y
+\end{cases}$
+\end{center}
+\paragraph{Joint cumulative probability distribution function}
+Let $F:\mathbb{R}^{2}\rightarrow\mathbb{R}$
+\begin{center}
+	$\forall (x,y)\in \mathbb{R}^{2},F(x,y)=\Prob{X\leq x,Y\leq y}=\Su{ {-\infty}}{y}\Su{ {-\infty}}{x}f(u,v)dudv\Leftrightarrow\text{ F is the joint cumulative probability density function for }X\text{ and }Y$
+\end{center}
+From the fundamental theorem of calculus:
+$f(x,y)=\dfrac{\partial^{2}F(x,y)}{\partial x\partial y}$

@@ -1,0 +1,61 @@
+\paragraph{Definition}
+A continuous random variable $X$ is said to have a $t$-distribution 
+with $\nu$ degrees of freedom if its probability density function is of
+the form:
+$$
+f(x;\nu) = 
+\dfrac{\Gamma\left(\frac{\nu+1}{2}\right)}{\sqrt{\pi\nu}~\Gamma\left(\frac{\nu}{2}\right)\left(1+\frac{x^{2}}{\nu}\right)^{\left(\frac{\nu+1}{2}\right)}}, -\infty\leq x\leq\infty
+$$
+where $\nu > 0$. If $X$ has a $t$-distribution with $\nu$ degrees of 
+freedom, then we denote it by writing $X\hookrightarrow t(\nu)$\\
+The distribution is a generalization of the Cauchy distribution and the
+normal distribution:
+$$
+\left\{
+\begin{array}{ll}
+\nu=1 \Rightarrow \forall x\in \mathbb{R} & f(x;\nu) = \dfrac{1}{\pi(1+x^{2})}\\
+\nu\rightarrow\infty \Rightarrow \forall x\in \mathbb{R} & \lm{\nu}{\infty} f(x;\nu) = \dfrac{1}{2\pi}e^{-\frac{1}{2}x^{2}}
+\end{array}
+\right.
+$$
+\paragraph{Properties}
+\subparagraph{Expected value and Variance}
+If the random variable $X$ has a $t$-distribution with $\nu$ degrees of
+freedom, then:
+$$
+\mathbb{E}(X) = 
+	\left\{
+	\begin{array}{ll}
+	0 & \mbox{if } \nu \geq 2\\
+	DNE & \mbox{if } \nu = 1
+	\end{array}
+	\right.
+$$
+$$
+\mathbb{V}(X) = 
+	\left\{
+	\begin{array}{ll}
+		\dfrac{\nu}{\nu-2} & \mbox{if } \nu \geq 3\\
+		DNE & \mbox{if } \nu \in \inter{1}{2} 
+	\end{array}
+	\right.
+$$
+\subparagraph{Normal and Chi-Squared distribution}
+$$
+\begin{cases}
+Z\hookrightarrow N(0,1)\\
+U\hookrightarrow\chi^{2}(\nu)\\
+Z\text{ and }U\text{ independents}
+\end{cases}
+\Rightarrow
+W=\dfrac{Z}{\sqrt{\frac{U}{\nu}}}\hookrightarrow t(\nu)
+$$
+\subparagraph{Normal variable sample}
+$$
+\begin{cases}
+X\hookrightarrow N(\mu,\sigma^{2})\\
+\prth{X}{i}{1}{n}\text{ a sample of the population }X
+\end{cases}
+\Rightarrow
+\dfrac{\overline{X}-\mu}{\frac{S}{\sqrt{n}}}\hookrightarrow t(n-1)
+$$

@@ -1,0 +1,248 @@
+\documentclass[a4paper, 10pt]{scrartcl}  %article
+
+% Permet l'encodage avec le Unicode Transformation Format-8-bit
+\usepackage[utf8]{inputenc}
+% Permet la gestion des caractères accentués ainsi que la stabilité des impressions en P.D.F.
+\usepackage[T1]{fontenc}
+% Permet la stabilisation de l'écriture
+\usepackage{lmodern}
+% Permet d'utiliser les liens hypertexte sans altérer la bibliothèque KOMA
+\usepackage{scrhack}
+\KOMAoptions{hyperref=false}
+% Utilise les règles gramaticales françaises
+\usepackage[french]{babel}
+
+%Utilise les règles typographique de la bibliothéques KOMA
+\setkomafont{author}{\scshape}
+%\usepackage{blindtext}
+
+% Package pour avoir plus d'arguments dans ses commandes.
+\usepackage{xargs}
+
+%Bibliothèque mathématiques pour la police.
+\usepackage{amsfonts}
+%Bibliothèques mathématiques générale.
+\usepackage{amsmath}
+\usepackage{amssymb}
+%Pour appliquer \mathbb à des nombres
+\usepackage{bbm}
+%Package pour l'indexation de matrices
+\usepackage{blkarray}
+%\usepackage{dsfont}
+%Bibliothèque pour l'affichage de nombre avec la typographie définie
+\usepackage{numprint}
+\newcommand{\np}[1]{\numprint{#1}}
+% Pour la notation scientifique
+\usepackage{siunitx}
+\sisetup{locale= FR,exponent-product=.}
+\DeclareSIUnit\year{ann\'{e}ee}
+%Positionnement des images
+\usepackage{float}
+\usepackage{subcaption}
+%Utilisation des couleurs
+\usepackage{xcolor}
+% Package pour le soulignement
+\usepackage{color,soulutf8}
+\setulcolor{red}
+% Package pour les annotations
+\usepackage{todonotes}
+%\usepackage[pygments]{pythontex} % Pour utiliser Python
+%\usepackage{fvextra} % Utile pour la mise en forme du code source inséré
+%Package pour la programmation
+\usepackage{listings}
+% Package pour les scripts en R
+\lstset{language=R,
+    basicstyle=\small\ttfamily,
+    stringstyle=\color{DarkGreen},
+    otherkeywords={0,1,2,3,4,5,6,7,8,9},
+    morekeywords={TRUE,FALSE},
+    deletekeywords={data,frame,length,as,character},
+    keywordstyle=\color{blue},
+    commentstyle=\color{DarkGreen},
+    }
+
+%Définition de couleurs:
+\definecolor{bleudefrance}{rgb}{.19, .55, .91}
+\definecolor{pakistangreen}{rgb}{.0, .4, .0}
+\definecolor{rossocorsa}{rgb}{0.83, 0.0, 0.0}
+\definecolor{persimmon}{rgb}{0.93, 0.35, 0.0}
+% Annotation auteur
+\newcommand{\Moi}[1]{\todo[color = teal!40]{#1}}
+\newcommand{\Cnsl}[1]{\todo[color = pakistangreen!40]{#1}}
+\newcommand{\MeG}[1]{\todo[color = rossocorsa!40]{#1}}
+%Notation récurrante:
+\newcommandx{\hb}[1]{\widehat{\beta_{#1}}}
+\newcommandx{\prth}[3]{\left( #1 \right)_{1\leq #2 \leq #3}}
+% Encadrement des résultats
+\newcommand{\enc}[1]{\fcolorbox{rossocorsa}{white}{#1}}
+\newcommand{\encB}[1]{\fcolorbox{bleudefrance}{white}{#1}}
+\newcommand{\encV}[1]{\fcolorbox{pakistangreen}{white}{#1}}
+\newcommand{\encN}[1]{\fcolorbox{black}{white}{#1}}
+% Soulignement couleur
+\newcommandx{\sN}[1]{\setulcolor{black}\ul{#1}}
+\newcommandx{\sR}[1]{\setulcolor{rossocorsa}\ul{#1}}
+\newcommandx{\sB}[1]{\setulcolor{bleudefrance}\ul{#1}}
+\newcommandx{\sV}[1]{\setulcolor{pakistangreen}\ul{#1}}
+\newcommandx{\sT}[1]{\setulcolor{teal}\ul{#1}}
+\newcommandx{\sO}[1]{\setulcolor{persimmon}\ul{#1}}
+% Text de couleur
+\newcommandx{\tR}[1]{\textcolor{rossocorsa}{#1}}
+\newcommandx{\tB}[1]{\textcolor{bleudefrance}{#1}}
+\newcommandx{\tV}[1]{\textcolor{pakistangreen}{#1}}
+\newcommandx{\tT}[1]{\textcolor{teal}{#1}}
+\newcommandx{\tO}[1]{\textcolor{persimmon}{#1}}
+% Écriture intervalle
+\newcommandx{\inter}[2]{\left[\![#1, #2]\!\right]}
+% Écriture intégrale
+\newcommand{\Su}[2]{\int\limits_#1^#2}
+% Écriture somme sigma
+\newcommand{\su}[2]{\sum\limits_#1^#2}
+% Écriture P(X)
+\newcommandx{\prob}[1]{\mathbb{P}\left(#1\right)}
+% Écriture P({X})
+\newcommandx{\Prob}[1]{\mathbb{P}\left(\left\{#1 \right\}\right)}
+% Écriture P_{\{Y\}}({X})
+\newcommandx{\ProbC}[2]{\mathbb{P}_{\left\{#1\right\}}\left(\left\{#2\right\}\right)}
+% Ecriture Esperance et Variance
+\newcommandx{\E}[1]{\mathbb{E}\left(#1\right)}
+\newcommandx{\V}[1]{\mathbb{V}\left(#1\right)}
+%Symbole de la norme
+\newcommandx{\norm}[1]{\left\lVert#1\right\rVert}
+
+\title{Titre}
+\author{Siger}
+\begin{document}
+
+\paragraph{8.}
+\begin{itemize}
+	\item[(a)] We perform a simple linear regression with \emph{
+		mpg} as the response and \emph{horsepower} as a 
+		predictor. Here the results:
+<<echo=TRUE, eval=TRUE>>=
+library(MASS)
+library(ISLR)
+library(car)
+lm.fit = lm(mpg~horsepower, data=Auto)
+summary(lm.fit)
+@
+We can observe that there is a relationship between the predictor and 
+the response
+		\begin{itemize}
+			\item[i.] We can observe, that the \emph{
+				p-value} is very low so we can believe
+				that there is a relationship between
+				the predictor and the response.
+			\item[ii.] The RSE equal to $4.906$ on $390$
+				degrees of freedom and $R^{2}=60.59\%$
+				that shows the relationship is a priori
+				strong.
+			\item[iii.] The slope of this simple linear
+				regression is positive thus the
+				relationship between the predictor and
+				the response is positive.
+			\item[iv.]
+<<echo=TRUE, eval=TRUE>>=
+attach(Auto)
+#To get confidence interval:
+predict(lm.fit, data.frame(horsepower=98), interval="confidence")
+#To get prediction interval:
+predict(lm.fit, data.frame(horsepower=98), interval="prediction")
+@
+				So the associated $95\%$ confidence and
+				predictive intervals are respectively
+				equal to: $[23.97, 24.96]$ and $[14.81,
+				34.12]$
+		\end{itemize}
+	\item[(b)] We will plot the response and the predictor:
+<<p1b, fig.pos="H", fig.height=4, fig.cap="The response and the predictor.">>=
+#To plot 
+plot(horsepower, mpg, col='red', pch='+')
+abline(lm.fit, lwd=3, col='green')
+@
+	\item[(c)] As we are in simple regression settings to check
+		if there is a \emph{Non-linerity of the Data} for this
+		we plot simply residual errors vs predictor:
+<<p2b, fig.pos="H", fig.height=4, fig.cap="Residuals errors vs predictor.">>=
+plot(horsepower, residuals(lm.fit), type='o', col='blue')
+@
+		After this we check if it exists correlation of errors
+		terms, ploting Residuals vs observation number:
+<<p3b, fig.pos="H", fig.height=4, fig.cap="Residuals vs observation number.">>=
+plot(residuals(lm.fit), type='o', col='red')
+title(xlab='Observation number')
+@
+We do not observe pattern in those plots.\\The residual errors stay
+confined so there is no \emph{Non-constant variance of error terms}
+issues. We do not see neither \emph{Outliers} or \emph{High leverage
+points}. Finaly as a simple regression there is no matter of \emph{
+Colinearity}
+\end{itemize}
+\paragraph{9.}
+\begin{itemize}
+	\item[(a)] Here a scatterplot matrix including all variables:
+<<p4b, fig.pos="H", fig.height=4, fig.cap="Scatterplot matrix.">>=
+pairs(Auto)
+@
+	\item[(b)] For the matrix of correlation:
+<<p5b, fig.pos="H", fig.height=4, fig.cap="Matrix of correlation.">>=
+Table = data.frame(Auto)
+cor(Table[, -9])
+@
+	\item[(c)]We use multiple linear regression with mpg and the 
+		predictors
+<<echo=TRUE, eval=TRUE>>=
+lm.fit = lm(mpg~.-name, data=Auto)
+summary(lm.fit)
+@
+	\begin{itemize}
+		\item[i.] The \emph{F-statistic} is a means to compute
+			hypothesis test to know if there is or not a
+			relationship between the response and the 
+			predictors. When $F-statistic$ takes a value
+			close to $1$ then there is not relationship,
+			but here \emph{F-statistic} equals to $252.4$
+			on the $7$ predictors that are the most 
+			significant.
+		\item[ii.] Regarding the \emph{p-value} associated
+			with \emph{F-statistic} the most significant
+			predictors are: weight, year, origin and
+			displacement.
+		\item[iii.] The year coefficient means that in $10$
+			years the distance traveled growth of $75$
+			miles per gallon.
+	\end{itemize}
+	\item[(d)] Recall that main problems that we can encountered
+		are: \emph{Non-linerity of the Data, Correlation of
+		error terms, Non-constant variance of error terms,
+		Outliers, High-leverage points, and Colinearity}.
+		\begin{itemize}
+			\item[Non-linerity] It suffices to plot 
+				residual errors vs the predicted 
+				response
+<<p6b, fig.pos="H", fig.height=4, fig.cap="Residuals vs the predicted response.">>=
+y_predict = predict(lm.fit)
+plot(y_predict, residuals(lm.fit), type='o', col='blue')
+@
+We do not identify any pattern in the Residuals vs the predicted
+response plot
+			\item[Colinearity of error terms] We plot 
+				residuals vesus observation:
+<<p7b, fig.pos="H", fig.height=4, fig.cap="Residuals vs observation number.">>=
+plot(residuals(lm.fit), type='o', col='red')
+@
+				This time we observe that residual 
+				values increase with observation,
+				we suspect a correlation in the error
+				terms.
+			\item[Non-constant variance of error terms ] We
+				can observe that the residual values
+				tend to stay confined between $5$ and
+				$-5$.
+			\item[Non-linerity]
+			\item[Non-linerity]
+			\item[Non-linerity]
+		\end{itemize}
+	\item[(e)]
+	\item[(f)]
+\end{itemize}
+\end{document}

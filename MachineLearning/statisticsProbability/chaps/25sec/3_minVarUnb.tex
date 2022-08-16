@@ -1,0 +1,60 @@
+\paragraph{Definition}
+Let $\hat{\theta}$ to be an unbiased estimator of $\theta$
+For any unbiased estimator $\hat{T}$ of $\theta$:
+$\V{\hat{\theta}} \leq \V{\hat{T}} \Leftrightarrow 
+\hat{\theta}$ is said to be a uniform minimum variance unbiased
+estimator of $\theta$.
+
+\paragraph{Definition (2)}
+Let $\hat{\theta}$ to be an unbiased estimator of $\theta$.
+$\hat{\theta}$ minimizes the variance $\E{\left[\hat{\theta}-\theta\right]^{2}} \Rightarrow \hat{\theta}$ is said to be a minimum variance 
+unbiased estimator.
+
+\paragraph{Minoration of an unbiased estimator}
+$
+\text{For any }h\left(\prth{x}{i}{1}{n}\right)\text{ with }
+\E{h\left(\prth{x}{i}{1}{n}\right)}<\infty
+$
+$$
+\begin{cases}
+	X\text{ a population with pdf }f(x;\theta)\\
+	\prth{X}{i}{1}{n}\text{ a random sample of size }n\text{ from
+	X}\\
+	\hat{\theta}\text{ any unbiased estimator of }\theta\\
+	L(\theta)\text{ the likelihood function is differentiable}\\
+	\dfrac{d}{d\theta}\Su{-\infty}{\infty}\cdots\Su{-\infty}{\infty}h\left(\prth{x}{i}{1}{n}\right)L(\theta)dx_{1}\cdots dx_{n} = 
+	\Su{-\infty}{\infty}\cdots\Su{-\infty}{\infty}h\left(\prth{x}{i}{1}{n}\right)\dfrac{d}{d\theta}L(\theta)dx_{1}\cdots dx_{n}
+\end{cases}
+$$
+
+$$
+\Rightarrow
+\V{\hat{\theta}} \geq \dfrac{1}{\E{\left[\frac{\partial~ln\left(L(\theta)\right)}{\partial\theta}\right]^{2}}}
+$$
+If $L(\theta)$ is twice differentiable with respect to $\theta$, the
+last inequality can be stated equivalently as 
+$
+\V{\hat{\theta}} \geq \dfrac{-1}{\E{\frac{\partial^{2}~ln\left(L(\theta)\right)}{\partial\theta^{2}}}}
+$
+\paragraph{Theorem}
+$
+\begin{cases}
+	X\text{ a population with pdf }f(x;\theta)\\
+	\prth{X}{i}{1}{n}\text{ a random sample of size }n\text{ from
+	X}\\
+	\hat{\theta}\text{ an unbiased estimator}\\
+	\V{\hat{\theta}} = \dfrac{1}{\E{\left[\frac{\partial~ln\left(L(\theta)\right)}{\partial\theta}\right]^{2}}}
+
+\end{cases}\\
+\Rightarrow 
+\hat{\theta}
+$ is a minimum variance unbiased estimator of $\theta$
+
+\paragraph{Cramér-Rao lower bound} 
+Let $\hat{\theta}$ to be a unbiased estimator.\\ 
+$
+\V{\hat{\theta}} = \dfrac{1}{\E{\left[\frac{\partial~ln\left(L(\theta)\right)}{\partial\theta}\right]^{2}}}
+\Rightarrow
+\hat{\theta}
+$
+is an efficient estimator

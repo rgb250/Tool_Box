@@ -1,0 +1,58 @@
+Aim: representing data in a compact fashion.\\
+Note that compactly representing data requires allocating short codewords to 
+highly probable bit strings, and reserving longer codewords to less probable
+bit strings.
+
+\paragraph{Entropy}
+The \textbf{entropy} is a measure of its uncertainty, $\mathbb{H}(X)$
+\begin{center}
+	$\mathbb{H}(X) \triangleq - \su{{k=1}}{K}\Prob{X=k}\log_{2}(
+	\Prob{X=k})$
+\end{center}
+
+\paragraph{KL Divergence}
+\paragraph{Equality}
+Kullback-Leibler divergence or \textbf{relative entropy} allows to measure
+the dissimilarity of 2 probability distribution $p$ and $q$.\\
+\begin{align*}
+	\mathbb{KL}(p||q) &\triangleq \su{{k=1}}{k}p_{k}\log\left(
+\dfrac{p_{k}}{q_{k}}\right)\\
+	&= \su{k}{}p_{k}\log\left(p_{k}\right) - \su{k}{}p_{k}\log\left(q_{k}
+	\right)\\
+	&=  -\mathbb{H}(p) + \underbrace{\mathbb{H}(p,q)}_{\text{cross 
+	entropy}}
+\end{align*}
+
+
+\paragraph{Inequality}
+Let $(p,q)$ 2 distinct probability distributions 
+$\begin{cases}
+	\mathbb{KL} \geq 0 \\
+	p=q \Rightarrow \mathbb{KL} = 0
+\end{cases}$
+\paragraph{Mutual Information}
+\subparagraph{Definition}
+Aim: knowing how much knowing one varaible tells us about one other.
+Motivation: The correlation coefficient is only defined for real-valued variables and has some limitations. 
+Purpose: Determining how similar the joint distribution $p(X, Y)$ is to the factored 
+distribution $p(X), p(Y)$
+\begin{align*}
+    \mathcal{I}(X:Y) &\triangleq \mathcal{KL}(p(X, Y) || p(X), p(Y)) \\
+                     &= \su{x}{}\su{y}{}p(x, y)\log\left(\dfrac{p(x,y)}{p(x)p(y)}\right)
+\end{align*}
+\subparagraph{Pointwise Mutual Information}
+This measures the discripencey between these events occuring together compared to what 
+would be expected by chance. MI is indeed the expected value of the PMI\\
+$PMI(x, y) = \log\left(\dfrac{p(x, y)}{p(x)p(y)}\right) = \log\left(\dfrac{p(x|y)}
+{p(x)}\right) = \log\left(\dfrac{p(y|x)} {p(y)}\right)$a\\
+This is the amount we learn from updating the prior $p(x)$ into the posterior $p(x|y)$, 
+or equivalently updating the prior $p(y)$ into the posterior $p(y|x)$.
+
+\subparagraph{Maximal Information Coefficient}
+For continuous random variables, it is common to \textbf{discretize} by dividing the 
+ranges of each variable into bins. As the bin boundaries can have a significant impact, we
+can try many different bin sizes and location, then compute the maximum MI achieved.
+This statistic, appropriately normalized, is known as the Maximal Information Coefficient
+(MIC).\\
+
+$MIC \triangleq \displaystyle\max_{x,y:xy<B} \dfrac{\max_{G\in\mathcal{G}(x,y)}\mathcal{I}(X(G):Y(G))}{\log(\min(x,y))}$

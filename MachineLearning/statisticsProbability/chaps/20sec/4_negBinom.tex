@@ -1,0 +1,38 @@
+\paragraph{Definition}
+A discrete bivariate random variable $(X, Y )$ is said to have
+the bivariate negative Binomial distribution with parameters $k, p_{1}, p_{2}$ if its joint probability density is of the
+form
+\begin{center}
+	$f(x,y)=
+	\begin{cases}	
+		\dfrac{(x+y+k-1)!}{x!y!(k-1)!}p_{1}^{x}p_{2}^{y}(1-p_{1}-p_{2})^{k}\Leftarrow (x,y)\in\mathbb{N}^{2}\\
+		0\Leftarrow (x,y)\not\in\mathbb{N}^{2} 
+	\end{cases}$	
+	$\Rightarrow \left( X,Y \right)\hookrightarrow NBIN(p_{1},p_{2})
+	$
+\end{center}
+where $0<p_{1},p_{2}, p_{1}+p_{2}<1$
+\paragraph{Properties}
+\begin{center}
+	$
+	\begin{cases}
+		\E{X}=\dfrac{kp_{1}}{1-p_{1}-p_{2}}\\
+	\E{Y}=\dfrac{kp_{2}}{1-p_{1}-p_{2}}\\
+	\V{X}=\dfrac{kp_{1}(1-p_{1})}{1-p_{1}-p_{2}}\\
+	\V{Y}=\dfrac{kp_{2}(1-p_{2})}{1-p_{1}-p_{2}}\\
+	Cov{X,Y}=\dfrac{kp_{1}p_{2}}{1-p_{1}-p_{2}}\\
+	M(s,t)=\dfrac{(1-p_{1}-p_{2})^{k}}{(1-p_{1}e^{s}-p_{2}e^{t})^{k}}
+	\end{cases}
+	$
+\end{center}
+\paragraph{Conditional Properties}
+\begin{center}
+	$
+	\begin{cases}
+	\Ec{X=x}{Y}=\dfrac{p_{2}(k+x)}{1-p_{1}}\\
+	\Ec{Y=y}{X}=\dfrac{p_{1}(k+y)}{1-p_{2}}\\
+	\Vc{X=x}{Y}=\dfrac{p_{2}(k+p_{1}-p_{2})(1-x)}{(1-p_{1})^{2}}\\
+	\Vc{Y=y}{X}=\dfrac{p_{1}(k+p_{1}-p_{2})(1-y)}{(1-p_{2})^{2}}
+	\end{cases}
+	$
+\end{center}

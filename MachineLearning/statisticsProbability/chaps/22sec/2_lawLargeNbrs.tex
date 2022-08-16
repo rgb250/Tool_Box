@@ -1,0 +1,27 @@
+\paragraph{Markov inequality}
+\begin{center}
+		$X\neq\underline{0}\Rightarrow \Prob{X\geq t}\leq \dfrac{\E{X}}{t}$
+\end{center}
+\paragraph{Theorem weak law of large numbers:}
+Let $\prth{X}{i}{1}{n}\text{: independent \& identically distributed RV}$
+\begin{center}
+	$\lm{n}{\infty}\Prob{\left|\overline{S}_{n}-\mu\right|\geq\epsilon}=0$ with $\overline{S}_{n}=\dfrac{1}{n}\su{ {i=1}}{n}X_{i}$
+\end{center}
+\paragraph{Convergence in probability}
+Suppose $\prth{X}{i}{1}{n}$ is a sequence of random variables de-
+fined on a sample space S. The sequence ``converges in probability'' to the
+random variable X if, for any $\epsilon>0$
+\begin{center}
+	$\lm{n}{\infty}\Prob{\left|X_{n}-X\right|<\epsilon}=1$
+\end{center}
+\paragraph{Convergence almost surely}
+Suppose the RV $X\text{ and }\prth{X}{i}{1}{n}$ is a sequence of random variables de-
+fined on a sample space S. The sequence $X_{n}(\omega)$ ``converges almost surely'' to $X(\omega)$ if
+\begin{center}
+	$\Prob{w\in S|\lm{n}{\infty}X_{n}(\omega)=X(\omega)}=1$
+\end{center}
+\paragraph{Properties}
+\begin{itemize}
+	\item For a Bernoulli distribution, $\overline{S}_{n}\text{ converges in probability to }p$
+	\item For a Normal distribution, $\overline{S}_{n}\text{ converges almost surely to }\mu$
+\end{itemize}

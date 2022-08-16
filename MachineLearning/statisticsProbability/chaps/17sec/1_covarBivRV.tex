@@ -1,0 +1,18 @@
+\paragraph{Product Moment}
+The product moment of $X$ and $Y$, denoted $\E{XY}$ is defined as:
+\begin{center}
+	$\begin{cases}
+		\su{ {x\in R_{X}}}{}\su{ {y\in R_{Y}}}{}xyf(x,y)\text{ if }X\text{ and } Y\text{ are discrete}\\
+		\Su{ {-\infty}}{\infty}\Su{ {-\infty}}{\infty}xyf(x,y)dxdy\text{ if }X\text{ and } Y\text{ are continuous}
+	\end{cases}$
+\end{center}
+\paragraph{Covariance}
+\subparagraph{Definition}
+Let $X$ and $Y$ 2 random variables with joint density function $f$:
+\begin{center}
+	$Cov\left( X,Y \right)=\E{\left( X-\mu_{X} \right)\left( Y-\mu_{Y} \right)}= \E{XY}-\E{X}\E{Y}$
+\end{center}
+\subparagraph{Properties}
+\begin{center}
+	$Cov(aX+b, cY+d)=acCov(X,Y)$
+\end{center}

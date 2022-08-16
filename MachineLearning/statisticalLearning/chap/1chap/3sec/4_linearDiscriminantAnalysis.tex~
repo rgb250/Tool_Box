@@ -1,0 +1,154 @@
+Why do we need another method that logistic regression in the case of
+several response classes?
+\begin{itemize}
+	\item When classes are well-separated, the \sB{parameter 
+		estimates for the logistic regression model are
+		unstable}
+	\item If \sB{$n$ is small and the distribution of the 
+		predictors is approximately normal in each classe}, the
+		\emph{linear discriminant model} is \tB{more stable 
+		than the logistic.}
+	\item Linear discriminant analysis is popular when we have 
+		\sB{more than $2$ response classes}.
+ \end{itemize}
+\paragraph{Using Bayes Theorem for classification}
+Let \tB{$\pi_{k}$ represents the prior probability} that a randomly
+chosen observation comes from the $k^{th}$ class. Let $f_{k}\text{ such
+that }\tB{f_{k}(x) \equiv\ProbC{X=x}{Y=k}}$ the density function of $X$
+for an observation that comes from $k^{th}$ class:\\
+\enc{$\ProbC{X=x}{Y=k}=\dfrac{\pi_{k}f_{k}(x)}{\su{{j=1}}{K}\pi_{j}f_{j}(x)}$}
+\paragraph{Linear Discriminant Analysis for p=1}
+Aims:
+\begin{enumerate}
+	\item To obtain an estimate for $f_{k}(x)$ that we can plug 
+		into $\ProbC{X=x}{Y=k}=\dfrac{\pi_{k}f_{k}(x)}{\su{{j=1}}{K}\pi_{j}f_{l}(x)}$
+	\item To classify an observation to the class for which $p_{k}(x)$ is greatest
+\end{enumerate}
+Assumption:
+$f_{k}(x)$ is \emph{Gaussian} that is $f_{k}(x)=\dfrac{1}{\sqrt{2\pi\sigma_{k}}}e^{-\frac{1}{2\sigma_{k}^{2}}(x-\mu_{k})^{2}}$
+Knowing that $\sigma_{1}^{2}= \cdots = \sigma_{K}^{2}$ and taking the log of $p_{k_{x}}=\dfrac{\pi_{k}\dfrac{1}{\sqrt{2\pi\sigma}}e^{-\frac{1}{2\sigma^{2}}(x-\mu_{k})^{2}}}{\su{{j=1}}{K}\pi_{j}\dfrac{1}{\sqrt{2\pi\sigma}}e^{-\frac{1}{2\sigma^{2}}(x-\mu_{i})^{2}}}$\\
+It is equivalent to assigning the observation to the classer for which:
+\\
+\enc{$\delta_{k}(x)=x\frac{\mu_{k}}{\sigma^{2}}-\frac{\mu_{k}^{2}}{2\sigma^{2}}+ln(\pi_{k})$} is the largest.\\
+The \emph{linear discriminant analysis} (LDA) method approximates the
+Bayes classifier by plugging estimates for $\pi_{k},\mu_{k}\text{ and }\sigma^{2}$:\\
+\encB{
+$
+\begin{cases}
+	\hat{\pi}_{k} = \frac{n_{k}}{n}\\
+	\hat{\mu}_{k} = \dfrac{1}{n_{k}}\su{{i:y_{i}=k}}{}x_{i}\\
+	\hat{\sigma}^{2} = \dfrac{1}{n-K}\su{{k=1}}{K}\su{{i:y_{i}=k}}{}\left(x_{i}-\hat{\mu}_{k}\right)
+\end{cases}$}
+
+\paragraph{Linear Discriminant Analysis for p>1}
+Now we assume that $X=\prth{X}{i}{n}\hookrightarrow\mathcal{N}(\mu,\Sigma)$
+Here $\E{X}=\mu = 
+\begin{pmatrix}
+	\mu_{1}\\
+	.\\
+	.\\
+	.\\
+	\mu_{p}
+\end{pmatrix}
+\text{ and } \Sigma = 
+\begin{pmatrix}
+	Cov\left( X_{1},X_{1} \right) & \cdots & Cov\left( X_{1},X_{j}\right) &\cdots & Cov\left( X_{1},X_{n} \right)\\
+	&\cdots& & &\\
+	&\cdots& & &\\
+	&\cdots& & &\\
+	Cov\left( X_{i},X_{1} \right) & \cdots & Cov\left( X_{i},X_{j}\right) &\cdots & Cov\left( X_{i},X_{n} \right)\\
+	&\cdots& & &\\
+	&\cdots& & &\\
+	&\cdots& & &\\
+	Cov\left( X_{n},X_{1} \right) & \cdots & Cov\left( X_{n},X_{j}\right) &\cdots & Cov\left( X_{n},X_{n} \right)\\
+\end{pmatrix}\\
+\text{ and }
+\tB{f(x)=\dfrac{1}{(2\pi)^{\frac{p}{2}}|\Sigma|^{\frac{1}{2}}}exp\left( \dfrac{1}{2}(x-\mu)^{T}\Sigma^{-1}(x-\mu) \right)}
+	$\\
+\text{ then }
+$$
+\tR{\delta_{k}(x) = x^{T}\Sigma^{-1}\mu_{k}-\dfrac{1}{2}\mu_{k}^{T}\Sigma^{-1}\mu_{k}+ln(\pi_{k})}
+$$
+
+\paragraph{Quadratic Discriminant Analysis}
+unlike LDA, QDA assumes that each class has its own covariance matrix.
+That is for an observation from the $k^{th}$ class 
+\tR{$X\hookrightarrow N(\mu_{k},\Sigma^{k})$}
+\begin{align*}
+	\delta_{k}(x) &= -\dfrac{1}{2}(x-\mu_{k})^{T}\Sigma_{k}^{-1}(x-\mu_{k})-\dfrac{1}{2}\ln|\Sigma_{k}|+\ln(\pi_{k})\\
+	&= -\dfrac{1}{2}x^{T}\Sigma_{k}^{-1}x+x^{T}\Sigma_{k}^{-1}\mu_{k}-\dfrac{1}{2}\mu_{k}^{T}\Sigma_{k}^{-1}\mu_{k}-\dfrac{1}{2}\ln|\Sigma_{k}|+\ln(\pi_{k})
+\end{align*}
+
+\paragraph{Regularized Discriminant Analysis}
+The regularize covariance matrices have the form:
+$$ \hat{\bm{\Sigma}}_{k}(\alpha) = \alpha\hat{\bm{\Sigma}}_{k} + (1-\alpha)\hat{\bm{\Sigma}}$$
+where $\hat{\bm{\Sigma}}$ is the pooled covariance matrix as used in LDA.
+Here $\alpha\in[0, 1]$ allows a continuum of models between LDA and QDA, $\alpha$ can be choosed
+by cross-validation. \\
+Similar modifications allow $\hat{\bm{\Sigma}}$ itself to be shrunk toward the scalar covariance:
+$$ \hat{\bm{\Sigma}}(\gamma) = \gamma\hat{\bm{\Sigma}} + (1-\gamma)\hat{\sigma}^{2}\bm{I}$$
+for $\gamma\in [0, 1]$
+
+\paragraph{computations for LDA}
+The Computations of LDA and QDA are simplified by diagonalizing $\hat{\bm{\Sigma}}$ or 
+$\hat{\bm{\Sigma}}_{k}$ for the latter, suppose we compute the eigendecomposistion for each
+$\hat{\bm{\Sigma}}_{k} = \bm{U}_{k}\bm{D}_{k}\bm{U}_{k}^{T}\text{ where } \bm{U}_{k}\text{ is }
+p\times p$ orthonormal and $\bm{D}_{k}$ a diagonal matrix of positive eigenvalues $d_{kl}$.
+\begin{itemize}
+	\item $(x-\hat{\mu}_{k})^{T}\hat{\bm{\Sigma}}^{-1}_{k}(x-\hat{\mu}_{k}) =
+		\left[ \bm{U}_{k}^{T}(x-\hat{\mu}_{k}) \right]^{T}\bm{D}_{k}^{-1}
+		\left[ \bm{U}_{k}^{T}(x-\hat{\mu}_{k}) \right]$
+	\item $\log\left( \hat{\bm{\Sigma}}_{k} \right) = \su{l}{}\log(d_{kl})$
+\end{itemize}
+LDA classifier can be implemented by the following pair of steps:
+\begin{itemize}
+	\item \textbf{Sphere} the data with respect to the common covariance estimate $\hat{\bm{\Sigma}}: X^{*} \leftarrow \bm{D}^{\frac{1}{2}}\bm{U}^{T}X$ where $\hat{\bm{Sigma}} = \bm{U}\bm{D}\bm{U}^{T}$. The common covariance estimate of $X^{*}$ will now be the identity.
+	\item Classify to the closet class centroid in the transformed space, modulo the effect of
+		the class prior probabilities $\pi_{k}$.
+\end{itemize}
+
+\paragraph{Reduced-Rank Discriminant Analysis}
+The $K$ centroids in $p-\text{dimensional}$ input space lie in an affine subspace of dimension
+$\leq K-1$, and if $p$ is much larger than $K$ this will be a considerable drop in dimension.\\
+Moreover in locating the closet centroid we can ignore distances orthogonal to this subspace, 
+since they will contribute equally to each class. Thus we might just as well project the $X^{*}$
+onto centroid-spanning subspace $H_{K-1}$ and make distance comparisons there.
+
+Finding the sequences of optimal subspaces for LDA involves the following steps:
+\begin{itemize}
+	\item compute the $K\times p$ matrix of class centroids $\bm{M}$ and the common covariance
+		matrix $\bm{W}$
+	\item compute $\bm{M}^{*} = \bm{M}\bm{W}^{-\frac{1}{2}}$ using the eigen-decomposition of 
+		$\bm{W}$
+	\item compute $\bm{B}^{*}$, the covariance matrix of $\bm{M}^{*}$ and its 
+		eigen-decomposition $\bm{B}^{*} = \bm{V}^{*}\bm{D}_{B}(\bm{V}^{*})^{T}$.
+		The columns $v_{l}^{*}$ of $\bm{V}^{*}$ in sequence from first to last define
+		the coordinates of the optimal subspaces.
+\end{itemize}
+Combining all these operations the $l^{th}$ discriminant variable is given by $Z_{l}=v_{l}^{T}X$
+with $v_{l}=\bm{W}^{-\frac{1}{2}}v_{l}^{*}$
+
+Fisher arrived at this decomposition via a different route, without referring to Gaussian 
+distribution at all.
+\begin{center}
+	Find the linear combination $Z=a^{T}X$ such that the between class variance is maximized
+	relative to the within-class variance.
+\end{center}
+
+The between-class variance of $Z$ is a $a^{T}\bm{B}a$ and the within-class variance $a^{T}\bm{W}a$,
+where $\bm{W}$ is defined earlier, and $\bm{B}$ is the covariance matrix of the class centroid matrix
+$\bm{M}$.\\
+Fisher's problem therefore amounts to maximizing the Rayleigh quotient:
+$$ \max\limits_{a}\dfrac{a^{T}\bm{B}a}{a^{T}\bm{W}a}$$ or equivalently:
+$$ \max\limits_{a}a^{T}\bm{B}a \text{ subject to } a^{T}\bm{W}a=1$$
+This is a generalized eigenvalue problem, with $a$ given by the largest eigenvalue of $\bm{W}^{-1}
+\bm{B}$. 
+\begin{itemize}
+	\item Gaussian classification with common covariances leads to linear decision boundaries
+	\item One can confine the data to the subspace spanned by the centroids in the sphered
+		space.
+	\item This subspace can be further decomposed into successively optimal subspaces in 
+		term of centroid separation. This decomposition is identical to the decomposition
+		due to Fisher.
+\end{itemize}
+

@@ -1,0 +1,65 @@
+\paragraph{Definition}
+Let $\prth{X}{i}{1}{n}$ be a random sample from a population $X$ with
+probability density function $f(x;\theta)$, where $\theta$ is an
+unknown parameter. The likelihood, $L(\theta)$, is the distribution of
+the sample. That is:
+$$
+L(\theta) = \prd{{i=1}}{n}f(x_{i};\theta)
+$$
+The $\theta$ that maximizes the likelihood function $L(\theta)$ is
+called the maximum likelihood estimator of $\theta$ and it is denoted
+by $\hat{\theta}$
+
+\paragraph{Method}
+\begin{enumerate}
+	\item Obtain a random sample $\prth{x}{i}{1}{n}$ from the
+		distribution $X$ with probability density function
+		$f(x;\theta)$
+	\item Define the likelihood function for the sample 
+		$\prth{x}{i}{1}{n}$ 
+		by $L(\theta)=\prd{{i=1}}{n}f(x_{i};\theta)$
+	\item find the expression for $\theta$ that maximizes 
+		$L(\theta)$. This can be done directly or by maximizing
+		$ln\left(L(\theta)\right))$
+	\item replace $\theta$ by $\hat{\theta}$ to obtain an 
+		expression for the maximum likelihood estimator for
+		$\theta$
+	\item find the observed value of this estimator for a given
+		sample.
+\end{enumerate}
+
+\paragraph{Theorem}
+Let $\hat{\theta}$ be a maximum likelihood estimator of a parameter
+$\theta$ and let $g(\theta)$ be a function of $\theta$. Then the 
+maximum likelihood estimator of $g(\theta)$ is given by 
+$g\left(\hat{\theta}\right)$
+
+\paragraph{Fisher information}
+Let $X$ be an observation from a population with probability density 
+function $f(x;\theta)$. Suppose $f(x;\theta)$ is continuous, twice
+differentiable and it's support does not depend on $\theta$. Then the
+Fisher information $I(\theta)$ in a single observation $X$ about 
+$\theta$ is given by:
+$$
+I(\theta) = \Su{-\infty}{\infty}\left[\frac{d~ln\left(f(x;\theta)\right)}{d\theta}\right]^{2}f(x;\theta)dx
+$$
+It can be given alternatively as:
+$$
+I(\theta) = -\Su{-\infty}{\infty}\left[\frac{d^{2}~ln\left(f(x;\theta)\right)}{d\theta^{2}}\right]f(x;\theta)dx
+$$
+$
+\begin{cases}
+	\prth{X}{i}{1}{n}\text{ random sample from }X\\
+	X\hookrightarrow f(x;\theta)
+\end{cases}
+\Rightarrow I_{n}(\theta) = nI(\theta)
+$
+\paragraph{Theorem}
+Under certain regularity conditions on the $f(x;\theta)$ the maximum
+likelihood estimator $\hat{estimator}$ of $\theta$ based on a random
+sample of size $n$ from a population $X$ with probability density 
+$f(x;\theta)$ is asymptotically normally distributed with mean 
+$\theta$ and variance $\frac{1}{nI(\theta)}$. That is :
+$$
+\hat{\theta}_{ML} \hookrightarrow N\left( \theta,\frac{1}{nI(\theta)} \right)\text{ as }n\rightarrow\infty
+$$
