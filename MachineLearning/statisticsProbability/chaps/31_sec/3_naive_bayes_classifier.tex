@@ -1,0 +1,109 @@
+\subsection{Naive Bayes classifiers}
+The aim is to classify vectors of discrete-valued features $\bm{x}\in 
+\left\{x_{i}\right\}^{D}_{1\leq i\leq K}$. Using generative approach requires us to 
+specify the class conditional distribution $\ProbC{y=c}{\bm{x}}$.\\
+We assume that the features are \emph{conditionally independent} given the class label.
+\begin{center}
+    $\ProbC{y=c, \theta}{\bm{x}} = \prd{j=1}{D}\ProbC{y=c,\bm{\theta}_{jc}}{x_{j}}$
+\end{center}
+This model is qualified of naive because actually we do not expect the features to be
+independent, even conditional on the class label.\\
+Considering $c$ parameters, and $d$ features, the model is only $O(c\times d)$ and hence 
+it is relatively immune to overfitting.
+Use cases: 
+\begin{itemize}
+    \item Real-valued features with Gaussian distribution
+    \item Binary features
+    \item Categorical features with multinoulli distribution.
+\end{itemize}
+
+
+\paragraph{Model fitting}
+By computing the \emph{MLE} or the \emph{MAP}
+
+\subparagraph{MLE for NBC}
+The probability for a single data case is given by
+\begin{align*}
+    \ProbC{\theta}{x_{i}, y_{i}} 
+    &= \ProbC{\pi}{y_{i}} \prd{j}{D}\ProbC{\theta_{j}}{x_{ij}}\\ 
+    &= \prd{c}{C}\pi^{\mathbbm{1}_{\{y_{i}=c\}}}_{c}\prd{j}{D}\prd{c}{C}
+    \ProbC{\theta_{jc}}{x_{ij}}^{\mathbbm{1}_{\{y_{i}=c\}}}
+\end{align*}
+Then the log-likelihood is given by 
+\begin{center}
+    $\log\left(\ProbC{\theta}{D}\right) = 
+    \su{c=1}{C}N_{c}\log(\pi_{c}) + \su{j=1}{D}\su{c=1}{C}\su{i:y_{i}=c}{}
+    \log \left(\ProbC{\theta_{jc}}{x_{ij}}\right)$
+\end{center}
+Remember that the prior is just a ratio, in our case: 
+\begin{center}
+    $\hat{\pi_{c}} = \dfrac{N_{c}}{N}$
+\end{center}
+With $N_{c} = \su{i}{}\mathbbm{1}_{\{y_{i}=c\}}$ 
+The MLE for the likelihood depends on the type of distribution we choose to use for each
+feature. For example, if we consider $x_{j}|y=c ~ Bernoulli(\theta_{jc})$\\
+Then $\theta_{jc} = \dfrac{N_{jc}}{N_{c}}$
+
+\subparagraph{Bayesian naive Bayes}
+The trouble with maximum likelihood is that it can overfit. 
+A simple solution to overfitting is to be Bayesian.
+For simplicity let's use a factored prior:
+\begin{center}
+    $\Prob{\theta} = \Prob{\pi}\prd{j=1}{D}\prd{c=1}{C}\Prob{\theta_{jc}}$
+\end{center}
+We will use a $Dir(\alpha)$ prior for $\bm{\pi}$ and a $Beta(\beta_{0}, \beta_{1})$ prior
+for each $\theta_{jc}$
+Then we get:
+$\begin{cases}
+    \ProbC{D}{\theta} = \ProbC{D}{\pi}\prd{j=1}{D}\prd{c=1}{C}\ProbC{D}{\theta_{jc}}\\
+    \ProbC{D}{\pi} = Dir(\su{c=1}{C}N_{c}+\alpha_{c}) \\
+    \ProbC{D}{\theta_{jc}} = Beta(N_{c}-N_{jc} + \beta_{0}, N_{jc} + \beta{1})
+\end{cases}$ \\
+In other words, to compute teh posterior we just update the prior counts with the 
+empirical counts from the likelihod.
+
+\paragraph{Using the model for prediction}
+Aim: compute 
+$\ProbC{\bm{x}, \mathcal{D}}{y=c} \propto \ProbC{\mathcal{D}}{y=c}\prd{j=1}{D}
+\ProbC{y=c, \mathcal{D}}{x_{j}}$
+
+The correct Bayesian procedure is to integrate out the unknown parameters 
+\begin{align*}
+\ProbC{\bm{x}, \mathcal{D}}{y=c}
+&\propto \Su{}{}Cat(y=c|\bm{\pi})\ProbC{\mathcal{D}}{\bm{\pi}}\\
+&= \prd{j=1}{D}\Su{}{}Ber(x_{j}|y=c, \theta_{jc})\ProbC{\mathcal{D}}{\theta_{jc}}
+\end{align*}
+Fortunately, this is easy to do, at least if the posterior is Dirichlet.
+
+\paragraph{The log-sum-exp trick}
+Unfortunately a naive implementation can fail due to numerical underflow, the problem is 
+that $\ProbC{y=c}{\bm{x}}$ is often very small, especially if $\bm{x}$ is a 
+high-dimensional vector. This is because we require that $\su{\bm{x}}{}\ProbC{y}{\bm{x}}
+= 1$.\\ 
+The obvious solution is to take logs when applying the Bayes rule:
+$\begin{cases}
+    b_{c} \triangleq \log(\ProbC{y=c}{\bm{x}}) + \log(\Prob{y=c})\\
+    \log(\ProbC{\bm{x}}{y=c}) = b_{c} - \log\left(\su{c'=1}{C}e^{b_{c'}}\right)
+\end{cases}$
+This requires evaluating the last member of the first above equation, but we can factor
+out the largest term and just represent the remaining numbers relative to that
+In general 
+\begin{align*}
+    \log \left(\su{c}{}e^{b_{c}}\right) 
+    &=  \log \left(\left(\su{c}{}e^{b_{c} - B}\right)e^{B}\right)\\
+    &=  \log \left(\su{c}{}e^{b_{c} - B}\right) + B
+\end{align*}
+where $B = \max_{c}b_{c}$
+This technique is widely used.
+
+
+\subsection{Feature selection using mutual information}
+In using 
+\begin{center}
+    $I(X, Y) = \su{x_{j}}{}\su{y}{}\Prob{x_{j}, y}\times
+    \log \left(\dfrac{\Prob{x_{j}, y}}{\Prob{x_{j}}\Prob{y}}\right)$
+\end{center}
+The mutual information can be thought of as the reduction in entropy on the label 
+distribution once we observe the value of feature $j$.
+
+
