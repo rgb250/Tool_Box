@@ -1,0 +1,35 @@
+Basic example of Bayes theory.
+
+\subsection{Likelihood}
+Suppose $ X \hookrightarrow \mathcal{B}(\theta)$ and $n_{1}$ the number of heads, and 
+$n_{0}$ the number of tails.
+\begin{center}
+    $\Prob{\theta}{\mathcal{D}} = \theta^{n_{1}} (1-\theta)^{n_{0}}$
+\end{center}
+
+\subsection{Prior}
+To make the maths easier it would be convenient to choose a prior having the same form as
+the Likelihood, in this situation we call it a \textbf{conjugate prior}. In our case:
+\begin{center}
+    $\Prob{\theta} \propto \theta^{\gamma_{1}} \left(1-\theta^{\gamma_{1}}\right)$
+\end{center}
+Then we can easily evaluate the posterior:
+\begin{align*}
+    \ProbC{\mathcal{D}}{\theta}
+    &\propto \ProbC{\theta}{\mathcal{D}} \times \Prob{\theta}\\
+    &= \theta^{\gamma_{1}} \left(1-\theta^{\gamma_{1}}\right)\\ 
+    &= \theta^{n_{1}} (1-\theta)^{n_{0}} \theta^{\gamma_{1}} (1-\theta)^{\gamma_{0}}\\ 
+    &=\theta^{n_{1}+\gamma_{1}} (1-\theta)^{n_{0}+\gamma_{1}}
+\end{align*}
+
+\subsection{Posterior}
+\begin{center}
+    $\ProbC{\mathcal{D}}{\theta} \propto Bin_{(\theta, N_{0} + N_{1})}(N_{1}) 
+    \times Beta_{(a,b)}(\theta) \timesjBeta_{(N_{1}+a, N_{0}+b)}(\theta)$
+\end{center}
+
+The strength of the prior, also known as the \emph{effective sample size} of the prior
+is the sum of the pseudo counts, $a+b$ this plays a role analogous to the data size 
+$N_{1} + N_{0} = N$\\
+Note that updating the posterior sequentially is equivalent to updating in a single batch.
+\paragraph{Posterior mean and mode}
