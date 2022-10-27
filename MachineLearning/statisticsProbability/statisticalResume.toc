@@ -336,45 +336,60 @@
 \contentsline {section}{\numberline {18.6}Approximate Confidence Interval for Parameter with MLE}{86}{}%
 \contentsline {section}{\numberline {18.7}The Statistical or General Method}{86}{}%
 \contentsline {section}{\numberline {18.8}Criteria for Evaluating Confidence Intervals}{86}{}%
-\contentsline {chapter}{\numberline {19}Test of Statistical Hypotheses}{87}{}%
-\contentsline {section}{\numberline {19.1}Introduction}{87}{}%
-\contentsline {paragraph}{\nonumberline Statistical hypothesis}{87}{}%
-\contentsline {paragraph}{\nonumberline Simple and Composite hypotheses}{87}{}%
-\contentsline {paragraph}{\nonumberline Null and alternative hypothesis}{87}{}%
-\contentsline {paragraph}{\nonumberline Hypothesis test}{87}{}%
-\contentsline {section}{\numberline {19.2}Tests}{87}{}%
-\contentsline {paragraph}{\nonumberline Z-test}{87}{}%
-\contentsline {paragraph}{\nonumberline T-test}{87}{}%
-\contentsline {paragraph}{\nonumberline Test Method}{88}{}%
-\contentsline {section}{\numberline {19.3}A method of Finding Tests}{88}{}%
-\contentsline {paragraph}{\nonumberline The likelihood ratio test statistics}{88}{}%
-\contentsline {section}{\numberline {19.4}Methods of Evaluating Tests}{88}{}%
-\contentsline {paragraph}{\nonumberline Significance level}{88}{}%
-\contentsline {paragraph}{\nonumberline P-value}{89}{}%
-\contentsline {paragraph}{\nonumberline Probability of type II error}{89}{}%
-\contentsline {paragraph}{\nonumberline The power function}{89}{}%
-\contentsline {paragraph}{\nonumberline A test of level $\delta $}{89}{}%
-\contentsline {paragraph}{\nonumberline Test of size $\delta $}{89}{}%
-\contentsline {paragraph}{\nonumberline Uniformly most powerful}{89}{}%
-\contentsline {paragraph}{\nonumberline Theorem Neyman-Perarson}{89}{}%
-\contentsline {section}{\numberline {19.5}Some Examples of Likelihood Ratio Tests}{89}{}%
-\contentsline {chapter}{\numberline {20}Simple Linear Regression and Correlation Analysis}{91}{}%
-\contentsline {section}{\numberline {20.1}Least Squared Method}{91}{}%
-\contentsline {paragraph}{\nonumberline Unbiased estimators}{91}{}%
-\contentsline {section}{\numberline {20.2}Normal Regression Analysis}{91}{}%
-\contentsline {paragraph}{\nonumberline Likelihood estimators}{91}{}%
-\contentsline {paragraph}{\nonumberline Distributions of the estimators}{91}{}%
-\contentsline {section}{\numberline {20.3}The Correlation Analysis}{91}{}%
-\contentsline {paragraph}{\nonumberline Correlation coefficient}{91}{}%
-\contentsline {chapter}{\numberline {21}Analysis of Variance}{93}{}%
-\contentsline {section}{\numberline {21.1}One-way Analysis of Variance with Equal Sample Sizes}{93}{}%
-\contentsline {paragraph}{\nonumberline Theorem ANOVA}{93}{}%
-\contentsline {paragraph}{\nonumberline Lemma}{93}{}%
-\contentsline {paragraph}{\nonumberline ANOVA model}{93}{}%
-\contentsline {section}{\numberline {21.2}One-way Analysis of Variance with Unequal Sample Sizes}{93}{}%
-\contentsline {section}{\numberline {21.3}Pair Wise Comparisons}{94}{}%
-\contentsline {section}{\numberline {21.4}Test for Homogeneity of Variances}{94}{}%
-\contentsline {chapter}{\numberline {22}Goodness of Fits Tests}{95}{}%
-\contentsline {section}{\numberline {22.1}Chi-Squared test}{95}{}%
-\contentsline {section}{\numberline {22.2}Kolmogorov-Smirnov test}{95}{}%
+\contentsline {chapter}{\numberline {19}Gaussian models}{87}{}%
+\contentsline {section}{\numberline {19.1}Introduction to the gaussian models}{87}{}%
+\contentsline {subsection}{\numberline {19.1.1}Notion}{87}{}%
+\contentsline {subparagraph}{\nonumberline MultiVariate Normal}{87}{}%
+\contentsline {subparagraph}{\nonumberline Mahalanobis}{87}{}%
+\contentsline {paragraph}{\nonumberline MLE for an MVN}{88}{}%
+\contentsline {subparagraph}{\nonumberline MLE for a Gaussian}{88}{}%
+\contentsline {subparagraph}{\nonumberline Proof}{89}{}%
+\contentsline {paragraph}{\nonumberline Maximum entropy derivation of the Gaussian}{90}{}%
+\contentsline {subparagraph}{\nonumberline Theorem}{90}{}%
+\contentsline {subparagraph}{\nonumberline Proof}{90}{}%
+\contentsline {section}{\numberline {19.2}Gaussian discriminant analysis}{90}{}%
+\contentsline {paragraph}{\nonumberline Quadratic discriminant analysis (QDA)}{91}{}%
+\contentsline {paragraph}{\nonumberline Linear discriminant analysis (LDA)}{91}{}%
+\contentsline {subparagraph}{\nonumberline Two-class LDA}{92}{}%
+\contentsline {chapter}{\numberline {20}Test of Statistical Hypotheses}{93}{}%
+\contentsline {section}{\numberline {20.1}Introduction}{93}{}%
+\contentsline {paragraph}{\nonumberline Statistical hypothesis}{93}{}%
+\contentsline {paragraph}{\nonumberline Simple and Composite hypotheses}{93}{}%
+\contentsline {paragraph}{\nonumberline Null and alternative hypothesis}{93}{}%
+\contentsline {paragraph}{\nonumberline Hypothesis test}{93}{}%
+\contentsline {section}{\numberline {20.2}Tests}{93}{}%
+\contentsline {paragraph}{\nonumberline Z-test}{93}{}%
+\contentsline {paragraph}{\nonumberline T-test}{93}{}%
+\contentsline {paragraph}{\nonumberline Test Method}{94}{}%
+\contentsline {section}{\numberline {20.3}A method of Finding Tests}{94}{}%
+\contentsline {paragraph}{\nonumberline The likelihood ratio test statistics}{94}{}%
+\contentsline {section}{\numberline {20.4}Methods of Evaluating Tests}{94}{}%
+\contentsline {paragraph}{\nonumberline Significance level}{94}{}%
+\contentsline {paragraph}{\nonumberline P-value}{95}{}%
+\contentsline {paragraph}{\nonumberline Probability of type II error}{95}{}%
+\contentsline {paragraph}{\nonumberline The power function}{95}{}%
+\contentsline {paragraph}{\nonumberline A test of level $\delta $}{95}{}%
+\contentsline {paragraph}{\nonumberline Test of size $\delta $}{95}{}%
+\contentsline {paragraph}{\nonumberline Uniformly most powerful}{95}{}%
+\contentsline {paragraph}{\nonumberline Theorem Neyman-Perarson}{95}{}%
+\contentsline {section}{\numberline {20.5}Some Examples of Likelihood Ratio Tests}{95}{}%
+\contentsline {chapter}{\numberline {21}Simple Linear Regression and Correlation Analysis}{97}{}%
+\contentsline {section}{\numberline {21.1}Least Squared Method}{97}{}%
+\contentsline {paragraph}{\nonumberline Unbiased estimators}{97}{}%
+\contentsline {section}{\numberline {21.2}Normal Regression Analysis}{97}{}%
+\contentsline {paragraph}{\nonumberline Likelihood estimators}{97}{}%
+\contentsline {paragraph}{\nonumberline Distributions of the estimators}{97}{}%
+\contentsline {section}{\numberline {21.3}The Correlation Analysis}{97}{}%
+\contentsline {paragraph}{\nonumberline Correlation coefficient}{97}{}%
+\contentsline {chapter}{\numberline {22}Analysis of Variance}{99}{}%
+\contentsline {section}{\numberline {22.1}One-way Analysis of Variance with Equal Sample Sizes}{99}{}%
+\contentsline {paragraph}{\nonumberline Theorem ANOVA}{99}{}%
+\contentsline {paragraph}{\nonumberline Lemma}{99}{}%
+\contentsline {paragraph}{\nonumberline ANOVA model}{99}{}%
+\contentsline {section}{\numberline {22.2}One-way Analysis of Variance with Unequal Sample Sizes}{99}{}%
+\contentsline {section}{\numberline {22.3}Pair Wise Comparisons}{100}{}%
+\contentsline {section}{\numberline {22.4}Test for Homogeneity of Variances}{100}{}%
+\contentsline {chapter}{\numberline {23}Goodness of Fits Tests}{101}{}%
+\contentsline {section}{\numberline {23.1}Chi-Squared test}{101}{}%
+\contentsline {section}{\numberline {23.2}Kolmogorov-Smirnov test}{101}{}%
 \providecommand \tocbasic@end@toc@file {}\tocbasic@end@toc@file 
