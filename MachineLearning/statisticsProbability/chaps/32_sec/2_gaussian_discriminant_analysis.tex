@@ -110,6 +110,15 @@ Hence we can observe the similarity with logistic regression:
     \label{fig:2_geometry_lda}
 \end{figure}
 
+\subparagraph{MLE for discriminant analysis}
+The \emph{log-likelihood} function is as follows:
+\begin{center}
+    $\log\left(p(\mathcal{D}|\theta)\right) = 
+    \su{i=1}{N}\su{c=1}{C}\mathbb{1}(y_{i}=c)\log(\pi_{c}) + \su{c=1}{C}\left[
+        \su{i:y_{i}=c}{}\log\left(\mathcal{N}(\bm{x}|\bm{\mu}_{c},\bm{\Sigma}_{c})\right)
+\right]$
+\end{center}
+
 
 
 
