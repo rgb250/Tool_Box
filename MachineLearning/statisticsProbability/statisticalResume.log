@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2022.9.6)  10 SEP 2022 15:26
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2022.9.6)  26 OCT 2022 23:14
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1107,7 +1107,17 @@ oc [3
 
 
 ] [4]
-[5])
+[5]
+Overfull \hbox (0.99997pt too wide) detected at line 384
+ []\T1/lmss/bx/n/10 101
+ []
+
+
+Overfull \hbox (0.99997pt too wide) detected at line 392
+ []\T1/lmss/bx/n/10 103
+ []
+
+)
 \tf@toc=\write4
 \openout4 = `statisticalResume.toc'.
 
@@ -1530,12 +1540,57 @@ OML/lmm/m/it/10 ^^R$ \T1/lmr/m/n/10 is a pair of sta-tis-tics $\OML/lmm/m/it/10
 (./chaps/26sec/6_approxConf.tex) (./chaps/26sec/7_statisticalMeth.tex)
 (./chaps/26sec/8_criteriaEvalConf.tex)) [86]
 chapter 19.
-(./chaps/27_testOfStatisticalHypothesis.tex (./chaps/27sec/1_introduction.tex)
-(./chaps/27sec/11_tests.tex [87
+(./chaps/32_gaussian_models.tex (./chaps/32_sec/1_introduction.tex
+<./chaps/32_sec/images/1_mahalanobis.png, id=332, 328.22626pt x 271.0125pt>
+File: ./chaps/32_sec/images/1_mahalanobis.png Graphic file (type png)
+<use ./chaps/32_sec/images/1_mahalanobis.png>
+Package pdftex.def Info: ./chaps/32_sec/images/1_mahalanobis.png  used on input
+ line 39.
+(pdftex.def)             Requested size: 373.44246pt x 308.34955pt.
+ [87
 
 
 ]
-<./chaps/27sec/images/1_methodApproxNorm.png, id=335, 573.14125pt x 568.1225pt>
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [88 <./chaps/32_sec/images/1_mahalanobis.png>]
+Overfull \hbox (2.2024pt too wide) detected at line 98
+[]
+ []
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [89]
+Underfull \hbox (badness 10000) in paragraph at lines 113--118
+
+ []
+
+) (./chaps/32_sec/2_gaussian_discriminant_analysis.tex [90]
+Overfull \hbox (95.73093pt too wide) detected at line 31
+[]
+ []
+
+
+Overfull \hbox (5.6677pt too wide) detected at line 46
+[]
+ []
+
+[91]
+<./chaps/32_sec/images/2_geometry_lda.png, id=351, 316.18124pt x 188.705pt>
+File: ./chaps/32_sec/images/2_geometry_lda.png Graphic file (type png)
+<use ./chaps/32_sec/images/2_geometry_lda.png>
+Package pdftex.def Info: ./chaps/32_sec/images/2_geometry_lda.png  used on inpu
+t line 106.
+(pdftex.def)             Requested size: 186.72122pt x 111.44151pt.
+)) [92 <./chaps/32_sec/images/2_geometry_lda.png>]
+chapter 20.
+(./chaps/27_testOfStatisticalHypothesis.tex (./chaps/27sec/1_introduction.tex)
+(./chaps/27sec/11_tests.tex [93
+
+
+]
+<./chaps/27sec/images/1_methodApproxNorm.png, id=359, 573.14125pt x 568.1225pt>
 
 File: ./chaps/27sec/images/1_methodApproxNorm.png Graphic file (type png)
 <use ./chaps/27sec/images/1_methodApproxNorm.png>
@@ -1543,7 +1598,7 @@ Package pdftex.def Info: ./chaps/27sec/images/1_methodApproxNorm.png  used on i
 nput line 17.
 (pdftex.def)             Requested size: 186.72122pt x 185.0884pt.
 ) (./chaps/27sec/2_findingT.tex)
-(./chaps/27sec/3_evaluatingT.tex [88 <./chaps/27sec/images/1_methodApproxNorm.p
+(./chaps/27sec/3_evaluatingT.tex [94 <./chaps/27sec/images/1_methodApproxNorm.p
 ng>]
 Overfull \hbox (61.55228pt too wide) in paragraph at lines 24--32
 [] \T1/lmss/bx/n/10 The po-wer func-tion[][] \T1/lmr/m/n/10 It is the func-tion
@@ -1558,23 +1613,23 @@ Overfull \hbox (67.83157pt too wide) in paragraph at lines 42--9
 [] \T1/lmss/bx/n/10 Theo-rem Neyman-Perarson[][] $[] [] 
  []
 
-(./chaps/27sec/4_rationT.tex)) [89] [90
-
-
-]
-chapter 20.
-(./chaps/28_simpleLinearRegression.tex (./chaps/28sec/1_least.tex)
-(./chaps/28sec/2_normal.tex) (./chaps/28sec/3_correlationAnalysis.tex))
-Overfull \hbox (72.35599pt too wide) in paragraph at lines 2--201
-[] \T1/lmss/bx/n/10 Cor-re-la-tion co-ef-fi-cient[][] $[] [] [] \OMS/lmsy/m/n/1
-0 ) [][] 
- []
-
-[91] [92
+(./chaps/27sec/4_rationT.tex)) [95] [96
 
 
 ]
 chapter 21.
+(./chaps/28_simpleLinearRegression.tex (./chaps/28sec/1_least.tex)
+(./chaps/28sec/2_normal.tex) (./chaps/28sec/3_correlationAnalysis.tex))
+Overfull \hbox (72.35599pt too wide) in paragraph at lines 2--203
+[] \T1/lmss/bx/n/10 Cor-re-la-tion co-ef-fi-cient[][] $[] [] [] \OMS/lmsy/m/n/1
+0 ) [][] 
+ []
+
+[97] [98
+
+
+]
+chapter 22.
 (./chaps/29_AnalysisOfVariance.tex (./chaps/29sec/1_equalSample.tex
 Overfull \hbox (8.57526pt too wide) in paragraph at lines 2--13
 [] \T1/lmss/bx/n/10 Theo-rem ANOVA[][] $[] [] 
@@ -1591,48 +1646,52 @@ Overfull \hbox (84.83641pt too wide) in paragraph at lines 26--45
 [] \OMS/lmsy/m/n/10 ) []$ 
  []
 
-) (./chaps/29sec/2_unequalSample.tex) (./chaps/29sec/3_pairWise.tex [93])
-(./chaps/29sec/4_testHomogeneity.tex)) [94]
-chapter 22.
+) (./chaps/29sec/2_unequalSample.tex) (./chaps/29sec/3_pairWise.tex [99])
+(./chaps/29sec/4_testHomogeneity.tex)) [100]
+chapter 23.
 (./chaps/30_goodnessFitsTests.tex (./chaps/30sec/1_chiT.tex)
-(./chaps/30sec/2_kolmogorovSmirnov.tex)) [95
+(./chaps/30sec/2_kolmogorovSmirnov.tex)) [101
 
 
-] (./statisticalResume.aux) ) 
+] (./statisticalResume.aux)
+
+LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+
+ ) 
 Here is how much of TeX's memory you used:
- 29813 strings out of 478287
- 626800 string characters out of 5849290
+ 29849 strings out of 478287
+ 628031 string characters out of 5849290
  1172808 words of memory out of 5000000
- 47082 multiletter control sequences out of 15000+600000
- 555792 words of font info for 81 fonts, out of 8000000 for 9000
+ 47104 multiletter control sequences out of 15000+600000
+ 561771 words of font info for 83 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 108i,15n,131p,10612b,526s stack positions out of 5000i,500n,10000p,200000b,80000s
-{/usr/share/texmf/fonts/enc/dvips/lm/lm-ec.enc} </
-home/kr/.texlive2021/texmf-var/fonts/pk/ljfour/public/bbm/bbm10.600pk>{/usr/sha
-re/texmf/fonts/enc/dvips/lm/lm-mathit.enc} </home/kr/.texlive2021/texmf-var/fon
-ts/pk/ljfour/public/bbm/bbm7.600pk>{/usr/share/texmf/fonts/enc/dvips/lm/lm-rm.e
-nc}{/usr/share/texmf/fonts/enc/dvips/lm/lm-mathsy.enc}{/usr/share/texmf/fonts/e
-nc/dvips/lm/lm-mathex.enc}</usr/share/texmf/fonts/type1/public/lm/lmbx10.pfb></
-usr/share/texmf/fonts/type1/public/lm/lmbx7.pfb></usr/share/texmf/fonts/type1/p
-ublic/lm/lmcsc10.pfb></usr/share/texmf/fonts/type1/public/lm/lmex10.pfb></usr/s
-hare/texmf/fonts/type1/public/lm/lmmi10.pfb></usr/share/texmf/fonts/type1/publi
-c/lm/lmmi5.pfb></usr/share/texmf/fonts/type1/public/lm/lmmi7.pfb></usr/share/te
-xmf/fonts/type1/public/lm/lmmib10.pfb></usr/share/texmf/fonts/type1/public/lm/l
-mmib7.pfb></usr/share/texmf/fonts/type1/public/lm/lmr10.pfb></usr/share/texmf/f
-onts/type1/public/lm/lmr12.pfb></usr/share/texmf/fonts/type1/public/lm/lmr5.pfb
-></usr/share/texmf/fonts/type1/public/lm/lmr7.pfb></usr/share/texmf/fonts/type1
-/public/lm/lmri10.pfb></usr/share/texmf/fonts/type1/public/lm/lmro10.pfb></usr/
-share/texmf/fonts/type1/public/lm/lmssbo10.pfb></usr/share/texmf/fonts/type1/pu
-blic/lm/lmssbx10.pfb></usr/share/texmf/fonts/type1/public/lm/lmsy10.pfb></usr/s
-hare/texmf/fonts/type1/public/lm/lmsy5.pfb></usr/share/texmf/fonts/type1/public
-/lm/lmsy7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/symbol
-s/msam10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols
-/msbm10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/
-msbm7.pfb>
-Output written on statisticalResume.pdf (95 pages, 978200 bytes).
+ 108i,16n,131p,10612b,526s stack positions out of 5000i,500n,10000p,200000b,80000s
+{/usr/share/texmf/fonts/enc/dvips/lm/lm-mathsy.enc}{/usr/share/texmf/fonts/en
+c/dvips/lm/lm-ec.enc} </home/kr/.texlive2021/texmf-var/fonts/pk/ljfour/public/b
+bm/bbm10.600pk>{/usr/share/texmf/fonts/enc/dvips/lm/lm-mathit.enc} </home/kr/.t
+exlive2021/texmf-var/fonts/pk/ljfour/public/bbm/bbm7.600pk>{/usr/share/texmf/fo
+nts/enc/dvips/lm/lm-rm.enc}{/usr/share/texmf/fonts/enc/dvips/lm/lm-mathex.enc}<
+/usr/share/texmf/fonts/type1/public/lm/lmbsy5.pfb></usr/share/texmf/fonts/type1
+/public/lm/lmbx10.pfb></usr/share/texmf/fonts/type1/public/lm/lmbx7.pfb></usr/s
+hare/texmf/fonts/type1/public/lm/lmcsc10.pfb></usr/share/texmf/fonts/type1/publ
+ic/lm/lmex10.pfb></usr/share/texmf/fonts/type1/public/lm/lmmi10.pfb></usr/share
+/texmf/fonts/type1/public/lm/lmmi5.pfb></usr/share/texmf/fonts/type1/public/lm/
+lmmi7.pfb></usr/share/texmf/fonts/type1/public/lm/lmmib10.pfb></usr/share/texmf
+/fonts/type1/public/lm/lmmib7.pfb></usr/share/texmf/fonts/type1/public/lm/lmr10
+.pfb></usr/share/texmf/fonts/type1/public/lm/lmr12.pfb></usr/share/texmf/fonts/
+type1/public/lm/lmr5.pfb></usr/share/texmf/fonts/type1/public/lm/lmr7.pfb></usr
+/share/texmf/fonts/type1/public/lm/lmri10.pfb></usr/share/texmf/fonts/type1/pub
+lic/lm/lmro10.pfb></usr/share/texmf/fonts/type1/public/lm/lmssbo10.pfb></usr/sh
+are/texmf/fonts/type1/public/lm/lmssbx10.pfb></usr/share/texmf/fonts/type1/publ
+ic/lm/lmsy10.pfb></usr/share/texmf/fonts/type1/public/lm/lmsy5.pfb></usr/share/
+texmf/fonts/type1/public/lm/lmsy7.pfb></usr/share/texlive/texmf-dist/fonts/type
+1/public/amsfonts/symbols/msam10.pfb></usr/share/texlive/texmf-dist/fonts/type1
+/public/amsfonts/symbols/msbm10.pfb></usr/share/texlive/texmf-dist/fonts/type1/
+public/amsfonts/symbols/msbm7.pfb>
+Output written on statisticalResume.pdf (101 pages, 1034603 bytes).
 PDF statistics:
- 481 PDF objects out of 1000 (max. 8388607)
- 303 compressed objects within 4 object streams
+ 509 PDF objects out of 1000 (max. 8388607)
+ 319 compressed objects within 4 object streams
  0 named destinations out of 1000 (max. 500000)
- 78 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 88 words of extra memory for PDF output out of 10000 (max. 10000000)
 
