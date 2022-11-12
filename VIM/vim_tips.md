@@ -7,7 +7,8 @@
   - [2 FORMAT](#2-format)
     - [a. Change the case](#a-change-the-case)
   - [3 DISPLAY OPTIONS](#3-display-options)
-    - [a. Window operations](#a-window-operations)
+    - [a. Open multiple file](#a-open-multiple-file)
+    - [b. Window operations](#b-window-operations)
   - [4 FILE SYSTEM INFORMATION](#4-file-system-information)
     - [a. Current file](#a-current-file)
   - [5 MACRO](#5-macro)
@@ -34,7 +35,12 @@
 Visual mode + type 'u' to impose lower case and 'U' to impose upper case.
 
 ## 3 DISPLAY OPTIONS
-### a. Window operations 
+### a. Open multiple file 
+```bash
+vim -O file1 file2 file3  # open in vertical split the 3 files
+vim -o file1 file2 file3  # open in horizontal split the 3 files
+```
+### b. Window operations 
 To each window to synchronize
 ```bash
 :set scrollbind
@@ -49,6 +55,6 @@ To each window to synchronize
 ## 5 MACRO
 ### a. To a block
 Apply a macro **a** to a multiple lines.
-```bash
+```normal
 :'<,'>normal @a
 ```
