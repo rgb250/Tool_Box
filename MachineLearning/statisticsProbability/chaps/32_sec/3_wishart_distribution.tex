@@ -15,4 +15,15 @@ The normalization constant fro this distribution is:
 where $\Gamma_{D}: x\mapsto \pi^{\frac{D(D-1)}{4}}\prd{i=1}{D}\Gamma\left(x+\dfrac{1-i}
     {2}\right)$
 
+\paragraph{Inverse Wishart distribution}
+\begin{align*}
+    IW(\bm{\Sigma}|\bm{S}, \nu) &= \dfrac{1}{Z_{IW}}|\bm{\Sigma}|^{-\frac{\nu + D + 1}{2}}
+    \exp\left(\dfrac{1}{2}tr(\bm{S}^{-1}\bm{\Sigma}^{-1})\right)\\
+    Z_{IW} = |\bm{S}|^{-\dfrac{\nu}{2}}2^{-\dfrac{D\nu}{2}}\bm{\Gamma}_{D}(\dfrac{\nu}{2})
+\end{align*}
 
+One can show that the distribution has these properties
+$\begin{cases}
+    mean = \dfrac{S^{-1}}{\nu - D - 1}\\
+    mode = \dfrac{S^{-1}}{\nu + D + 1}
+\end{cases}$
