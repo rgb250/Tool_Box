@@ -1,0 +1,30 @@
+\paragraph{Definition}
+It is a generalization of the Gamma distribution to positive definite matrices.
+The Wishart distribution is for some, ranked next to the multivariate normal distribution
+in order of importance and usefulness in multivariate statistics.
+The probability density function is defined as follows:
+\begin{center}
+    $Wi(\Lambda|S,\nu) = \dfrac{1}{Z_{Wi}}|\Lambda|^{\frac{\nu-D-1}{2}}exp\left(
+    -\dfrac{1}{2}tr(\Lambda S^{-1})\right)$
+\end{center}
+Here $\nu$ and $S$ correspond respectively to degrees of freedom and scale matrix.
+The normalization constant fro this distribution is:
+\begin{center}
+    $Z_{Wi} = 2^{\frac{\nu D}{2}}\Gamma_{D}\left(\dfrac{\nu}{2}\right)|S|^{\frac{\nu}{2}}$
+\end{center}
+where $\Gamma_{D}: x\mapsto \pi^{\frac{D(D-1)}{4}}\prd{i=1}{D}\Gamma\left(x+\dfrac{1-i}
+    {2}\right)$
+
+\paragraph{Inverse Wishart distribution}
+\begin{align*}
+    IW(\bm{\Sigma}|\bm{S}, \nu) &= \dfrac{1}{Z_{IW}}|\bm{\Sigma}|^{-\frac{\nu + D + 1}{2}}
+    \exp\left(\dfrac{1}{2}tr(\bm{S}^{-1}\bm{\Sigma}^{-1})\right)\\
+    Z_{IW} = |\bm{S}|^{-\frac{\nu}{2}}2^{-\frac{D\nu}{2}}\bm{\Gamma}_{D}\left(\frac{\nu}
+        {2}\right)
+\end{align*}
+
+One can show that the distribution has these properties
+$\begin{cases}
+    mean = \dfrac{S^{-1}}{\nu - D - 1}\\
+    mode = \dfrac{S^{-1}}{\nu + D + 1}
+\end{cases}$

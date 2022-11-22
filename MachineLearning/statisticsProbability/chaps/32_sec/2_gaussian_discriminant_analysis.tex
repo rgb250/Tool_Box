@@ -119,6 +119,86 @@ The \emph{log-likelihood} function is as follows:
 \right]$
 \end{center}
 
+\subparagraph{Strategies for preventing the overfitting}
+Even if \textit{speed} and \textit{simplicity} are the attractive aspects of MLE, it can
+badly overfit in high dimensions.\\
+In particular the MLE for a full covariance matrix is singular if $N_{c} < D$, and even
+when $N_{c} > D$ the MLE can be ill-conditioned, meaning close to singular.\\
+Some solution to this problem:
+\begin{itemize}
+    \item use a diagonal covariance matrix for each class, this assumes the features are
+        conditionally independent, this is equivalent to using a naive Bayes classifier.
+    \item use the full covariance matrix but force it to be the same for all classes, 
+        $\Sigma_{c} = \Sigma$, this is equivalent to \textit{parameter sharing} and is
+        equivalent to LDA.
+    \item Use a diagonal matrix and force it to be shared.
+    \item use a diagonal covariance, but impose a prior and then integrate it out. If we 
+        use a conjugate prior this is analogous to the Bayesian naive Bayes.
+    \item fit a full or a diagonal covariance matrix by MAP estimation.
+    \item Project the data into a low dimensional subspace and fit the Gaussian there.
+\end{itemize}
+
+\subparagraph{Regularized LDA*}
+Assume we tie the covariance matrices, so $\bm{\Sigma_{c}} = \bm{\Sigma}$ as in LDA and 
+furthermore we perform MAP estimation of $\bm{\Sigma}$ using an inverse Wishart prior 
+of the form $IW(diag(\hat{\bm{\Sigma}}_{mle}), \nu_{0})$
+\begin{center}
+$\hat{\bm{\Sigma}} = \lambda diag(\hat{\bm{\Sigma}}_{mle}) =
+(1-\lambda)\hat{\bm{\Sigma}}_{mle}$
+\end{center}
+where $\lambda$ controls the amount of regularization which is related to the strength of the prior $\nu_{0}$
+
+\subparagraph{Nearest shruken centroids classifier}
+A disadvantage of \textit{diagonal LDA} is it depends on all of the features.\\
+An idea can be to perform MAP estimation for the diagonal LDA with a sparsity-promoting 
+(Laplace).\\
+More precisely define
+\begin{itemize}
+    \item $\mu_{cj}$ class-specific feature mean 
+    \item $m_{j}$ class-independent feature mean
+    \item $\Delta_{cj}$ class-specific offset
+\end{itemize}
+Then $\mu_{cj} = m_{j} + \Delta_{cj}$
+In putting a prior on the $\Delta_{cj}$ terms to encourage them to be strictly zero and 
+compute a MAP estimate. If, for feature $j$ we find that $\Delta_{cj}=0$ for all $c$, 
+then feature $j$ will play no role in teh classification decision. Thus features that are 
+not discriminative are automatically ignored.
+
+\paragraph{Inference in jointly Gaussian distribution}
+Suppose $\bm{x} = (x_{1}, x_{2})$, then\\
+$\bm{\mu} = \begin{pmatrix}
+    \mu_{1}\\
+    \mu_{2}
+\end{pmatrix},
+\bm{\Sigma} = \begin{pmatrix}
+    \Sigma_{11} & \Sigma_{12}\\
+    \Sigma_{21} & \Sigma_{22}
+\end{pmatrix},
+\bm{\Lambda} = \bm{\Sigma}^{-1} = \begin{pmatrix}
+    \Lambda_{11} & \Lambda_{12}\\
+    \Lambda_{21} & \Lambda_{22}
+\end{pmatrix} $\\
+Thus the marginals are given by: 
+$\begin{cases}
+    p(x_{1}) = \mathcal{N}(x_{1}|\mu_{1}, \Sigma_{11})\\
+    p(x_{2}) = \mathcal{N}(x_{2}|\mu_{2}, \Sigma_{22})
+\end{cases}$\\
+and the posterior conditional is given by: 
+\tR{
+\begin{align*}
+    p(x_{1}|x_{2}) &= \mathcal{N}(x_{1}|\mu_{1|2},\Sigma_{1|2})\\
+    \mu_{1|2} &= \mu_{1} + \Sigma_{12}\Sigma_{22}^{-1}(x_{2} -\mu_{2})\\
+              &= \mu_{1} - \Lambda_{11}^{-1}\Lambda_{12}(x_{2} -\mu_{2})\\
+              &= \Sigma_{1|2} \left(\Lambda_{11}\mu_{1} - \Lambda_{12}(x_{2}-\mu_{2})
+              \right)\\
+    \Sigma_{1|2} &= \Sigma_{11} - \Sigma_{12}\Sigma_{22}^{-1}\Sigma_{21}\\
+                 &= \Lambda_{11}^{-1}
+\end{align*}
+}
+The conditional mean is just a linear function of $x_{2}$ and the conditional covariance 
+is just a constant matrix that is independent of $x_{2}$
+
+
 
 
 

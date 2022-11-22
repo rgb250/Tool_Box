@@ -47,6 +47,7 @@ Both allow to release some space of the data treated by the CPU.
 df -h # disk filename command, with the human readable option (adapt the figures of each filesystem)
 du -h -d 1 ./folder_path | sort -h # to see the size of each elements in a given repository with a depth of 1 and sorted by size 
 
+
 # SEARCH INSIDE FILES
 
 grep --exclude=\*.{pyc,log} -rl './' -e ".*10\.214\.82\.92.*" # find in the current directory and its subdirectorires all the files containing the string "10.214.82.92" inside a 
@@ -74,6 +75,7 @@ find /dir_path -regextype sed -regex ".*/regex"  # search of "sed" type, ".*/" i
 
 # for the process
 ps aux  # ps aux --> a: process of all users, u: process's users/owner x: process not attached to a terminal 
+ps aux | sed -n "1p; /<regex_word>/p"  # to search for a given regular expression while keeping the header.
 cat /proc/<PID>/cmdline  # provide the command line that called the process <PID>
 # Run process in the background --> use ampersand symbol (&)
 vlc > /dev/null 2>&1 &  # >/dev/null 2>&1 means stdout --> /dev/null and stderr --> stdout
