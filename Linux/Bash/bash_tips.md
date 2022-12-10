@@ -49,8 +49,28 @@ du -h -d 1 ./folder_path | sort -h # to see the size of each elements in a given
 
 
 # SEARCH INSIDE FILES
+
 grep --exclude=\*.{pyc,log} -rl './' -e ".*10\.214\.82\.92.*" # find in the current directory and its subdirectorires all the files containing the string "10.214.82.92" inside a 
 grep --include=*.tex -lri monte ./* # find all files containing at least one occurence of "monte" inside it 
+
+# REGEX
+In *sed* system we have to escape characters like '{' or '}'
+|Operator|Effect|
+|---|---|
+|.|Matches any single character|
+|?|Preceding item is optional and will be matched at least one|
+|*|Preceding item will be matched zero or more times|
+|+|Preceding item will be matched one or more times|
+|\b|Matches the empty string at the edge of a word|
+|\B|Matches the empty string NOT at the edge of a word|
+|\<|Matches the empty string at the beginning  of a word|
+|\>|Matches the empty string at the end  of a word|
+
+
+# SEARCH OVER FILES
+```bash
+find /dir_path -regextype sed -regex ".*/regex"  # search of "sed" type, ".*/" is fundamental! 
+```
 
 
 # for the process
