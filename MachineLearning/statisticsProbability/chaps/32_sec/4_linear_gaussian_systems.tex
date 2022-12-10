@@ -1,0 +1,23 @@
+\paragraph{Condition}
+Let $(\bm{x}, \bm{y}) \in \mathbb{R}^{D_{x}}\times\mathbb{R}^{D_{y}}$ respectively a 
+hidden variable and a noisy observation of the hidden variable.\\
+Let assume we have the following prior and likelihood :
+$ \begin{cases}
+    p(\bm{x}) = \mathcal{N}\left(\bm{x}|\bm{\mu_{x}},\bm{\Sigma}_{x}\right)\\
+    p(\bm{y}|\bm{x}) = \mathcal{N}\left(\bm{y}|\bm{A}\bm{x} + \bm{b}, \bm{\Sigma}_{y}
+    \right)
+\end{cases}$
+where $\bm{A}\in\mathcal{M}(\mathbb{R})_{D_{x},D_{y}}$.\\
+This schematically means $\bm{x}$ generates $\bm{y}$, in this section we show how to 
+invert the arrow that is how to infer $\bm{x}$ from $\bm{y}$.
+
+\paragraph{Bayes rule for linear Gaussian systems}
+Given a linear Gaussian system as the previous one is given by the following: 
+\begin{align*}
+    p(\bm{x}|\bm{y}) &= \mathcal{N}\left(\bm{x}|\mu_{x|y},\bm{\Sigma}_{x|y}\right)\\ 
+    \bm{\Sigma}_{x|y}^{-1} &= \bm{\Sigma}_{x}^{-1} + \bm{A}^{T}\bm{\Sigma}_{y}^{-1}
+    \bm{A}\\
+    \bm{\mu}_{x|y} &= \bm{\Sigma}_{x|y}\left(\bm{A}^{T}\bm{\Sigma}_{y}^{-1}(\bm{y}-\bm{b})
+        + \bm{\Sigma}_{x}^{-1}\bm{\mu}_{x}\right)
+\end{align*}
+
