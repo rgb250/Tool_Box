@@ -67,6 +67,12 @@ In *sed* system we have to escape characters like '{' or '}'
 |\>|Matches the empty string at the end  of a word|
 
 
+# INTERNET CONNECTION
+Use **speedtest-cli**
+```bash
+sudo apt install speedtest-cli  # downloads the package
+speedtest-cli --secure
+```
 # SEARCH OVER FILES
 ```bash
 find /dir_path -regextype sed -regex ".*/regex"  # search of "sed" type, ".*/" is fundamental! 
