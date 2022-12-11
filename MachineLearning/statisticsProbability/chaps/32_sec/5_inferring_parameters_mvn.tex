@@ -1,0 +1,51 @@
+\paragraph{Posterior distribution of $\mu$}
+ For simplicity purpose we will use the conjugate prior, which in this case is Gaussian.
+ If $p(\bm{\mu}) = \mathcal{N}(\bm{\mu}|\bm{m}_{0},\bm{V}_{0})$ then we can derive a 
+ Gaussian posterior for $\mu$ based on the results in 
+ \begin{align*}
+     p(\bm{\mu}|\bm{D},\bm{\Sigma}) &= \mathcal{N}(\bm{\mu}|\bm{m}_{N}, \bm{V}_{N})\\
+     \bm{V}_{N}^{-1} &= \bm{V}_{0}^{-1} + N\bm{\Sigma}^{-1}\\
+     \bm{m}_{N} &= \bm{V}_{N}\left(\bm{\Sigma}^{-1}N\hat{\bm{x}} +
+     \bm{V}_{0}^{-1}\bm{m}_{0}\right)
+ \end{align*}
+
+ \paragraph{Posterior distribution of $\bm{\Sigma}$}
+ Aim: compute $p(\bm{\Sigma}|\mathcal{D},\bm{\mu})$\\
+ The likelihood has the form 
+ \begin{center}
+     $p(\mathcal{D}|\bm{\mu},\bm{\Sigma}) \propto |\bm{\Sigma}|^{-\frac{N}{2}}
+     exp\left(-\dfrac{1}{2}tr(\bm{S}_{\bm{\mu}}\bm{\Sigma}^{-1})\right)$
+ \end{center}
+ The corresponding conjugate prior is known as the inverse Wishart distribution.
+ Then 
+ \begin{align*}
+     p(\mathcal{D}|\bm{\mu},\bm{\Sigma}) 
+     &\propto |\bm{\Sigma}|^{-\frac{N}{2}}\exp\left(-\dfrac{1}{2}tr(\bm{S}_{\bm{\mu}}
+     \bm{\Sigma}^{-1})\right) 
+     |\bm{\Sigma}|^{-\frac{\nu_{0}+D+1}{2}}\exp\left(-\dfrac{1}{2}tr(\bm{S}_{0}
+     \bm{\Sigma}^{-1})\right)\\
+     &= |\bm{\Sigma}|^{\frac{n+\nu_{0}+D+1}{2}}\exp\left(-\dfrac{1}{2}tr\left[
+     (\bm{S}_{\bm{\mu}}+\bm{\Sigma}_{0})\bm{\Sigma}^{-1}\right]\right)\\
+     &= IW(\bm{\Sigma}|\bm{S}_{N},\nu_{N})
+ \end{align*}
+ Then $\begin{cases}
+    \nu_{n} = \nu_{0} + n\\
+    \bm{S}_{n}^{-1} = \bm{S}_{0} + \bm{S}_{\bm{\mu}}
+\end{cases}$
+ 
+ 
+ \subparagraph{MAP estimation}
+ To progress in case where $\hat{\bm{\Sigma}}_{mle}$ is non-invertible or ill-conditioned
+ we can use the posterior mode (or mean). One can show that the MAP estimate is given by:
+ \begin{center}
+     $\hat{\bm{\Sigma}}_{map} = \dfrac{\bm{S}_{n}}{\nu_{N} + D + 1} = \dfrac{\bm{S}_{0} +
+     \bm{S}_{\mu}}{n_{0} + n}$
+ \end{center}
+ Consider now the use of a proper informative prior, which is necessary whenever 
+ $\dfrac{D}/{N}$ is large (> 0.1). We can rewrite the MAP estimate as a convex combination
+ of the prior mode and the MLE.
+ \begin{center}
+     $\hat{\bm{\Sigma}}_{MAP} = \dfrac{\bm{S}_{0} + \bm{S}_{\bm{\mu}}}{n_{0} + n} = 
+     \dfrac{n_{0}}{n_{0}+n}\dfrac{\bm{S}_{0}}{n_{0}} + \dfrac{n}{n_{0} + n}\dfrac{\bm{S}}
+     {n} = \lambda\bm{\Sigma}_{0} + (1-\lambda)\hat{\bm{\Sigma}}_{mle}$
+ \end{center}
