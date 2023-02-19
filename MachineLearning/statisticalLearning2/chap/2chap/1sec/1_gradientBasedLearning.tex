@@ -1,0 +1,11 @@
+\paragraph{Cost functions}
+In most cases our parametric model defines a distribution $p(x\lvert x;\bm{\theta})$ and
+we simply use the principle of maximum likelihood, namely the \textit{cross-entropy} 
+between the training data and the model's prediction as the cost function.
+
+\subparagraph{Learning conditional distributions with Maximum Likelihood}
+The cost function is simply the negative log-likelihood:
+\begin{center}
+	$J(\theta) = -\mathbb{E}_{\bm{X},\bm{y}\sim\hat{p}_{data}}\left(
+	\log\left(p_{model}(\bm{y}|\bm{x})\right)\right)$
+\end{center}

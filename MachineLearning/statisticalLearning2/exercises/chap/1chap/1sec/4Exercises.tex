@@ -1,0 +1,265 @@
+\documentclass[a4paper, 10pt]{scrartcl}\usepackage[]{graphicx}\usepackage[]{color}
+%% maxwidth is the original width if it is less than linewidth
+%% otherwise use linewidth (to make sure the graphics do not exceed the margin)
+\makeatletter
+\def\maxwidth{ %
+  \ifdim\Gin@nat@width>\linewidth
+    \linewidth
+  \else
+    \Gin@nat@width
+  \fi
+}
+\makeatother
+
+\definecolor{fgcolor}{rgb}{0.345, 0.345, 0.345}
+\newcommand{\hlnum}[1]{\textcolor[rgb]{0.686,0.059,0.569}{#1}}%
+\newcommand{\hlstr}[1]{\textcolor[rgb]{0.192,0.494,0.8}{#1}}%
+\newcommand{\hlcom}[1]{\textcolor[rgb]{0.678,0.584,0.686}{\textit{#1}}}%
+\newcommand{\hlopt}[1]{\textcolor[rgb]{0,0,0}{#1}}%
+\newcommand{\hlstd}[1]{\textcolor[rgb]{0.345,0.345,0.345}{#1}}%
+\newcommand{\hlkwa}[1]{\textcolor[rgb]{0.161,0.373,0.58}{\textbf{#1}}}%
+\newcommand{\hlkwb}[1]{\textcolor[rgb]{0.69,0.353,0.396}{#1}}%
+\newcommand{\hlkwc}[1]{\textcolor[rgb]{0.333,0.667,0.333}{#1}}%
+\newcommand{\hlkwd}[1]{\textcolor[rgb]{0.737,0.353,0.396}{\textbf{#1}}}%
+\let\hlipl\hlkwb
+
+\usepackage{framed}
+\makeatletter
+\newenvironment{kframe}{%
+ \def\at@end@of@kframe{}%
+ \ifinner\ifhmode%
+  \def\at@end@of@kframe{\end{minipage}}%
+  \begin{minipage}{\columnwidth}%
+ \fi\fi%
+ \def\FrameCommand##1{\hskip\@totalleftmargin \hskip-\fboxsep
+ \colorbox{shadecolor}{##1}\hskip-\fboxsep
+     % There is no \\@totalrightmargin, so:
+     \hskip-\linewidth \hskip-\@totalleftmargin \hskip\columnwidth}%
+ \MakeFramed {\advance\hsize-\width
+   \@totalleftmargin\z@ \linewidth\hsize
+   \@setminipage}}%
+ {\par\unskip\endMakeFramed%
+ \at@end@of@kframe}
+\makeatother
+
+\definecolor{shadecolor}{rgb}{.97, .97, .97}
+\definecolor{messagecolor}{rgb}{0, 0, 0}
+\definecolor{warningcolor}{rgb}{1, 0, 1}
+\definecolor{errorcolor}{rgb}{1, 0, 0}
+\newenvironment{knitrout}{}{} % an empty environment to be redefined in TeX
+
+\usepackage{alltt}  %livre
+
+% Permet l'encodage avec le Unicode Transformation Format-8-bit
+\usepackage[utf8]{inputenc}
+% Permet la gestion des caractères accentués ainsi que la stabilité des impressions en P.D.F.
+\usepackage[T1]{fontenc}
+% Permet la stabilisation de l'écriture
+\usepackage{lmodern, textcomp}
+% Permet d'utiliser les liens hypertexte sans altérer la bibliothèque KOMA
+\usepackage{scrhack}
+\KOMAoptions{hyperref=false}
+% Utilise les règles gramaticales françaises
+\usepackage[french]{babel}
+
+%Utilise les règles typographique de la bibliothéques KOMA
+\setkomafont{author}{\scshape}
+%\usepackage{blindtext}
+
+% Package pour avoir plus d'arguments dans ses commandes.
+\usepackage{xargs}
+%Package pour plus de souplesse
+\usepackage{tabularx}
+
+%Package pour les listes indexées
+\usepackage{enumitem}
+
+%Bibliothèque mathématiques pour la police.
+\usepackage{amsfonts}
+%Bibliothèques mathématiques générale.
+\usepackage{amsmath}
+\usepackage{amssymb}
+%Pour appliquer \mathbb à des nombres
+\usepackage{bbm}
+%Package pour l'indexation de matrices
+\usepackage{blkarray}
+%\usepackage{dsfont}
+%Package pour spreadsheet
+\usepackage{spreadtab}
+\usepackage{fp}
+\usepackage{xstring}
+\renewcommand\STprintnum[1]{\numprint{#1}}
+\STsetdecimalsep{,}
+\STautoround{6}
+\usepackage{eurosym}
+%Bibliothèque pour l'affichage de nombre avec la typographie définie
+\usepackage{numprint}
+\newcommand{\np}[1]{\numprint{#1}}
+% Pour la notation scientifique
+\usepackage{siunitx}
+\sisetup{locale= FR,exponent-product=., unit-mode = text}
+\DeclareSIUnit\year{ann\'{e}ee}
+%Positionnement des images
+\usepackage{float}
+\usepackage{subcaption}
+%Utilisation des couleurs
+\usepackage{xcolor}
+% Package pour le soulignement
+\usepackage{color,soulutf8}
+\setulcolor{red}
+% Package pour les annotations
+\usepackage{todonotes}
+%\usepackage[pygments]{pythontex} % Pour utiliser Python
+%\usepackage{fvextra} % Utile pour la mise en forme du code source inséré
+%Package pour la programmation
+\usepackage{listings}
+% Package pour les scripts en R
+\lstset{language=R,
+    basicstyle=\small\ttfamily,
+    stringstyle=\color{DarkGreen},
+    otherkeywords={0,1,2,3,4,5,6,7,8,9},
+    morekeywords={TRUE,FALSE},
+    deletekeywords={data,frame,length,as,character},
+    keywordstyle=\color{blue},
+    commentstyle=\color{DarkGreen},
+    }
+
+%Définition de couleurs:
+\definecolor{bleudefrance}{rgb}{.19, .55, .91}
+\definecolor{pakistangreen}{rgb}{.0, .4, .0}
+\definecolor{rossocorsa}{rgb}{0.83, 0.0, 0.0}
+\definecolor{persimmon}{rgb}{0.93, 0.35, 0.0}
+\definecolor{bronze}{rgb}{0.8, 0.5, 0.2}
+% Annotation auteur
+\newcommand{\Moi}[1]{\todo[color = teal!40]{#1}}
+\newcommand{\Cnsl}[1]{\todo[color = pakistangreen!40]{#1}}
+\newcommand{\MeG}[1]{\todo[color = rossocorsa!40]{#1}}
+%Notation récurrante:
+\newcommandx{\hb}[1]{\widehat{\beta_{#1}}}
+\newcommandx{\prth}[4]{\left( #1_{#2} \right)_{#3\leq #2 \leq #4}}
+% Encadrement des résultats
+\newcommand{\enc}[1]{\fcolorbox{rossocorsa}{white}{#1}}
+\newcommand{\encB}[1]{\fcolorbox{bleudefrance}{white}{#1}}
+\newcommand{\encV}[1]{\fcolorbox{pakistangreen}{white}{#1}}
+\newcommand{\encN}[1]{\fcolorbox{black}{white}{#1}}
+% Soulignement couleur
+\newcommandx{\sN}[1]{\setulcolor{black}\ul{#1}}
+\newcommandx{\sR}[1]{\setulcolor{rossocorsa}\ul{#1}}
+\newcommandx{\sB}[1]{\setulcolor{bleudefrance}\ul{#1}}
+\newcommandx{\sV}[1]{\setulcolor{pakistangreen}\ul{#1}}
+\newcommandx{\sT}[1]{\setulcolor{teal}\ul{#1}}
+\newcommandx{\sO}[1]{\setulcolor{persimmon}\ul{#1}}
+\newcommandx{\sG}[1]{\setulcolor{tiger}\ul{#1}}
+% Text de couleur
+\newcommandx{\tR}[1]{\textcolor{rossocorsa}{#1}}
+\newcommandx{\tB}[1]{\textcolor{bleudefrance}{#1}}
+\newcommandx{\tV}[1]{\textcolor{pakistangreen}{#1}}
+\newcommandx{\tT}[1]{\textcolor{teal}{#1}}
+\newcommandx{\tO}[1]{\textcolor{persimmon}{#1}}
+\newcommandx{\tBr}[1]{\textcolor{bronze}{#1}}
+% Écriture intervalle
+\newcommandx{\inter}[2]{\left[\![#1, #2]\!\right]}
+% Écriture intégrale
+\newcommandx{\Su}[2]{{\displaystyle \int_{#1}^{#2}}}
+% Écriture somme sigma
+\newcommandx{\su}[2]{{\displaystyle \sum_{#1}^{#2}}}
+% Écriture produit pi
+\newcommandx{\prd}[2]{{\displaystyle \prod_{#1}^{#2}}}
+%Écriture limite lim
+\newcommandx{\lm}[2]{{\displaystyle \lim_{#1\to #2}}}
+% Écriture P(X)
+\newcommandx{\prob}[1]{\mathbb{P}\left(#1\right)}
+% Écriture P_{\{Y\}}({X})
+\newcommandx{\probC}[2]{\mathbb{P}_{#1}\left(#2\right)}
+% Écriture P({X})
+\newcommandx{\Prob}[1]{\mathbb{P}\left(\left\{#1 \right\}\right)}
+% Écriture P_{\{Y\}}({X})
+\newcommandx{\ProbC}[2]{\mathbb{P}_{\left\{#1\right\}}\left(\left\{#2\right\}\right)}
+% Ecriture Esperance et Variance
+\newcommandx{\E}[1]{\mathbb{E}\left(#1\right)}
+\newcommandx{\Ec}[2]{\mathbb{E}_{\left\{#1\right\}}\left(#2\right)}
+\newcommandx{\V}[1]{\mathbb{V}\left(#1\right)}
+\newcommandx{\Vc}[2]{\mathbb{V}_{\left\{#1\right\}}\left(#2\right)}
+%Symbole de la norme
+\newcommandx{\norm}[1]{\left\lVert#1\right\rVert}
+
+\title{Summarise Course/Methods}
+\author{Siger}
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\begin{document}
+
+\maketitle
+
+Si Dieu est infini, alors je suis une partie de Dieu sinon je serai sa limite\ldots
+
+\tableofcontents
+
+\begin{abstract}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlkwd{print}\hlstd{(}\hlkwd{paste}\hlstd{(}\hlstr{"Euclidean function creation"}\hlstd{))}
+\end{alltt}
+\begin{verbatim}
+## [1] "Euclidean function creation"
+\end{verbatim}
+\begin{alltt}
+\hlstd{EuclDist} \hlkwb{=} \hlkwa{function}\hlstd{(}\hlkwc{x}\hlstd{,} \hlkwc{y}\hlstd{)\{}
+        \hlcom{#To acertain that we have 2 vectors of the same length.}
+        \hlkwa{if} \hlstd{(}\hlkwd{length}\hlstd{(x)}\hlopt{==}\hlkwd{length}\hlstd{(y))\{}
+                \hlcom{#s2 variable will be the sum of the squared difference of compoments}
+                \hlstd{s2}\hlkwb{=}\hlnum{0}
+                \hlkwa{for} \hlstd{(i} \hlkwa{in} \hlnum{1}\hlopt{:}\hlkwd{length}\hlstd{(x))\{}
+                        \hlstd{s2}\hlkwb{=}\hlstd{s2}\hlopt{+}\hlstd{(x[i]}\hlopt{-}\hlstd{y[i])}\hlopt{^}\hlnum{2}
+                \hlstd{\}}
+                \hlcom{#s variable will be the euclidian distance}
+                \hlstd{s}\hlkwb{=}\hlkwd{sqrt}\hlstd{(s2)}
+                \hlkwd{return}\hlstd{(s)}
+        \hlstd{\}}
+        \hlkwa{else}\hlstd{\{}
+                \hlkwd{print}\hlstd{(}\hlkwd{paste}\hlstd{(}\hlstr{"Given vectors have different length"}\hlstd{))}
+        \hlstd{\}}
+\hlstd{\}}
+
+\hlkwd{print}\hlstd{(}\hlkwd{paste}\hlstd{(}\hlstr{"KNN function creation"}\hlstd{))}
+\end{alltt}
+\begin{verbatim}
+## [1] "KNN function creation"
+\end{verbatim}
+\begin{alltt}
+\hlstd{KNN} \hlkwb{=} \hlkwa{function}\hlstd{(}\hlkwc{x0}\hlstd{,} \hlkwc{M}\hlstd{,} \hlkwc{k}\hlstd{)\{}
+        \hlkwa{if}\hlstd{(}\hlkwd{length}\hlstd{(x0)}\hlopt{==}\hlkwd{dim}\hlstd{(M)[}\hlnum{1}\hlstd{])\{}
+                \hlcom{#l variable will contain all euclidean distance between x0 and}
+                \hlcom{# vectors of cbind M}
+                \hlstd{l}\hlkwb{=}\hlkwd{c}\hlstd{()}
+                \hlkwa{for}\hlstd{(j} \hlkwa{in} \hlnum{1}\hlopt{:}\hlkwd{dim}\hlstd{(M)[}\hlnum{2}\hlstd{])\{}
+                        \hlstd{l}\hlkwb{=}\hlkwd{c}\hlstd{(l,} \hlkwd{EuclDist}\hlstd{(x0,M[,j]))}
+                \hlstd{\}}
+                \hlcom{#names of M columns are the class}
+                \hlkwd{names}\hlstd{(l)}\hlkwb{=}\hlkwd{colnames}\hlstd{(M)}
+                \hlcom{#nearestN contains the neigborhood of x0}
+                \hlstd{nearestN}\hlkwb{=}\hlkwd{sort}\hlstd{(l,} \hlkwc{decreasing}\hlstd{=}\hlnum{TRUE}\hlstd{)[}\hlnum{1}\hlopt{:}\hlstd{k]}
+                \hlcom{#class contain the name (the class) wich is the most common name}
+                \hlstd{class}\hlkwb{=}\hlkwd{sort}\hlstd{(}\hlkwd{table}\hlstd{(}\hlkwd{names}\hlstd{(nearestN)),}\hlkwc{decreasing}\hlstd{=}\hlnum{TRUE}\hlstd{)[}\hlnum{1}\hlstd{]}
+                \hlkwd{return}\hlstd{(}\hlkwd{names}\hlstd{(class))}
+        \hlstd{\}}
+\hlstd{\}}
+
+\hlstd{M}\hlkwb{=} \hlkwd{cbind}\hlstd{(}\hlkwd{c}\hlstd{(}\hlnum{0}\hlstd{,}\hlnum{3}\hlstd{,}\hlnum{0}\hlstd{),} \hlkwd{c}\hlstd{(}\hlnum{2}\hlstd{,}\hlnum{0}\hlstd{,}\hlnum{0}\hlstd{),} \hlkwd{c}\hlstd{(}\hlnum{0}\hlstd{,}\hlnum{1}\hlstd{,}\hlnum{3}\hlstd{),} \hlkwd{c}\hlstd{(}\hlnum{0}\hlstd{,}\hlnum{1}\hlstd{,}\hlnum{2}\hlstd{),} \hlkwd{c}\hlstd{(}\hlopt{-}\hlnum{1}\hlstd{,}\hlnum{0}\hlstd{,}\hlnum{1}\hlstd{),} \hlkwd{c}\hlstd{(}\hlnum{1}\hlstd{,}\hlnum{1}\hlstd{,}\hlnum{1}\hlstd{))}
+\hlkwd{colnames}\hlstd{(M)}\hlkwb{=}\hlkwd{c}\hlstd{(}\hlstr{"Red"}\hlstd{,} \hlstr{"Red"}\hlstd{,} \hlstr{"Red"}\hlstd{,} \hlstr{"Green"}\hlstd{,} \hlstr{"Green"}\hlstd{,} \hlstr{"Red"}\hlstd{)}
+\hlkwd{print}\hlstd{(}\hlkwd{paste}\hlstd{(}\hlstr{"The result for K=1"}\hlstd{,}\hlkwd{KNN}\hlstd{(}\hlkwd{c}\hlstd{(}\hlnum{0}\hlstd{,}\hlnum{0}\hlstd{,}\hlnum{0}\hlstd{), M,} \hlnum{1}\hlstd{)))}
+\end{alltt}
+\begin{verbatim}
+## [1] "The result for K=1 Red"
+\end{verbatim}
+\begin{alltt}
+\hlkwd{print}\hlstd{(}\hlkwd{paste}\hlstd{(}\hlstr{"The result for K=3"}\hlstd{,}\hlkwd{KNN}\hlstd{(}\hlkwd{c}\hlstd{(}\hlnum{0}\hlstd{,}\hlnum{0}\hlstd{,}\hlnum{0}\hlstd{), M,} \hlnum{3}\hlstd{)))}
+\end{alltt}
+\begin{verbatim}
+## [1] "The result for K=3 Red"
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+\end{abstract}
+
+\end{document}

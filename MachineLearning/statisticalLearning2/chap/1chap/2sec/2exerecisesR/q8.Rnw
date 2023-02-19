@@ -1,0 +1,21 @@
+@
+\begin{itemize}
+	\item[(a)] We perform a simple linear regression with \emph{
+		mpg} as the response and \emph{horsepower} as a 
+		predictor. Here the results:
+<<echo=TRUE, eval=TRU>>
+library(MASS)
+library(ISLR)
+library(car)
+fix(Auto)
+summary(Auto)
+@
+		\begin{itemize}
+			\item[i.]
+			\item[ii.]
+			\item[iii.]
+			\item[iv.]
+		\end{itemize}
+	\item[(b)]
+	\item[(c)]
+\end{itemize}

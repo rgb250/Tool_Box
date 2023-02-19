@@ -1,0 +1,39 @@
+\paragraph{Conceptual}
+\begin{enumerate}
+ \item
+   \begin{itemize}
+     \item[(a)] The number of predictors being small, and sample size
+being extremely high, and knowing the expected test MSE $\E{\left( 
+y_{0}-\widehat{f}\left( x_{0} \right) \right)^{2}}=\V{\widehat{f}\left(
+x_{0} \right)}+\left[ Biais\left( \widehat{f}\left( x_{0} \right)
+\right) \right]^{2}+\V{\epsilon}$ which refers to the average test MSE.
+\\A great number of observations results an increase of the variance.
+Then to compensate this increasing we should use a unflexible method,
+because unflexible methods decrease the variance.\\Then we avoid the
+overfitting risk.
+\item[(b)] It is the opposite case, now the low amount number of
+observations results to a high probability to make mistakes on our
+approximate function $f$. This means that biais increases, therefore
+we should use a flexible methods therewith to componsate the biais
+increasing. However the variance will increase but it's not a problem
+because the number of observation is small.
+\item[(c)] If the relationship between predictors and response is
+highly non-linear we need a method with a high level of flexibility.
+Then the challange is to approximate the real life problem therefore we
+must reduce the biais.
+\item[(d)] We have no control on the $\epsilon$ so I do not know.
+   \end{itemize}
+ \item
+   \begin{itemize}
+     \item[(a)] Our predictors are almost all quantitative, there is
+just the industry predictor which is qualitative however we can assign
+a number in function of the industry.\\Then it looks like a regression
+problem. We are most interested in inference.$n=500,p=4$
+\item[(b)] Our predictors are all quantitative but response is
+qualitative.\\Then it looks like a classification problem. We are most
+interested in prediction $n=20,p=14$
+\item[(b)] Our predictors are all quantitative and the response 
+searched is quantitative.\\Then it looks like a
+regression problem. We are most interested in prediction $n=?,p=4$
+   \end{itemize}
+ \end{enumerate}

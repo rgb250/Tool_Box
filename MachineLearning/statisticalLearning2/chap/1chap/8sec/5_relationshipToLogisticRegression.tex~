@@ -1,0 +1,92 @@
+It turns out that one can rewrite solution for fitting the support
+vector classifier $f(X)=\beta_{0}+\su{{i=1}}{p}\beta_{i}X_{i}$
+$$
+\min\limits_{\prtH{\beta}{i}{1}{p}}\left\{ \su{{i=1}}{n}max[0,1-y_{i}f(x_{i})]+\lambda\su{{j=1}}{p}\beta_{j}^{2} \right\}
+$$
+where $\lambda$ is a nonnegative tuning parameter, and 
+$P(\beta)=\su{{j=1}}{p}\beta_{j}^{2}$ (ridge regression) and 
+$P(\beta)=\su{{j=1}}{p}|\beta_{j}|$ (lasso)
+Recall that the ``Loss + Penality'' form is:
+$\min\limits_{\prtH{\beta}{i}{1}{p}}{L(X,y,\beta)+\lambda P(\beta)}$\\
+For the ridge regression and the lasso both loss functions take this
+form with:\\
+$L(X,y,\beta)=\su{{i=1}}{n}\left( y_{i}-\beta_{0}-\su{{j=1}}{p}x_{ij}\beta_{j} \right)^{2}$\\
+For the SVM the loss function istead takes the form:\\
+$L(X,y,\beta)=\su{{i=1}}{n}max[0,1-y_{i}\left( \beta_{0}+\su{{j=1}}{p}\beta_{j}x_{ij} \right)]$
+
+\paragraph{Regression and Kernels}
+Suppose we consider approximation of the regression function in terms of a set of basis functions
+$\left\{h_{m}(x)|m\in\inter{1}{M}\right\}$: $f(x)=\su{{m=1}}{M}\beta_{m}h_{m}(x)+\beta_{0}$
+To estimate $\beta$ and $\beta_{0}$ we minimize:
+$$ H(\beta,\beta_{0})=\su{{i=1}}{N}V(y_{i}-f(x_{i}))+\dfrac{\lambda}{2}\su{}{}\beta_{m}^{2}$$
+for some general error measure $V(r)$.\\ For any choice of $V(r)$, the solution $\hat{f}(x)=
+\su{}{}\hat{\beta}_{m}h_{m}(x)+\hat{\beta}_{0}$ has the form : 
+$$ \hat{f}(x)=\su{{i=1}}{N}\hat{\alpha}_{i}K(x,x_{i})$$ with $K(x,y)=\su{{m=1}}{M}h_{m}(x)h_{m}(
+y)$\\
+We estimate $\beta$ by minimizing the penalized least squares criterion:
+$$ H(\beta)=\left(\bm{y}-\bm{H}\beta\right)^{T}\left(\bm{y}-\bm{H}\beta\right) + 
+\lambda\norm{\beta}^{2}$$
+The solution is $\hat{\bm{y}} = \bm{H}\hat{\beta}$ with $\hat{\beta}$ determined by:
+$-\bm{H}^{T}(\bm{y}-\bm{H}\hat{\beta}) + \lambda\hat{\beta} = 0$
+We can pre-multiply by $\bm{H}$ to give: 
+$$ \bm{H}\hat{\beta} = \left(\bm{H}\bm{H}^{T}+\lambda\bm{I}\right)^{-1}\bm{H}\bm{H}^{T}\bm{y}$$
+
+\subsection{Linear Discriminant Analysis}
+There is a class of techniques that produce better classifiers than LDA by directly generalizing
+LDA.
+
+\paragraph{Flexible Discriminant Analysis}
+This is a method for performing LDA using linear regression on derived responses.\\
+We assume that we have observations with a quantitative response $G$ falling into one $K$ classes
+$\mathcal{G}=\left\{k\right\}_{1\leq k\leq K}$ each having measured features $X$.\\
+Suppose $\theta:\mathcal{G}\mapsto\mathbb{R}$ is a function that assigns scores to the classes,
+such that the transformed class labels are optimally predicted by linear regression on $X$: If
+our training has the form $\left(g,x_{i}\right)$ for $i\in\inter{1}{N}$ we solve:
+$$ \min\limits_{\beta,\theta}\su{{i=1}}{N}\left(\theta(g_{i})-x_{i}^{T}\beta\right)^{2}$$
+with restriction to $\theta$ to avoid a trivial solution (mean zero and unit variance over the 
+training data).\\
+More generally, we can find up to $L\leq K-1$ sets of independent scorings for the class labels
+$\prth{theta}{l}{L}$ and $L$ corresponding linear maps $\eta_{l}(X)=X^{T}\beta_{l}$ with$l\in
+\inter{1}{L}$ chosen to be optimal for multiple regression in $\mathbb{R}^{p}$. The scores
+$\theta_{l}(g)$ and the maps $\beta_{l}$ are chosen to minimize the averages squared residual:
+
+$$ASR = \dfrac{1}{N}\su{{l=1}}{L}\left[\su{{i=1}}{N}\left(\theta_{l}(g_{i})-x_{i}^{T}\beta_{l}
+\right)^{2}\right] $$
+Moreover, the Mahalanobis distance of a test point $x$ to the $k^{th}$ class centroid $\hat{\mu}_{
+k}$ is given by:
+$$ \delta_{J}(x,\hat{\mu}_{k}) = \su{{l=1}}{K-1}\omega_{l}\left(\hat{eta}_{l}(x)-\overline{\eta}_{
+l}^{k}\right)^{2} + D(x)$$
+where $\overline{\eta}_{l}^{k}$ is the mean of the $\hat{\eta}_{l}(x_{i})$ in the $k^{th}$ class,
+and $D(x)$ does not depend on $k$. Here $\omega_{l}$ are coordinate weights that are defined
+in terms of the mean squared residual $r_{l}^{2}$ of the $l^{th}$ optimally scored fit:
+$$ \omega_{l}= \dfrac{1}{r_{l}^{2}(1-r_{l}^{2})}$$ To summarize LDA can be performed by a
+sequence of linear regressions, followed by classification to the closest class centroid in
+the space of fits. The analogy applies both to the reduced rank version or the full rank case
+when $L=K-1$. \\
+The real power of this result is in the generalizations that it invites, we can replace the linear
+regression fits $\eta_{l}(x) = x^{T}\beta$ by far more flexible non-parametric fits, and by 
+analogy achieve a more flexible classifier than LDA. In this more general form the regression 
+problems are defined via the criterion:
+$$ ASR\left(\left\{\theta_{l},\eta_{l}\right\}_{l=1}^{L}\right)=\dfrac{1}{N}\su{{l=1}}{L}\left[
+\su{{i=1}}{N}\left(\theta_{l}(g_{i})-\eta_{l}(x_{i}) \right)^{2} +\lambda J(\eta_{l})\right]$$
+where $J$ is a regularized appropriate for some forms of non-parametric regression, such as 
+smoothing splines, additive splines and lower-order ANOVA spline models.
+
+\paragraph{Penalized Discriminant Analysis}
+Although FDA is motivated by generalized optimal scoring, it can also be viewed directly as a
+form of regularized discriminant analysis. Suppose the regression procedure used in FDA amounts
+to a linear regression onto a basis expansion $h(X)$, with a quatrat
+
+The steps in FDA can be viewed as generalized form of LDA which we call penalized discriminant
+analysis or PDA:
+\begin{itemize}
+	\item Enlarge the set of predictors $X$ via basis expansion $h(X)$
+	\item Use penalized LDA in the enlarged space, where the penalized Mahalanobis distance
+		is given by:
+		i$$D(x,\mu)=\left(h(x)-h(\mu)\right)^{T}\left(\Sigma_{\W}+\lambda\Omega \right)^{
+		-1}\left(h(x)-h(\mu)\right)$$ where $\Sigma_{W}$ is the within-class covariance
+		matrix of the derived variables $h(x_{i})$
+	\item Decompose the classification subspace using a penalized metric:
+		$$ \max u^{T}\su{}{}\beta u\text{ subject to }u^{T}\left(\Sigma_{W}+\lambda\Omega\right)u = 1$$
+\end{itemize}
+

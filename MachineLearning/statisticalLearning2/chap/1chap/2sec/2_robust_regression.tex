@@ -1,0 +1,36 @@
+\paragraph{Relevancy of using robust regression model}
+In the common way to model the noise, with a Gaussian distribution, maximizing likelihood is equivalent to minimizing the sum of squared residuals, however squared error penalizes
+deviation quadratically, then a few outliers can provoke poor model fitting.
+\paragraph{Potential approach to handle bypass outlier presence}
+Replace Gaussian distribution with \textbf{heavy tail} such it will assign higher 
+likelihood to outliers without impacting the main hyperspace explaining them.
+Like Laplace distribution of which probability function is:\\
+$\begin{cases}
+    \mathbb{R} & \longrightarrow \mathbb{R}\\
+    x & \longmapsto \dfrac{1}{2b}e^{\frac{\left| x-\mu\right|}{b}}
+\end{cases}$
+The robustness comes from the use of absolute value error instead of quadratic error.\\
+If for $i \in \inter{1}{n},~r_{i} \triangleq y_{i} - \beta^{T}x_{i}$ then NLL has this 
+form: $l(\beta) = \su{i=1}{n}\left|r_{i}(\beta)\right|$
+Unfortunately this function is hard to optimize, however we can convert the NLL to a 
+linear objective.\\
+Let set $r_{i} \triangleq r^{+}_{i} - r^{-}_{i}$, with $r^{+}_{i} \geq 0 \wedge
+r^{+}_{i}\geq 0$.
+Then the constrained objectives becomes $\displaystyle\min_{r^{+}, r^{-}}\su{i=1}{n}
+(r^{+}_{i} - r^{-}_{i})$\\
+An alternative to using NLL under a Laplace likelihood is to minimize the \textbf{Huber 
+Looss} defined as follow:
+$
+\begin{cases}
+    \frac{r^{2}}{2} & \Rightarrow |r| \leq \delta\\
+    \delta |r|-\frac{\delta^{2}}{2} & \Rightarrow |r| > \delta
+\end{cases}
+$
+This is equivalent to $l_{2}$ for smaller errors than $\delta$, and is equivalent to 
+$l_{1}$ for larger errors.\\
+This function is differentiable everywhere considering that 
+$r\neq \Rightarrow \frac{d}{dr}|r| = sign(r)$, also this function is continuous since 
+the gradients of the 2 parts of the functcion match at $r=\pm \delta$
+Consequently optimizing the Huber loss is much faster than using teh Laplace likelihood.
+
+

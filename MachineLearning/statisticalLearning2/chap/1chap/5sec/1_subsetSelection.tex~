@@ -1,0 +1,288 @@
+\paragraph{Best Subset Selection}
+\begin{lstlisting}
+import sklearn
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.datasets import load_iris
+import mlxtend
+from mlxtend.feature_selection import\
+SequentialFeatureSelector as SFS
+
+iris = load_iris()
+X = iris.data
+y = iris.target
+knn = KNeighborsClassifier(n_neighbors=4)
+\end{lstlisting}
+We fit a separate least squares regression for each possible 
+combination of the $p$ predictors.
+\subparagraph{Algorithm}
+\begin{enumerate}
+	\item Let \tB{$\mathcal{M}_{0}$ denote the \emph{null model},
+		which contains no predictors}. This model model simply 
+		predicts the sample mean for each observations.
+	\item For $k\in\inter{1}{p}$:
+		\begin{enumerate}[label=\alph*]
+			\item Fit all $\binom{p}{k}$ models that 
+				contain exactly $k$ predictors
+			\item \tB{Pick the best among these $\binom{p}{
+				k}$ models, and call it $\mathcal{M}_{
+				k}$}\\ \sB{Here best is defined as
+				having the small RSS or equivalently 
+				largest $R^{2}$}
+		\end{enumerate}
+	\item \tB{Select a single best model from among 
+		$\prtH{\mathcal{M}}{i}{0}{p}$} \sB{using
+		cross-validation prediction error, $C_{p}(AIC), BIC$,
+		or adjusted $R^{2}$}
+\end{enumerate}
+This task must be performed with care, because the RSS of these $p+1$
+models decreases monotonically, and the $R^{2}$ increases monotonically
+as the number of features included in the models increases.\\
+
+This problem is that \tB{a low RSS or a high $R^{2}$ indicates a model
+with a low \emph{training error}, whereas we wish to choose a model 
+that has a model that has a low test error}.\\
+
+\tB{Instead use RSS, we use the \emph{deviance}}, a measure that plays
+the role of RSS for a broader class class of models. The \tR{deviance 
+is negative 2 times the maximized log-likelihood}; the smaller the 
+deviance the better the fit.
+
+\paragraph{Stepwise Selection}
+\subparagraph{Forward Stepwise Selection}
+Algorithm
+\begin{enumerate}
+	\item Let \tB{$\mathcal{M}_{0}$ denote the \emph{null} model,
+		which contains no predictors}.
+	\item For $k\in\inter{0}{p-1}$
+		\begin{enumerate}[label=\alph*]
+			\item \tB{Consider all $p-k$ models} that
+				argument the predictors in
+				$\mathcal{M}_{k}$ with one additional
+				predictor.
+			\item \tB{Choose the \emph{best} among these 
+				$p-k$ models, and call it 
+				$\mathcal{M}_{k+1}$.}\\
+				Here \emph{best} is defined as having
+				smallest RSS or highest $R^{2}$
+			\end{enumerate}
+	\item \tB{Select a single best model from among
+		$\prth{\mathcal{M}}{i}{0}{p}$} using cross-validated
+		prediction error, $C_{p}(AIC), BIC$, or adjusted
+		$R^{2}$
+\end{enumerate}
+\sB{Unlike best subset selection, which involved fitting $2^{p}$ 
+models, forward stepwise selection involves fitting one null model,
+along with $p-k$ models in the $kth$ iteration, for $k\in\inter{0}{
+p-1}$.}\\
+This amounts to a total of $1+\su{{k=0}}{p-1}(p-k)=1+\frac{p(p+1)}{2}$
+models
+\begin{lstlisting}
+sfsl = SFS(knn, # sickit-learn classifier/regressor
+    k_features=3, # Number of features to select
+    forward=True, # Forward if True otherwise False
+    floating=False, # Adds a conditional exclusion/inclusion if True
+    verbose=2, # Level of verbosity to use in logging [0,2]
+    scoring='accuracy', # 'accuracy' for classifiers, 'r2' for regressors
+    cv=0 # Stratified k-fold for classifier
+    )
+\end{lstlisting}
+
+\subparagraph{Backward Stepwise Selection}
+Algorithm
+\begin{enumerate}
+	\item Let \tB{$\mathcal{M}_{p}$ denote the \emph{full} model,
+		which contains all $p$ predictors}.
+	\item For $k\in\inter{p-1}{0}$
+		\begin{enumerate}[label=\alph*]
+			\item \tB{Consider all $k$ models that contain
+				all but one of the predictors in 
+				$\mathcal{M}_{k}$} (for a total of)
+				$k-1$ predictors.
+			\item \tB{Choose the \emph{best} among these 
+				$k$ models, and call it 
+				$\mathcal{M}_{k-1}$.}\\
+				Here \emph{best} is defined as having
+				smallest RSS or highest $R^{2}$
+			\end{enumerate}
+	\item \tB{Select a single best model from among
+		$\prtH{\mathcal{M}}{i}{0}{p}$} using cross-validated
+		prediction error, $C_{p}(AIC), BIC$, or adjusted
+		$R^{2}$
+\end{enumerate}
+\begin{lstlisting}
+sfsl = SFS(knn,
+    k_features=3,
+    forward=False,
+    floating=False,
+    verbose=2,
+    scoring='accuracy',
+    cv=0
+    )
+\end{lstlisting}
+
+\subparagraph{Hybrid approach}
+Such an approach attempts to more closely mimic best subset selection
+while retaining the computational advantages of forward and backward
+stepwise selection.
+
+\paragraph{Optimism of the Training Error Rate}
+
+The \emph{in-sample} error:
+$$ Err_{in} = \dfrac{1}{N}\su{{i=1}}{N}\mathbb{E}_{Y^{0}}\left(L\left(Y_{i}^{0},\hat{f}(x_{i})
+\right)|\mathcal{T}\right)$$
+The $Y^{0}$ notation indicates that we observe $N$ new response values at each of the training
+point $x_{i}\text{ with }i\in\inter{1}{N}$. We define the \emph{\textbf{optimism}} as :
+$$
+\begin{cases}
+	op \equiv Err_{in}-\overline{err}\\
+	\omega \equiv E_{y}(op)
+\end{cases}
+$$
+We can usually estimate only the expected error $\omega$ rather than \emph{op}, in the same way
+that we can estimate the expected error $Err$ rather than the conditional error $Err_{\mathcal{T}
+}$\\
+For squared error, one can show quite generally that:
+$$ \omega=\dfrac{2}{N}\su{{i=1}}{N}Cov(\hat{y}_{i},y_{i})$$
+In summary we have the important relation:
+$$ \mathbb{E}_{\bm{y}}\left(Err_{in}\right) = \mathbb{E}_{\bm{y}}(\overline{err}) +
+\dfrac{2}{N}\su{{i=1}}{N}Cov(\hat{y}_{i},y_{i})$$
+
+
+\paragraph{The effective number of parameters}
+The effective number of parameters is 
+$$ df(\bm{S} = trace(\bm{S}))$$
+If $\bm{y}$ arises from an additive-erro model $Y=f(X)+\epsilon$ with $\V{\epsilon}=\sigma^{2}$,
+then one can show that $\su{{i=1}}{N}Cov(\hat{y}_{i},y_{i})=trace(\bm{S})\sigma^{2}$ which 
+motivates the more general definition:
+$$ df(\hat{\bm{y}})=\dfrac{\su{{i=1}}{N}Cov(\bm{y}_{i},y_{i})}{\sigma^{2}}$$
+
+\paragraph{Choosing the Optimal Model}
+Now rather to choose the model with the smallest RSS and the largest
+$R^{2}$, since these quantities are related to training error, we 
+wish to choose the model with a low test error.\\
+Then we can
+\begin{enumerate}
+	\item \tB{indirectly estimate test error}, by making an 
+		\emph{adjustment} to the training error to account
+		for the bias due to overfitting.
+	\item \tB{directly estimate test error}, using either a 
+		validation set approach or a cross-validation approach.
+\end{enumerate}
+
+\subparagraph{$C_{p}$, AIC, BIC, and adjusted $R^{2}$}
+\textbf{$C_{p}$}\\
+For a fitted least squares model containing $d$ predictors,
+the \tB{$C_{p}$ estimate of test MSE} is computed using the equation
+\begin{center}
+\encV{$
+\begin{cases}
+C_{p} = \dfrac{1}{n}\left( RSS+2d\hat{\sigma}^{2} \right)\\
+C_{p} = \overline{err} + 2\dfrac{d}{N}\hat{\sigma}^{2}
+\end{cases}
+$}
+\end{center}
+where $\hat{\sigma}^{2}$ is an estimate of the variance of the error
+$\epsilon$ associated with each response measurement.\\
+Using this criterion we adjust the training error by a factor proportional to the number of basis
+function used.
+
+\textbf{AIC}\\
+It is defined for a large class of models fit by maximum likelihood.
+The \emph{Akaike information criterion} is a similar but more generally applicable but more
+applicable estimate of $Err_{in}$ when a log-likelihood loss function is used. It relies on
+a relationship:
+$$ -2\E{\log\left(\mathbb{P}_{\hat{\theta}}(Y)\right)}\approx -\dfrac{2}{N}\E{logik}+2\dfrac{d}{N}
+$$ 
+Here $\mathbb{P}_{\hat{\theta}}(Y)$ is a family of densities for $Y$ (containing the ``true''
+density), $\hat{\theta}$ is the maximum-likelihood estimate of $\theta$, and ``logik''is the 
+maximized log-likelihood:
+$$ loglik = \su{{i=1}}{N}\log\left(\mathbb{P}_{\hat{\theta}}(y_{i})\right)$$
+\begin{center}
+\encV{$
+\begin{cases}
+AIC = \dfrac{1}{n\hat{\sigma}^{2}}\left( RSS+2d\hat{\sigma}^{2} \right)\\
+AIC = \overline{err}(\alpha) + 2\dfrac{d(\alpha)}{N}\hat{\sigma}_{\epsilon}^{2}
+\end{cases}
+$}
+\end{center}
+
+\textbf{BIC}\\
+It is derived from a Bayesian point of view, like AIC it is applicable in setting where the 
+fitting is carried out by maximization of a log-likelihood:
+\begin{center}
+\encV{$
+\begin{cases}
+BIC = \dfrac{1}{n\hat{\sigma}^{2}}\left( RSS+\ln(n)d\hat{\sigma}^{2} \right)\\
+BIC = \dfrac{N}{\sigma^{2}}\left[\overline{err}+\log(N)\dfrac{d}{N}\sigma^{2}\right]
+\end{cases}
+$}
+\end{center}
+Therefore BIC is proportional to AIC, with the factor $2$ replaced by $\log(N)$. Assuming 
+$N>e^{2}\approx 7.4$, BIC tends to penalize complex models more heavily, giving preference to 
+simpler models in selection.
+
+\textbf{Adjusted $R^{2}$}\\
+For a least squares model with $d$ variables it is calculated as:
+\begin{center}
+\encV{$
+\text{Adjusted }R^{2}=1-\dfrac{\frac{RSS}{n-d-1}}{\frac{TSS}{n-1}}
+$}
+\end{center}
+
+Given a family of models, including the true model, the probability that BIC will select the 
+correct model approaches one as the sample size $N\rightarrow\infty$. This is not the case for
+AIC, which tends to choose models which are too complex as $N\rightarrow\infty$.\\
+On the other hand, for finite samples BIC often chooses models that are too simple, because of
+its penalty on complexity.
+
+\paragraph{Vapnik-Chervonenkis Dimension}
+Altough the effective number of parameters is useful for some non-linear models, it is not fully
+general. The \emph{Vapnik-Chervonenkis} theory provides such a general measure of complexity and
+gives associated bounds on the optimism.\\
+The \emph{Vapnik-Chervonenkis} dimension is a way of measuring the complexity of a class of function
+by assessing how wiggly its members can be.\\
+If we fit $N$ training points using a class of function $\left\{f(x,\alpha)\right\}$ (class of 
+functions indexed by a parameter vector $\alpha$, with $x\in\mathbb{R}^{p}$) having VC dimensions
+(that is defined as the largest number of points that can be shattered by members of $\left\{
+f(x,\alpha)\right\}$) noted $h$. Then with probability at least $1-\eta$ over training sets:
+$$
+\begin{cases}
+	Err_{\mathcal{T}} \leq \overline{err}+\dfrac{\epsilon}{2}\left(1+\sqrt{1+\dfrac{4\overline{
+	err}}{\epsilon}}\right)\text{ (binary classification)}\\
+	Err_{\mathcal{T}} \leq \dfrac{\overline{err}}{1-c\sqrt{\epsilon}}_{+} \text{ (regression)}
+\end{cases}
+$$
+where $\epsilon=a_{1}\dfrac{h\left[\log\left(a_{2}\frac{N}{h}\right)+1\right]-\log\left(\frac{\eta}{4}\right)}{N}$ and $(a_{1},a_{2})\in]0,4]\times]0,2]$.\\
+Cherkassky and Mulier recommend the value of $c=1$,
+\begin{itemize}
+	\item For regression they suggest $(a_{1},a_{2})=(1,1)$
+	\item For classification they suggest $(a_{1},a_{2})=(4,2)$
+\end{itemize}
+
+\subparagraph{Validation and Cross-Validation}
+We can compute the validation set error or the cross-validation error 
+for each model under consideration, and then \tB{select the model for
+which the resulting estimated test error is smallest}.
+
+\paragraph{Bootstrap Methods}
+The bootstrap is a general tool for assessing statistical accuracy.\\
+We denote the training set by $\bm{Z}=(z_{1},\cdots,z_{N})$ where $z_{i}=(x_{i},y_{i})$. The basic
+idea is to randomly draw datasets with replacement from the training data, each sample the same size
+as the original training set. This done $B$ times, producing $B$ bootstrap datasets.
+
+The leave-one-out boostrap estimate of prediction error is defined by: 
+$$ \hat{Err}=\dfrac{1}{N}\su{{i=1}}{N}\dfrac{1}{|C^{-i}|}\su{{b\in C^{-i}}}{}L\left(y_{i},
+\hat{f}^{*b}(x_{i})\right)$$
+Here $C^{-i}$ is the set of indices of the bootstrap samples b that do not contain observation $i$,
+and $|C^{-i}|$ is the number of such samples.
+First we define $\gamma$ to be the \emph{no-information rate} this is the error rate of our 
+prediction rule if the inputs and class labels were independent.
+$$\hat{\gamma}=\dfrac{1}{N^{2}}\su{{i=1}}{N}\su{{j=1}}{N}L\left(y_{i},\hat{f}(x_{j})\right)$$
+The \emph{relative overfitting rate} is defined to be:
+$$\hat{R}=\dfrac{\hat{Err}-\overline{err}}{\hat{\gamma}-\overline{err}}$$
+a quantity that ranges from 0 if there is no overfitting to 1 if the overfitting equals the
+no-information value ($\hat{\gamma}-\overline{err}$).\\
+
+We conclude that estimation of test error for a particular training set is not easy in general,
+given just the data from that same training set. Instead cross-validation and related methods
+may provide reasonable estimate of the \emph{expected} error Err.
