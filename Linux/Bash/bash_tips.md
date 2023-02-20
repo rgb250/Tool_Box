@@ -55,6 +55,7 @@ grep --include=*.tex -lri monte ./* # find all files containing at least one occ
 
 # REGEX
 In *sed* system we have to escape characters like '{' or '}'
+Expression like '\d' or '\w' does not exist in basic bash.
 |Operator|Effect|
 |---|---|
 |.|Matches any single character|
@@ -90,3 +91,19 @@ fg  # bring a process to the foreground
 bg  # bring a process to the background
 nohup vlc &  # nohup ignore all SIGHUP (hangup) signals, sent when terminal is closed
 
+## Zip a list of files
+````bash
+find -type f -regex 'pattern' | zip file_list.zip -@  # -@ makes zip read from STDIN
+````
+
+# Coding
+## Loop over an array
+````bash
+declare -a arr=(
+    'fsfsd' 'fsfsff' 'mmkoi'  # create an array named arr
+    )
+for word in "${arr[@]}"       # loop over the value of arr
+    do
+        echo $word
+    done
+````
