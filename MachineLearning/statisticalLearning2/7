@@ -1,0 +1,12 @@
+It turns out that one can rewrite solution for fitting the support
+vector classifier $f(X)=\beta_{0}+\su{{i=1}}{p}\beta_{i}X_{i}$
+$$
+\min\limits_{\prtH{\beta}{i}{1}{p}}\left\{ \su{{i=1}}{n}max[0,1-y_{i}f(x_{i})]+\lambda\su{{j=1}}{p}\beta_{j}^{2} \right\}
+$$
+where $\lambda$ is a nonnegative tuning parameter.\\
+Recall that the ``Loss + Penality'' form is:
+$\min\limits_{\prtH{\beta}{i}{1}{p}}{L(X,y,\beta)+\lambda P(\beta)}$\\
+For the ridge regression and the lasso both take this form with
+$L(X,y,\beta)=\su{{i=1}}{n}\left( y_{i}-\beta_{0}-\su{{j=1}}{p}x_{ij}\beta_{j} \right)^{2}$\\
+For the SVM the loss function istead takes the form:
+$L(X,y,\beta)=\su{{i=1}}{n}max[0,1-y_{i}\left( \beta_{0}+\su{{j=1}}{p}\beta_{j}x_{ij} \right)<++>]<++>$<++>

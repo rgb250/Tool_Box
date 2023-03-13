@@ -1,4 +1,11 @@
 Here are a few important questions that we might seek to address:
+Linear model is a model of the form:
+$$ p(y|\bm{x}, \bm{\theta}) = \mathcal{N}\left(
+\bm{\beta}^{T}\bm{x},\sigma^{2}\right)$$.
+Linear regression can be made to model non-linear reltationships by replacing
+$\bm{x}$ with some non-linear function of the inputs $\phi$
+$$ p(y|\bm{x}, \bm{\theta}) = \mathcal{N}\left(
+\bm{\beta}^{T}\phi(\bm{x}),\sigma^{2}\right)$$.
 \subsection{Simple linear regression}
 \input{./chap/1chap/2sec/1_simpleLinearRegression.tex}
 \subsection{Multiple linear regression}

@@ -1,0 +1,19 @@
+The neural network model has unknown parameters often called \emph{weights} and we seek values
+for them that make the model fit the training data well. We denote the complete set of of 
+weights by $$\theta=
+\begin{cases}
+	\left\{(\alpha_{0m},\alpha_{m})|m\in\inter{1}{M}\right\}\\
+	\left\{(\beta_{0k},\beta_{k})|k\in\inter{1}{K}\right\}
+\end{cases}
+$$
+A aour measure of fit we use:
+$$
+\begin{cases}
+	R(\theta)=\su{{k=1}}{K}\su{{i=1}}{N}\left(y_{ik}-f_{k}(x_{i})\right)^{2}\text{ 
+	regression}\\
+	R(\theta)=-\su{{k=1}}{K}\su{{i=1}}{N}y_{ik}\log\left(f_{k}(x_{i})\right)\text{ 
+	classification}
+\end{cases}
+$$
+The generic approach to minimizeing $R(\theta)$ is by gradient descescent  
+

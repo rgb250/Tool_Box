@@ -1,0 +1,66 @@
+Refers to the process by which principal components are computed, and
+the subsequent use of these components in understanding the data.
+
+\paragraph{Definition of principal components}
+PCA finds a low-dimensional representation of a data set that contains
+as much as possible of the variation. PCA seeks a small number of 
+dimensions that are interesting as possible.\\
+
+The \emph{first principal component} of a set of features 
+$\prtH{X}{i}{1}{p}$ is the \emph{normalized} linear combination of the
+features:
+\begin{center}
+\enc{$
+Z_{1}=\su{{i=1}}{p}\phi_{i1}X_{i}
+$}
+\end{center}
+that has the largest variance. \sB{By normalized}, we mean that 
+\tB{$\su{{j=1}}{p}\phi_{j1}^{2}=1$} \\
+
+The first principal component loading vector solves the optimization
+problem:
+\begin{center}
+\enc{
+$
+\max\limits{\left(\phi_{i1}\right)_{1\leq i\leq n}}\left\{ \dfrac{1}{n}\su{{i=1}}{n}\left( \su{{j=1}}{p}\phi_{j1}x_{ij} \right)^{2} \right\}\text{ subject to }\su{{j=1}}{p}\phi_{j1}^{2}=1
+$}
+\end{center}
+It turns out that constructing $Z_{2}$ to be uncorrelated with $Z_{1}$
+is equivalent to constraining the direction $\phi_{2}$ to be orthogonal
+to the direction $\phi_{1}$
+
+\paragraph{Another interpretation of principal components}
+An alternative interpretation for principal components can also be 
+useful: principal components provide low-dimensional linear surfaces
+that are \emph{closet} to the observations.\\
+With the first principal component we seek a single dimension of the 
+data that lies as close as possible to all of the data points.
+
+\paragraph{More on PCA}
+\subparagraph{Scaling the variables}
+The results obtained when we perform PCA will also depend on whether
+the variables have been individually scaled.
+\subparagraph{Uniqueness of the principal component}
+The sign has no effects as the direction does not change.
+\subparagraph{The proportion of variance explained}
+We are interested in knowing the \emph{Proportion of Variance
+Explained} PVE by each principal component. \\
+The total variance present in a daa set (assuming that the variables
+have been centered to have mean zero) is defined as:
+$$
+\su{{j=1}}{p}\V{X_{j}}=\su{{j=1}}{p}\dfrac{1}{n}\su{{i=1}}{n}x_{ij}^{2}
+$$
+
+The variance explained by the $m^{th}$ principal component is:
+$$
+\dfrac{1}{n}\su{{i=1}}{n}z_{im}^{2}=\dfrac{1}{n}\su{{i=1}}{n}\left( \su{{j=1}}{p}\phi_{jm}x_{ij} \right)^{2}
+$$
+
+PVE:
+$$
+\dfrac{\su{{i=1}}{n}\left( \su{{j=1}}{p}\phi_{jm}x_{ij} \right)^{2}}{\su{{j=1}}{p}\su{{i=1}}{n}x_{ij}^{2}}
+$$
+
+\subparagraph{Deciding how many principal component to use}
+We tipycally decide on the number of principal components required
+to visualize the data by examining a \emph{scree pot}

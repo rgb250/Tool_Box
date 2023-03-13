@@ -1,0 +1,41 @@
+\begin{enumerate}
+	\item \emph{Is there a relationship between advertising sales
+		and budget?}
+		\begin{itemize}
+			\item fitting a multiple regression model
+			\item $F-statistic$ can be used to determine if
+				or not we should reject the null 
+				hypothesis, in this case a low 
+				$p-value$ corresponding to the 
+				$F-statistic$ indicates a clear
+				evindence of a relationship.
+		\end{itemize}
+	\item \emph{How strong is the relationship?}
+		\begin{itemize}
+			\item RSE
+			\item $R^{2}$
+		\end{itemize}
+	\item \emph{Which media contribute to sales?}
+		Examine the $p-values$ associated with each 
+		predictor's $t-statistic$
+	\item \emph{How large is the effect of each medium on sales?}
+		If confidence intervals are narrow and far from $0$ 
+		then it provides evindence that exists relationship 
+		between predictors.\\The collinearity can cause a wide
+		confidence interval, so we could use \emph{VIF} to know
+		if there is collinearity.
+	\item \emph{How accurately can we predict future sales?}
+		\begin{itemize}
+			\item To predict an individual response $Y=
+				f\left(X\right)+\epsilon$
+				we use a \emph{predictor interval}
+			\item To predict the average response $f\left(
+				X\right)$, we use a confidence interval
+		\end{itemize}
+	\item \emph{Is the relationship linear?}
+		To observe residual plots.
+	\item \emph{Is there synergy among the advertising media?}
+		In the presence of non-additive relationships we can
+		introduce an \emph{interaction term} in the regression.
+	\ldots
+ \end{enumerate}

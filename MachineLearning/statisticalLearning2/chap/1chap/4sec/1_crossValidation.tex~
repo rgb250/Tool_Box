@@ -1,0 +1,103 @@
+\paragraph{The Validation Set Approach}
+It involves randomly \tB{dividing the available set of observations 
+into 2 parts}:
+\begin{enumerate}
+	\item \emph{\tR{training set}}
+	\item \emph{\tR{validation set}}
+\end{enumerate}
+Pitfall: 
+\begin{itemize}
+	\item the \sB{validation estimate of the test error rate can be highly variable}.
+	\item \sB{Only a subset of the observations are used to fit}
+		the model.
+\end{itemize}
+
+\paragraph{Leave-One-Out Cross-Validation}
+Instead of creating 2 subsets of comparable size, \tR{a single
+observations $(x_{1},y_{1})$ is used for the validation} set and the
+remaining observations $\left\{ x_{i},y_{i} \right\}_{2\leq i\leq n}$ 
+make up the training set.\\
+The LOOCV estimate for the test MSE is the average of these $n$ test
+error estimates:
+
+\begin{center}
+\encB{$CV_{n}=\dfrac{1}{n}\su{{i=1}}{n}MSE_{i}$}
+\end{center}
+
+LOOCV approach tends not to overestimate the test error rate as much
+as the validation set approach does.\\
+With least squares linear or polynomial regression, \sB{an amazing
+shortcut makes the cost of LOOCV the same as that of a single model 
+fit}!
+\begin{center}
+\encV{$
+CV_{n}=\dfrac{1}{n}\su{{i=1}}{n}\left( \dfrac{y_{i}-\overline{y}_{i}}{1-h_{i}} \right)^{2}
+$}
+\end{center}
+$h_{i}$ is the leverage (that reflects the amount that an observations
+influence its own fit).\\
+LOOCV is a very general method, and can be used with any kind of
+predictive modeling.
+
+\paragraph{k-Fold Cross-Validation}
+This approach \tB{involves randomly dividing the set of observations 
+into $k$ groups (folds), of approximately equal size}. The \tB{first
+fold is treated as a validation set}, and the method is fit on the 
+remaining $k-1$ folds.
+\begin{center}
+\encV{$
+CV_{n}=\dfrac{1}{k}\su{{i=1}}{k}MSE_{i}
+$}
+\end{center}
+
+When we examine real data, \tB{we do not know the True test MSE, and
+so it is difficult to determine the accuracy of the cross-validation estimate}.\\
+
+When we perform cross-validation, our goal might to be \tB{determine
+how well a given statistical learning procedure can be expected to 
+perform on independent data}; \tB{in this case, the actual estimate of 
+the test MSE is of interest}. But \tB{other times we are interested 
+only in the location of the \emph{minimum point in the estimated test}
+MSE curve}.\\
+
+Despite the fact that they sometimes underestimate the true test MSE,
+\tR{all of the CV curves come close to identifying, the flexibility
+level corresponding to the smallest test MSE}.
+
+\paragraph{Biais-Variance Trade-Off for k-Fold Cross-Validation} 
+\tB{Validation set approach can lead to overestimates of the test error
+rate}, since the training set used to fit the response contains only
+half the observations of the entire data set. Likewise \tB{LOOCV will
+give approximately unbiased estimates of the test error}.\\
+
+And \tB{performing $k$-fold CV for, say, $k=5$ or $k=10$ will lead to
+an intermediate level of biais}, since each training set contains 
+$\frac{(k-1)n}{k}$ observations fewer than in the LOOCV approach, but
+substantially more than in the validation set approach.\\
+
+
+It turns out that \tB{LOOCV has higher variance than does $k$-fold CV
+with k < n}. Why ?
+We are averaging the outputs of $n$ fitted models, each of which is 
+trained on an almost identical set of observations; therefore, these
+outputs are highly (positively) correlated with each other.
+In contrast, when we perform $k$-fold CV with $k<n$ we are averaging
+the outputs of $k$ fitted models that are somewhat less correlated with
+each other, since the overlap between the training sets in each model 
+is smaller.\\
+
+Since the mean of many highly correlated quantities has high variance 
+than does the mean of many quantities that are not as highly 
+correlated, the test error estimate resulting from LOOCV tends to have
+higher variance than does the test error estimate resulting from
+$k$-fold CV.
+
+\paragraph{Cross-Validation on Classification Problems} Instead to use
+the MSE to quantify test error, we rather use the number of 
+misclassified observations.
+\begin{center}
+\encV{$
+CV_{n}=\dfrac{1}{n}\su{{i=1}}{n}Err_{i}
+$}
+\end{center}
+where $Err_{i}=I(y_{i}\neq\hat{y}_{i})$

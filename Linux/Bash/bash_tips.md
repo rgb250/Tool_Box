@@ -51,7 +51,7 @@ du -h -d 1 ./folder_path | sort -h # to see the size of each elements in a given
 # SEARCH INSIDE FILES
 
 grep --exclude=\*.{pyc,log} -rl './' -e ".*10\.214\.82\.92.*" # find in the current directory and its subdirectorires all the files containing the string "10.214.82.92" inside a 
-grep --include=*.tex -lri monte ./* # find all files containing at least one occurence of "monte" inside it 
+grep --exclude-dir=folder_e --include=*.tex -lri monte ./* # find all files except in folder_e containing at least one occurence of "monte" inside it 
 
 # REGEX
 In *sed* system we have to escape characters like '{' or '}'

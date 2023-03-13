@@ -1,0 +1,302 @@
+\documentclass[a4paper, 10pt]{scrartcl}  %livre
+
+% Permet l'encodage avec le Unicode Transformation Format-8-bit
+\usepackage[utf8]{inputenc}
+% Permet la gestion des caractères accentués ainsi que la stabilité des impressions en P.D.F.
+\usepackage[T1]{fontenc}
+% Permet la stabilisation de l'écriture
+\usepackage{lmodern, textcomp}
+% Permet d'utiliser les liens hypertexte sans altérer la bibliothèque KOMA
+\usepackage{scrhack}
+\KOMAoptions{hyperref=false}
+% Utilise les règles gramaticales françaises
+\usepackage[french]{babel}
+
+%Utilise les règles typographique de la bibliothéques KOMA
+\setkomafont{author}{\scshape}
+%\usepackage{blindtext}
+
+% Package pour avoir plus d'arguments dans ses commandes.
+\usepackage{xargs}
+%Package pour plus de souplesse
+\usepackage{tabularx}
+
+%Package pour les listes indexées
+\usepackage{enumitem}
+
+%Bibliothèque mathématiques pour la police.
+\usepackage{amsfonts}
+%Bibliothèques mathématiques générale.
+\usepackage{amsmath}
+\usepackage{amssymb}
+%Pour appliquer \mathbb à des nombres
+\usepackage{bbm}
+%Package pour l'indexation de matrices
+\usepackage{blkarray}
+%\usepackage{dsfont}
+%Package pour spreadsheet
+\usepackage{spreadtab}
+\usepackage{fp}
+\usepackage{xstring}
+\renewcommand\STprintnum[1]{\numprint{#1}}
+\STsetdecimalsep{,}
+\STautoround{6}
+\usepackage{eurosym}
+%Bibliothèque pour l'affichage de nombre avec la typographie définie
+\usepackage{numprint}
+\newcommand{\np}[1]{\numprint{#1}}
+% Pour la notation scientifique
+\usepackage{siunitx}
+\sisetup{locale= FR,exponent-product=., unit-mode = text}
+\DeclareSIUnit\year{ann\'{e}ee}
+%Positionnement des images
+\usepackage{float}
+\usepackage{subcaption}
+%Utilisation des couleurs
+\usepackage{xcolor}
+% Package pour le soulignement
+\usepackage{color,soulutf8}
+\setulcolor{red}
+% Package pour les annotations
+\usepackage{todonotes}
+%\usepackage[pygments]{pythontex} % Pour utiliser Python
+%\usepackage{fvextra} % Utile pour la mise en forme du code source inséré
+%Package pour la programmation
+\usepackage{listings}
+% Package pour les scripts en R
+\lstset{language=R,
+    basicstyle=\small\ttfamily,
+    stringstyle=\color{DarkGreen},
+    otherkeywords={0,1,2,3,4,5,6,7,8,9},
+    morekeywords={TRUE,FALSE},
+    deletekeywords={data,frame,length,as,character},
+    keywordstyle=\color{blue},
+    commentstyle=\color{DarkGreen},
+    }
+
+%Définition de couleurs:
+\definecolor{bleudefrance}{rgb}{.19, .55, .91}
+\definecolor{pakistangreen}{rgb}{.0, .4, .0}
+\definecolor{rossocorsa}{rgb}{0.83, 0.0, 0.0}
+\definecolor{persimmon}{rgb}{0.93, 0.35, 0.0}
+\definecolor{bronze}{rgb}{0.8, 0.5, 0.2}
+% Annotation auteur
+\newcommand{\Moi}[1]{\todo[color = teal!40]{#1}}
+\newcommand{\Cnsl}[1]{\todo[color = pakistangreen!40]{#1}}
+\newcommand{\MeG}[1]{\todo[color = rossocorsa!40]{#1}}
+%Notation récurrante:
+\newcommandx{\hb}[1]{\widehat{\beta_{#1}}}
+\newcommandx{\prth}[4]{\left( #1_{#2} \right)_{#3\leq #2 \leq #4}}
+% Encadrement des résultats
+\newcommand{\enc}[1]{\fcolorbox{rossocorsa}{white}{#1}}
+\newcommand{\encB}[1]{\fcolorbox{bleudefrance}{white}{#1}}
+\newcommand{\encV}[1]{\fcolorbox{pakistangreen}{white}{#1}}
+\newcommand{\encN}[1]{\fcolorbox{black}{white}{#1}}
+% Soulignement couleur
+\newcommandx{\sN}[1]{\setulcolor{black}\ul{#1}}
+\newcommandx{\sR}[1]{\setulcolor{rossocorsa}\ul{#1}}
+\newcommandx{\sB}[1]{\setulcolor{bleudefrance}\ul{#1}}
+\newcommandx{\sV}[1]{\setulcolor{pakistangreen}\ul{#1}}
+\newcommandx{\sT}[1]{\setulcolor{teal}\ul{#1}}
+\newcommandx{\sO}[1]{\setulcolor{persimmon}\ul{#1}}
+\newcommandx{\sG}[1]{\setulcolor{tiger}\ul{#1}}
+% Text de couleur
+\newcommandx{\tR}[1]{\textcolor{rossocorsa}{#1}}
+\newcommandx{\tB}[1]{\textcolor{bleudefrance}{#1}}
+\newcommandx{\tV}[1]{\textcolor{pakistangreen}{#1}}
+\newcommandx{\tT}[1]{\textcolor{teal}{#1}}
+\newcommandx{\tO}[1]{\textcolor{persimmon}{#1}}
+\newcommandx{\tBr}[1]{\textcolor{bronze}{#1}}
+% Écriture intervalle
+\newcommandx{\inter}[2]{\left[\![#1, #2]\!\right]}
+% Écriture intégrale
+\newcommandx{\Su}[2]{{\displaystyle \int_{#1}^{#2}}}
+% Écriture somme sigma
+\newcommandx{\su}[2]{{\displaystyle \sum_{#1}^{#2}}}
+% Écriture produit pi
+\newcommandx{\prd}[2]{{\displaystyle \prod_{#1}^{#2}}}
+%Écriture limite lim
+\newcommandx{\lm}[2]{{\displaystyle \lim_{#1\to #2}}}
+% Écriture P(X)
+\newcommandx{\prob}[1]{\mathbb{P}\left(#1\right)}
+% Écriture P_{\{Y\}}({X})
+\newcommandx{\probC}[2]{\mathbb{P}_{#1}\left(#2\right)}
+% Écriture P({X})
+\newcommandx{\Prob}[1]{\mathbb{P}\left(\left\{#1 \right\}\right)}
+% Écriture P_{\{Y\}}({X})
+\newcommandx{\ProbC}[2]{\mathbb{P}_{\left\{#1\right\}}\left(\left\{#2\right\}\right)}
+% Ecriture Esperance et Variance
+\newcommandx{\E}[1]{\mathbb{E}\left(#1\right)}
+\newcommandx{\Ec}[2]{\mathbb{E}_{\left\{#1\right\}}\left(#2\right)}
+\newcommandx{\V}[1]{\mathbb{V}\left(#1\right)}
+\newcommandx{\Vc}[2]{\mathbb{V}_{\left\{#1\right\}}\left(#2\right)}
+%Symbole de la norme
+\newcommandx{\norm}[1]{\left\lVert#1\right\rVert}
+
+\title{Summarise Course/Methods}
+\author{Siger}
+
+\begin{document}
+
+\maketitle
+
+Si Dieu est infini, alors je suis une partie de Dieu sinon je serai sa limite\ldots
+
+\tableofcontents
+
+\section{Conceptual}
+\subsection{1)}
+\begin{figure}[H]
+	\begin{center}
+		\includegraphics[width=\textwidth]{./images/table3_4.png}
+	\end{center}
+	\caption{Analyse p-value}
+	\label{fig:1}
+\end{figure}
+Noting $H_{0_{variable}}$ the null hypotheses to which the p-values 
+correspond then for $variable\in\left\{ TV,radio,newspaper \right\}$
+$H_{0}$ is true if and only if there is no relationship between $sales\text{ and }variable$.\\
+Regarding $p-values$ of $intercept, TV, radio$ we observe that it is
+unlikely to observe such a 
+substantial association between each of these variables and $sales$ due to chance.\\
+Then we can infer that it exists a association between each of these 
+variables and $sales$, unlike $newspaper$.
+\subsection{2.}
+K-Nearest neighbors classifier: attempts to estimate the conditional
+distribution of $Y$ given $X$, and then classify a
+given observation to the class with highest estimated probability.
+\begin{center}
+	$\ProbC{X=x_{0}}{Y=j}=\dfrac{1}{K}\su{ {i\in\mathcal{N}_{0}}}{}I(y_{i}=j)$
+\end{center}
+
+K-Nearest neighbors regression: given a value for $K$ and a prediction 
+point $x_{0}$ , KNN regression first identifies the $K$ training 
+observations that are closest to
+$x_{0}$ , represented by $\mathcal{N}_{0}$ . It then estimates $f(x_{0})$ using the
+average of all the training responses in $\mathcal{N}_{0}$
+\begin{center}
+	$\hat{f}(x_{0})=\dfrac{1}{K}\su{ {x_{i}\in\mathcal{N}_{0}}}{}y_{i}$
+\end{center}
+\subsection{3.}
+Fait sur papier
+\subsection{4.}
+For a linear regression without intercept we have the ith fitted value
+in the form: $\hat{y}_{i}=x_{i}\hat{\beta}\text{ with }\hat{\beta}=
+\dfrac{\su{ {i=1}}{n}x_{i}y_{i}}{\su{ {i=1}}{n}x_{i}^{2}}$\\Then we get
+$\hat{y_{i}}=\su{ {i=1}}{n}\dfrac{x_{i}}{\su{ {i=1}}{n}x_{i}^{2}}y_{i}=
+\su{ {i=1}}{n}a_{i}y_{i}$
+``We interpret this result by saying that the fitted values from
+linear regression are linear combinations of the response values.''
+\subsection{6.}
+$\hat{y_{i}}=\hat{\beta_{0}}+\hat{\beta_{1}}x_{i}\text{ but }\beta_{0}=
+\overline{y}-\beta_{1}\overline{x}\text{ then }\hat{y_{i}}=\overline{y}
+-\beta_{1}\overline{x}+\beta_{1}x_{i}$\\ For $x_{i}=\overline{x}$ we
+get $\hat{y_{i}}=\overline{y}$, so the point $(\overline{x},\overline{y})$ belongs to the least square line.
+\subsection{7.}
+
+\section{Applied}
+\subsection{8.}
+\begin{abstract}
+<<>>=
+library(MASS)
+library(ISLR)
+autoDF=Auto
+lm.fit = lm(mpg~horsepower, data=autoDF) #simple linear regression horsepower onto mpg
+summary(lm.fit) #Displaying global information
+@
+\end{abstract}
+\begin{itemize}
+	\item[i] Regarding the p-value, it seems there is a 
+		relationship between predictor and the response
+	\item[ii] This relationship is weak because  
+		$\widehat{horsepower}=-0.157845$
+	\item[iii] The relationship is negative because $-0.157845<0$
+	\item[iv] The predicted mpg associated with a horsepower 
+		of 98 is
+		\begin{abstract}
+			<<>>=
+			coef(lm.fit)[1] + coef(lm.fit)[2]*98
+			@
+		\end{abstract}
+		And confidence and prediction interval, for 
+		$horsepower=98$ are respectively:
+		\begin{abstract}
+			<<>>=
+			predict(lm.fit, data.frame(horsepower=98), interval="confidence")
+			predict(lm.fit, data.frame(horsepower=98), interval="prediction")
+			@
+		\end{abstract}
+\end{itemize}
+\paragraph{(b)}
+Plot of the response and the predictor:
+\begin{abstract}
+<<>>=
+attach(Auto)
+plot(horsepower, mpg, col='red', pch='+')
+abline(lm.fit, lwd=3, col='green')
+@
+\end{abstract}
+\paragraph{(c)}
+Plot of the response and the predictor:
+\begin{abstract}
+<<>>=
+par(mfrow=c(2,2))
+plot(lm.fit)
+@
+\end{abstract}
+Regarding plots above, the first ``Residuals vs Fitted'' plots shows us
+that the linear model is not a very suitable model for these data.\\
+And the ``Normal Q-Q'' shows us that residuals or not normally 
+spread.\\ Then the ``Scale-Location'' shows us that residuals are not 
+equally spread along the range of predictors, so the equal variance
+(homoscedasticity) is not adapted to these data.\\
+Finally the ``Residuals vs Leverage'' shows us that it is not seems to
+exist very big outliers.
+\subsection{9}
+\paragraph{(a)} Scatterplot matrix which including all of the variables
+in the data set
+\begin{abstract}
+<<>>=
+pairs(Auto)
+@
+\end{abstract}
+\paragraph{(b)}The matrix of correlations between the variables, and
+we have excluded then ``name'' variable:
+\begin{abstract}
+<<>>=
+Table = data.frame(Auto)
+cor(Table[, -9])
+@
+\end{abstract}
+\paragraph{(c)} We perform a multiple linear regression with mpg as the
+response and all other variables except name as the predictors.
+\begin{abstract}
+<<>>=
+lm.fit = lm(mpg~.-name, data=Auto)
+summary(lm.fit)
+@
+\end{abstract}
+\subparagraph{i.} The predictors displacement, horsepower, and weight
+do not seem to have a relationship with the response.
+\subparagraph{ii.} It seems that there is a relationship is statically
+significant between the response and the following predictors: origin,
+year, weight and in lesser measure displacement.
+\subparagraph{iii.} The coefficient for the year variable suggests that
+an increasing of 10 years, bring on average 75 miles per gallon to a
+car.
+\paragraph{(d)} We produce diagnostic plots of the linear regression 
+fit:
+\begin{abstract}
+<<>>=
+lm.fit = lm(mpg~.-name, data=Auto)
+par(mfrow=c(2,2))
+plot(lm.fit)
+@
+\end{abstract}
+The ``Residuals vs Fitted'' plot shows us that relationship is not 
+really linear.\\ And the ``Normal Q-Q'' plot shows that the very most
+part of residuals are normally spread.\\ Then the ``Scale-Location''
+shows us that the homoscedasticity assumption is enough respected.\\
+Finally the ``Residuals vs Leverage'' shows us that there is not 
+significant of outliers.
+\end{document}

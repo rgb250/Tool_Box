@@ -1,4 +1,21 @@
 \paragraph{Estimating the Regression Coefficients}
+A common way to estimate the parameters of a statistical model is to compute
+the MLE(Maximum Likelihood Estimation) defined as 
+$$\hat{\bm{\theta}} \triangleq \displaystyle \argmax_{\theta} \log\left(
+p(\mathcal{D}|\bm{\theta})\right)$$
+fsfs
+\begin{align*}
+    l(\bm{\theta}) &\triangleq \log\left(p(\mathcal{D}|\bm{\theta})\right)\\
+                   &=\su{i=1}{n}\log\left(p(y_{i}|\bm{x_{i}}, \bm{\theta})\right)\\
+                   &= \su{i=1}{n}\log\left(
+                       \left[\dfrac{1}{2\pi\sigma^{2}}\right]^{\frac{1}{2}}
+                       \exp\left(-\dfrac{1}{2\sigma^{2}}\left[y_{i} - \bm{\beta}^{T}
+                       \bm{x_{i}}]\right]^{2}\right)\right)\\ 
+                   &= \dfrac{1}{2\sigma^{2}}RSS(\bm{\beta}) +
+                   \dfrac{n}{2}\log(2\pi\sigma^{2})
+\end{align*}
+\Moi{Note that in the above lines, gaussian hypothesis has been assumed}
+
 Given $\left(\beta_{i}\right)_{1\leq i\leq n},\widehat{y}=\widehat{\beta_{0}}+
 \su{{i=1}}{n}\widehat{\beta_{i}}x_{i}$ then \tR{$RSS=\su{{i=1}}{n}
 \left(y_{i} -\widehat{\beta_{0}}-\su{{j=1}}{n}\widehat{\beta_{j}}x_{ij}
@@ -85,6 +102,12 @@ $
 (n-p-1)\hat{\sigma}^{2}\hookrightarrow\sigma^{2}\chi_{n-p-1}^{2}
 \end{cases}
 $
+
+\paragraph{Convexity}
+Functions having a bowl shape with a unique minimum, more precisely:
+$$\forall (\bm{\theta}, \bm{\theta'},\lambda) \in \mathcal{S}\times\mathcal{S}\times[0,1],
+~ \lambda\bm{\theta} + (1-\lambda)\bm{\theta'} \in \mathcal{S} \Rightarrow \mathcal{S}
+\text{ is \textbf{convex}}$$
 
 %This is that we get after a linear regression.\\We recall that is we
 %obtained for simple regressions:
