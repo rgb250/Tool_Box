@@ -1,0 +1,35 @@
+\begin{tabular}{|*3{c|}}
+    \hline
+    \textbf{Likelihood} & \textbf{Prior} & \textbf{Name}\\
+    \hline
+    Gaussian & Uniform & Least Squares\\
+    \hline
+    Gaussian & Gaussian & Ridge\\
+    \hline
+    Gaussian & Laplace & Lasso\\
+    \hline
+    Laplace & Uniform & Robust Regression\\
+    \hline
+    Student & Uniform & Robust Regression\\
+    \hline
+\end{tabular}
+
+The likelihood refers to $p(y|\bm{x},\bm{\beta},\bm{\sigma^{2}})$ and the prior refer to 
+$p(\bm{\beta})$
+
+\paragraph{Purpose}
+
+The MLE can overfit as it is picking the parameter values that are the best for modleing 
+the training data, however if the data is noisy such parameters result in complex 
+functions.
+
+\paragraph{Assumption}
+\paragraph{Functionning}
+Having a too complex model will perfectly fit the training data but the parameters will
+signifciantly change if we fit on another data set. We can then encourage the parameters
+to be small by using a prior zero-mean value:
+$p(\bm{\beta}) = \prd{j=1}{p}\mathcal{N}(\beta_{j}|0, \tau^{2})$
+where $\frac{1}{\tau^{2}}$ controls the strength of the prior.
+To avoid to create 
+
+\paragraph{Limitation}

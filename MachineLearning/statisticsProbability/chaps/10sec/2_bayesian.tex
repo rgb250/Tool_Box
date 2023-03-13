@@ -1,7 +1,35 @@
 \subsection{Tools}
 
+\paragraph{Bayesian concept learning}
+Let be $\mathcal{D}$ the data, $h$ the hypothesis taken in account
+\subparagraph{Likelihood}
+$p\left(\mathcal{D|h}\right)$ the probability to get the observed data considering the 
+hypothesis $h$.
+\subparagraph{Prior}
+$p(h)$ the probability of our hypothesis, many prior can be used, and this 
+\textbf{subjective} aspect of Bayesian reasoning is a source of much controversy.
+
+\subparagraph{Posterior}
+The posterior is simply the likelihood times the prior, normalized.
+\begin{center}
+$p\left(h|\mathcal{D}\right) = \dfrac{p\left(\mathcal{D}|h\right)\times p(h)}{
+    \su{h'\in\mathcal{H}}{}p\left(\mathcal{D}, h'\right)
+}$
+\end{center}
+\subparagraph{MAP estimate}
+As the denominator of the posterior formula does not change across the different 
+hypothesis:
+\begin{center}
+    $\hat{h}_{MAP} = \displaystyle\argmax_{h} p\left(\mathcal{D}|h\right)p(h) = 
+    \displaystyle\argmax_{h} \log\left(p\left(\mathcal{D}|h\right)p(h)\right) + \log\left(
+       p(h)\right)
+    $
+\end{center}
+
+
+
 \paragraph{Summarizing posterior distributions}
-\subparagraph{MAP}
+\subparagraph{MAP (Maximum A Posteriori)}
 Although most appropriate choice for:
 $
 \begin{cases}
@@ -22,6 +50,8 @@ Some point to be aware about MAP:
 		suffer from this since the likelihood is a function not a probability
 		density
 \end{itemize}
+
+Remember that we have 
 
 \subparagraph{Credible Intervals}
 With point estimates, we want a measure of confidence. 
