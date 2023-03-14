@@ -10,7 +10,7 @@
 ###  a. Time Series Definition
 The observed data $\{x_{t}\}_{t\in\mathbb{N}^{*}}$ are seen as realization of the follwoing random variables $\{X_{t}\}_{t\in\mathbb{N}^{*}}$
 ### b. Stationarity
-The time series $\{X_{t}\}_{t\in\mathbb{Z}}$ is said to be *(weakly)* stationary if 
+The time series $\{X_{t}\}_{t\in\mathbb{Z}}$ and its AutoCoVariance Function $\gamma_{X}$ is said to be *(weakly)* stationary if 
 - $\forall t\in \mathbb{Z}, \exist M\in \mathbb{R}_{+}, \mathbb{V}(X_{t}) < M$
 - $\exists! \mu \in \mathbb{R}, \forall t\in\mathbb{Z} ~\mathbb{E}(X_{t}) = \mu$ 
 - $\forall (r, s, t) \in\mathbb{Z}^{3}~\gamma_{X}(r, s) = \gamma_{X}(r + t, s + t)$
