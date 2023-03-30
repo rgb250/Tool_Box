@@ -11,6 +11,9 @@
   - [a. Delete a change or a branch](#a-delete-a-change-or-a-branch)
   - [b. Rename branch](#b-rename-branch)
   - [c. Stashing](#c-stashing)
+- [4) Review history](#4-review-history)
+  - [a. Change commits](#a-change-commits)
+- [5) Credentials](#5-credentials)
 
 ## 1) Basics
 ### a. Import remote branch
@@ -84,4 +87,12 @@ git stash apply stash@{2} # apply the third more recent stash
 git stash drop stash@{1} # remove the second more recent stash
 ````
 
+## 4) Review history
+### a. Change commits
+````git
+git rebase -i HEAD~n  # with n the depth of the past commits
+````
+Then a window containing the different commit names and the option that can be used on them will be displayed.
+For example we can **drop** a given commit.
+## 5) Credentials
 ![Windows Credential](./images/windows_credential.png)

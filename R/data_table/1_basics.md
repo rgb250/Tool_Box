@@ -1,7 +1,11 @@
 # Table of Content
 
 ## 1) Packages
-### a. Beginning of the script
+### a. R location
+````r
+file.path(R.home('bin'), 'R')
+````
+### b. Beginning of the script
 ```r
 if(!require(pacman)){        # require return FALSE if the package does not exist
   install.packages('pacman')  # pacman will load, and install if needed, a list of specified packages 
