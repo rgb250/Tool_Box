@@ -81,7 +81,7 @@ git push origin -u new_name  # reset the upstream branch for the new_name local 
 ### c. Stashing
 ````git
 git stash
-git stash list # to access to the stash list
+git stash list --date=local # to access to the stash list with date
 git stash apply # apply the more recent stash (stash@{0})
 git stash apply stash@{2} # apply the third more recent stash
 git stash drop stash@{1} # remove the second more recent stash
