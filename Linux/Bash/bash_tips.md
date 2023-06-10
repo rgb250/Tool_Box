@@ -66,6 +66,9 @@ Expression like '\d' or '\w' does not exist in basic bash.
 |\B|Matches the empty string NOT at the edge of a word|
 |\<|Matches the empty string at the beginning  of a word|
 |\>|Matches the empty string at the end  of a word|
+|\or|Or Condition
+|\( \)| Start End of group
+|\< \>| Start End of word
 
 
 # INTERNET CONNECTION
@@ -97,6 +100,10 @@ find -type f -regex 'pattern' | zip file_list.zip -@  # -@ makes zip read from S
 ````
 
 # Coding
+## Count number of new lines in a given text
+````bash
+find -type f -regex '.*/pattern' | wc -l  # wc count the number of words, bits or newlines, the -l argument allows to count newlines
+````
 ## Loop over an array
 ````bash
 declare -a arr=(
