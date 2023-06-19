@@ -44,10 +44,16 @@ Both allow to release some space of the data treated by the CPU.
 
 # To know the memory usage on UNIX:
 
+````bash
 df -h # disk filename command, with the human readable option (adapt the figures of each filesystem)
 du -h -d 1 ./folder_path | sort -h # to see the size of each elements in a given repository with a depth of 1 and sorted by size 
+````
 
 
+# SELECT FILES
+````bash
+ls -lh !(file_name_1|file_name_2) ./fold  # select all files in the directory <fold> except file_name_1 and file_name_2.
+````
 # SEARCH INSIDE FILES
 
 grep --exclude=\*.{pyc,log} -rl './' -e ".*10\.214\.82\.92.*" # find in the current directory and its subdirectorires all the files containing the string "10.214.82.92" inside a 
