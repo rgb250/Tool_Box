@@ -9,6 +9,7 @@
   - [3 DISPLAY OPTIONS](#3-display-options)
     - [a. Open multiple file](#a-open-multiple-file)
     - [b. Window operations](#b-window-operations)
+    - [c. Compare 2 files](#c-compare-2-files)
   - [4 FILE SYSTEM INFORMATION](#4-file-system-information)
     - [a. Current file](#a-current-file)
   - [5 MACRO](#5-macro)
@@ -45,6 +46,15 @@ To each window to synchronize
 ```bash
 :set scrollbind
 ```
+### c. Compare 2 files
+- open one file
+  ````bash
+  vim path_file_1
+  ````
+- inside vim type
+  ````vim
+  :vert diff path_file_2
+  ````
 
 ## 4 FILE SYSTEM INFORMATION
 ### a. Current file

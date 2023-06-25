@@ -13,6 +13,7 @@
   - [b. Rename branch](#b-rename-branch)
   - [c. Stashing](#c-stashing)
   - [d. Merge](#d-merge)
+  - [e. Unmerged conflicts](#e-unmerged-conflicts)
 - [4) Review history](#4-review-history)
   - [a. Change commits](#a-change-commits)
 - [5) Credentials](#5-credentials)
@@ -97,6 +98,12 @@ git stash drop stash@{1} # remove the second more recent stash
 ````bash
 git switch branch_merge_into  # move to the branch in which we want to perform changes
 git merge branch_merge_from   # perform the merge in providing the name of the branch from where we want to get data.
+````
+
+### e. Unmerged conflicts
+![](./images/abort_merge.png)
+````bash
+git restore --staged  # restore the index
 ````
 
 ## 4) Review history
