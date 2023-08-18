@@ -68,3 +68,7 @@ Apply a macro **a** to a multiple lines.
 ```normal
 :'<,'>normal @a
 ```
+## 6 Spellcheck
+### a. Relevant plugins
+- [vim-lexical](https://vimawesome.com/plugin/vim-lexical) (spelling)
+- [LanguageTool](https://vimawesome.com/plugin/languagetool) (grammar)
