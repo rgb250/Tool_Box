@@ -16,6 +16,9 @@
 %	letter  --> cover letter, etc..
 %	slides  --> ONLY use with beamer
 
+%% Page size, margins
+\usepackage[margin=1in]{geometry}
+
 %% For accented character printing
 \usepackage[T1]{fontenc} % T1 --> support characters of european languages
 
@@ -23,8 +26,8 @@
 \usepackage[english]{babel}
 
 %% Bibliography
-\usepackage{biblatex}          % --> import biblatex package
-\addbibresource{ml_notes.bib}  % --> import the bibliography file
+\usepackage[backend=biber]{biblatex}          % --> import biblatex package using the helper program 'biber' that sorts the bibliography entries and provide all the relevant information to package 'biblatex'.
+\addbibresource{ml_notes.bib}                 % --> import the bibliography file
 
 %% For handling characters from Latin Modern family 
 \usepackage{lmodern}
@@ -143,8 +146,10 @@ Si Dieu est infini, alors je suis une partie de Dieu sinon je serai sa limite\ld
 
 \tableofcontents
 
+\chapter{Collect and Pre-process Data}
+\input{./chapters/1_collect_and_preprocess_data.tex}
 \chapter{Statistics}
-\input{./chapters/1_statistics/1_descriptive_statistics.tex}
+\input{./chapters/2_statistics.tex}
 \chapter{Conventional Statistical Learning}
 \chapter{Deep Learning}
 

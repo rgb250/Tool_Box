@@ -1,35 +1,4 @@
-\paragraph{Data Quality} 
-\subparagraph{Validity}
-\begin{itemize}
-    \item \textbf{Data-Type Constraints}: for a given column a fixed data-type must be associated with.
-    \item \textbf{Range Constraints}: only a range of values should be taken.
-    \item \textbf{Mandatory Constraints}: some columns cannot be empty.
-    \item \textbf{Unique Constraints}: across a given dataset a field or a combination of
-    \item \textbf{Foreign-key constraints}: a foreign key column cannot have a value that
-        does not exist in the primary key.
-    \item \textbf{Regular expression patterns}: text fields that have to follow a given 
-        alphanumerical pattern.
-    \item \textbf{Cross-field validation}: consistency of values, for example considering
-        a given man, his birth date have to be older than his death date.
-\end{itemize}
-
-\subparagraph{Accuracy}
-The degree to which the data is close to the true value.
-\cite{omar_elgabry_the_ultimate_guide_to_data_cleaning}
-
-\subparagraph{Completeness}
-The degree to which the all the required data is known.
-
-\subparagraph{Consistency}
-The degree to which the data is consistent, within the same data set or across multiple 
-data sets.
-
-\subparagraph{Uniformity}
-The degree to which the data is specified using the same unit of measure.
-
-
-\paragraph{The workflow}
-\subparagraph{Inspection} 
+\paragraph{Inspection} 
 Detect unexpected behavior in the data.
 \begin{itemize}
     \item \textbf{Data profiling}: summary statistics about the data, see \href{https://github.com/ydataai/ydata-profiling}{ydata-profiling} in Python.
@@ -39,7 +8,7 @@ Detect unexpected behavior in the data.
         see \href{https://pypi.org/project/pydeequ/}{pydeequ}
 \end{itemize}
 
-\subparagraph{Cleaning} 
+\paragraph{Cleaning} 
 Fix or remove anomalies discovered in the above phase.
 \begin{itemize}
     \item \textbf{Irrelevant Data}: ask to the expert what can be the unnecessary columns,
@@ -66,11 +35,8 @@ Fix or remove anomalies discovered in the above phase.
         kids, quantity being different of the one when we compute using other columns.
 \end{itemize}
 
-\subparagraph{Verifying}
+\paragraph{Verifying}
 Check correctness of the cleaning phase.
-\subparagraph{Reporting} 
+\paragraph{Reporting} 
 Report about changes made, using one of the software summarising the data quality for 
 example.
-
-
-

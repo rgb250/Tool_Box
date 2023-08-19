@@ -16,8 +16,15 @@
 %	letter  --> cover letter, etc..
 %	slides  --> ONLY use with beamer
 
+%% Page, margins size 
+\usepackage[margins=1in]{geometry}
+
 %% For accented character printing
 \usepackage[T1]{fontenc} % T1 --> support characters of european languages
+
+%% Bibliography
+\usepackage[backend=biber]{biblatex}          % --> import biblatex package using the helper program 'biber' that sorts the bibliography entries and provide all the relevant information to package 'biblatex'. First run pdflatex, then biber and again pdflatex.
+\addbibresource{programming_template.bib}                 % --> import the bibliography file
 
 %% For handling characters from Latin Modern family 
 \usepackage{lmodern}
