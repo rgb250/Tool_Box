@@ -1,0 +1,111 @@
+\tB{We can formalize any given statistical decision problem as a game against nature} (as 
+opposed to a game against other strategic players, which is the topic of game theory).
+\tB{In this game, nature picks a state or parameter or label, $y\in \mathcal{Y}$, unknown
+to us, and then generates an observation, $\bm{x}\in\mathcal{X}$ which we get to see. We
+then have to make a decision, that is, we have to choose an action $a$ from some 
+\textbf{action space} $\mathcal{A}$. Finally we incur some \textbf{loss}, $L(y, a)$, which
+measures how compatible our action $a$ is with nature's hidden state $y$.}\\
+Our goal is to devise a decision procedure or policy, $\delta: \mathcal{X}\rightarrow
+\mathcal{A}$ which specifies the optimal action for each possible input which specifies the optimal action for each possible input, meaning the action that minimizes the expected 
+loss:
+$$ \delta(\bm{x}) = \argmin_{{a\in \mathcal{A}}} \E{{L(y, a)}}$$
+In the Bayesian vision, the expected value of $y$ given the data we have seen so far, 
+whereas in the frequentist vision the expected value refers to $x$ and $y$ that we expect
+to see in the future.\\
+\tO{In the Bayesian vision the optimal action having observed $\bm{x}$ is defined as the 
+action $a$ that minimizes the \textbf{posterior expected loss}:
+$$ \rho(a|\bm{x})\triangleq\mathbb{E}_{p(y|x)}\left(L(y, a)\right) = \su{y}{}L(y, a)
+p(y|x)$$}
+Hence the \tR{Bayes estimator also called Bayes decision rule is given by:
+$$\delta(\bm{x}) = \argmax_{a\in\mathcal{A}}\rho(\bm{a}|\bm{x})$$}
+
+\paragraph{Bayes estimators for common loss functions}
+\begin{itemize}
+    \item \textbf{MAP} estimate minimizes 0-1 loss: $L(y, a) = \mathbb{I}_{y\neq a}
+		\begin{cases}
+			0 \text{ if } a = y\\
+			1 \text{ else}
+		\end{cases}$
+    \item \textbf{Reject option}, in classification problems where $p(y|\bm{x})$ is very 
+		uncertain we may prefer to choose a reject action, in which we refuse to 
+		classify the example as any of the specified classes. Let choosing $a=C+1$
+		correspond to picking the reject action, and choosing $a\in\{1,...,C\}$
+		correspond to picking one of the classes.\\
+		$L(y=j, a=i) = 
+		\begin{cases}
+			0 &\text{ if } i=j \text{ and } i,j\in\{1,...,C\}\\
+			\lambda_{r} &\text{ if } i=C+1 \\
+			\lambda_{s} &\text{ otherwise}
+		\end{cases} $\\
+		where $\lambda_{r}$ is the cost of the reject action, and $\lambda_{s}$ is
+		the cost of a substitution error. 
+    \item \textbf{Squared Error ($l_{2}$)} for a continuous parameters. $L(y, a) =
+        (y-a)^{2}$
+    \item \textbf{Absolute Error ($l_{1}$)} more robust against outliers. $L(y,a)=
+		\lvert y-a\rvert$. The optimal point is the median.
+    \item \textbf{Supervised learning} considering a prediction function $\delta: 
+        \mathcal{X} \rightarrow \mathcal{Y}$ and some cost function $l(y, \delta(x))$. 
+        Then the loss incurred by taking action $\delta$ when the unknown state of nature
+        is $\theta$ (the parameters of the data generating the mechanism).
+        $L(\bm{\theta}, \delta) \triangleq 
+        \mathbb{E}_{(\bm{x}, y)~p(\bm{x},y|\bm{\theta})}\left(
+        l(y, \delta(\bm{x}))\right)=\su{\bm{x}}{}\su{y}{}L\left(y,\delta(\bm{x}) 
+        p(\bm{x},y|\bm{\theta})\right)$
+    \item \textbf{False positive vs False negative trade-off} for binary decision problems
+        three are 2 types of errors:
+        \begin{enumerate}
+            \item {false positive} (false alarm) if $\hat{y}=1 \wedge y=0$
+            \item {false negative} (missed detection) if $\hat{y}=0 \wedge y=1$
+        \end{enumerate}
+        We can consider the loss matrix:\\
+        \begin{tabular}{|*{3}{c|}}
+            \hline
+            \textbf{Headers} & $\bm{y=1}$ & $\bm{y=0}$\\
+            \hline
+            $\bm{\hat{y}=1}$ & 0 & $L_{FP}$\\
+            \hline
+            $\bm{\hat{y}=0}$ & $L_{FN}$ & 0\\
+            \hline
+        \end{tabular}
+        where $L_{FN}$ is the cost of a false negative and $L_{FP}$ the cost of a false
+        positive.
+
+    \item \textbf{ROC curves} From the below table \\
+        \begin{tabular}{|cc|*{3}{c|}}
+            \hline
+            \multicolumn{2}{|c}{\textbf{Headers}} & \multicolumn{2}{|c|}{\textbf{Truth}} &
+            \textbf{Count}\\
+            \hline
+            \multirow{2}{*}{\textbf{Estimate}} & 1 & $TP$ & $FP$ & $\hat{N}_{+}=TP + FP$\\
+                                               & 0 & $FN$ & $TN$ & $\hat{N}_{-}=FN + TN$\\
+            \hline
+            \multicolumn{2}{|c|}{\textbf{Count}} & $N_{+}=TP+FN$ & $N_{-}=FP+TN$ 
+                                               & $N=N_{+}+N_{-}=\hat{N}_{+}+\hat{N}_{-}$\\
+            \hline
+        \end{tabular}\\
+        we can generate the \emph{confusion matrix} is the below table\\
+        \begin{tabular}{|*{3}{c|}}
+            \hline
+            \textbf{Headers} & $\bm{y=1}$ & $\bm{y=0}$\\
+            \hline
+            $\bm{\hat{y}=1}$ & $\dfrac{TP}{N}$ (sensitivity/recall) 
+                           & $\dfrac{FP}{N}$ (error type I/ false alarm) \\
+            \hline
+            $\bm{\hat{y}=0}$ & $\dfrac{FN}{N}$ (error type II/ missed detection) 
+                           & $\dfrac{TN}{N}$ (specificity) \\
+            \hline
+        \end{tabular}
+    \item \textbf{Precision recall curves}
+        When trying to detect a rare event the number of negatives is very large, hence
+        comparing \emph{sensitivity} and \emph{the error of type I} is not very 
+        informative. We would then like to use a measure that only talks about positives.
+        \begin{itemize}
+            \item \textbf{precision} $=\dfrac{TP}{\hat{N}_{+}}$
+            \item \textbf{recall} $=\dfrac{TP}{N_{+}}$
+        \end{itemize}
+        A \textbf{precision recall curve} is a plot of \textit{precision} vs 
+        \textit{recall}.
+    \item \textbf{F-scores} is the \emph{harmonic mean of precision and recall}:\\
+        $F_{1} \triangleq \dfrac{2}{\frac{1}{precision} + \frac{1}{recall}}$
+\end{itemize}
+

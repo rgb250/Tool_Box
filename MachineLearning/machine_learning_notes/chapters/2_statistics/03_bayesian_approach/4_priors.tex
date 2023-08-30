@@ -1,0 +1,49 @@
+The most controversial aspect of Bayesian statistics is its reliance on priors
+\subparagraph{Uninformative priors}
+If we do not have strong evidence on what $\theta$ should be, it is common to use an
+uninformative priors, to "let the data speak for itself".\\
+One might think that the most uninformative prior would be the uniform distribution: 
+$Beta(1, 1)$, but the posterior would then be: $\E{\theta|\mathcal{D}} =
+\dfrac{N_{1}+1}{N_{1}+N_{0}+2}$, whereas the MLE is $\dfrac{N_{1}}{N_{1}+N_{0}}$.\\
+As by decreasing the magnitude of the pseudo counts, we can lessen the impact of the 
+prior, we can argue that the most non-informative prior is: 
+$$\lm{\epsilon}{0} Beta(\epsilon, \epsilon) = Beta(0, 0)$$
+Called the \emph{Haldane prior}, it is an improper prior.\\
+In general it is advisable to perform a some kind of sensitivity analysis, in which one
+checks how much one's conclusions or prediction change in response to change in the 
+modelling assumptions which includes the choice of the prior and the likelihood as well.
+If the conclusion are relatively insensitive to the modelling assumption, one can have
+more confidence in the results.
+\subparagraph{Jeffreys priors}
+Harold Jeffreys designed a general purpose technique for creating non-informative priors.
+The key observation is that if $p(\phi)$ is non-informative then any re-parametrization
+of the prior, such as $\theta=h(\phi)$ for some function $h$ should also be 
+non-informative.
+\begin{itemize}
+	\item Start with a variable change: $p_{\theta}(\theta) = p_{\phi}(\phi)\left|\dfrac{d\phi}{d\theta}\right|$
+	\item Consider the following constraint: $p_{\phi}(\phi)\propto
+		\sqrt{\mathcal{I}(\phi)}$, where $\mathcal{I}(\phi)$ is the Fisher 
+		information.\\ $\mathcal{I}(\phi) \triangleq - \E{2 \times 
+		\dfrac{d\log\left(p(X|\phi)\right)}{d\phi}}$. This a measure of the
+		curvature of the expected negative log likelihood and hence a measure of
+		stability of the MLE.
+	\item Now $\dfrac{d\log(p(x|\theta))}{d\theta} = 
+		\dfrac{d\log(p(X|\phi))}{d\phi}\dfrac{d\phi}{d\theta}$
+	\item $\mathcal{I}(\theta) = \mathcal{I}(\phi)
+		\left(\dfrac{d\phi}{d\theta}\right)^{2}$
+	\item $\sqrt{\mathcal{I}(\theta)} = \sqrt{\mathcal{I}(\phi)}\left|\dfrac{d\phi}
+		{d\theta}\right|$
+	\item Finally $p_{\theta}(\theta) = p_{\phi}(\phi)\left|\dfrac{d\phi}
+		{d\theta}\right| \propto \sqrt{\mathcal{I}(\phi)}\left|\dfrac{d\phi}
+		{d\theta}\right| = \sqrt{\mathcal{I}(\theta)}$
+\end{itemize}
+
+\subparagraph{Robust priors}
+To prevent an undue influence on the result, we build priors having heavy tails, which 
+avoids forcing things to be too close to the prior mean.
+
+\subparagraph{Mixture of conjugate priors}
+Conjugate priors simplify the computation of robust priors, but are often not robust, and 
+not flexible enough to encode our prior knowledge. However it turns out that a mixture of
+conjugate priors is also conjugate, and seem to be a good compromise.
+

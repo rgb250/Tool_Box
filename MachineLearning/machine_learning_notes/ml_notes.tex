@@ -63,6 +63,9 @@
 %% Alphabetical indexed list.
 \usepackage{enumitem}
 
+%% Multirow option
+\usepackage{multirow}
+
 %% Libraries to display number depending on the chose typography.
 \usepackage{siunitx} % --> Scientific notation
 %\sisetup{locale= FR,exponent-product=.} % --> French Adaptation for example 5,6.10²
@@ -96,38 +99,42 @@
 \newcommandx{\prtH}[4]{\left( #1_{#2} \right)_{#3\leq #2 \leq #4}}
 
 %% Square results
-\newcommand{\enc}[1]{\fcolorbox{rossocorsa}{white}{#1}}
-\newcommand{\encB}[1]{\fcolorbox{bleudefrance}{white}{#1}}
-\newcommand{\encV}[1]{\fcolorbox{pakistangreen}{white}{#1}}
-\newcommand{\encN}[1]{\fcolorbox{black}{white}{#1}}
+\newcommand{\fr}[1]{\fcolorbox{rossocorsa}{white}{#1}}
+\newcommand{\frB}[1]{\fcolorbox{bleudefrance}{white}{#1}}
+\newcommand{\frG}[1]{\fcolorbox{pakistangreen}{white}{#1}}
+\newcommand{\frN}[1]{\fcolorbox{black}{white}{#1}}
 
 %% Color underlining
-\newcommandx{\sN}[1]{\setulcolor{black}\ul{#1}}
-\newcommandx{\sR}[1]{\setulcolor{rossocorsa}\ul{#1}}
-\newcommandx{\sB}[1]{\setulcolor{bleudefrance}\ul{#1}}
-\newcommandx{\sV}[1]{\setulcolor{pakistangreen}\ul{#1}}
-\newcommandx{\sT}[1]{\setulcolor{teal}\ul{#1}}
-\newcommandx{\sO}[1]{\setulcolor{persimmon}\ul{#1}}
+\newcommandx{\uN}[1]{\setulcolor{black}\ul{#1}}
+\newcommandx{\uR}[1]{\setulcolor{rossocorsa}\ul{#1}}
+\newcommandx{\uB}[1]{\setulcolor{bleudefrance}\ul{#1}}
+\newcommandx{\uG}[1]{\setulcolor{pakistangreen}\ul{#1}}
+\newcommandx{\uT}[1]{\setulcolor{teal}\ul{#1}}
+\newcommandx{\uO}[1]{\setulcolor{persimmon}\ul{#1}}
 
 %% Text in color 
 \newcommandx{\tR}[1]{\textcolor{rossocorsa}{#1}}
 \newcommandx{\tB}[1]{\textcolor{bleudefrance}{#1}}
-\newcommandx{\tV}[1]{\textcolor{pakistangreen}{#1}}
+\newcommandx{\tG}[1]{\textcolor{pakistangreen}{#1}}
 \newcommandx{\tT}[1]{\textcolor{teal}{#1}}
 \newcommandx{\tO}[1]{\textcolor{persimmon}{#1}}
 
 %% Mathematics writting | symbols
 \newcommandx{\inter}[2]{\left[\![#1, #2]\!\right]}                % --> interval
+\newcommandx{\lm}[2]{{\displaystyle \lim_{#1 \rightarrow #2}}}    % --> limit
+\DeclareMathOperator*{\argmax}{arg\,max}                          % --> argmax
+\DeclareMathOperator*{\argmin}{arg\,min}                          % --> argmin
 \newcommandx{\Su}[2]{{\displaystyle \int_{#1}^{#2}}}              % --> integral
 \newcommandx{\su}[2]{{\displaystyle \sum_{#1}^{#2}}}              % --> sum (sigma)
 \newcommandx{\prd}[2]{{\displaystyle \prod_{#1}^{#2}}}            % --> product (pi)
 \newcommandx{\prob}[1]{\mathbb{P}\left(#1\right)}                 % --> probability P(A)
+\newcommandx{\probC}[2]{\mathbb{P}\left(#1|#2\right)} % --> conditionnal probability
 \newcommandx{\Prob}[1]{\mathbb{P}\left(\left\{#1 \right\}\right)} % --> probability P({A})
 \newcommandx{\ProbC}[2]{\mathbb{P}_{\left\{#1\right\}}\left(\left\{#2\right\}\right)} % --> conditionnal probability
-\newcommandx{\E}[1]{\mathbb{E}\left(#1\right)}               % --> expecting
-\newcommandx{\V}[1]{\mathbb{V}\left(#1\right)}               % --> variance
-\newcommandx{\norm}[1]{\left\lVert#1\right\rVert}            % --> norm symbol
-\newcommandx{\sP}[2]{\langle\left. #1\right\vert #2 \rangle} % --> dot product
+\newcommandx{\E}[1]{\mathbb{E}\left(#1\right)}                    % --> expecting
+\newcommandx{\V}[1]{\mathbb{V}\left(#1\right)}                    % --> variance
+\newcommandx{\norm}[1]{\left\lVert#1\right\rVert}                 % --> norm symbol
+\newcommandx{\sP}[2]{\langle\left. #1\right\vert #2 \rangle}      % --> dot product
 
 
 
@@ -152,6 +159,7 @@ Si Dieu est infini, alors je suis une partie de Dieu sinon je serai sa limite\ld
 \input{./chapters/2_statistics.tex}
 \chapter{Conventional Statistical Learning}
 \chapter{Deep Learning}
+\chapter{Use-cases}
 
 \printbibliography
 

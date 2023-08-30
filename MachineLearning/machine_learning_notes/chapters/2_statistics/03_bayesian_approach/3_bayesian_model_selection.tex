@@ -1,0 +1,114 @@
+A more efficient approach than cross-validation, meaning fitting \emph{k} times each
+model, is \tR{to compute the posterior over models}.
+$$
+p(m|\mathcal{D}) = \dfrac{p(\mathcal{D}|m)p(m)}{\su{{m\in\mathcal{M}}}{}p(m|\mathcal{D})}
+$$
+From this we can compute the \tB{MAP model $\hat{m} = \displaystyle \argmax_{m}
+p(m|\mathcal{D})$}\\
+Then we have the \tB{marginal likelihood}: $p(\mathcal{D}|\hat{m}) = \Su{}{}p(
+\mathcal{D}|\hat{m})p(\theta|\hat{m})d\theta$
+
+\paragraph{Baysian Occam's razor}
+\tB{In integrating out the parameters rather than maximizing them we are automatically 
+protected from overfitting}: model with more parameters do not necessarily have higher 
+marginal likelihood.\\
+A way to understand the Bayesian Occam's razor effect is to \tB{remember that 
+probabilities must sum to one, meaning $\su{{\mathcal{D}'}}{}p(\mathcal{D}'|m)=1$. Complex
+models, which can predict many things, must spread their probability mass thinly, and 
+hence will not obtain as large a probability for any given data set as simpler models.}
+
+\paragraph{Computing the marginal likelihood (evidence)}
+For a fixed model we often write:
+$$p(\bm{\theta}|\mathcal{D},m) \propto p(\bm{\theta}|m)p(\mathcal{D}|\bm{\theta},m)$$
+This valid since $p(\mathcal{D}|m)$ is constant. However when comparing models we need
+to know how to compute the marginal likelihood, $p(\mathcal{D}|m)$. In general this can
+be quite hard, since we have to integrate over all possible parameter values, but when
+we have a conjugate prior, it is easy to compute.\\
+Let $p(\bm{\theta})=\dfrac{q(\bm{\theta})}{Z_{0}}$ be our prior, where $q(\bm{\theta})$
+is an unnormalized distribution, and $Z_{0}$ is the normalization constant of the prior.
+Let $p(\mathcal{D}|\bm{\theta})=\dfrac{q(\mathcal{D}|\bm{\theta})}{Z_{l}}$ be the 
+likelihood, where $Z_{l}$ contains any constant factors in the likelihood. Finally let
+$p(\bm{\theta}|\mathcal{D})=\dfrac{q(\bm{\theta}|\mathcal{D})}{Z_{N}}$ be our posterior
+where $q(\bm{\theta}|\mathcal{D})=q(\mathcal{D}|\bm{\theta})q(\bm{\theta})$ is the 
+unnormalized posterior, and $Z_{N}$ is the normalization constant of the posterior.\\
+We have:
+$
+\begin{cases}
+	p(\bm{\theta})= \dfrac{p(\mathcal{D}|\bm{\theta})p(\bm{\theta})}{p(\mathcal{D})}\\
+	\dfrac{q(\bm{\theta}|\mathcal{D})}{Z_{N}} = \dfrac{q(\mathcal{D}|\bm{\theta})
+	q(\bm{\theta})}{Z_{l}Z_{0}p(\mathcal{D})}\\
+	p(\mathcal{D}) = \dfrac{Z_{N}}{Z_{0}Z_{l}}
+\end{cases}
+$
+
+In general $p(\mathcal{D}|m) = \Su{}{}p(\mathcal{D}|\bm{\theta})p(\bm{\theta}|m)d\bm{
+\theta}$ can be quite difficult to compute. 
+Simpler approach
+\begin{itemize}
+	\item \textbf{BIC} simple approximation:
+		\tB{$BIC \triangleq \log(p(\mathcal{D}|\bm{\hat{\theta}})) - 
+		\dfrac{dof(\bm{\hat{\theta})}}{2}\log(N)\approx\log{p(\mathcal{D})}$}
+	\item \textbf{AIC}:
+		\tB{$AIC(m,\mathcal{D})\triangleq\log(p(\mathcal{D})\bm{\hat{\theta}}_{MLE
+		}) -dof(m)$}\\
+		This is derived from Frequentits framework and cannot be interpreted as 
+		an approximation to the marginal likelihood. The penalty of AIC is less
+		than BIC, it causes AIC pick more complex models. That can be better for 
+		predictive accuracy.
+	\item Effect of the prior.\\
+		If the prior is unknown, the correct Bayesian procedure is to put a prior
+		on the prior. That is we should put a prior on the hyper-parameter 
+		$\alpha$ as well as the parameters $\bm{w}$. To compute the marginal 
+		likelihood we should integrate out all unknowns, we should compute:
+		\tB{$\Su{}{}\Su{}{}p(\mathcal{D}|\bm{w})p(\bm{w}|\alpha,m)p(\alpha|m)
+		d\bm{w}d\alpha$}
+		A computational shortcut is to optimize $\alpha$ rather than integrating
+		it out. That is, we use \tG{$p(\mathcal{D}|m)\approx\Su{}{}p(\mathcal{D}
+		\bm{w})p(\bm{w}|\alpha,m)d\bm{w}$}.
+		where \tG{$\hat{\alpha} = \displaystyle \argmax_{\alpha} p(\mathcal{D}|
+			\alpha,m) = \displaystyle \argmax_{\alpha}\Su{}{}p(\mathcal{D}|
+		\bm{w})p(\bm{w}|\hat{\alpha},m)d\bm{w}$}
+\end{itemize}
+\paragraph{Bayes Factors}
+When prior on models is uniform, then model selection is equivalent to picking the model
+with the highest marginal likelihood. Now suppose we just have two models we are 
+considering, call them the null hypothesis, $M_{0}$ and the alternative hypothesis,
+$M_{1}$.\\
+\tB{$$BF_{1,0} \triangleq \dfrac{p(\mathcal{D}|M_{1})}{p(\mathcal{D}|M_{0})}=
+	\dfrac{\frac{p(M_{1}|\mathcal{D})}{p(M_{0}|\mathcal{D})}}{\frac{p(M_{1})}{
+	p(M_{0})}}
+$$}
+This is like a likelihood ratio, except we integrate out the parameters, which allows us
+to compare models of different complexity. 
+
+\begin{table}[h!]
+	\begin{tabular}{|cl|}
+		\hline
+	\textbf{Bayes Factor} $\bm{BF(1,0)}$ & \textbf{Interpretation}\\
+		\hline
+		$BF<\frac{1}{100}$ & Decisive evidence for $M_{0}$\\
+		\hline
+		$BF<\frac{1}{10}$ & Strong evidence for $M_{0}$\\
+		\hline
+		$\frac{1}{10}<BF<\frac{1}{3}$ & Modest evidence for $M_{0}$\\
+		\hline
+		$\frac{1}{3}<BF<1$ & Weak evidence for $M_{0}$\\
+		\hline
+		$1<BF<3$ & Weak evidence for $M_{1}$\\
+		\hline
+		$3<BF<10$ & Modest evidence for $M_{1}$\\
+		\hline
+		$BF>10 $ &  Strong evidence for $M_{1}$\\
+		\hline
+		$BF>100$ & Decisive evidence for $M_{1}$\\
+		\hline
+	\end{tabular}
+\end{table}
+
+
+\paragraph{Jeffreys-Lindley paradox}
+Problems can arise when we use improper priors (i.e. priors that do not integrate to 1)
+for model selection/ hypothesis testing, even though such priors may be acceptable for 
+other purposes. \tB{In particular the Bayes Factor will always favor the simplest model 
+since the probability of the observed data under a complex model with a very diffuse prior
+will be very small.} Thus it is important to use proper priors when doing model selection.

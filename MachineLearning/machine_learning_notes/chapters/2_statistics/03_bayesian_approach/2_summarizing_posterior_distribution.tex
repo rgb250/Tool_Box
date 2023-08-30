@@ -1,0 +1,42 @@
+\paragraph{MAP (Maximum A Posteriori) estimation}
+Although most appropriate choice for:\\
+$
+\begin{cases}
+	\text{Real valued quantity} &\rightarrow \text{\emph{posterior median or mean}}\\
+	\text{Discrete} &\rightarrow \text{\emph{vector of posterior marginals}}
+\end{cases}
+$\\
+The most popular choice is \tB{\emph{posterior mode}} aka \tR{MAP}, because it reduces to
+optimization problems for which efficient algorithms often exist.\\
+Some point to be aware about MAP:
+\begin{itemize}
+	\item \uB{No measure of uncertainty}
+	\item \tB{Plugging in the MAP estimate can result in overfitting}
+	\item \tB{The mode is an untypical point}, unlike the mean or median the mode is a
+		point of measure 0, it does not take the volume of the space into account.
+	\item \tB{MAP estimation is not invariant to reparameterization}, for example 
+		passing from centimeters to inches can break things.)\\ The MLE does not
+		suffer from this since the likelihood is a function not a probability
+		density
+\end{itemize}
+
+
+\paragraph{Credible intervals}
+With point estimates, we want a measure of confidence. 
+\tB{
+$$ C_{\alpha}\left(\mathcal{D}\right) = (l, u): \Prob{{l\leq \theta \leq u | \mathcal{D}}}
+$$}
+In general, credible intervals are usually what people want to compute but confidence
+intervals are usually what they actually compute, because most people are taught 
+frequentist statistics but not Bayesian statistics.\\
+Sometimes with central intervals there might be points be outside the CI which have higher
+probability density.\\
+More formally $p^{*}$ such that: 
+\begin{center}
+	$1-\alpha = 
+	\Su{{\theta:p(\theta|\mathcal{D})>p^{*}}}{}p(\theta|\mathcal{D})d\theta$
+\end{center}
+Then the \uB{HPD} such that:
+\begin{center}
+	$\mathcal{D}=\left\{\theta: p(\theta|\mathcal{D})\geq p^{*}\right\}$
+\end{center}

@@ -1,0 +1,47 @@
+\paragraph{Hierarchical Bayes}
+A key requirement for computing the posterior $p(\theta|\mathcal{D})$ is the 
+specification of a prior $p(\theta|\eta)$ where $\eta$ are the hyper-parameters. A 
+Bayesian approach is to \tB{put a prior on our priors}. This is an example of a \textbf{
+hierarchical Bayesian Model}.
+
+\paragraph{Empirical Bayes}
+In hierarchical Bayesian models, we need to compute the posterior on multiple levels of
+latent variables. For example, in a two-level model, we need to compute:
+$p(\eta, \theta|\mathcal{D}) \propto p(\mathcal{D}|\theta)p(\theta|\eta)p(\eta)$\\
+\tB{We can approximate the posterior on the hyper-parameters with a point-estimate, 
+$p(\eta|\mathcal{D}\approx \delta_{\hat{\eta}}(\eta))$ where $\hat{\eta}=\argmax_{\eta}
+p(\eta|\mathcal{D})$. Since $\eta$ is typically much smaller than $\theta$ in 
+dimensionality, it is less prone to overfitting, so we can safely use a uniform prior on 
+$\eta$}. Then the estimate becomes: 
+$$ \hat{\eta} = \argmax_{\eta} p(\mathcal{D}|\eta) = \argmax_{\eta} \Su{}{}
+p(\mathcal{D}|\theta)p(\theta|\mathcal{\eta})d\theta $$
+This overall approach is called \textbf{Empirical Bayes}\\
+Empirical Bayes violates the principle that the prior should be chosen independently of 
+the data. However, we can just view it as a computationally cheap approximation to 
+inference in a hierarchical Bayesian model, just as we viewed MAP estimation as an approximation to inference in the one level model $\theta \rightarrow \mathcal{D}$. In fact, we
+can construct a hierarchy in which the more integrals one performs, the "more Bayesian" 
+one becomes:
+\begin{center}
+	\begin{tabular}{|*{2}{l|}}
+		\hline
+		\textbf{Method} & \textbf{Definition} \\
+		\hline
+		Maximum likelihood & $\hat{\theta} = \argmax_{\theta} 
+		p(\mathcal{D}|\theta)$ \\
+		\hline
+		MAP estimation & $\hat{\theta} = \argmax_{\theta} 
+		p(\mathcal{D}|\theta)p(\theta|\eta)$ \\
+		ML-II (Empirical Bayes) & $\hat{\eta}=\argmax_{\eta}\Su{}{}
+		p(\mathcal{D}|\theta)p(\theta|\eta)d\theta = \argmax_{\eta}p(\mathcal{D}|
+		\eta)$ \\
+		\hline
+		MAP-II & $\hat{\eta}=\argmax_{\eta}\Su{}{}
+		p(\mathcal{D}|\theta)p(\theta|\eta)p(\eta)d\theta = \argmax_{\eta}p(
+		\mathcal{D}| \eta)p(\eta)$\\
+		\hline
+		Full Bayes & $p(\theta, \eta|\mathcal{D}) \approx p(\mathcal{D}|\theta)
+		p(\theta|\eta)p(\eta)$\\
+		\hline
+	\end{tabular}
+\end{center}
+
