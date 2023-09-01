@@ -1,5 +1,11 @@
+
 # 1) Packages
-## a. How to check the list of packages
+## a. How to install packages
+- Deb
+```bash
+sudo dpkg -i package_deb  # dpkg --> Debian Package Management System
+```
+## b. How to check the list of packages
 - Apt-get
     ```bash
     apt list --installed  # list of packages installed through apt-get

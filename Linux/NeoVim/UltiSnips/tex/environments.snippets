@@ -1,7 +1,7 @@
 snippet img "Insert Image"
 \begin{figure}[H]
 	\begin{center}
-		\includegraphics[width=\textwidth]{${1:url}}
+		\includegraphics[width=.5\textwidth]{${1:url}}
 	\end{center}
 	\caption{${2:caption}}
 	\label{fig:${3:label}}
@@ -31,6 +31,15 @@ $\begin{cases}
     $1 \\\
     $2 
 \end{cases}$$0
+endsnippet
+
+snippet table
+\begin{center}
+	\begin{tabular}{|*{$1}{|c}}
+	\hline
+	$2
+	\end{tabular}
+\end{center}
 endsnippet
 
 snippet rnd_b
