@@ -1,0 +1,32 @@
+\paragraph{Frequentist issue}
+\tB{Frequentist decision theory suffers from the fundamental problem that one cannot 
+actually compute the risk function, since it relies on knowing the true data 
+distribution}. By contrast, the Bayesian posterior expected loss can always be computed 
+since it conditions on the data rather that on $\theta^{*}$.\\
+\uB{However there is one setting which avoids this problem, it is when the task is to 
+predict observable quantities, as opposed to estimating hidden variables or parameters}.\\
+\tB{Instead of looking at loss functions of the form $L(\bm{\theta^{*}}, 
+\delta(\mathcal{D}))$ let us look at loss functions of the form $L(y, \delta(\bm{x}))$}.\\
+Then the risk becomes:
+$R(p_{*}, \delta) \triangleq \mathbb{E}_{(\bm{x}, y)\hookrightarrow p_{*}}\left(L(y,
+\delta(\bm{x}))\right) = \su{\bm{x}}{}\su{\bm{y}}{}L(y, \delta(\bm{x}))p_{*}(\bm{x}, y)$
+Where $p_{*}$ represents "nature's distribution", indeed this distribution is unknown, 
+but a simple approach is to use the empirical distribution, derived from some training 
+data to approximate $p_{*}(x,y)\approx
+p_{emp}(x,y) \triangleq \dfrac{1}{N}\su{i=1}{N}\delta_{x_{i}}(\bm{x})\delta_{y_{i}}(y)$
+We define the empirical risk as follows:
+\tR{
+\begin{center}
+    $R_{emp}(\mathcal{D}, \mathcal{D}) \triangleq R(p_{emp}, \delta) = \dfrac{1}{N}
+    \su{i=1}{N}L(y_{i}, \delta(x_{i}))$
+\end{center}
+}
+
+
+\paragraph{Regularized risk minimization}
+\begin{center}
+    $R'(\mathcal{D}, \delta) = R_{emp}(\mathcal{D}, \delta) + \lambda C(\delta)$
+\end{center}
+where $C(\delta)$ measures the complexity of the prediction function $\delta(\bm{x})$ and 
+$\lambda$ controls the strength of the complexity penalty. 
+This approach is known as \textbf{regularized risk minimization}.

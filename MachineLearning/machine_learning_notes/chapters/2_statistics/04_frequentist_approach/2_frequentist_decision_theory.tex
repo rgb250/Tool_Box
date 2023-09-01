@@ -1,0 +1,78 @@
+In Frequentist decision theory there is a loss function and a likelihood, but there
+is no prior and hence no posterior or posterior expected loss. Thus there is no 
+automatic way of deriving an optimal estimator, unlike the Bayesian case.\\
+Instead, we are free to choose any estimator or decision procedure $\delta: \mathcal{X}
+\rightarrow \mathcal{A}$ we want.\\
+Having chosen an estimator, we define its \tR{expected loss or risk} as follows
+\tR{
+\begin{center}
+ $R(\theta^{*}, \delta) \triangleq \mathbb{E}_{p(\tilde{\mathcal{D}}|\theta^{*})}
+\left(L(\theta^{*}, \delta(\tilde{\mathcal{D}}))\right) = \Su{}{}L\left(\theta^{*},
+\delta(\tilde{\mathcal{D}})\right)p(\tilde{\mathcal{D}})d\tilde{\mathcal{D}}$   
+\end{center}
+}
+where $\tilde{\mathcal{D}}$ is data sampled from 'nature's distribution' which is 
+represented by parameter $\theta^{*}$.
+Whereas the \tR{Bayesian posterior expected loss}: 
+\tR{
+\begin{center}
+    $p(a, \mathcal{D, \pi}) \triangleq \mathbb{E}_{p(\theta|\mathcal{D},\pi)}\left(
+        L(\theta, a)\right) = \Su{\Theta}{}L(\theta, \bm{a})p(\theta|\mathcal{D}, \pi)
+        d\theta
+    $
+\end{center}
+}
+We see that the Bayesian approach averages over $\theta$, which is unknown, and conditions
+on $\mathcal{D}$ which is known. Unlike the frequentist approach averages over $\tilde{
+\mathcal{D}}$, thus ignoring the observed data, and conditions on $\theta^{*}$ which is 
+unknown.
+
+\paragraph{Bayes risk}
+How to chose amongst the estimators? 
+We need some way to convert $R(\theta^{*}, \delta)$ into single measure of quality, $R(
+\delta)$ which does not depend on knowing $\theta^{*}$. One approach is to \uR{put a prior
+on $\theta^{*}$ and then to define} \tR{\textbf{Bayes risk}} of an estimator as follows:
+\tR{
+\begin{center}
+    $R_{B}(\delta) \triangleq \mathbb{E}_{p(\theta^{*})}\left(R(\theta^{*}, \delta)\right)
+    =\Su{}{}R(\theta^{*}, \delta)p(\theta^{*})d\theta^{*}$
+\end{center}
+}
+A \tR{\textbf{Bayes estimator} or \textbf{Bayes decision rule}} is one which minimizes the
+expected risk: \tR{$\delta_{B} \triangleq \displaystyle\argmin_{\delta} R_{B}(\delta)$}
+
+\subparagraph{Connection Bayesian and Frequentist approaches to decision theory.}
+\begin{itemize}
+    \item \emph{Theorem 1} \uB{A Bayes estimator can be optained by minimizing the 
+            posterior expected loss for each $\bm{x}$}
+    \item \emph{Theorem 2} \tB{Every admissible frequentist decision rule is a Bayes 
+            decision rule with respect to some possibly improper prior distribution}.
+\end{itemize}
+
+\subparagraph{Minimax risk}
+Some frequentist statistic users avoid using Bayes risk since it requires the choice of
+a prior, although this is only in the evaluation of the estimator, not necessarily as 
+part of its construction. An alternative approach is as follows:
+\begin{enumerate}
+    \item Define the  maximum risk of an estimator as:\\
+        $R_{max}(\delta) \triangleq \displaystyle\max_{\theta^{*}}R(\bm{\theta}^{*},
+        \delta)$
+    \item A \tB{\textbf{minimax rule}} is one which minimizes the maximum risk:
+        \tB{$\delta_{MM} \triangleq \displaystyle\argmin_{\delta} R_{\max}(\delta)$} 
+\end{enumerate}
+\uB{Minimax estimators have a certain appeal, however computing them can be hard and 
+furthermore they are very pessimistic}.
+In most statistical situations, excluding games theoretic ones, assuming nature is an
+adversary is not a reasonable assumption.
+
+
+\paragraph{Admissible estimators}
+The basic problem with frequentis decision theory is that it relies on knowing the true
+distribution $p(\cdot|\theta^{*})$ in order to evaluate the risk. However it might be 
+the case that some estimators are worse than others regardless of the value of 
+$\theta^{*}$.\\
+In particular \tB{if for $\theta \in \Theta, R(\theta, \delta_{1}) \leq R(\theta, 
+    \delta_{2})$ bayesthen we say that $\delta_{1}$ \textbf{dominates} $\delta_{2}$}.\\
+An estimator is said to be \textbf{admissible} if it is not strictly dominated by any 
+other estimator.\\
+\textbf{Admissibility is not enough}

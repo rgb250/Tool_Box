@@ -1,0 +1,25 @@
+\paragraph{Sampling Distributions of an estimator}
+\tB{In frequentist statistic a parameter estimate $\hat{\theta}$ is computed by applying 
+an estimator $\delta$ to some data $\mathcal{D}$}, so \textbf{$\hat{\theta}=\delta(
+\mathcal{D})$}.
+The \tR{uncertainty in the parameter estimate can be measured by computing the 
+\emph{sampling distribution of the estimator}}.
+Imagine sampling many different \tB{datasets $\mathcal{D}^{(s)}$ from some true model 
+$p(\cdot|\theta^{*})$ meaning $\mathcal{D}^{(s)}=\left\{x_{i}^{(s)}\hookrightarrow 
+p(\cdot|\theta^{*})\right\}_{1\leq i\leq N}$ for $1\leq s\leq S$ and $\theta^{*}$ is the 
+true parameter. Now apply the estimator $\hat{\theta}(\cdot)$ to each $\mathcal{D}^{(s)}$
+to get a set of estimates $\{\hat{\theta}(\mathcal{D}^{(s)})\}_{1\leq s\leq S}$.}\\
+\tR{As we late $S \rightarrow \infty$, the distribution induced on $\hat{\theta}(\cdot)$ 
+is the \textbf{sampling distribution of the estimator}.}
+
+\paragraph{Bootstrap}
+It is a \tB{simple \emph{Monte Carlo} technique to approximate the sampling distribution}.
+The idea is that \tR{if we knew the true parameters $\theta^{*}$, we could generate $S$ 
+fake datasets of size $N$}, from the true distribution. We could then \tR{compute our 
+estimator from each sample, and use the empirical distribution of the resulting samples as
+our estimate of the sampling distribution}.\\
+Since $\theta$ is unknown, the idea of the \tB{\textbf{parametric bootstrap} is to 
+generate the samples using $\hat{\theta}(\mathcal{D})$ instead}.
+An alternative, called \tB{\textbf{non-parametric bootstrap} is to sample the $x_{i}^{s}$
+(with replacement) from the original data $\mathcal{D}$ and then compute the induced
+distribution} as before.

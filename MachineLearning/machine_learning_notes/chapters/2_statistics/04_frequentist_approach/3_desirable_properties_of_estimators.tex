@@ -1,0 +1,31 @@
+\paragraph{Consistent estimators}
+An estimator is said to be \textbf{consistent} \tB{if it eventually recovers the true
+parameters that generated the data as the sample size goes to infinity}. 
+
+\paragraph{Unbiased estimator}
+The \textbf{bias} of an estimator is defined as 
+\tR{
+\begin{center}
+    $bias\left(\hat{\theta}(\cdot)\right) = \mathbb{E}_{p(\mathcal{D}|\theta^{*})}
+    \left(\hat{\theta}(\mathcal{D})-\theta^{*}\right)$
+\end{center}
+}
+The estimator is \tB{unbiased when the bias is equal to 0}.
+
+\paragraph{Minimum variance estimators}
+A famous result called the \textbf{Cramerè-Rao lower bound} provides a lower bound on the
+variance of any unbiased estimator. More precisely:
+Let $\left(X_{j}\right)_{1 \leq j \leq p} \hookrightarrow p(X|\theta_{0})$ and 
+\tB{$\hat{\theta}(\cdot)$ an unbiased estimator of $\theta^{*}$}
+Then, under various smoothness assumptions on $p(X|\theta_{0})$ we have  
+\tR{
+\begin{center}
+    $\mathbb{V}(\hat{\theta}) \geq \dfrac{1}{nI(\theta^{*})}$
+\end{center}
+}
+where \tB{$I(\theta^{*})$ is the Fisher information matrix}.
+
+\paragraph{Bias-Variance Trade-off} 
+As $MSE = variance + bias^{2}$\\
+\tB{It might be wise to use a biased estimator, so long as it reduces our variance},
+assuming our goal is to minimize squared error. 
