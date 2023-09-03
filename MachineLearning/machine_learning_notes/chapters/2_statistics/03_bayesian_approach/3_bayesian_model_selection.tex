@@ -75,11 +75,19 @@ with the highest marginal likelihood. Now suppose we just have two models we are
 considering, call them the null hypothesis, $M_{0}$ and the alternative hypothesis,
 $M_{1}$.\\
 \tB{$$BF_{1,0} \triangleq \dfrac{p(\mathcal{D}|M_{1})}{p(\mathcal{D}|M_{0})}=
-	\dfrac{\frac{p(M_{1}|\mathcal{D})}{p(M_{0}|\mathcal{D})}}{\frac{p(M_{1})}{
-	p(M_{0})}}
+    \dfrac{\left.\frac{p(M_{1}|\mathcal{D})}{p(M_{0}|\mathcal{D})}\right\}\text{\emph{Posterior odds}}}{\left.\frac{p(M_{1})}{p(M_{0})}\right\}\text{\emph{Prior odds}}}
 $$}
-This is like a likelihood ratio, except we integrate out the parameters, which allows us
-to compare models of different complexity. 
+\begin{itemize}
+    \item \emph{Posterior odds}: quantifies relative plausibility of the rival hypotheses
+        \textbf{after} having seen the data.
+    \item \emph{Bayes Factor}, $BF_{1,0}$, quantifies the evidence provided by the data, 
+        this is like a likelihood ratio, except we integrate out the parameters, which 
+        allows us to compare models of different complexity.
+    \item \emph{Prior odds}: quantifies relative plausibility of the rival hypotheses
+        \textbf{before} seeing the data.
+\end{itemize}
+
+ 
 
 \begin{table}[h!]
 	\begin{tabular}{|cl|}

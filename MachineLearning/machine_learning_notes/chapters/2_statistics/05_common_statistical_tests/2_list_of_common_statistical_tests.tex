@@ -1,0 +1,100 @@
+\paragraph{\hyperref[binomial_test]{Binomial}}
+To check if the deviations from a theoretically expected distribution of observations into
+2 categories.\\
+
+\subparagraph{Assumptions}
+\begin{itemize}
+    \item \tB{Sample items are independent.}
+    \item Items are dichotomous and nominal.
+    \item The sample size is significantly less than the population size
+    \item The sample is a fiar representation of the population
+\end{itemize}
+
+
+\subparagraph{Frequentist}
+Let define a user-defined probability $p_{0}$, with $H_{0}: p = p_{0}$ and
+$\begin{cases}
+    H_{1}: p \neq p_{0}\text{: two-tailed test} \\
+    H_{1}: p < p_{0}\text{: left-tailed test} \\
+    H_{1}: p > p_{0}\text{: right-tailed test} \\
+     
+\end{cases}$
+
+\subparagraph{Bayesian}
+Define the prior distribution with a \emph{Beta}($a,b$) distribution\\
+
+\textit{\hyperref[statistical_method_table]{Return to the table.}}
+
+
+\paragraph{Fisher's exact test}
+To chekc the significance of the contingency between 2 kinds of classification of a given
+object, initially Fisher used this test to distinguish drink in which the tea has been put
+before the milk or vice-versa.
+For large sample use \emph{G-test}
+
+\subparagraph{Assumptions}
+\begin{itemize}
+    \item In practice, small sample size $\lessapprox 1000$
+\end{itemize}
+
+\subparagraph{Frequentist}
+For example let's divide a population into male and female and for each persons indicating
+if this person is currently studying or not. We want to test if the proportion of studying
+students is higher among the women than among the men.
+\begin{center}
+    \begin{tabular}{|*{4}{c|}}
+    \hline
+    & \textbf{Men} & \textbf{Women} & \textbf{Row Total}\\
+    \hline
+    \textbf{Studying} & $a$ & $b$ & $a+b$ \\
+    \hline
+    \textbf{Non-Studying} & $c$ & $d$ & $c+d$ \\
+    \hline
+    \textbf{Column Total} & $a+c$ & $b+d$ & $a + b + c + d = n$ \\
+    \hline
+    \end{tabular}
+\end{center}
+The conditional on the margins of the table is distributed as $\text{\emph{Hypergeometric}}(a+c, a+b, c+d)$ meaning $a + c$ draws from a population with $a + b$ success and $c+d$ 
+failures.
+The probability of obtaining such set of values is given by
+\begin{center}
+    $p = \dfrac{{{a+b}\choose{a}}\times{{c+d}\choose{c}}}{{{n}\choose{a+c}}}
+    = \dfrac{{{a+b}\choose{b}}\times{{c+d}\choose{d}}}{{{n}\choose{b+d}}}$
+\end{center}
+
+\subparagraph{Bayesian}
+Does not exist, see \emph{contingency table} \\
+
+
+\textit{\hyperref[statistical_method_table]{Return to the table.}}
+
+
+
+
+
+\paragraph{$\bm{\chi^{2}}$ test}
+To check if there is a significant difference between the expected and observed 
+frequencies.
+\subparagraph{Assumptions}
+\begin{itemize}
+    \item simple random sample
+    \item sample with a sufficiently large size is assumed, for small sample size see Cash test
+    \item expected cell count has to be adequate, a rule of thumb is at least 5 for 2-by-2
+        table and 5 or more in 80\% of cells in larger tables.
+    \item Independence of the observations
+\end{itemize}
+
+\subparagraph{Frequentist}
+$\chi^{2} = \su{i=1}{n}\dfrac{\left(\frac{O_{i}}{N} - p_{i} \right)^{2}}{p_{i}}
+\begin{cases}
+    O_{i}\text{: number of observations of type }i \\
+    N\text{: total number of observations}\\
+    n\text{: number of cells in the table.}
+    p_{i}\text{: expected proportions of the fraction of type}i\text{ in the population.}
+\end{cases}
+$
+
+\subparagraph{Bayesian}
+Does not exist, see \emph{contingency table}\\
+
+\textit{\hyperref[statistical_method_table]{Return to the table.}}
