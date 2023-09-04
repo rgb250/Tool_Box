@@ -18,10 +18,10 @@ endsnippet
 snippet sys "Equation system request 'amsmath'"
 \begin{equation*}
     \left\{
-        \begin{aligned}
+        \begin{align*}
 	    $1\\\
 	    $2
-        \end{aligned}
+        \end{align*}
     \right.
 \end{equation*}$0
 endsnippet
@@ -33,12 +33,22 @@ $\begin{cases}
 \end{cases}$$0
 endsnippet
 
-snippet table
+snippet tabular
 \begin{center}
 	\begin{tabular}{|*{$1}{c|}}
 	\hline
 	$2
 	\end{tabular}
+\end{center}
+endsnippet
+
+snippet tabularx
+\begin{center}
+	\begin{tabularx}{$1\textwidth}{|*{$2}{c|}}
+	\hline
+	$3 \\
+	\hline
+	\end{tabularx}
 \end{center}
 endsnippet
 

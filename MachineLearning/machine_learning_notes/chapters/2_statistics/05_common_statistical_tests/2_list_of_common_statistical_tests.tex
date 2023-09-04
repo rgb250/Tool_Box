@@ -26,11 +26,68 @@ Define the prior distribution with a \emph{Beta}($a,b$) distribution\\
 \textit{\hyperref[statistical_method_table]{Return to the table.}}
 
 
+\paragraph{$\bm{\chi^{2}}$ test}
+Either used to test \emph{goodness-of-fit} and \emph{independence} between 2 variables.
+It checks either if there is a significant difference between the expected and observed 
+frequencies.
+\begin{itemize}
+    \item \emph{goodness-of-fit}: expected frequencies are computed with a theoretical 
+        relationship between observed frequencies
+    \item \emph{independence}: expected frequencies are computed with observed frequencies
+        from the other sample
+\end{itemize}
+\subparagraph{Assumptions}
+\begin{itemize}
+    \item simple random sample
+    \item sample with a sufficiently large size is assumed, for small sample size see Cash test
+    \item expected cell count has to be adequate, a rule of thumb is at least 5 for 2-by-2
+        table and 5 or more in 80\% of cells in larger tables.
+    \item Independence of the observations
+\end{itemize}
+
+\subparagraph{Frequentist}
+$\chi^{2} = \su{i=1}{n}\dfrac{\left(\frac{O_{i}}{N} - p_{i} \right)^{2}}{p_{i}}
+\begin{cases}
+    O_{i}\text{: number of observations of type }i \\
+    N\text{: total number of observations}\\
+    n\text{: number of cells in the table.}
+    p_{i}\text{: expected proportions of the fraction of type}i\text{ in the population.}
+\end{cases}
+$
+
+\subparagraph{Bayesian}
+Does not exist, see \emph{contingency table}\\
+
+\textit{\hyperref[statistical_method_table]{Return to the table.}}
+
+
+\paragraph{Exact test of goodness-of-fit}
+Unlike the conventional statistical tests, there is no \emph{test statistic}, we directly
+compute the \emph{p-value} under the null hypothesis.
+The most common use are for dichotomous nominal variables or multinomial variables.
+
+\subparagraph{Assumptions}
+\begin{itemize}
+    \item \tB{Observations are independent.}
+    \item Small sample size $\lessapprox 1000$
+\end{itemize}
+
+\subparagraph{Frequentist}
+Let us define the list of, respectively, expected counts for each modality 
+$i,~(E_{i})_{1\leq i\leq m}$, and observed counts $(O_{i})_{1\leq i\leq m}$.
+Then
+$\begin{cases}
+    \bm{H_{0}: \forall i\in \inter{1}{m},~O_{i} = E_{i}}\\
+    H_{1}: \exists i\in \inter{1}{m},~O_{i} \neq E_{i}\text{: two-tailed test} \\
+\end{cases}$
+
+
+
+
 \paragraph{Fisher's exact test}
-To chekc the significance of the contingency between 2 kinds of classification of a given
-object, initially Fisher used this test to distinguish drink in which the tea has been put
-before the milk or vice-versa.
-For large sample use \emph{G-test}
+To check the significance of the contingency between 2 kinds of classification of a given
+object, \uB{initially Fisher used this test to distinguish drink in which the tea has been
+put before the milk or vice-versa}. For large sample use \emph{G-test}
 
 \subparagraph{Assumptions}
 \begin{itemize}
@@ -65,36 +122,191 @@ The probability of obtaining such set of values is given by
 \subparagraph{Bayesian}
 Does not exist, see \emph{contingency table} \\
 
-
 \textit{\hyperref[statistical_method_table]{Return to the table.}}
 
 
+\paragraph{G-test}
+
+It's a likelihood-ratio or a maximum likelihood statistical significance test. 
+Either used to test \emph{goodness-of-fit} and \emph{independence} between 2 variables.
+It checks either if there is a significant difference between the expected and observed 
+frequencies. This test tends to replace $\chi^{2}$\emph{-test}
+\begin{itemize}
+    \item \emph{goodness-of-fit}: expected frequencies are computed with a theoretical 
+        relationship between observed frequencies
+    \item \emph{independence}: expected frequencies are computed with observed frequencies
+        from the other sample
+    \item \emph{repeated tests}: first variable is analysed with a goodness-of-fit and the
+        second one represents the repetition of the experiments multiple times. Thus it
+        allows to assess the goodness-of-fit on a large sample instead of multiple lower
+        samples. Expected frequencies is a theoretical relationship between the observed
+        frequencies segmented in groups by the modalities of the second variable.
+\end{itemize}
 
 
-
-\paragraph{$\bm{\chi^{2}}$ test}
-To check if there is a significant difference between the expected and observed 
-frequencies.
 \subparagraph{Assumptions}
 \begin{itemize}
-    \item simple random sample
-    \item sample with a sufficiently large size is assumed, for small sample size see Cash test
-    \item expected cell count has to be adequate, a rule of thumb is at least 5 for 2-by-2
-        table and 5 or more in 80\% of cells in larger tables.
-    \item Independence of the observations
+    \item 
+    \item Expected count must not be small in any modality.
+\end{itemize}
+
+\subparagraph{Strengths}
+\begin{itemize}
+    \item Approximation to the theoretical $chi^{2}$ distribution is better attained with
+        \emph{G-test} than $\chi^{2}$ \emph{test}.
+    \item Cases where $O_{i} > 2\times E_{i}$, \emph{G-test} is always better than
+        $\chi^{2}$ \emph{test}.
+\end{itemize}
+
+\subparagraph{Weaknesses}
+\begin{itemize}
+    \item in test of independence, for a small sample size use rather Fisher's extract 
+        test.
+\end{itemize}
+
+
+\subparagraph{Frequentist}
+We compare the observed counts in each modality with their expected counts.
+Let us define the list of, respectively, expected counts for each modality 
+$i,~(E_{i})_{1\leq i\leq m}$, and observed counts $(O_{i})_{1\leq i\leq m}$.
+Then
+$\begin{cases}
+    \bm{H_{0}: \forall i\in \inter{1}{m},~O_{i} = E_{i}}\\
+    H_{1}: \exists i\in \inter{1}{m},~O_{i} \neq E_{i}\text{: two-tailed test} \\
+\end{cases}$
+
+\begin{center}
+    $G = 2\su{i=1}{m}O_{i}\times\ln\left(\dfrac{O_{i}}{E_{i}}\right)$
+\end{center}
+
+$$
+\ln\left(\dfrac{L(\tilde{\theta}|x)}{L(\hat{\theta}|x)}\right)
+= \ln\left(\dfrac{\prd{i=1}{m}\tilde{\theta}^{x_{i}}}{\prd{i=1}{m}\hat{\theta}^{x_{i}}}\right)
+= \ln\left(\dfrac{\prd{i=1}{m}\left(\frac{x_{i}}{n}\right)^{x_{i}}}{\prd{i=1}{m}\left(\frac{e_{i}}{n}\right)^{x_{i}}}\right)
+= \ln\left(\prd{i=1}{m}\left(\dfrac{x_{i}}{e_{i}}\right)^{x_{i}}\right)
+= \su{i=1}{m}x_{i}\ln\left(\dfrac{x_{i}}{e_{i}}\right)
+$$
+
+Then we multiply by $-2$ to get \emph{G-test} that is asymptotically equivalent to the 
+\emph{Pearson's} $\chi^{2}$ formula.
+
+
+\paragraph{Cochran's Q test}
+It checks if $k$ treatments have identical effect, the response can take only 2 possible 
+outcomes and a second variable segments the treatments.
+
+\begin{center}
+    \begin{tabularx}{.65\textwidth}{|*{5}{c|}}
+    \hline
+     & \textbf{Treatment 1} & \textbf{Treatment 2} & $\cdots$  & \textbf{Treatment k}\\
+    \hline
+    \emph{Block 1} & $x_{11}$ & $x_{12}$ & $\cdots$  & $x_{1k}$\\
+    \hline
+    \emph{Block 2} & $x_{21}$ & $x_{22}$ & $\cdots$  & $x_{2k}$\\
+    \hline
+    \emph{Block 3} & $x_{31}$ & $x_{32}$ & $\cdots$  & $x_{3k}$\\
+    \hline
+    $\vdots$ & $\vdots$ & $\vdots$ & $\ddots$ & $\vdots$ \\
+    \hline
+    \emph{Block b} & $x_{b1}$ & $x_{b2}$ & $\cdots$  & $x_{bk}$\\
+    \hline
+    \end{tabularx}
+\end{center}
+And $\forall (i,j)\in\inter{1}{b}\times\inter{1}{k}, x_{ij}\in\left\{0, 1\right\}$
+
+\subparagraph{Assumptions}
+\begin{itemize}
+    \item The blocks are randomly selected from the population of all possible blocks.
+    \item Outcome of the treatments are dichotomous, and should be coded in a standard way
 \end{itemize}
 
 \subparagraph{Frequentist}
-$\chi^{2} = \su{i=1}{n}\dfrac{\left(\frac{O_{i}}{N} - p_{i} \right)^{2}}{p_{i}}
-\begin{cases}
-    O_{i}\text{: number of observations of type }i \\
-    N\text{: total number of observations}\\
-    n\text{: number of cells in the table.}
-    p_{i}\text{: expected proportions of the fraction of type}i\text{ in the population.}
-\end{cases}
-$
+For example if $b$ respondents in a survey had each been asked $k$ \emph{Yes/No} questions
+the \emph{Q-test} could be use to test the null hypothesis that all questions were equally
+likely to elicit the answer "Yes".\\
+We have
+$\begin{cases}
+    H_{0}\text{: the treatments are equally effective} \\
+    H_{a}\text{: the treatments are \emph{not} equally effective} 
+\end{cases}$
+
+\begin{center}
+    $
+    T = k(k-1)\dfrac{\su{j=1}{k}\left(x_{\cdot j} - \frac{N}{k}\right)^{2}}{
+    \su{i=1}{b}x_{i\cdot}\left(k-x_{i\cdot}\right)}
+    \begin{cases}
+        k\text{: number of treatments} \\
+        x_{\cdot j}\text{: column total for the }j\text{th treatment} \\
+        b\text{: number of blocks} \\
+        X_{i\cdot}\text{: row total for the }i\text{th block} \\
+        N\text{: grand total}
+         
+    \end{cases}$
+\end{center}
+
+For significance level $\alpha$, the asymptotic critical region is 
+$T > \chi^{2}_{1-\alpha, k-1}$ which is the ($a-\alpha$) quantile of the $\chi^{2}$ 
+distribution with $K-1$ degrees of freedom.
 
 \subparagraph{Bayesian}
-Does not exist, see \emph{contingency table}\\
+Does not exist, see \emph{contingency table} \\
 
-\textit{\hyperref[statistical_method_table]{Return to the table.}}
+
+
+\paragraph{Sign test}
+It is a statistical method to test for consistent differences between pairs of 
+observations, such as the weight of subjects before and after treatment.
+For comparisons of paired observations $(x, y)$ the \emph{sign-test} is most useful if 
+comparison can only be expressed as $x>y,~x=y,\text{ or } x<y$.
+If instead the differences can be expressed in numeric quantities it is worthy to use 
+\emph{t-test} or \emph{Wilcoxon signed-rank test} will usually have greater power than
+the sign test to detect consistent differences.
+
+\subparagraph{Frequentist}
+Let $p=\Prob{X>Y}$, then
+$\begin{cases}
+    H_{0}:~p=0.5\text{ meaning that given a random pair of measurements }(x_{i}, y_{i})
+    \text{ then }x_{i}\text{ and }y_{i}\text{are equally likely to be larger than the
+    other}\\
+    H_{a}:~p\neq 0.5
+\end{cases}$
+Pairs are omitted for which there is no differences so that there is a potential reduced
+sample of $m$ pairs.\\
+The statistics $W$ is defined as follow:
+\begin{center}
+    $W = \mathbf{1}_{\left\{x_{i} > y_{i}\right\}} \hookrightarrow \mathcal{B}(m, 0.5)$
+\end{center}
+
+\subparagraph{Assumptions}
+Let $\forall i\in\inter{1}{n},~Z_{i} = X_{i} - Y_{i}$
+
+\begin{itemize}
+    \item $Z_{i}$ are assumed independent.
+    \item Each $Z_{i}$ comes from the same continuous population.
+    \item The values $X_{i}$ and $Y_{i}$ are ordered.
+\end{itemize}
+
+\subparagraph{Strengths}
+\begin{itemize}
+    \item A fewer assumptions need to be made than for parametrical test
+\end{itemize}
+
+\subparagraph{Weaknesses}
+\begin{itemize}
+    \item The power of test is lower than for a parametrical test
+\end{itemize}
+
+
+
+\paragraph{Contingency coefficients}
+\paragraph{Wilconox test}
+\paragraph{Mann-Whitney test}
+\paragraph{Kruksal-Wallis test}
+\paragraph{Friedman test}
+\paragraph{Sperman test}
+\paragraph{Pearson correlation}
+\paragraph{Repeated-measures ANOVA}
+\paragraph{1-way ANOVA}
+\paragraph{Unpaired t-test}
+\paragraph{Paired t-test}
+\paragraph{1-sample t-test}
