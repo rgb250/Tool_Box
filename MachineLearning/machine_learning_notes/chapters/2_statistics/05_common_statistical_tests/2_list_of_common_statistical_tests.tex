@@ -298,15 +298,215 @@ Let $\forall i\in\inter{1}{n},~Z_{i} = X_{i} - Y_{i}$
 
 
 
-\paragraph{Contingency coefficients}
+\paragraph{Contingency coefficients: Cramér's V}
+To quantify associations between 2 paired samples in a contingency table, it is based
+on $\chi^{2}$ and varies from 0 (no association) to 1 (complete association).
+\subparagraph{Frequentist}
+Let a sample of size $n$ of the simultaneously distributed variable $A$ and $B$.
+$\forall (i,j)\in\inter{1}{r}\times\inter{1}{c},~n_{ij} = \text{\emph{Card}}\left(
+\left\{A_{i},B_{j}\right\}\right)$.
+Then $\chi^{2} = \su{(i,j)\in\inter{1}{r}\times\inter{1}{c}}{}\dfrac{\left(n_{ij} - \frac{
+n_{i\cdot}\times n_{\cdot j}}{n}\right)^{2}}{\frac{n_{i\cdot}\times n_{\cdot j}}{n}}$\\
+Finally the Cramér's V with bias correction is: 
+\begin{center}
+    $V = \sqrt{\dfrac{\max\left(0, \frac{\chi^{2}}{n} - \frac{(r-1)(c-1)}{n}\right)}{\min\left(r-\frac{(r-1)^{2}}{n-1}-1, c-\frac{(c-1)^{2}}{n-1}-1\right)}}$
+\end{center}
+
+\subparagraph{Assumptions}
+\begin{itemize}
+    \item The both variables have to be nominal.
+\end{itemize}
+
+\subparagraph{Strengths}
+\begin{itemize}
+    \item Good analog of the $R^{2}$ for categorical variables.
+\end{itemize}
+
+\subparagraph{Weaknesses}
+\begin{itemize}
+    \item Can tend to overestimate the strength of association.
+\end{itemize}
+
+
+
+\paragraph{Contingency table from a Bayesian perspective}
+To test the independence hypothesis between 2 variables.
+\subparagraph{Bayesian}
+Let's consider 4 sampling plans, depending on which sampling plan is chosen the Bayes
+factor formula will change.
+\begin{itemize}
+    \item \emph{Poisson} sampling scheme: Each cell count is considered as random and so
+        is the grand total, the cells are Poisson distributed. This design often occurs
+        in purely observational work.
+    \item \emph{Joint multinomial} sampling scheme: same as above except that now, the 
+        grand total is fixed. 
+    \item \emph{Independent multinomial} sampling scheme: either all row margins or all 
+        column margins are fixed, this scheme is frequently used in psychological studies.
+    \item \emph{Hypergeometric} sampling scheme: here both row margins and column margins are fixed. Practical use of this scheme is rare!  
+\end{itemize}
+Bayes factors are often difficult to compute, as they are obtained by integrating out over
+the entire parameter space, a process that is non-trivial when the integrals are 
+high-dimensional and intractable. \\
+Then we will use the 4 Bayes Factor developed by \emph{Gunnel and Dickey in 1974}, because
+they only require computation of common functions such as gamma functions, for which 
+numerical approximation are already available.\\
+Here the logic: the Bayes Factor $BF^{i+1}_{01}$ computed at the observation $i+1$, 
+contains the information up to the step $i$ with the extra information of the step $i+1$. 
+We can then see $BF^{i+1}_{01}$ as the Bayes factor of the observation $i+1$ conditioned
+on the observation $i$.\\
+Finally thanks to the successive conditionalization the Bayes Factor are easy to compute.
+
+\subparagraph{Assumptions}
+\begin{itemize}
+    \item We need to be consider data providing from one of the following sampling scheme: \emph{Poisson}, \emph{Joint multinomial}, \emph{Independent multinomial} or 
+        \emph{Hypergeometric}
+\end{itemize}
+
+\subparagraph{Strengths}
+\begin{itemize}
+    \item Bayesian approach, then no issue to assess the significance
+    \item Implemented in R
+\end{itemize}
+
+\subparagraph{Weaknesses}
+\begin{itemize}
+    \item Restricted to the above sampling scheme today. 
+\end{itemize}
+
+
 \paragraph{Wilconox test}
+Non parametric test, used to test the location of a population based on a data sample or 
+to compare the locations of two populations using two matching samples.\\
+It is a good alternative of the \emph{t-test} when the mean is not of interest for the 
+studied population.
+\subparagraph{Frequentist}
+Let $Y$ and $X$ be 2 random variables, and $\left(x_{i}, y_{i}\right)_{1\leq i\leq n}$
+a paired sample. 
+\begin{enumerate}
+    \item $\forall i\in\inter{1}{n},~\left|x_{i}\right|$
+    \item Sort the $\left(\left|x_{i}\right|\right)_{1\leq i\leq n}$ and assign a rank
+        $\left(R_{i}\right)_{1\leq i\leq n}$
+    \item The test statistic i $T=\su{i=1}{n}sgn\left(X_{i}\right)R_{i}$
+    \item Produce a \emph{p-value} by computing T to its distribution under the null
+        hypothesis.
+\end{enumerate}
+We will provide the logic for a one-sample test, the two-sample follows the same logic but
+with 2 variables.
+
+Assume the data consists of independent and identically distributed (IID) samples from a
+distribution $F$ then consider 2 variables $(X_{1}, X_{2})\hookrightarrow IID(F)$
+Define $p_{2} = \Prob{\dfrac{X_{1} + X_{2}}{2}>0} = 1-F^{(2)}(0)$
+Then Wilcoxon signed-rank \emph{sum} $\rightarrow H_{0}:~p_{2} = \dfrac{1}{2}$
+In restricting the distributions of interest we can reach more interpretable null and 
+alternative hypotheses. On mildly restrictive is that $F^(2)$ has a unique median $\mu$. 
+This median is called pseudo median of $F$
+Then we have $H_{0}:~\mu=0$
+\begin{itemize}
+    \item  
+\end{itemize}
+
+
+\subparagraph{Assumptions}
+\begin{itemize}
+    \item Distribution $F$ is symmetric
+\end{itemize}
+
+\subparagraph{Strengths}
+\subparagraph{Weaknesses}
+
+TO COMPLETE
+
 \paragraph{Mann-Whitney test}
+Test for a randomly selected values $x$ and $y$ from 2 populations, $\Prob{x\leq y} = 
+\Prob{x > y}$
+\subparagraph{Frequentist}
+Let $(n_{1}, n_{2})\mathcal{N}_{*}^{2}$ and $\left(x_{i}\right)_{1\leq i\leq n_{1}}$
+and $\left(y_{i}\right)_{1\leq i\leq n_{2}}$ both samples independent of each other.\\
+Then
+$\begin{cases}
+    U_{1} = n_{1}n_{2} + \frac{n_{1}(n_{1} + 1)}{2} - R_{1} \\
+    U_{2} = n_{1}n_{2} + \frac{n_{2}(n_{2} + 2)}{2} - R_{2} 
+\end{cases}$
+$R_{1}, R_{2}$ being the sum of the ranks in groups 1 and 2. \\
+Note that $AUC_{1}=\dfrac{U_{1}}{n_{1}n_{2}}$ meaning \emph{U}-statistics is related to
+the area under the receiver operating characteristic.
+
+
+\subparagraph{Assumptions}
+\begin{itemize}
+    \item All observation from both groups are independent
+    \item Values are at least ordinal
+    \item $H_{0}$: the distribution of both population is identical
+    \item $H_{1}$: the 2 distribution of population are different
+\end{itemize}
+
+\subparagraph{Strengths}
+\subparagraph{Weaknesses}
+
 \paragraph{Kruksal-Wallis test}
+Non-parametrical to test if samples originate from the same distribution.
+\subparagraph{Frequentist}
+Let $N$ be the number of observations across all groups, $g$ number of groups, $n_{i}$ the
+number of observation in the group $i$, $r_{ij}$ the rank of observation $j$ from group 
+$i$.\\
+And 
+$\begin{cases}
+    \overline{r}_{i\cdot} = \dfrac{\su{j=1}{n_{i}}r_{ij}}{n_{i}} \\
+    \overline{r} = \dfrac{N + 1}{2}
+\end{cases}$
+\begin{itemize}
+    \item Rank all data from all groups together
+    \item $\left(N-1\right)\dfrac{\su{i=1}{g}n_{i}\left(\overline{r}_{i\cdot} - 
+                \overline{r}\right)^{2}}{\su{i=1}{g}\su{j=1}{n_{j}}n_{i}\left(r_{ij} - 
+        \overline{r}\right)^{2}}$
+        To actually check the stochastic differences.
+    \item A correction can be brought
+
+\end{itemize}
+
+\subparagraph{Assumptions}
+\subparagraph{Strengths}
+\subparagraph{Weaknesses}
+
 \paragraph{Friedman test}
 \paragraph{Sperman test}
+\subparagraph{Frequentist}
+\subparagraph{Assumptions}
+\subparagraph{Strengths}
+\subparagraph{Weaknesses}
+
 \paragraph{Pearson correlation}
+\subparagraph{Frequentist}
+\subparagraph{Assumptions}
+\subparagraph{Strengths}
+\subparagraph{Weaknesses}
+
 \paragraph{Repeated-measures ANOVA}
+\subparagraph{Frequentist}
+\subparagraph{Assumptions}
+\subparagraph{Strengths}
+\subparagraph{Weaknesses}
+
 \paragraph{1-way ANOVA}
+\subparagraph{Frequentist}
+\subparagraph{Assumptions}
+\subparagraph{Strengths}
+\subparagraph{Weaknesses}
+
 \paragraph{Unpaired t-test}
+\subparagraph{Frequentist}
+\subparagraph{Assumptions}
+\subparagraph{Strengths}
+\subparagraph{Weaknesses}
+
 \paragraph{Paired t-test}
+\subparagraph{Frequentist}
+\subparagraph{Assumptions}
+\subparagraph{Strengths}
+\subparagraph{Weaknesses}
+
 \paragraph{1-sample t-test}
+\subparagraph{Frequentist}
+\subparagraph{Assumptions}
+\subparagraph{Strengths}
+\subparagraph{Weaknesses}

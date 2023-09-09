@@ -14,7 +14,15 @@ sudo dpkg -i package_deb  # dpkg --> Debian Package Management System
     ```bash
     snap list  # list of snap packages
     ```
-
+## c. How to search a package in the list 
+- Apt-get
+    ```bash
+    apt-cache search <keyword>  # search for all packages containing <keyword>
+    ```
+- Snap
+    ```bash
+    snap search <keyword>  # search for all packages containing <keyword>
+    ```
 # 2) Networks
 ## a. Speedtest from 
 ```bash
