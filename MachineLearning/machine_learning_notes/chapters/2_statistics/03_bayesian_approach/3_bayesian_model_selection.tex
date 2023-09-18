@@ -41,20 +41,20 @@ $
 \end{cases}
 $
 
-In general $p(\mathcal{D}|m) = \Su{}{}p(\mathcal{D}|\bm{\theta})p(\bm{\theta}|m)d\bm{
-\theta}$ can be quite difficult to compute. 
+ 
 Simpler approach
 \begin{itemize}
-	\item \textbf{BIC} simple approximation:
-		\tB{$BIC \triangleq \log(p(\mathcal{D}|\bm{\hat{\theta}})) - 
-		\dfrac{dof(\bm{\hat{\theta})}}{2}\log(N)\approx\log{p(\mathcal{D})}$}
+	\item \textbf{BIC} In general $p(\mathcal{D}|m) = \Su{}{}p(\mathcal{D}|\bm{\theta})p(\bm{\theta}|m)d\bm{
+\theta}$ can be quite difficult to compute. A popular approximation is:
+		\tB{$BIC \triangleq \log(p(\mathcal{D}|\bm{\hat{\theta}_{MLE}})) - 
+		\dfrac{dof(\bm{\hat{\theta}_{MLE}})}{2}\log(N)\approx\log{p(\mathcal{D})}$}
 	\item \textbf{AIC}:
-		\tB{$AIC(m,\mathcal{D})\triangleq\log(p(\mathcal{D})\bm{\hat{\theta}}_{MLE
-		}) -dof(m)$}\\
-		This is derived from Frequentits framework and cannot be interpreted as 
+		\tB{$AIC(m,\mathcal{D})\triangleq\log(p(\mathcal{D}|\bm{\hat{\theta}}_{MLE
+		})) -dof(m)$}\\
+		This is derived from Frequentist framework and cannot be interpreted as 
 		an approximation to the marginal likelihood. The penalty of AIC is less
-		than BIC, it causes AIC pick more complex models. That can be better for 
-		predictive accuracy.
+		than BIC, it causes AIC pick more complex models. That \tB{can be better for 
+		predictive accuracy}.
 	\item Effect of the prior.\\
 		If the prior is unknown, the correct Bayesian procedure is to put a prior
 		on the prior. That is we should put a prior on the hyper-parameter 

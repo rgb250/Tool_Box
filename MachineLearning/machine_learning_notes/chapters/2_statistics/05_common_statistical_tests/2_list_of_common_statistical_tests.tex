@@ -460,53 +460,290 @@ $\begin{cases}
                 \overline{r}\right)^{2}}{\su{i=1}{g}\su{j=1}{n_{j}}n_{i}\left(r_{ij} - 
         \overline{r}\right)^{2}}$
         To actually check the stochastic differences.
-    \item A correction can be brought
+    \item A correction can be brought for large number of ties.
 
 \end{itemize}
 
 \subparagraph{Assumptions}
+\begin{itemize}
+    \item Independence
+    \item All groups should have te same distributions
+\end{itemize}
+
 \subparagraph{Strengths}
+\begin{itemize}
+    \item Non-parametrical test, no need of the normally distributed assumption.
+\end{itemize}
+
 \subparagraph{Weaknesses}
 
 \paragraph{Friedman test}
-\paragraph{Sperman test}
+Non-parametric statistical test, analogu of the \emph{repeated-measures ANOVA}.
+It use to detect differences in treatments across multiple test attempts.
 \subparagraph{Frequentist}
+\begin{itemize}
+    \item Consider a matrix of $n$ rows (the blocks) and $k$ columns (the treatments)
+    and a single observation at the intersetion of each block and treatment. Then 
+    calculate the ranks.
+    \item $\overline{r}_{\cdot j} = \dfrac{1}{n}\su{i=1}{n}r_{ij}$
+    \item The test statistic is given by $Q = \dfrac{12n}{k(k+1)}\su{j=1}{k}\left(\overline{r}_{\cdot j} - \dfrac{k+1}{2}\right)^{2}$
+    Note that the value of $Q$ does need to be adjusted for tied values in data.
+    \item Finally when n or k is large ($n>15 or k>4$) the probability distribution of $Q$ can be approximated by
+    a $\chi^{2}$ distribution.
+\end{itemize}
+
+\subparagraph{Assumptions}
+\begin{itemize}
+    \item Independence
+\end{itemize}
+\subparagraph{Strengths}
+\subparagraph{Weaknesses}
+
+\paragraph{Sperman test}
+It assesses how well the relationship between 2 variables can be described using a monotonic function.
+Let $X, Y$ be 2 random variables, and $R$ the function transforming the realization of a random variable.
+
+\subparagraph{Frequentist}
+$r_{s} = \rho_{R(X), R(Y)} = \dfrac{Cov\left(R(X), R(Y)\right)}{\sigma_{R(X)}\sigma_{R(Y)}}
+\begin{cases}
+\rho:\text{ Pearson correlation coefficient applied to the rank variables} \\
+Cov\left(R(X), R(Y)\right)
+\end{cases}$
 \subparagraph{Assumptions}
 \subparagraph{Strengths}
 \subparagraph{Weaknesses}
 
-\paragraph{Pearson correlation}
+\paragraph{Pearson correlation coefficient}
+This coefficient is essentially a normalized measurement of the covariance such that the result
+has a value $-1$ and 1
 \subparagraph{Frequentist}
+$\rho_{X, Y} = \dfrac{Cov\left(X, Y\right)}{\sigma_{X}\sigma_{Y}}$
 \subparagraph{Assumptions}
 \subparagraph{Strengths}
 \subparagraph{Weaknesses}
+\begin{itemize}
+    \item Not robust
+\end{itemize}
 
 \paragraph{Repeated-measures ANOVA}
+Used in repeated measure design, meaning when we measure multiple time the same variable
+taken on the same or matched subject either under different conditions or at different periods.
 \subparagraph{Frequentist}
+Here $F = \dfrac{\frac{SS_{treatment}}{df_{treatment}}}{\frac{SS_{error}}{df_{error}}}$
+In a \emph{between-subjects} design there is a element of variance due to individual difference that 
+is combined with the treatment and error term, meaning: $SS_{total} = SS_{treatment} + SS_{error}$
+In a \emph{repeated-measure} design it is possible to partition subject variability from the
+treatment and error term, meaning $SS_{total} = SS_{treatment(excluding indivdual differences) + SS_{subjects} + SS_{error}}$
+
 \subparagraph{Assumptions}
+\begin{itemize}
+    \item \emph{Normality}: for each level of the within-subject factor, the dependent variable must have a normal distribution.
+    \item \emph{Sphericity}: difference scores computed between 2 levels of a within subject factor must have the same variance
+    for the comparison of any 2 levels.
+    \item \emph{Randomness}: cases should be derived from a random sample.
+\end{itemize}
 \subparagraph{Strengths}
+\begin{itemize}
+    \item ability to partition out variability due to individual differences.
+\end{itemize}
 \subparagraph{Weaknesses}
+\begin{itemize}
+    \item Vulnerable to missing values, imputation, unequivalent time points
+    between subjects and violation of Sphericity.
+\end{itemize}
 
 \paragraph{1-way ANOVA}
+Analysis of Variance describes \uB{the partition of the response variable sum of squares in a 
+linear model into ``explained'' and ``unexplained'' components.}\\
+\begin{itemize}
+	\item Single categorical (or less common numerical) explanatory variable corresponds to One-Way ANOVA
+	\item 2 factors to Two-Way ANOVA
+	\item 3 factors to Three-Way ANOVA
+\end{itemize}
+The term ``analysis of variance'' is a bit of misnomer, \tB{we use variance-like quantities to
+study the equality or non-equality of population means}, so we are analyzing means, not variances.
+\subparagraph{Frequentist}
+\tR{examines equality of population means for a quantitative outcome and a 
+single categorical explanatory variable with any number of levels}.\\
+The term \tB{``one-way'' indicates that there is a single explanatory variable (``treatment'') 
+with 2 or more levels and only one level of treatment is applied at any time for a given subject}.\\
+And $H_{0}:\forall (i,j) \in \inter{1}{k}^{2} \mu_{i} = \mu_{j}$
+
+
+In ANOVA \uB{we work with variances and also ``variance-like quantities'' which are not really the
+variance of anything}, but are still calculated as $\frac{SS}{df}$ all of these quantities are
+called ``mean squares''.\\
+
+The deviation for subject $j$ of group $i$ in the figure above is mathematically equal to $Y_{ij}-
+\overline{Y}_{i}$ where $Y_{ij}$ is the observed value for subject $j$ of group $i$ and $\overline{Y}_{i}$ is the sample mean for group $i$.
+\begin{figure}[H]
+	\begin{center}
+		\includegraphics[width=\textwidth]{./chapters/2_statistics/05_common_statistical_tests/2_images/1_anova_inter_grp.PNG}
+	\end{center}
+	\caption{Deviations for within-group of squares}
+	\label{fig:3_anovaInterGrp}
+\end{figure}
+\begin{center}
+\fr{
+$ MS_{within} = \dfrac{SS_{within}}{df_{within}}
+\begin{cases}
+	SS_{within} = \su{{j=1}}{k}SS_{j}=\su{{j=1}}{k}\su{{i=1}}{n_{j}}\left(Y_{ij}-\overline{Y}_{\bullet j}
+	\right)\\
+	df_{within} = df_{j} = \su{{j=1}}{k}(n_{j}-1) = N-k
+\end{cases}
+$
+}\end{center}
+
+\tB{$MS_{within}$ is a good estimate of $\sigma^{2}$ from our model regardless of the truth of 
+$H_{0}$.} This is due to the way $SS_{within}$ is defined.
+
+\begin{figure}[H]
+	\begin{center}
+		\includegraphics[width=\textwidth]{./chapters/2_statistics/05_common_statistical_tests/2_images/2_anova_btw.PNG}
+	\end{center}
+	\caption{Deviations for betwwen-group sum of squares}
+	\label{fig:4_anovaBtw}
+\end{figure}
+$SS_{between}$ is the sum of the $N$ squared between-group deviations, where the deviation is
+the same for all subjects in the same group. The formula is : 
+\begin{center}
+\fr{
+$
+MS_{Between} = \dfrac{SS_{Between}}{df_{between}}
+\begin{cases}
+SS_{between} = \su{{j=1}}{k}n_{j}\left(\overline{Y}_{\bullet j}-\overline{Y}\right)^{2}\\
+df_{between} = k-1
+\end{cases}
+$
+}\end{center}
+Because of the way $SS_{between}$ is defined, \tB{$MS_{between}$ is a good estimate of $\sigma^{2}
+$ only if $H_{0}$ is true}. Otherwise it tends to be larger. \\
+The $F-statistic$ defined by $F=\dfrac{MS_{between}}{MS_{within}}$ \uR{tends to be larger if the
+alternative hypothesis is true than if the null hypothesis is true}.\\
+
+We can quantify ``large'' for the \emph{F-statistic}, by comparing it to its null sampling 
+distribution which is the specific \emph{F-distribution}  which has degrees of freedom matching
+the numerator and denominator of the \emph{F-statistic}.\\
+Concerning inferences to build the confidence interval we need the \tB{\emph{standard error} (the
+standard deviation of the means) that is $\sqrt{\dfrac{MS_{within}}{n_{i}}}$}\\
+
+Numerically we have:\\
+Given 2 samples with means $\mu_{1}$ and $\mu_{2}$, same variance $\sigma^{2}$ and $n=n_{1}+n_{2}$
+observations.
+Model: 
+\begin{center}
+	$\forall (j,i)\in\inter{1}{2}\times\inter{1}{n_{j}}y_{ij} = \mu_{i} + \epsilon_{ij} = \mu + \alpha_{j} + \epsilon_{ij}$
+\end{center}
+$\alpha_{j}=\mu_{j}-\mu$ is called (treatment-) effect
+
+Decomposition:
+\begin{align*}
+	SS_{total} =& \su{{j=1}}{n_{1}}\left(y_{1j}-\overline{y}\right)^{2} +
+	\su{{j=1}}{n_{2}}\left(y_{2j}-\overline{y}\right)^{2}\\
+	=& \su{{j=1}}{n_{1}}\left(y_{1j}-\overline{y_{1}}+\overline{y_{1}}-\overline{y}\right)^{2}
+	+ \su{{j=1}}{n_{2}}\left(y_{2j}-\overline{y_{2}}+\overline{y_{2}}-\overline{y}\right)^{2}\\
+	=& \underbrace{(n_{1}-1)s_{1}^{2} + (n_{2}-1)s_{2}^{2}}_{SS_{within}} +
+	\underbrace{n_{1}(\overline{y}_{1}-\overline{y}) + 
+	n_{2}(\overline{y}_{2})-\overline{y}^{2}}_{SS_{between}}
+\end{align*}
+$SS_{between}$ corresponds to squared enumerator $(\overline{y}_{1} - \overline{y}_{2})^{2}$ of
+the statistic: 
+\begin{align*}
+	SS_{between} =& n_{1}(\overline{y}_{1}-\overline{y})^{2} + 
+	n_{2}(\overline{y}_{2}-\overline{y})^{2}\\
+	=& n_{1}\left(\overline{y}_{1}-\dfrac{n_{1}\overline{y}_{1}+n_{2}\overline{y}_{2}}{n_{1}+
+	n_{2}}\right)^{2} + n_{2}\left(\overline{y}_{2}-\dfrac{n_{1}\overline{y}_{1}+n_{2}
+	\overline{y}_{2}}{n_{1}+ n_{2}}\right)^{2}\\
+	=& \dfrac{n_{1}n_{2}}{n_{1}+n_{2}}\left(\overline{y}_{1}-\overline{y}_{2}\right)^{2}
+\end{align*}
+$SS_{within}$ corresponds to denominator of \emph{t-statistic}:
+$s=\sqrt{\dfrac{(n_{1}-1)s_{1}^{2}+(n_{2}-1)s_{2}^{2}}{n_{1}+n_{2}-2}}$\\
+Pooled variance that is an estimate of the fixed common variance $\sigma^{2}$ underlying various
+populations that have different means.
+$\hat{\sigma}=\dfrac{(n_{1}-1)s_{1}^{2}+(n_{2}-1)s_{2}^{2}}{(n_{1}-1)+(n_{2}-1)}$
+Null hypothesis $H_{0}:\mu_{1}=\mu_{2}$ or $\alpha_{1}=\alpha_{2}=0$
+\emph{F-test}
+$\left(\overline{Y}_{1}-\overline{Y}_{2}\right)\hookrightarrow \mathcal{N}\left(\mu_{1}-\mu_{2},
+\left(\frac{1}{n_{1}}+\frac{1}{n_{2}}\right)\sigma^{2}\right)\\
+\E{\left[\overline{Y}_{1}-\overline{Y}_{2}\right]^{2}}=\left(\frac{1}{n_{1}}+\frac{1}{n_{2}}
+\right)\sigma^{2}+(\mu_{1}-\mu_{2})^{2}\\
+\E{MS_{between}}=\E{\frac{n_{1}n_{2}}{n_{1}+n_{2}}\left[\overline{Y}_{1}-\overline{Y}_{2}
+\right]^{2}} = \sigma^{2}+\frac{n_{1}n_{2}}{n_{1}+n_{2}}(\mu_{1}-\mu_{2})^{2}\\
+\E{MS_{whithin}}=\sigma^{2}\\
+F = \dfrac{MS_{between}}{MS_{within}}$
+Here $F=t^{2}$\\
+\begin{align*}
+	\text{Degrees of freedom} =& n - 1\\
+	=& \underbrace{(n-m)}_{df_{within}} + \underbrace{(m-1)}_{df_{between}}
+\end{align*}
+\begin{itemize}
+	\item $SS_{within}$ and $SS_{between}$ are independent
+	\item under $H_{0}$ $\E{MS_{between}} = \E{MS_{within}} = \sigma^{2}$
+	\item under $H_{a}$ $\E{MS_{between}}>\sigma^{2}$ and $\E{MS_{within}} = \sigma^{2}$
+\end{itemize}
+Hence $$ F= \dfrac{MS_{between}}{MS_{within}}\hookrightarrow F_{m-1,n-m}$$
+In the case of 2 groups (``\emph{t-test}'') we received:
+$$ \overline{y}_{1}-\overline{y}_{2} \pm t_{n-2,1-\frac{\alpha}{2}}s\sqrt{\frac{1}{n_{1}}+
+\frac{1}{n_{2}}}$$
+
+
+\subparagraph{Assumptions}
+\begin{center}
+	The statistical model for which one-way ANOVA is appropriate is that the
+	\begin{itemize}
+		\item (Quantitative) Outcomes for each group are normally distributed
+		\item Outcome variances are all equal to  ($\sigma^{2}$)
+		\item The errors are assumed to be independent.
+	\end{itemize}
+\end{center}
+\subparagraph{Strengths}
+\subparagraph{Weaknesses}
+
+\paragraph{T-test}
+It is commonly used when the test statistic would follow a normal distribution
+if the value of a scaling term in the test statistic were known.\\
+When the scaling term is estimated from the data, under certain conditions, the
+test statistic follows a \emph{Student's t-test}.\\
+Most test statistics have the form $t=\dfrac{Z}{s}$, $Z$ may be sensitive to 
+the alternative hypothesis, whereas $s$ isa scaling parameter allowing to determine
+the distribution \emph{t}.
+\paragraph{One-sample}
+\subparagraph{Frequentist}
+$$
+t = \dfrac{\overline{x} - \mu_{0}}{\frac{s}{\sqrt{n}}},
+\begin{cases}
+    \overline{x}\text{: sample mean}\\
+    s\text{: sample standard deviation}\\
+    n\text{: sample size}
+\end{cases}
+$$
+By the central limit theorem, if the observations are independent and the second
+moment exist, then $t$ will approximately follow the distribution $\mathcal{N}(0, 1)$
+
+\subparagraph{Assumptions}
+Although the parent population does not need to be normally distributed, the distribution
+of the population sample means $\left(\overline{x}_{s}\right)_{1\leq s\leq S}$.\\
+\subparagraph{Strengths}
+\subparagraph{Weaknesses}
+
+
+\paragraph{Slope of a regression line}
+Suppose one is fitting: $Y = \alpha + \beta x + \epsilon$, where $x$ is known and $\alpha$ and $\beta$ are unknown
+and finally $\epsilon \hookrightarrow \mathcal{N(0, 1)}$.
+Symbols with hat will refer to estimators.
+\subparagraph{Frequentist}
+$$t_{score} = \dfrac{\hat{\beta} - \beta_{0}}{SE_{\hat{\beta}}} \hookrightarrow \mathcal{N}(0, 1)$$
+
+\subparagraph{Assumptions}
+\subparagraph{Strengths}
+\subparagraph{Weaknesses}
+
+\paragraph{Paired / Unpaired  t-test}
+Depending on if the samples are paired or not and the differences between means and variances, the formula will be different. 
+It is not worthful to dive in these formulas.
 \subparagraph{Frequentist}
 \subparagraph{Assumptions}
 \subparagraph{Strengths}
 \subparagraph{Weaknesses}
 
-\paragraph{Unpaired t-test}
-\subparagraph{Frequentist}
-\subparagraph{Assumptions}
-\subparagraph{Strengths}
-\subparagraph{Weaknesses}
-
-\paragraph{Paired t-test}
-\subparagraph{Frequentist}
-\subparagraph{Assumptions}
-\subparagraph{Strengths}
-\subparagraph{Weaknesses}
-
-\paragraph{1-sample t-test}
-\subparagraph{Frequentist}
-\subparagraph{Assumptions}
-\subparagraph{Strengths}
-\subparagraph{Weaknesses}
+Weimprove

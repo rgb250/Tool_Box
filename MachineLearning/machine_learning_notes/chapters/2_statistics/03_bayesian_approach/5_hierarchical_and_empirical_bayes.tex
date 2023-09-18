@@ -9,7 +9,7 @@ In hierarchical Bayesian models, we need to compute the posterior on multiple le
 latent variables. For example, in a two-level model, we need to compute:
 $p(\eta, \theta|\mathcal{D}) \propto p(\mathcal{D}|\theta)p(\theta|\eta)p(\eta)$\\
 \tB{We can approximate the posterior on the hyper-parameters with a point-estimate, 
-$p(\eta|\mathcal{D}\approx \delta_{\hat{\eta}}(\eta))$ where $\hat{\eta}=\argmax_{\eta}
+$p(\eta|\mathcal{D})\approx \delta_{\hat{\eta}}(\eta)$ where $\hat{\eta}=\argmax_{\eta}
 p(\eta|\mathcal{D})$. Since $\eta$ is typically much smaller than $\theta$ in 
 dimensionality, it is less prone to overfitting, so we can safely use a uniform prior on 
 $\eta$}. Then the estimate becomes: 

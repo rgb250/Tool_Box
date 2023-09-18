@@ -1,0 +1,83 @@
+\paragraph{Naive Bayes classifiers}
+\subparagraph{Purpose}
+Classifying vectors of discrete-valuated features $x\in\left\{i\right\}_{1\leq i \leq K}^{D}$, where $K$ is the number 
+of values for each feature, and $D$ the number of features.
+\subparagraph{Assumptions}
+\begin{itemize}
+    \item Features are conditionally independent given the class label
+\end{itemize}
+\subparagraph{Theory}
+As a \emph{generative} model, meaning of the form:
+$\prob{y=c|\bm{x}, \bm{\theta}} \propto \prob{\bm{x}|y=c,\bm{\theta}}
+\prob{y=c|\bm{\theta}}$. The key of such models is the possibility
+to specify a suitable form for the class-conditional density 
+$\prob{\bm{x}|y=c, \bm{\theta}}$ which definees what kind of data we 
+expect to see in each class. And with the independence assumption we 
+have:
+\begin{center}
+    \tB{$\prob{\bm{x}|y=c, \bm{\theta}} = \prd{j=1}{D}\prob{x_{j}|y=c,\bm{\theta}_{jc}}$}
+\end{center}
+with all $\prob{x_{j}|y=c,\bm{\theta}_{jc}}$ being able to 
+follow a \textit{normal}, \textit{bernoulli} or \textit{multinoulli} 
+distribution.\\
+Training a NBC consists in computing the MLE or the MAP estimate for the
+parameters.\\
+For a single observation
+$\prob{x_{i}, y_{i}|\bm{\theta}} = \prob{y_{i}|\bm{\pi}}\prd{j}{}\prob{x_{ij}|\bm{\theta}_{j}} = 
+\prd{c}{}\pi_{c}^{\mathbbm{1}(y_{i}=c)}\prd{j}{}\prd{c}{}\prob{x_{ij}|
+\theta_{jc}}^{\mathbbm{1}(y_{i}=c)}
+$\\ 
+Hence the \tB{\emph{log-likelihooh}:
+$\log\left(\mathcal{D}|\theta\right) = \su{c=1}{C}N_{c}\log(\pi_{c}) + 
+\su{j=1}{D}\su{c=1}{C}\su{i:y_{i}=c}{}\log\left(\prob{x_{ij}|
+\bm{\theta}_{jc}}\right)$}\\
+By optimizing the above equation we are able to find the $\left(\theta_{jc}\right)_{1\leq j \leq D,~ 1\leq c\leq C}$ and we can then use them to
+predict the output of an observation $\bm{x}$ as: $\prob{y=c|\bm{x},\mathcal{D}} \propto \prob{y=c|\mathcal{D}}\prd{j=1}{D}\prob{x_{j}|y=c,\mathcal{D}}$
+
+\subparagraph{Strengths}
+\begin{itemize}
+    \item Simple model, for $C$ classes and $D$ features, and hence \tB{relatively immune to 
+        overfitting}
+\end{itemize}
+
+\subparagraph{Weaknesses}
+\begin{itemize}
+    \item Unaccuracy because of strong independence assumption
+\end{itemize}
+
+
+\subparagraph{Relationships with other methods}
+\textbf{Logistic Regression}: for discrete inputs 
+\emph{Naive Bayesian Classifiers} form a 
+generative-discriminant pair with \emph{Multinomial Logistic
+Regression}: each NBC can be considered a way of fitting a
+probability model that optimizes the joint likelihood 
+$\prob{C, \bm{x}}$, while Logistic Regression fits the same 
+probability to optimize the conditional $\prob{C|\bm{x}}$
+
+\subparagraph{Examples of application}
+\begin{itemize}
+    \item Classifying documents using bag of words
+    \item Determining the gender of a person, based on measured features 
+\end{itemize}
+
+
+\paragraph{Linear/Quadratic Discriminant Analysis}
+\subparagraph{Purpose}
+\subparagraph{Assumptions}
+\subparagraph{Theory}
+\subparagraph{Strengths}
+\subparagraph{Weaknesses}
+\subparagraph{Relationships with other methods}
+\subparagraph{Examples of application}
+
+
+\paragraph{Naive Bayes classifiers}
+\subparagraph{Purpose}
+\subparagraph{Assumptions}
+\subparagraph{Theory}
+\subparagraph{Strengths}
+\subparagraph{Weaknesses}
+\subparagraph{Relationships with other methods}
+\subparagraph{Examples of application}
+
