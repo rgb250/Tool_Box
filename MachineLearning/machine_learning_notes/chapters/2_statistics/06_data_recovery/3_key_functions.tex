@@ -1,0 +1,15 @@
+\subsection{Softmax function}
+\paragraph{Purpose}
+The softmax function takes as input a vector $z$ of $K$ real numbers, 
+and normalizes it into a probability distribution consisting of $K$ 
+probabilities proportional to the exponentials of the input numbers.
+\begin{center}
+    $\sigma(\bm{z})_{i} = \dfrac{e^{z_{i}}}{\su{j=1}{K}e^{z_{j}}}$
+\end{center}
+\paragraph{Interpretation}
+it is rather a smooth approximation of the \emph{argmax} function, 
+meaning the function returning the index of the maximum value of a given
+vector.
+
+
+

@@ -8,7 +8,7 @@ p(m|\mathcal{D})$}\\
 Then we have the \tB{marginal likelihood}: $p(\mathcal{D}|\hat{m}) = \Su{}{}p(
 \mathcal{D}|\hat{m})p(\theta|\hat{m})d\theta$
 
-\paragraph{Baysian Occam's razor}
+\subsection{Baysian Occam's razor}
 \tB{In integrating out the parameters rather than maximizing them we are automatically 
 protected from overfitting}: model with more parameters do not necessarily have higher 
 marginal likelihood.\\
@@ -17,7 +17,7 @@ probabilities must sum to one, meaning $\su{{\mathcal{D}'}}{}p(\mathcal{D}'|m)=1
 models, which can predict many things, must spread their probability mass thinly, and 
 hence will not obtain as large a probability for any given data set as simpler models.}
 
-\paragraph{Computing the marginal likelihood (evidence)}
+\subsection{Computing the marginal likelihood (evidence)}
 For a fixed model we often write:
 $$p(\bm{\theta}|\mathcal{D},m) \propto p(\bm{\theta}|m)p(\mathcal{D}|\bm{\theta},m)$$
 This valid since $p(\mathcal{D}|m)$ is constant. However when comparing models we need
@@ -69,7 +69,7 @@ Simpler approach
 			\alpha,m) = \displaystyle \argmax_{\alpha}\Su{}{}p(\mathcal{D}|
 		\bm{w})p(\bm{w}|\hat{\alpha},m)d\bm{w}$}
 \end{itemize}
-\paragraph{Bayes Factors}
+\subsection{Bayes Factors}
 When prior on models is uniform, then model selection is equivalent to picking the model
 with the highest marginal likelihood. Now suppose we just have two models we are 
 considering, call them the null hypothesis, $M_{0}$ and the alternative hypothesis,
@@ -114,7 +114,7 @@ $$}
 \end{table}
 
 
-\paragraph{Jeffreys-Lindley paradox}
+\subsection{Jeffreys-Lindley paradox}
 Problems can arise when we use improper priors (i.e. priors that do not integrate to 1)
 for model selection/ hypothesis testing, even though such priors may be acceptable for 
 other purposes. \tB{In particular the Bayes Factor will always favor the simplest model 

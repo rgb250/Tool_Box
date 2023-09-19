@@ -1,21 +1,21 @@
-\paragraph{Introduction}
+\subsection{Introduction}
 Avoid treating parameters as randome variables.
 The notion of variation across repeated trials forms the basis for modelling
 uncertainity.
 
 
-\paragraph{Hypothesis Testing}
+\subsection{Hypothesis Testing}
 A \emph{frequentist} statistics, probabilities represent the frequencies at which 
 particular events happen.
 
-\paragraph{\emph{p-value}}
+\subsection{\emph{p-value}}
 It is the heart of frequentist hypothesis testing, it tells us the \tB{probability of 
 getting a particular test statistic $t$ as big as the one we have or bigger under the null
 hypothesis} (that there is actually no effect).\\
 By convention we usually conclude an effect is \emph{statistically significant} if the 
 \emph{p-value} is less than a threshold $\alpha$.
 
-\paragraph{Confidence intervals}
+\subsection{Confidence intervals}
 When we fit a model to our data we look for the \emph{maximum of likelihood} parameters,
 meaning the parameters that are most consistent with our data. 
 For each parameter we will able to construct $95\%$ interval namely \tB{$95$ of the $100$ 
@@ -31,7 +31,7 @@ include 0, $p<0.05$.
 	\label{fig:2.4.1_estimates}
 \end{figure}
 
-\paragraph{Multiple comparisons}
+\subsection{Multiple comparisons}
 The more tests we run the more likely it is to we'll find at least one that is significant
 even though the null hypothesis is true. We can then apply a Bonferroni correction.\\
 Let's say we are running $k$ tests, we can either adjust: 

@@ -1,12 +1,15 @@
-\paragraph{Naive Bayes classifiers}
-\subparagraph{Purpose}
+% Naive Bayes Classifiers
+\subsection{Naive Bayes classifiers}
+\paragraph{Purpose}
 Classifying vectors of discrete-valuated features $x\in\left\{i\right\}_{1\leq i \leq K}^{D}$, where $K$ is the number 
 of values for each feature, and $D$ the number of features.
-\subparagraph{Assumptions}
+
+\paragraph{Assumptions}
 \begin{itemize}
     \item Features are conditionally independent given the class label
 \end{itemize}
-\subparagraph{Theory}
+
+\paragraph{Theory}
 As a \emph{generative} model, meaning of the form:
 $\prob{y=c|\bm{x}, \bm{\theta}} \propto \prob{\bm{x}|y=c,\bm{\theta}}
 \prob{y=c|\bm{\theta}}$. The key of such models is the possibility
@@ -34,19 +37,18 @@ $\log\left(\mathcal{D}|\theta\right) = \su{c=1}{C}N_{c}\log(\pi_{c}) +
 By optimizing the above equation we are able to find the $\left(\theta_{jc}\right)_{1\leq j \leq D,~ 1\leq c\leq C}$ and we can then use them to
 predict the output of an observation $\bm{x}$ as: $\prob{y=c|\bm{x},\mathcal{D}} \propto \prob{y=c|\mathcal{D}}\prd{j=1}{D}\prob{x_{j}|y=c,\mathcal{D}}$
 
-\subparagraph{Strengths}
+\paragraph{Strengths}
 \begin{itemize}
     \item Simple model, for $C$ classes and $D$ features, and hence \tB{relatively immune to 
         overfitting}
 \end{itemize}
 
-\subparagraph{Weaknesses}
+\paragraph{Weaknesses}
 \begin{itemize}
     \item Unaccuracy because of strong independence assumption
 \end{itemize}
 
-
-\subparagraph{Relationships with other methods}
+\paragraph{Relationships with other methods}
 \textbf{Logistic Regression}: for discrete inputs 
 \emph{Naive Bayesian Classifiers} form a 
 generative-discriminant pair with \emph{Multinomial Logistic
@@ -55,29 +57,67 @@ probability model that optimizes the joint likelihood
 $\prob{C, \bm{x}}$, while Logistic Regression fits the same 
 probability to optimize the conditional $\prob{C|\bm{x}}$
 
-\subparagraph{Examples of application}
+\paragraph{Examples of application}
 \begin{itemize}
     \item Classifying documents using bag of words
     \item Determining the gender of a person, based on measured features 
 \end{itemize}
 
 
-\paragraph{Linear/Quadratic Discriminant Analysis}
-\subparagraph{Purpose}
-\subparagraph{Assumptions}
-\subparagraph{Theory}
-\subparagraph{Strengths}
-\subparagraph{Weaknesses}
-\subparagraph{Relationships with other methods}
-\subparagraph{Examples of application}
+% Linear/Quadratic Discriminant Analysis
+\subsection{Linear/Quadratic Discriminant Analysis}
+it consists in defining the class conditional densities in a generative
+classifier: $\prob{\bm{x}|y=c,\bm{\theta}} = \mathcal{N}\left(\bm{x},
+\bm{\mu}_{c},\bm{\Sigma}_{c}\right)$\\
+As for a generative classifier we have the following equation: 
+\begin{center}
+    $\prob{y=c|\bm{x},\bm{\theta}} = \dfrac{\overbrace{\prob{\bm{x}|y=c,
+        \bm{\theta}}}^{\text{\emph{class-conditional density}}}
+        \overbrace{\prob{y=c|\bm{\theta}}}^{\text{\emph{class prior}}}}{
+    \su{c'}{}\prob{y=c'|\bm{\theta}} \prob{\bm{x}|y=c',\bm{\theta}}}$
+\end{center}
+\paragraph{Purpose of Quadratic Discriminant Analysis}
+\begin{center}
+    $\prob{y=c|\bm{x},\bm{\theta}} = \dfrac{\pi_{c}|2\pi\Sigma_{c}|^{
+    -\frac{1}{2}}\exp\left(-\frac{1}{2}[\bm{x}-\bm{\mu}_{c}]^{T}\Sigma_{
+    c}^{-1}[\bm{x}-\bm{\mu}_{c}]\right)}{\su{c'}{}\pi_{c'}|2\pi\Sigma_{
+    c'}|^{-\frac{1}{2}}\exp\left(-\frac{1}{2}[\bm{x}-\bm{\mu}_{c'}]^{T}
+    \Sigma_{c'}^{-1}[\bm{x}-\bm{\mu}_{c'}]\right)}$
+\end{center}
+The threshold of this results will be a quadratic function of $\bm{x}$.
+
+\paragraph{Purpose of Linear Discriminant Analysis}
+Same equation than above but this time, $\forall c\in \inter{1}{C} 
+\Sigma_{c} = \Sigma$, then quadratic term $\bm{x}^{T}\Sigma^{-1}\bm{x}$ 
+will cancel out from numerator and denominator.
+Then by considering the above cancellation and the fact that 
+evidence is considered as a constant, we have:
+\begin{align*}
+    \prob{y=c|\bm{x},\bm{\theta}} & \propto \exp\left(\log(\pi_{c})+\bm{
+        \mu}_{c}^{T}\Sigma^{-1}\bm{x}\bm{\mu}_{c}\right)\\
+    &= \exp\left(\bm{\beta}_{c}^{T}\bm{x} + \gamma_{c}\right)
+\end{align*}
+We can write: $\prob{y=c|\bm{x},\bm{\theta}} = \dfrac{e^{\bm{\beta}_{c
+}^{T}\bm{x} + \gamma_{c}}}{\su{c'}{}e^{\bm{\beta}_{c'}^{T}\bm{x} + 
+\gamma_{c'}}} = S(\bm{\eta})_{c}$. With $\eta=\left(\bm{\beta}_{c}\bm{x}
++\gamma_{c}\right)_{1\leq c\leq C}$
+This is the \emph{softmax} function.
 
 
-\paragraph{Naive Bayes classifiers}
-\subparagraph{Purpose}
-\subparagraph{Assumptions}
-\subparagraph{Theory}
-\subparagraph{Strengths}
-\subparagraph{Weaknesses}
-\subparagraph{Relationships with other methods}
-\subparagraph{Examples of application}
+\paragraph{Assumptions}
+\paragraph{Theory}
+\paragraph{Strengths}
+\paragraph{Weaknesses}
+\paragraph{Relationships with other methods}
+\paragraph{Examples of application}
+
+
+\subsection{Naive Bayes classifiers}
+\paragraph{Purpose}
+\paragraph{Assumptions}
+\paragraph{Theory}
+\paragraph{Strengths}
+\paragraph{Weaknesses}
+\paragraph{Relationships with other methods}
+\paragraph{Examples of application}
 

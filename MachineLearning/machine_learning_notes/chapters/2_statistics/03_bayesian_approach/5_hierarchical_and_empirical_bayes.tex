@@ -1,10 +1,10 @@
-\paragraph{Hierarchical Bayes}
+\subsection{Hierarchical Bayes}
 A key requirement for computing the posterior $p(\theta|\mathcal{D})$ is the 
 specification of a prior $p(\theta|\eta)$ where $\eta$ are the hyper-parameters. A 
 Bayesian approach is to \tB{put a prior on our priors}. This is an example of a \textbf{
 hierarchical Bayesian Model}.
 
-\paragraph{Empirical Bayes}
+\subsection{Empirical Bayes}
 In hierarchical Bayesian models, we need to compute the posterior on multiple levels of
 latent variables. For example, in a two-level model, we need to compute:
 $p(\eta, \theta|\mathcal{D}) \propto p(\mathcal{D}|\theta)p(\theta|\eta)p(\eta)$\\

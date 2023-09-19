@@ -1,8 +1,8 @@
-\paragraph{\hyperref[binomial_test]{Binomial}}
+\subsection{\hyperref[binomial_test]{Binomial}}
 To check if the deviations from a theoretically expected distribution of observations into
 2 categories.\\
 
-\subparagraph{Assumptions}
+\paragraph{Assumptions}
 \begin{itemize}
     \item \tB{Sample items are independent.}
     \item Items are dichotomous and nominal.
@@ -11,7 +11,7 @@ To check if the deviations from a theoretically expected distribution of observa
 \end{itemize}
 
 
-\subparagraph{Frequentist}
+\paragraph{Frequentist}
 Let define a user-defined probability $p_{0}$, with $H_{0}: p = p_{0}$ and
 $\begin{cases}
     H_{1}: p \neq p_{0}\text{: two-tailed test} \\
@@ -20,13 +20,13 @@ $\begin{cases}
      
 \end{cases}$
 
-\subparagraph{Bayesian}
+\paragraph{Bayesian}
 Define the prior distribution with a \emph{Beta}($a,b$) distribution\\
 
 \textit{\hyperref[statistical_method_table]{Return to the table.}}
 
 
-\paragraph{$\bm{\chi^{2}}$ test}
+\subsection{$\chi^{2}$ test}
 Either used to test \emph{goodness-of-fit} and \emph{independence} between 2 variables.
 It checks either if there is a significant difference between the expected and observed 
 frequencies.
@@ -36,7 +36,7 @@ frequencies.
     \item \emph{independence}: expected frequencies are computed with observed frequencies
         from the other sample
 \end{itemize}
-\subparagraph{Assumptions}
+\paragraph{Assumptions}
 \begin{itemize}
     \item simple random sample
     \item sample with a sufficiently large size is assumed, for small sample size see Cash test
@@ -45,7 +45,7 @@ frequencies.
     \item Independence of the observations
 \end{itemize}
 
-\subparagraph{Frequentist}
+\paragraph{Frequentist}
 $\chi^{2} = \su{i=1}{n}\dfrac{\left(\frac{O_{i}}{N} - p_{i} \right)^{2}}{p_{i}}
 \begin{cases}
     O_{i}\text{: number of observations of type }i \\
@@ -55,24 +55,24 @@ $\chi^{2} = \su{i=1}{n}\dfrac{\left(\frac{O_{i}}{N} - p_{i} \right)^{2}}{p_{i}}
 \end{cases}
 $
 
-\subparagraph{Bayesian}
+\paragraph{Bayesian}
 Does not exist, see \emph{contingency table}\\
 
 \textit{\hyperref[statistical_method_table]{Return to the table.}}
 
 
-\paragraph{Exact test of goodness-of-fit}
+\subsection{Exact test of goodness-of-fit}
 Unlike the conventional statistical tests, there is no \emph{test statistic}, we directly
 compute the \emph{p-value} under the null hypothesis.
 The most common use are for dichotomous nominal variables or multinomial variables.
 
-\subparagraph{Assumptions}
+\paragraph{Assumptions}
 \begin{itemize}
     \item \tB{Observations are independent.}
     \item Small sample size $\lessapprox 1000$
 \end{itemize}
 
-\subparagraph{Frequentist}
+\paragraph{Frequentist}
 Let us define the list of, respectively, expected counts for each modality 
 $i,~(E_{i})_{1\leq i\leq m}$, and observed counts $(O_{i})_{1\leq i\leq m}$.
 Then
@@ -84,17 +84,17 @@ $\begin{cases}
 
 
 
-\paragraph{Fisher's exact test}
+\subsection{Fisher's exact test}
 To check the significance of the contingency between 2 kinds of classification of a given
 object, \uB{initially Fisher used this test to distinguish drink in which the tea has been
 put before the milk or vice-versa}. For large sample use \emph{G-test}
 
-\subparagraph{Assumptions}
+\paragraph{Assumptions}
 \begin{itemize}
     \item In practice, small sample size $\lessapprox 1000$
 \end{itemize}
 
-\subparagraph{Frequentist}
+\paragraph{Frequentist}
 For example let's divide a population into male and female and for each persons indicating
 if this person is currently studying or not. We want to test if the proportion of studying
 students is higher among the women than among the men.
@@ -119,13 +119,13 @@ The probability of obtaining such set of values is given by
     = \dfrac{{{a+b}\choose{b}}\times{{c+d}\choose{d}}}{{{n}\choose{b+d}}}$
 \end{center}
 
-\subparagraph{Bayesian}
+\paragraph{Bayesian}
 Does not exist, see \emph{contingency table} \\
 
 \textit{\hyperref[statistical_method_table]{Return to the table.}}
 
 
-\paragraph{G-test}
+\subsection{G-test}
 
 It's a likelihood-ratio or a maximum likelihood statistical significance test. 
 Either used to test \emph{goodness-of-fit} and \emph{independence} between 2 variables.
@@ -144,13 +144,13 @@ frequencies. This test tends to replace $\chi^{2}$\emph{-test}
 \end{itemize}
 
 
-\subparagraph{Assumptions}
+\paragraph{Assumptions}
 \begin{itemize}
     \item 
     \item Expected count must not be small in any modality.
 \end{itemize}
 
-\subparagraph{Strengths}
+\paragraph{Strengths}
 \begin{itemize}
     \item Approximation to the theoretical $chi^{2}$ distribution is better attained with
         \emph{G-test} than $\chi^{2}$ \emph{test}.
@@ -158,14 +158,14 @@ frequencies. This test tends to replace $\chi^{2}$\emph{-test}
         $\chi^{2}$ \emph{test}.
 \end{itemize}
 
-\subparagraph{Weaknesses}
+\paragraph{Weaknesses}
 \begin{itemize}
     \item in test of independence, for a small sample size use rather Fisher's extract 
         test.
 \end{itemize}
 
 
-\subparagraph{Frequentist}
+\paragraph{Frequentist}
 We compare the observed counts in each modality with their expected counts.
 Let us define the list of, respectively, expected counts for each modality 
 $i,~(E_{i})_{1\leq i\leq m}$, and observed counts $(O_{i})_{1\leq i\leq m}$.
@@ -191,7 +191,7 @@ Then we multiply by $-2$ to get \emph{G-test} that is asymptotically equivalent 
 \emph{Pearson's} $\chi^{2}$ formula.
 
 
-\paragraph{Cochran's Q test}
+\subsection{Cochran's Q test}
 It checks if $k$ treatments have identical effect, the response can take only 2 possible 
 outcomes and a second variable segments the treatments.
 
@@ -214,13 +214,13 @@ outcomes and a second variable segments the treatments.
 \end{center}
 And $\forall (i,j)\in\inter{1}{b}\times\inter{1}{k}, x_{ij}\in\left\{0, 1\right\}$
 
-\subparagraph{Assumptions}
+\paragraph{Assumptions}
 \begin{itemize}
     \item The blocks are randomly selected from the population of all possible blocks.
     \item Outcome of the treatments are dichotomous, and should be coded in a standard way
 \end{itemize}
 
-\subparagraph{Frequentist}
+\paragraph{Frequentist}
 For example if $b$ respondents in a survey had each been asked $k$ \emph{Yes/No} questions
 the \emph{Q-test} could be use to test the null hypothesis that all questions were equally
 likely to elicit the answer "Yes".\\
@@ -248,12 +248,12 @@ For significance level $\alpha$, the asymptotic critical region is
 $T > \chi^{2}_{1-\alpha, k-1}$ which is the ($a-\alpha$) quantile of the $\chi^{2}$ 
 distribution with $K-1$ degrees of freedom.
 
-\subparagraph{Bayesian}
+\paragraph{Bayesian}
 Does not exist, see \emph{contingency table} \\
 
 
 
-\paragraph{Sign test}
+\subsection{Sign test}
 It is a statistical method to test for consistent differences between pairs of 
 observations, such as the weight of subjects before and after treatment.
 For comparisons of paired observations $(x, y)$ the \emph{sign-test} is most useful if 
@@ -262,7 +262,7 @@ If instead the differences can be expressed in numeric quantities it is worthy t
 \emph{t-test} or \emph{Wilcoxon signed-rank test} will usually have greater power than
 the sign test to detect consistent differences.
 
-\subparagraph{Frequentist}
+\paragraph{Frequentist}
 Let $p=\Prob{X>Y}$, then
 $\begin{cases}
     H_{0}:~p=0.5\text{ meaning that given a random pair of measurements }(x_{i}, y_{i})
@@ -277,7 +277,7 @@ The statistics $W$ is defined as follow:
     $W = \mathbf{1}_{\left\{x_{i} > y_{i}\right\}} \hookrightarrow \mathcal{B}(m, 0.5)$
 \end{center}
 
-\subparagraph{Assumptions}
+\paragraph{Assumptions}
 Let $\forall i\in\inter{1}{n},~Z_{i} = X_{i} - Y_{i}$
 
 \begin{itemize}
@@ -286,22 +286,22 @@ Let $\forall i\in\inter{1}{n},~Z_{i} = X_{i} - Y_{i}$
     \item The values $X_{i}$ and $Y_{i}$ are ordered.
 \end{itemize}
 
-\subparagraph{Strengths}
+\paragraph{Strengths}
 \begin{itemize}
     \item A fewer assumptions need to be made than for parametrical test
 \end{itemize}
 
-\subparagraph{Weaknesses}
+\paragraph{Weaknesses}
 \begin{itemize}
     \item The power of test is lower than for a parametrical test
 \end{itemize}
 
 
 
-\paragraph{Contingency coefficients: Cramér's V}
+\subsection{Contingency coefficients: Cramér's V}
 To quantify associations between 2 paired samples in a contingency table, it is based
 on $\chi^{2}$ and varies from 0 (no association) to 1 (complete association).
-\subparagraph{Frequentist}
+\paragraph{Frequentist}
 Let a sample of size $n$ of the simultaneously distributed variable $A$ and $B$.
 $\forall (i,j)\in\inter{1}{r}\times\inter{1}{c},~n_{ij} = \text{\emph{Card}}\left(
 \left\{A_{i},B_{j}\right\}\right)$.
@@ -312,26 +312,26 @@ Finally the Cramér's V with bias correction is:
     $V = \sqrt{\dfrac{\max\left(0, \frac{\chi^{2}}{n} - \frac{(r-1)(c-1)}{n}\right)}{\min\left(r-\frac{(r-1)^{2}}{n-1}-1, c-\frac{(c-1)^{2}}{n-1}-1\right)}}$
 \end{center}
 
-\subparagraph{Assumptions}
+\paragraph{Assumptions}
 \begin{itemize}
     \item The both variables have to be nominal.
 \end{itemize}
 
-\subparagraph{Strengths}
+\paragraph{Strengths}
 \begin{itemize}
     \item Good analog of the $R^{2}$ for categorical variables.
 \end{itemize}
 
-\subparagraph{Weaknesses}
+\paragraph{Weaknesses}
 \begin{itemize}
     \item Can tend to overestimate the strength of association.
 \end{itemize}
 
 
 
-\paragraph{Contingency table from a Bayesian perspective}
+\subsection{Contingency table from a Bayesian perspective}
 To test the independence hypothesis between 2 variables.
-\subparagraph{Bayesian}
+\paragraph{Bayesian}
 Let's consider 4 sampling plans, depending on which sampling plan is chosen the Bayes
 factor formula will change.
 \begin{itemize}
@@ -356,30 +356,30 @@ We can then see $BF^{i+1}_{01}$ as the Bayes factor of the observation $i+1$ con
 on the observation $i$.\\
 Finally thanks to the successive conditionalization the Bayes Factor are easy to compute.
 
-\subparagraph{Assumptions}
+\paragraph{Assumptions}
 \begin{itemize}
     \item We need to be consider data providing from one of the following sampling scheme: \emph{Poisson}, \emph{Joint multinomial}, \emph{Independent multinomial} or 
         \emph{Hypergeometric}
 \end{itemize}
 
-\subparagraph{Strengths}
+\paragraph{Strengths}
 \begin{itemize}
     \item Bayesian approach, then no issue to assess the significance
     \item Implemented in R
 \end{itemize}
 
-\subparagraph{Weaknesses}
+\paragraph{Weaknesses}
 \begin{itemize}
     \item Restricted to the above sampling scheme today. 
 \end{itemize}
 
 
-\paragraph{Wilconox test}
+\subsection{Wilconox test}
 Non parametric test, used to test the location of a population based on a data sample or 
 to compare the locations of two populations using two matching samples.\\
 It is a good alternative of the \emph{t-test} when the mean is not of interest for the 
 studied population.
-\subparagraph{Frequentist}
+\paragraph{Frequentist}
 Let $Y$ and $X$ be 2 random variables, and $\left(x_{i}, y_{i}\right)_{1\leq i\leq n}$
 a paired sample. 
 \begin{enumerate}
@@ -406,20 +406,20 @@ Then we have $H_{0}:~\mu=0$
 \end{itemize}
 
 
-\subparagraph{Assumptions}
+\paragraph{Assumptions}
 \begin{itemize}
     \item Distribution $F$ is symmetric
 \end{itemize}
 
-\subparagraph{Strengths}
-\subparagraph{Weaknesses}
+\paragraph{Strengths}
+\paragraph{Weaknesses}
 
 TO COMPLETE
 
-\paragraph{Mann-Whitney test}
+\subsection{Mann-Whitney test}
 Test for a randomly selected values $x$ and $y$ from 2 populations, $\Prob{x\leq y} = 
 \Prob{x > y}$
-\subparagraph{Frequentist}
+\paragraph{Frequentist}
 Let $(n_{1}, n_{2})\mathcal{N}_{*}^{2}$ and $\left(x_{i}\right)_{1\leq i\leq n_{1}}$
 and $\left(y_{i}\right)_{1\leq i\leq n_{2}}$ both samples independent of each other.\\
 Then
@@ -432,7 +432,7 @@ Note that $AUC_{1}=\dfrac{U_{1}}{n_{1}n_{2}}$ meaning \emph{U}-statistics is rel
 the area under the receiver operating characteristic.
 
 
-\subparagraph{Assumptions}
+\paragraph{Assumptions}
 \begin{itemize}
     \item All observation from both groups are independent
     \item Values are at least ordinal
@@ -440,12 +440,12 @@ the area under the receiver operating characteristic.
     \item $H_{1}$: the 2 distribution of population are different
 \end{itemize}
 
-\subparagraph{Strengths}
-\subparagraph{Weaknesses}
+\paragraph{Strengths}
+\paragraph{Weaknesses}
 
-\paragraph{Kruksal-Wallis test}
+\subsection{Kruksal-Wallis test}
 Non-parametrical to test if samples originate from the same distribution.
-\subparagraph{Frequentist}
+\paragraph{Frequentist}
 Let $N$ be the number of observations across all groups, $g$ number of groups, $n_{i}$ the
 number of observation in the group $i$, $r_{ij}$ the rank of observation $j$ from group 
 $i$.\\
@@ -464,23 +464,23 @@ $\begin{cases}
 
 \end{itemize}
 
-\subparagraph{Assumptions}
+\paragraph{Assumptions}
 \begin{itemize}
     \item Independence
     \item All groups should have te same distributions
 \end{itemize}
 
-\subparagraph{Strengths}
+\paragraph{Strengths}
 \begin{itemize}
     \item Non-parametrical test, no need of the normally distributed assumption.
 \end{itemize}
 
-\subparagraph{Weaknesses}
+\paragraph{Weaknesses}
 
-\paragraph{Friedman test}
+\subsection{Friedman test}
 Non-parametric statistical test, analogu of the \emph{repeated-measures ANOVA}.
 It use to detect differences in treatments across multiple test attempts.
-\subparagraph{Frequentist}
+\paragraph{Frequentist}
 \begin{itemize}
     \item Consider a matrix of $n$ rows (the blocks) and $k$ columns (the treatments)
     and a single observation at the intersetion of each block and treatment. Then 
@@ -492,67 +492,67 @@ It use to detect differences in treatments across multiple test attempts.
     a $\chi^{2}$ distribution.
 \end{itemize}
 
-\subparagraph{Assumptions}
+\paragraph{Assumptions}
 \begin{itemize}
     \item Independence
 \end{itemize}
-\subparagraph{Strengths}
-\subparagraph{Weaknesses}
+\paragraph{Strengths}
+\paragraph{Weaknesses}
 
-\paragraph{Sperman test}
+\subsection{Sperman test}
 It assesses how well the relationship between 2 variables can be described using a monotonic function.
 Let $X, Y$ be 2 random variables, and $R$ the function transforming the realization of a random variable.
 
-\subparagraph{Frequentist}
+\paragraph{Frequentist}
 $r_{s} = \rho_{R(X), R(Y)} = \dfrac{Cov\left(R(X), R(Y)\right)}{\sigma_{R(X)}\sigma_{R(Y)}}
 \begin{cases}
 \rho:\text{ Pearson correlation coefficient applied to the rank variables} \\
 Cov\left(R(X), R(Y)\right)
 \end{cases}$
-\subparagraph{Assumptions}
-\subparagraph{Strengths}
-\subparagraph{Weaknesses}
+\paragraph{Assumptions}
+\paragraph{Strengths}
+\paragraph{Weaknesses}
 
-\paragraph{Pearson correlation coefficient}
+\subsection{Pearson correlation coefficient}
 This coefficient is essentially a normalized measurement of the covariance such that the result
 has a value $-1$ and 1
-\subparagraph{Frequentist}
+\paragraph{Frequentist}
 $\rho_{X, Y} = \dfrac{Cov\left(X, Y\right)}{\sigma_{X}\sigma_{Y}}$
-\subparagraph{Assumptions}
-\subparagraph{Strengths}
-\subparagraph{Weaknesses}
+\paragraph{Assumptions}
+\paragraph{Strengths}
+\paragraph{Weaknesses}
 \begin{itemize}
     \item Not robust
 \end{itemize}
 
-\paragraph{Repeated-measures ANOVA}
+\subsection{Repeated-measures ANOVA}
 Used in repeated measure design, meaning when we measure multiple time the same variable
 taken on the same or matched subject either under different conditions or at different periods.
-\subparagraph{Frequentist}
+\paragraph{Frequentist}
 Here $F = \dfrac{\frac{SS_{treatment}}{df_{treatment}}}{\frac{SS_{error}}{df_{error}}}$
 In a \emph{between-subjects} design there is a element of variance due to individual difference that 
 is combined with the treatment and error term, meaning: $SS_{total} = SS_{treatment} + SS_{error}$
 In a \emph{repeated-measure} design it is possible to partition subject variability from the
 treatment and error term, meaning $SS_{total} = SS_{treatment(excluding indivdual differences) + SS_{subjects} + SS_{error}}$
 
-\subparagraph{Assumptions}
+\paragraph{Assumptions}
 \begin{itemize}
     \item \emph{Normality}: for each level of the within-subject factor, the dependent variable must have a normal distribution.
     \item \emph{Sphericity}: difference scores computed between 2 levels of a within subject factor must have the same variance
     for the comparison of any 2 levels.
     \item \emph{Randomness}: cases should be derived from a random sample.
 \end{itemize}
-\subparagraph{Strengths}
+\paragraph{Strengths}
 \begin{itemize}
     \item ability to partition out variability due to individual differences.
 \end{itemize}
-\subparagraph{Weaknesses}
+\paragraph{Weaknesses}
 \begin{itemize}
     \item Vulnerable to missing values, imputation, unequivalent time points
     between subjects and violation of Sphericity.
 \end{itemize}
 
-\paragraph{1-way ANOVA}
+\subsection{1-way ANOVA}
 Analysis of Variance describes \uB{the partition of the response variable sum of squares in a 
 linear model into ``explained'' and ``unexplained'' components.}\\
 \begin{itemize}
@@ -562,7 +562,7 @@ linear model into ``explained'' and ``unexplained'' components.}\\
 \end{itemize}
 The term ``analysis of variance'' is a bit of misnomer, \tB{we use variance-like quantities to
 study the equality or non-equality of population means}, so we are analyzing means, not variances.
-\subparagraph{Frequentist}
+\paragraph{Frequentist}
 \tR{examines equality of population means for a quantitative outcome and a 
 single categorical explanatory variable with any number of levels}.\\
 The term \tB{``one-way'' indicates that there is a single explanatory variable (``treatment'') 
@@ -687,7 +687,7 @@ $$ \overline{y}_{1}-\overline{y}_{2} \pm t_{n-2,1-\frac{\alpha}{2}}s\sqrt{\frac{
 \frac{1}{n_{2}}}$$
 
 
-\subparagraph{Assumptions}
+\paragraph{Assumptions}
 \begin{center}
 	The statistical model for which one-way ANOVA is appropriate is that the
 	\begin{itemize}
@@ -696,10 +696,10 @@ $$ \overline{y}_{1}-\overline{y}_{2} \pm t_{n-2,1-\frac{\alpha}{2}}s\sqrt{\frac{
 		\item The errors are assumed to be independent.
 	\end{itemize}
 \end{center}
-\subparagraph{Strengths}
-\subparagraph{Weaknesses}
+\paragraph{Strengths}
+\paragraph{Weaknesses}
 
-\paragraph{T-test}
+\subsection{T-test}
 It is commonly used when the test statistic would follow a normal distribution
 if the value of a scaling term in the test statistic were known.\\
 When the scaling term is estimated from the data, under certain conditions, the
@@ -707,8 +707,8 @@ test statistic follows a \emph{Student's t-test}.\\
 Most test statistics have the form $t=\dfrac{Z}{s}$, $Z$ may be sensitive to 
 the alternative hypothesis, whereas $s$ isa scaling parameter allowing to determine
 the distribution \emph{t}.
-\paragraph{One-sample}
-\subparagraph{Frequentist}
+\subsection{One-sample}
+\paragraph{Frequentist}
 $$
 t = \dfrac{\overline{x} - \mu_{0}}{\frac{s}{\sqrt{n}}},
 \begin{cases}
@@ -720,30 +720,30 @@ $$
 By the central limit theorem, if the observations are independent and the second
 moment exist, then $t$ will approximately follow the distribution $\mathcal{N}(0, 1)$
 
-\subparagraph{Assumptions}
+\paragraph{Assumptions}
 Although the parent population does not need to be normally distributed, the distribution
 of the population sample means $\left(\overline{x}_{s}\right)_{1\leq s\leq S}$.\\
-\subparagraph{Strengths}
-\subparagraph{Weaknesses}
+\paragraph{Strengths}
+\paragraph{Weaknesses}
 
 
-\paragraph{Slope of a regression line}
+\subsection{Slope of a regression line}
 Suppose one is fitting: $Y = \alpha + \beta x + \epsilon$, where $x$ is known and $\alpha$ and $\beta$ are unknown
 and finally $\epsilon \hookrightarrow \mathcal{N(0, 1)}$.
 Symbols with hat will refer to estimators.
-\subparagraph{Frequentist}
+\paragraph{Frequentist}
 $$t_{score} = \dfrac{\hat{\beta} - \beta_{0}}{SE_{\hat{\beta}}} \hookrightarrow \mathcal{N}(0, 1)$$
 
-\subparagraph{Assumptions}
-\subparagraph{Strengths}
-\subparagraph{Weaknesses}
+\paragraph{Assumptions}
+\paragraph{Strengths}
+\paragraph{Weaknesses}
 
-\paragraph{Paired / Unpaired  t-test}
+\subsection{Paired / Unpaired  t-test}
 Depending on if the samples are paired or not and the differences between means and variances, the formula will be different. 
 It is not worthful to dive in these formulas.
-\subparagraph{Frequentist}
-\subparagraph{Assumptions}
-\subparagraph{Strengths}
-\subparagraph{Weaknesses}
+\paragraph{Frequentist}
+\paragraph{Assumptions}
+\paragraph{Strengths}
+\paragraph{Weaknesses}
 
 Weimprove
