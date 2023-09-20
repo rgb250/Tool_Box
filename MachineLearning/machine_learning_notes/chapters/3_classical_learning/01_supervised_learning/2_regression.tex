@@ -1,0 +1,126 @@
+\subsection{Linear Regression}
+\paragraph{Purpose}
+\paragraph{Assumptions}
+\paragraph{Theory}
+\subparagraph{General}
+It is a model for which the data distribution (likelihood) is described 
+by:
+\tR{\begin{center}
+    $\prob{y|\bm{x},\bm{\theta}} = \mathcal{N}\left(y|\bm{w}^{T}\phi(
+    \bm{x}), \sigma^{2}\right)$
+\end{center}}
+with $\phi$ that can be a non-linear function, in this case we talk about
+\emph{basis function expansion}.\\
+To estimate the parameters we can use the \emph{maximum likelihood 
+estimation}: \tB{$\hat{\theta} \triangleq \argmax_{\theta} \log\left(
+\prob{\mathcal{D}|\bm{\theta}}\right)$}.\\
+For computational purpose it is better to consider the minimization of 
+the \textit{Negative Log Likelihood} (NLL):
+\begin{align*}
+    \text{\emph{NLL}}(\theta) &\triangleq -\log\left(p\left(\mathcal{D}|
+    \theta\right)\right)\\
+                              &=-\su{i=1}{n}\log\left(\prob{y_{i}|
+                                      \bm{x}_{i},\bm{\theta}}\right)\\
+                              &=-\su{i=1}{n}\log\left(\left[\dfrac{1}{
+                              2\pi\sigma^{2}}\right]^{\frac{1}{2}}\exp
+                              \left(-\dfrac{1}{2\sigma^{2}}\left[y_{i}
+                                      - \bm{w}^{T} \bm{x}_{i}\right]^{2}
+                              \right)\right)\\
+                              &= \dfrac{n}{2}\log\left(2\pi\sigma^{2}
+                              \right) + \dfrac{1}{2\sigma^{2}}\su{i=1}{
+                              n}\left(y_{i} - \bm{w}^{T}\bm{x}_{i}
+                              \right)^{2}\\
+                              &= \dfrac{n}{2}\log\left(2\pi\sigma^{2}
+                              \right) + \dfrac{1}{2\sigma^{2}}\text{
+                              \emph{RSS}}(\bm{w})\\
+                              &= \dfrac{n}{2}\log\left(2\pi\sigma^{2}
+                          \right) + \dfrac{1}{2\sigma^{2}}\norm{\epsilon
+                          }_{2}^{2}
+\end{align*}
+As the \emph{MLE} for $\bm{w}$ is the one minimizing the \emph{RSS} then
+this method is known as \emph{least square}.
+
+\subparagraph{Derivation of the MLE}
+it is better to use a matrix-vector representation.\\
+$\text{\emph{NLL}}(\bm{w}) = \dfrac{1}{2}\left(y-\bm{X}\bm{w}\right)^{T}\left(y-\bm{X}
+\bm{w}\right) = \dfrac{1}{2}\bm{w}^{T}\left(\bm{X}^{T}\bm{X}\right)\bm{w} - \bm{w}^{T}
+\left(\bm{X}^{T}y\right)$ Note that $\bm{X}^{T}\bm{X}$ is the \emph{sum of squares 
+matrix}. Then \textbf{gradient}, $g(\bm{w}) = \bm{X}^{T}\bm{X}\bm{w} - \bm{X}^{T}\bm{y}$
+that we have to equate to zero to get $\bm{X}^{T}\bm{X}\bm{w} = \bm{X}^{T}\bm{y}$ to 
+conclude that:
+\begin{center}
+    \fr{$\hat{\bm{w}}_{OLS} = \left(\bm{X}^{T}\bm{X}\right)^{-1}\bm{X}^{T}\bm{y}$}
+\end{center}
+
+\subparagraph{Robust Linear Regression}
+It is very common to model the noise in regression models using a \emph{Gaussian 
+distribution}, meaning \tR{$\epsilon_{i} = y_{i} - \bm{w}^{T}\bm{x}_{i} \hookrightarrow 
+\mathcal{0, \sigma^{2}}$}. One way to achieve \emph{robustness} against \emph{outliers}
+is to replace the Gaussian distribution for the response variable with a distribution 
+having \textbf{heavy tails}.
+
+\begin{center}
+    \begin{tabular}{|*{3}{c|}}
+    \hline
+    \textbf{Likelihood} & \textbf{Prior} & \textbf{Name}\\
+    \hline
+    Gaussian & Uniform & \emph{Least Squares}\\
+    \hline
+    Gaussian & Gaussian & \emph{Ridge}\\
+    \hline
+    Gaussian & Laplace & \emph{Lasso}\\
+    \hline
+    \end{tabular}
+\end{center}
+
+\subparagraph{Ridge}
+encourages parameters to be small by using a zero-mean Gaussian prior: $\prob{\bm{w}} = 
+\prd{j=1}{D} \mathcal{N}\left(\omega_{j}|0, \tau^{2}\right)$, where $\frac{1}{\tau^{2}}$
+controls the strength of the prior.\\
+The corresponding \tB{\emph{MAP}} estimation problem becomes:
+\tB{$\argmax_{\bm{w}}\su{i=1}{n}\log\left(\mathcal{N}\left(y_{i}|\omega_{0} + \bm{w}^{T}
+\bm{x}_{i}, \sigma^{2}\right)\right) + \su{j=1}{D}\log\left(\mathcal{N}\left(\omega_{j}
+|0,\tau^{2} \right)\right)$}. After some calculus and with where $\lambda \triangleq 
+\dfrac{\sigma^{2}}{\tau^{2}}$ we deduce that:
+\begin{center}
+    \fr{$
+        \hat{\bm{w}}_{\text{\emph{Ridge}}} = \left(\lambda\bm{I}_{D} + \bm{X}^{T}\bm{X}
+        \right)^{-1}\bm{X}\bm{y}
+    $}
+\end{center}
+Advantages of Ridge regression on OLS regression:
+\begin{itemize}
+    \item $\left(\lambda\bm{I}_{D}+\bm{X}^{T}\bm{X}\right)$ is much better conditioned, 
+        and hence more likely to be invertible, than $\bm{X}^{T}\bm{X}$ at least for 
+        suitable large $\lambda$
+    \item if we follow a \emph{Singular Value Decomposition} $\bm{X} = \bm{U}\bm{S}
+        \bm{V}^{T}$ we find 
+        that $\hat{\bm{y}} = \bm{X}\hat{\bm{w}}_{\text{\emph{Ridge}}} = \su{j=1}{D}
+        \bm{u}_{j}\dfrac{\sigma_{j}^{2}}{\sigma_{j}^{2} + \lambda}\bm{u}_{j}^{T}\bm{y}$
+        with $\left(\sigma_{j}\right)_{1\leq j \leq D}$ the singular value of $\bm{X}$
+        whereas for OLS we have $\hat{\bm{y}} = \bm{X}\hat{\bm{w}}_{\text{\emph{OLS}}} 
+        = \su{j=1}{D} \bm{u}_{j}\bm{u}_{j}^{T}\bm{y}$. Meaning that with Ridge if 
+        $\sigma_{j}^{2}$ is small compared to $\lambda$ then direction $\bm{u}_{j}$
+        will not have much effect on the prediction. In term of predictive accuracy
+        \emph{Ridge} regression is more interesting than \emph{PCA} regression.
+\end{itemize}
+
+\paragraph{Strengths}
+\begin{itemize}
+    \item Simple
+    \item Customizable to achieve robustness
+\end{itemize}
+
+\paragraph{Weaknesses}
+\begin{itemize}
+    \item Not very powerful for non-linear data
+
+\end{itemize}
+
+\paragraph{Relationships with other methods}
+\begin{itemize}
+    \item Ridge Regression has similitude with PCA
+\end{itemize}
+
+\paragraph{Examples of application}
+

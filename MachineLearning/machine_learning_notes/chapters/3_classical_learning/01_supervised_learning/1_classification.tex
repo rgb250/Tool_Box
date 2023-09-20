@@ -1,12 +1,14 @@
 % Naive Bayes Classifiers
 \subsection{Naive Bayes classifiers}
 \paragraph{Purpose}
-Classifying vectors of discrete-valuated features $x\in\left\{i\right\}_{1\leq i \leq K}^{D}$, where $K$ is the number 
-of values for each feature, and $D$ the number of features.
+\tR{Classifying vectors of discrete-valuated features $x\in\left\{i
+\right\}_{1\leq i \leq K}^{D}$}, where $K$ is the number of values for
+each feature, and $D$ the number of features.
 
 \paragraph{Assumptions}
 \begin{itemize}
-    \item Features are conditionally independent given the class label
+    \item \tB{Features are conditionally independent given the class 
+        label}
 \end{itemize}
 
 \paragraph{Theory}
@@ -23,8 +25,8 @@ have:
 with all $\prob{x_{j}|y=c,\bm{\theta}_{jc}}$ being able to 
 follow a \textit{normal}, \textit{bernoulli} or \textit{multinoulli} 
 distribution.\\
-Training a NBC consists in computing the MLE or the MAP estimate for the
-parameters.\\
+\uB{Training a NBC consists in computing the MLE or the MAP estimate for 
+the parameters.}\\
 For a single observation
 $\prob{x_{i}, y_{i}|\bm{\theta}} = \prob{y_{i}|\bm{\pi}}\prd{j}{}\prob{x_{ij}|\bm{\theta}_{j}} = 
 \prd{c}{}\pi_{c}^{\mathbbm{1}(y_{i}=c)}\prd{j}{}\prd{c}{}\prob{x_{ij}|
@@ -45,17 +47,17 @@ predict the output of an observation $\bm{x}$ as: $\prob{y=c|\bm{x},\mathcal{D}}
 
 \paragraph{Weaknesses}
 \begin{itemize}
-    \item Unaccuracy because of strong independence assumption
+    \item \uB{Unaccuracy} because of the strong independence assumption
 \end{itemize}
 
 \paragraph{Relationships with other methods}
-\textbf{Logistic Regression}: for discrete inputs 
+\tB{Logistic Regression}: for discrete inputs 
 \emph{Naive Bayesian Classifiers} form a 
 generative-discriminant pair with \emph{Multinomial Logistic
-Regression}: each NBC can be considered a way of fitting a
+Regression}: \uB{each NBC can be considered a way of fitting a
 probability model that optimizes the joint likelihood 
-$\prob{C, \bm{x}}$, while Logistic Regression fits the same 
-probability to optimize the conditional $\prob{C|\bm{x}}$
+$\prob{C, \bm{x}}$, while Multinomial Logistic Regression fits the same 
+probability to optimize the conditional $\prob{C|\bm{x}}$}
 
 \paragraph{Examples of application}
 \begin{itemize}
@@ -66,9 +68,9 @@ probability to optimize the conditional $\prob{C|\bm{x}}$
 
 % Linear/Quadratic Discriminant Analysis
 \subsection{Linear/Quadratic Discriminant Analysis}
-it consists in defining the class conditional densities in a generative
-classifier: $\prob{\bm{x}|y=c,\bm{\theta}} = \mathcal{N}\left(\bm{x},
-\bm{\mu}_{c},\bm{\Sigma}_{c}\right)$\\
+\uB{It consists in defining the class conditional densities in a 
+generative classifier}: $\prob{\bm{x}|y=c,\bm{\theta}} = \mathcal{N}
+\left(\bm{x}, \bm{\mu}_{c},\bm{\Sigma}_{c}\right)$\\
 As for a generative classifier we have the following equation: 
 \begin{center}
     $\prob{y=c|\bm{x},\bm{\theta}} = \dfrac{\overbrace{\prob{\bm{x}|y=c,
@@ -78,32 +80,96 @@ As for a generative classifier we have the following equation:
 \end{center}
 \paragraph{Purpose of Quadratic Discriminant Analysis}
 \begin{center}
-    $\prob{y=c|\bm{x},\bm{\theta}} = \dfrac{\pi_{c}|2\pi\Sigma_{c}|^{
+    $\prob{y=c|\bm{x},\bm{\theta}} = \dfrac{|2\pi\Sigma_{c}|^{
     -\frac{1}{2}}\exp\left(-\frac{1}{2}[\bm{x}-\bm{\mu}_{c}]^{T}\Sigma_{
-    c}^{-1}[\bm{x}-\bm{\mu}_{c}]\right)}{\su{c'}{}\pi_{c'}|2\pi\Sigma_{
+    c}^{-1}[\bm{x}-\bm{\mu}_{c}]\right)\pi_{c}}{\su{c'}{}|2\pi\Sigma_{
     c'}|^{-\frac{1}{2}}\exp\left(-\frac{1}{2}[\bm{x}-\bm{\mu}_{c'}]^{T}
-    \Sigma_{c'}^{-1}[\bm{x}-\bm{\mu}_{c'}]\right)}$
+    \Sigma_{c'}^{-1}[\bm{x}-\bm{\mu}_{c'}]\right)\pi_{c'}}$
 \end{center}
-The threshold of this results will be a quadratic function of $\bm{x}$.
+\tB{The threshold of this results will be a quadratic function of 
+$\bm{x}$.}
 
 \paragraph{Purpose of Linear Discriminant Analysis}
-Same equation than above but this time, $\forall c\in \inter{1}{C} 
-\Sigma_{c} = \Sigma$, then quadratic term $\bm{x}^{T}\Sigma^{-1}\bm{x}$ 
-will cancel out from numerator and denominator.
+Same equation than above but this time, \tB{$\forall c\in \inter{1}{C} 
+\Sigma_{c} = \Sigma$}, \tB{then quadratic term $\bm{x}^{T}\Sigma^{-1}
+\bm{x}$ will cancel out from numerator and denominator}.
 Then by considering the above cancellation and the fact that 
 evidence is considered as a constant, we have:
+\tB{
 \begin{align*}
     \prob{y=c|\bm{x},\bm{\theta}} & \propto \exp\left(\log(\pi_{c})+\bm{
         \mu}_{c}^{T}\Sigma^{-1}\bm{x}\bm{\mu}_{c}\right)\\
     &= \exp\left(\bm{\beta}_{c}^{T}\bm{x} + \gamma_{c}\right)
+    \end{align*}
+}
+Note also that we have exactly: \tR{$\prob{y=c|\bm{x},\bm{\theta}} =
+\dfrac{e^{\bm{\beta}_{c}^{T}\bm{x} + \gamma_{c}}}{\su{c'}{}e^{\bm{\beta
+}_{c'}^{T}\bm{x} + \gamma_{c'}}} = S(\bm{\eta})_{c}$}. With $\eta=\left(
+\bm{\beta}_{c}\bm{x} +\gamma_{c}\right)_{1\leq c\leq C}$
+We recognize the \emph{softmax} function.
+
+\paragraph{Assumptions}
+\begin{itemize}
+    \item Independent \tB{variables are normal for each level} of the
+        grouping variable.
+    \item \tB{Homoscedasticity} for LDA: variances \uB{among group} 
+        variables are the same across levels of predictors.
+    \item \uB{Independence of the observations}.
+\end{itemize}
+
+
+\paragraph{Theory}
+\paragraph{Strengths}
+\paragraph{Weaknesses}
+\begin{itemize}
+    \item Multicollinearity: predictive power can decrease with an 
+        increased correlation between predictor variables.
+\end{itemize}
+
+\paragraph{Relationships with other methods}
+\paragraph{Examples of application}
+
+
+\subsection{Logistic Regression}
+\paragraph{Purpose}
+With the generative approach we create a joint model of the form $\prob{y,\bm{x}}$, and
+then to condition on $\bm{x}$, thereby deriving $\prob{y|bm{x}}$, it is the \emph{
+generative} approach.\\
+Alternatively, fitting directly a model of the form $\prob{y|\bm{x}}$ is a \emph{
+discriminative} approach.
+\paragraph{Assumptions}
+\begin{itemize}
+    \item Independence
+\end{itemize}
+
+\paragraph{Theory}
+The data distribution is modelled by : 
+\fr{$\prob{y|\bm{x}} = \text{\emph{Bernoulli}} \left(y|\sigma\left(\bm{w}^{T}\bm{x}
+\right)\right)$}\\
+With $\sigma$ being the \emph{sigmoid} function, such that 
+$\sigma = \begin{cases}
+    \mathbb{R} \longrightarrow [0, 1]\\ 
+    x \mapsto \dfrac{e^{x}}{1 + e^{x}}
+\end{cases}
+$
+\subparagraph{Maximum Likelihood Estimator}
+\begin{align*}
+    \text{\emph{NLL}}(\bm{w})
+    &= -\su{i=1}{N}\log\left(\hat{y}_{i}^{\mathbbm{1}_{\{y_{i} = 1\}}}\left[1 -
+    \hat{y}_{i}^{\mathbbm{1}_{\{y_{i}=0\}}}\right]\right)\\ 
+    &= -\su{i=1}{N}y_{i}\log\left(\hat{y}_{i}\right) + \left[1 -y_{i}\right]\log
+    \left(1 -\hat{y}_{i}\right)
 \end{align*}
-We can write: $\prob{y=c|\bm{x},\bm{\theta}} = \dfrac{e^{\bm{\beta}_{c
-}^{T}\bm{x} + \gamma_{c}}}{\su{c'}{}e^{\bm{\beta}_{c'}^{T}\bm{x} + 
-\gamma_{c'}}} = S(\bm{\eta})_{c}$. With $\eta=\left(\bm{\beta}_{c}\bm{x}
-+\gamma_{c}\right)_{1\leq c\leq C}$
-This is the \emph{softmax} function.
+This called \textit{cross-entropy}
 
 
+\paragraph{Strengths}
+\paragraph{Weaknesses}
+\paragraph{Relationships with other methods}
+\paragraph{Examples of application}
+
+\subsection{Logistic Regression}
+\paragraph{Purpose}
 \paragraph{Assumptions}
 \paragraph{Theory}
 \paragraph{Strengths}
@@ -111,8 +177,16 @@ This is the \emph{softmax} function.
 \paragraph{Relationships with other methods}
 \paragraph{Examples of application}
 
+\subsection{Logistic Regression}
+\paragraph{Purpose}
+\paragraph{Assumptions}
+\paragraph{Theory}
+\paragraph{Strengths}
+\paragraph{Weaknesses}
+\paragraph{Relationships with other methods}
+\paragraph{Examples of application}
 
-\subsection{Naive Bayes classifiers}
+\subsection{Logistic Regression}
 \paragraph{Purpose}
 \paragraph{Assumptions}
 \paragraph{Theory}
