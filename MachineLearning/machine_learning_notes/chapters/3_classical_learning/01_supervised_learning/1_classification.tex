@@ -156,7 +156,7 @@ $
 \begin{align*}
     \text{\emph{NLL}}(\bm{w})
     &= -\su{i=1}{N}\log\left(\hat{y}_{i}^{\mathbbm{1}_{\{y_{i} = 1\}}}\left[1 -
-    \hat{y}_{i}^{\mathbbm{1}_{\{y_{i}=0\}}}\right]\right)\\ 
+    \hat{y}_{i}\right]^{\mathbbm{1}_{\{y_{i}=0\}}}\right)\\ 
     &= -\su{i=1}{N}y_{i}\log\left(\hat{y}_{i}\right) + \left[1 -y_{i}\right]\log
     \left(1 -\hat{y}_{i}\right)
 \end{align*}
@@ -168,14 +168,68 @@ This called \textit{cross-entropy}
 \paragraph{Relationships with other methods}
 \paragraph{Examples of application}
 
-\subsection{Logistic Regression}
+\subsection{Fisher's Linear Discriminant Analysis (FLDA)}
 \paragraph{Purpose}
+An alternative way to the above discriminant analysis is to reduce the dimensionality
+of the features $\bm{x}\in\mathbb{R}^{D}$ and then fit a Multivariate Normal to the 
+resulting low-dimensional features $\bm{z}\in \mathbb{R}^{L}$.\\
+\emph{PCA} would not be a good idea because it is unsupervised and the low-dimensional
+resulting features would not be optimal for the classification problem.\\
+A better option would be to \uB{find a matrix $\bm{W}$ such that the low-dimensional 
+data can be classified as well as possible using a Gaussian class-conditional density 
+model}, this is the \emph{FLDA}.
 \paragraph{Assumptions}
+\begin{itemize}
+    \item Gaussian class-conditional: reasonable since we are computing linear 
+        combination of potentially non-Gaussian features.
+\end{itemize}
+
 \paragraph{Theory}
+For $2$ classes
+Let us define 
+$\begin{cases}
+    \mu_{1} = \frac{1}{N_{1}}\su{i:y_{i}=1}{}\bm{x}_{i}\\
+    \mu_{2} = \frac{1}{N_{2}}\su{i:y_{i}=2}{}\bm{x}_{i}
+\end{cases}$,
+and $m_{k} = \bm{w}^{T}\bm{\mu}_{k}$ being the projection of each mean onto the line
+$\bm{w}$. Also let $z_{i}=\bm{w}^{T}\bm{x}_{i}$ be the projection of the data onto the 
+line $\bm{w}$.\\
+The goal is to find $\bm{w}$ such that we maximize the distance between the means,
+$m_{1} - m_{2}$, while also ensuring the projected clusters are "tight":
+\begin{center}
+    $\bm{J}(\bm{w}) = \dfrac{(m_{f} - m_{1})^{2}}{s_{1}^{2} + s_{2}^{2}}
+    = \dfrac{\bm{w}^{T}\bm{S}_{B}\bm{w}}{\bm{w}^{T}\bm{S}_{W}\bm{w}}$
+\end{center}
+with the \emph{between-class scatter matrix}: $\bm{S}_{B} = \left(\mu_{2} - \mu_{1}
+\right)\left(\mu_{2} - \mu_{1}\right)^{T}$ and \emph{within-class scatter matrix}:
+$
+\su{i:y_{i}=1}{}\left(\bm{x}_{i} - \bm{\mu}_{1}\right) \left(\bm{x}_{i} - 
+\bm{\mu}_{1}\right)^{T} + \su{i:y_{i}=2}{}\left(\bm{x}_{i} - \bm{\mu}_{2}\right)\left(
+\bm{x}_{i} - \bm{\mu}_{2}\right)^{T}
+$
+
+
 \paragraph{Strengths}
+\begin{itemize}
+    \item Classification in taking in account the response label.
+\end{itemize}
+
 \paragraph{Weaknesses}
+\begin{itemize}
+    \item FLDA is restricted to using $L\leq C-1$ dimensions, regardless of $D$.
+\end{itemize}
+
 \paragraph{Relationships with other methods}
+\begin{itemize}
+    \item Linear Discriminant Analysis
+    \item PCA
+\end{itemize}
+
 \paragraph{Examples of application}
+\begin{itemize}
+    \item Speech recognition
+\end{itemize}
+
 
 \subsection{Logistic Regression}
 \paragraph{Purpose}
@@ -194,4 +248,3 @@ This called \textit{cross-entropy}
 \paragraph{Weaknesses}
 \paragraph{Relationships with other methods}
 \paragraph{Examples of application}
-

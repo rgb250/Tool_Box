@@ -124,3 +124,67 @@ Advantages of Ridge regression on OLS regression:
 
 \paragraph{Examples of application}
 
+
+\subsection{Generalized Linear Models (GLMs)}
+Models in which the output density is in the exponential family and in which the mean
+parameters are a linear combination of the inputs, passed through a possibly nonlinear
+function such as the logistic function.\\
+Exponential family:
+\tR{$\prob{\bm{x}|\bm{\theta}} = \dfrac{1}{Z(\bm{\theta})}h(x)e^{\bm{\theta}^{T}\phi(
+\bm{x})} = h(\bm{x})e^{\bm{\theta}^{T}\phi(\bm{x}) - A(\bm{\theta})}$}
+where
+$\begin{cases}
+    Z(\bm{\theta}) = \su{\mathcal{X}^{m}}{}h(\bm{x})e^{\bm{\theta}^{T}\phi(\bm{x})}
+    d\bm{x} \\
+    A(\bm{\theta}) = \log\left(Z(\bm{\theta})\right)
+\end{cases}$
+with the \emph{natural parameters} $\bm{\theta}$, the vector of  \emph{sufficient 
+statistics} $\phi(\bm{x})$, the \emph{partition function} $Z(\bm{\theta})$, the 
+\emph{log partition function} or \emph{cumulant function} $A(\bm{\theta})$and the 
+\emph{scaling constant} $h(\bm{x})$.\\
+The name \emph{cumulant function} comes from the property of the exponential family 
+being that derivatives of the log partition function can be used to generate cumulant
+of the sufficient statistics (the first and second cumulants of a distribution being
+its mean and variance).
+\paragraph{Purpose}
+We have the following data distribution:
+$\prob{y_{i}|\bm{\theta},\sigma^{2}} = \exp\left(\dfrac{y_{i}\bm{\theta} - A\left(
+\bm{\theta}\right)}{\sigma^{2}} + c(y_{i}, \sigma^{2})
+\right)$
+with $c$ a normalization constant.\\
+Let's consider an invertible mapping $\Phi$ such that $\bm{\theta} = \Phi(\mu)$ with
+$\mu$ being the mean parameter and $\bm{\theta}$ the natural parameter.\\
+We have as well \tB{$\mu = \Phi^{-1}(\bm{\theta}) = A'(\bm{\theta})$}.\\
+We are free to chose any link function as long as the inverse have an appropriate 
+range. A simple form of link function is to use $g=\Phi$, $g$ is then called 
+\emph{canonical function}.
+
+\begin{center}
+    \begin{tabular}{|*{4}{l|}}
+    \hline
+    \textbf{Distribution} & \textbf{Link function}  & 
+    \textbf{Natural parameter} $\theta = \Phi(\mu)$ & \textbf{Mean parameter} $\mu = 
+    \Phi^{-1}(\theta) = \mathbb{E}(y)$ \\
+    \hline
+    $\mathcal{N}(\mu, \sigma^{2})$ & \emph{identity} & $\bm{\theta} = \bm{\mu}$ & 
+    $\bm{\mu} = \bm{\theta}$\\
+    \hline
+    $\mathcal{B}(n,\mu)$ & \emph{logit} & $\bm{\theta} = \log\left(\frac{\mu}{1-\mu}
+    \right)$ & $\mu = \text{\emph{sigm}}(\bm{\theta})$\\
+    \hline
+    \emph{Poisson}$(\mu)$ & \emph{log} & $\bm{\theta} = \log\left(\mu\right)$ & 
+    $\mu=e^{\theta}$\\
+    \hline
+    \end{tabular}
+\end{center}
+
+\paragraph{Assumptions}
+\paragraph{Theory}
+\paragraph{Strengths}
+\begin{itemize}
+    \item GLMs can be fit using methods like gradient descent.
+\end{itemize}
+
+\paragraph{Weaknesses}
+\paragraph{Relationships with other methods}
+\paragraph{Examples of application}
