@@ -1,0 +1,83 @@
+\subsection{Bayesian Variable Selection}
+\paragraph{Purpose}
+Let $\gamma_{j}: 
+\begin{cases}
+    \gamma_{j} = 1 \Leftarrow \text{feature } j \text{is relevant}\\
+    \gamma_{j} = 0 \Leftarrow \text{otherwise}\\
+\end{cases}$ our goal is to compute the posterior over models:
+\begin{center}
+    $\prob{\gamma|\mathcal{D}} = \dfrac{e^{-f(\gamma)}}{\su{\gamma'}{}e^{-f(\gamma')}}$
+\end{center}
+where the cost function is defined by $f(\gamma) \triangleq -\left[\log\left(\prob{
+\mathcal{D}|\gamma}\right) + \log\left(\prob{\gamma}\right)\right]$
+
+\paragraph{Assumptions}
+\paragraph{Theory}
+\subparagraph{Spike and slab model}
+remember that posterior is given by $\prob{\bm{\gamma}|\mathcal{D}}\approx \prob{
+\mathcal{D}|\bm{\gamma}}\prob{\bm{\gamma}}$.\\
+It is common to use the following prior $\prob{\bm{\gamma}} = \prd{j=1}{D}\text{
+\emph{Ber}}(\gamma_{j}|\pi_{0}) = \pi_{0}^{\norm{\gamma}_{0}}(1-\pi_{0})^{D-\norm{
+\gamma}_{0}}$, where $\pi_{0}$ is the probability that a feature is relevant.\\
+The likelihood is defined as follows: $\prob{\mathcal{D}|\bm{X},\bm{\gamma}} = 
+\Su{}{}\Su{}{}\prob{\bm{y}|\bm{X},\bm{w},\bm{\gamma}}\prob{\bm{w}|\bm{\gamma},
+\sigma^{2}}\prob{\sigma^{2}}d\bm{w}d\sigma^{2}$\\
+Consider the prior $\prob{\bm{w}|\bm{\gamma},\sigma^{2}}$ in standardizing the inputs, 
+a reasonable prior is $\mathcal{N}(0, \sigma^{2}\sigma_{w}^{2})$, where 
+$\sigma_{w}^{2}$ controls how big we expect the coefficients associated with the 
+relevant variables to be, which is scaled by the overall noise. We can summarize this 
+prior as follows: $\prob{\bm{w}_{j}|\sigma^{2},\gamma_{j}}
+\begin{cases}
+    \delta_{0}(w_{j}) \Leftarrow \gamma_{j} = 0\\
+    \mathcal{N}(w_{j}|0, \sigma^{2}\sigma_{w}^{2}) \Leftarrow \gamma_{j} = 1
+\end{cases}$
+\uB{the first term is a "spike" at the origin, as $\sigma_{w}^{2}\rightarrow +\infty$ 
+the distribution $\prob{w_{j}|\gamma_{j} = 1}$ approaches a uniform distribution which 
+can be thought of as a "slab"}.
+
+\subparagraph{Bernoulli-Gaussian model}
+we have 
+$\begin{cases}
+    \prob{y_{i}|\bm{x}_{i},\bm{w}, \bm{\gamma},\sigma^{2}} = \mathcal{N}\left(\su{j}{}
+    \gamma_{j}w_{j}x_{ij}, \sigma^{2}\right) \\
+    \prob{\gamma_{j}} = \text{\emph{Ber}}(\pi_{0})\\
+    \prob{w_{j}} = \mathcal{N}(0, \sigma_{w}^{2})
+\end{cases}$
+we can think of the \tB{$\gamma_{j}$ as a masking out the weights $w_{j}$}. Unlike the
+spike and slab model we do not integrate the irrelevant coefficients, they always 
+exists.\\
+\uB{One interesting aspect of this model is that it can be used to derive objective 
+function that is widely used in the non-Bayesian subset selection literature.}
+\subparagraph{Algorithms}
+assuming that we want to find the MAP model.
+\begin{itemize}
+    \item Single best replacement: at each step, we define a \uB{neighborhood of the 
+        current model to be all models than can be reached by flipping a single bit
+        of $\gamma$}
+    \item Orthogonal least squares: we start from an empty set of variables and we 
+        add the best feature $j^{*} = \argmin_{j\notin\bm{\gamma}_{t}}\min_{\bm{w}}
+        \norm{\bm{y}-\bm{X}_{\bm{\gamma}_{t}\cup j}\bm{w}}^{2}$ 
+    \item Orthogonal matching pursuits: as Orthogonal least squares is somewhat 
+        expensive, a simplification is to freeze the current weight and then pick the 
+        next feature to add by solving $j^{*} = \argmin_{j\notin\bm{\gamma}_{t}}
+        \min_{\beta} \norm{\bm{y}-\bm{X}\bm{w}_{t} - \beta\bm{x}_{:,j}}^{2}$.
+        $\beta = \frac{\bm{x}_{:,j}^{T}\bm{r}_{t}}{\norm{\bm{x}_{:,j}}^{2}}$, where
+        $\bm{r} = \bm{y}-\bm{X}\bm{w}_{t}$
+    \item Backward selection: starts with all variables in the model and deletes the
+    \item Bayesian matching pursuits: similar to OMP except it uses a Bayesian marginal
+        likelihood scoring criterion instead of a least square objective.
+\end{itemize}
+
+\paragraph{Strengths}
+\paragraph{Weaknesses}
+\paragraph{Relationships with other methods}
+\paragraph{Examples of application}
+
+%\subsection{Logistic Regression}
+%\paragraph{Purpose}
+%\paragraph{Assumptions}
+%\paragraph{Theory}
+%\paragraph{Strengths}
+%\paragraph{Weaknesses}
+%\paragraph{Relationships with other methods}
+%\paragraph{Examples of application}

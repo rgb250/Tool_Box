@@ -1,0 +1,61 @@
+\subsection{$l_{1}$ regularization}
+\paragraph{Purpose}
+
+\paragraph{Assumptions}
+We assume $\prob{\bm{w}|\lambda} = \prd{j=1}{D}\text{\emph{Lap}}(w_{j}|0,
+\frac{1}{\lambda}) \propto \prd{j=1}{D}e^{-\lambda|w_{j}|}$
+\paragraph{Theory}
+For penalized negative log likelihood has the form: $f(\bm{w}) = -\log\left(\prob{
+\mathcal{D}|\bm{w}}\right) - \log\left(\prob{\bm{w}|\lambda}\right) = \text{\emph{NLL}}
+(\bm{w}) + \lambda\norm{\bm{w}}_{1}$.\\
+Geometrically we understand that as we relax the constraint we grow $l_{1}$ ball until
+it meets the objective, \tB{the corners of the ball are more likely to intersect the
+ellipse than one of the sides} especially in high dimensions because the corners "stick
+out". The corners correspond to sparse solutions which lie on the coordinate axes. By
+contrast when we grow the $l_{2}$ ball it can intersect the objective at any point, 
+there are no "corners" so there is no preference for sparsity. 
+\paragraph{Strengths}
+\begin{itemize}
+    \item can give quite different results if the data is slightly perturbed
+\end{itemize}
+
+\paragraph{Weaknesses}
+\paragraph{Relationships with other methods}
+\paragraph{Examples of application}
+
+\subsection{Regularization path}
+\paragraph{Purpose}
+As we increase $\lambda$, the solution vector $\hat{\bm{w}}(\lambda)$ will tend to get
+sparser, although not necessary monotically. For each feature $j$ we can plot the 
+values $\hat{w}_{j}(\lambda)$ vs $\lambda$ which is known as \emph{regularization path}
+\paragraph{Assumptions}
+\paragraph{Theory}
+\paragraph{Strengths}
+\paragraph{Weaknesses}
+\paragraph{Relationships with other methods}
+\paragraph{Examples of application}
+
+\subsection{$l_{1}$ algorithms}
+\paragraph{Purpose}
+These algorithms exploit the fact that one can quickly compute $\hat{\bm{w}}(
+\lambda_{k})$ from $\hat{\bm{w}}(\lambda_{k-1})$ if $\lambda_{k} \approx \lambda_{k-1}$
+this is known as \emph{warm starting}.
+\paragraph{Assumptions}
+\paragraph{Theory}
+\subparagraph{Coordinate descent}
+$w^{*}_{j} = \argmin_{z}f(\bm{w} + z\bm{e}_{j}) - f(\bm{w})$ with $\bm{e}_{j}$ is the 
+\emph{j}'th unit vector. 
+
+\paragraph{Strengths}
+\paragraph{Weaknesses}
+\paragraph{Relationships with other methods}
+\paragraph{Examples of application}
+
+%\subsection{Logistic Regression}
+%\paragraph{Purpose}
+%\paragraph{Assumptions}
+%\paragraph{Theory}
+%\paragraph{Strengths}
+%\paragraph{Weaknesses}
+%\paragraph{Relationships with other methods}
+%\paragraph{Examples of application}

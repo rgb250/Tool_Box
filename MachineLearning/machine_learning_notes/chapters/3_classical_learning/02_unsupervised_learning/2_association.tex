@@ -1,0 +1,46 @@
+\subsection{Directed graphical models}
+\paragraph{Purpose}
+Relevant to compactly represent the joint distribution $\prob{\bm{x}|\bm{\theta}}$ and 
+then \textit{infer} one set of variables given another, and how \textit{learn} the
+parameters of this distribution.
+\paragraph{Assumptions}
+\paragraph{Theory}
+\subparagraph{Graph terminology}
+let's consider a \emph{graph} $G=(\mathcal{V}, \mathcal{E})$ consisting of a set of 
+\emph{vertices} or nodes $\mathcal{V} = {v}_{1\leq v\leq V}$ and \emph{edges}, 
+$\mathcal{E} = \left\{(s,t): s,t\in\mathcal{V}^{2}\right\}$
+\begin{itemize}
+    \item \emph{Cycle}: series a cycle to be a series of nodes such that we can get 
+        back to where we started by following edges.
+    \item \emph{DAG}: Directed Acyclic Graph is a drected graph without cycles.
+    \item \emph{Tree}: Undirected graph without cycles.
+    \item \emph{Forest}: set of trees
+\end{itemize}
+A \textbf{Directed Graphical Model (DGM)} are more commonly known as \emph{Bayesian 
+Networks}.\\
+In partitionning the data into \emph{visible variables} $\bm{x}_{v}$ and \emph{hdden
+variables} $\bm{x}_{h}$, inference refers to computing the posterior distribution of 
+the unknows given the knows:
+\begin{center}
+    $\prob{\bm{x}_{h}|\bm{x}_{v},\bm{\theta}} = \dfrac{p(\bm{x}_{h}, \bm{x}_{v}|
+    \bm{\theta})}{p(\bm{x}_{v}|\bm{\theta})} = \dfrac{p(\bm{x}_{h}, \bm{x}_{v}|
+\bm{\theta})}{\su{\bm{x'}_{h}}{}p(\bm{x'}_{h}, \bm{x}_{v}|\bm{\theta})}$
+\end{center}
+
+
+\paragraph{Strengths}
+\paragraph{Weaknesses}
+\paragraph{Relationships with other methods}
+\paragraph{Examples of application}
+
+
+
+
+%\subsection{Logistic Regression}
+%\paragraph{Purpose}
+%\paragraph{Assumptions}
+%\paragraph{Theory}
+%\paragraph{Strengths}
+%\paragraph{Weaknesses}
+%\paragraph{Relationships with other methods}
+%\paragraph{Examples of application}

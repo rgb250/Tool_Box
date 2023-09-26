@@ -1,0 +1,76 @@
+\subsection{Mixture models}
+\paragraph{Purpose}
+It is the simplest form of \emph{Latent Variable Models (LVMs)} is when $z_{i}\in
+\{k\}_{1\leq k\leq K}$. 2 mains application of mixture models:
+\begin{itemize}
+    \item use them as \emph{black-box} density model, $p(\bm{x}_{i})$, useful for data
+        compression, outlier detection and creating generative classifiers
+    \item use for clustering
+\end{itemize}
+
+\paragraph{Assumptions}
+\paragraph{Theory}
+We use a discrete prior $p(z_{i}) = \text{\emph{Cat}}(\bm{\ conda install -c conda-forge juliapi})$ and the likelihood
+$p(\bm{x}_{i}|z_{i} = k)$, finally the \textbf{mixture model} is :
+\begin{center}
+    $\prob{\bm{x}_{i}|\bm{\theta}} = \su{k=1}{K}\pi_{k}\prob{\bm{x}_{i}|z_{i}=k,
+    \bm{\theta}} = \su{k=1}{K}\pi_{k}\mathbb{P}_{k}\left(\bm{x}_{i}|\bm{\theta}\right)$
+\end{center}
+where $\mathbb{P}_{k}$ is the $k$'th \emph{base distribution}.
+\subparagraph{Mixtures of Gaussian}
+Each base distribution in the mixture is a multivariate Gaussian with mean $\mu_{k}$ 
+and covariance matrix $\bm{\Sigma}_{k}$:
+$\prob{\bm{x}_{i}|\bm{\theta}}=\su{k=1}\pi_{k}\mathcal{N}\left(\bm{x}_{i}|\bm{\mu}_{k},
+    \bm{\Sigma_{k}}\right)$\\
+Given a sufficiently large number of mixture components a \tB{Gaussian Mixture Models
+(GMMs) can be used to approximate any density defined on $\mathbb{R}^{D}$}.
+\subparagraph{Mixtures of multinoullis}
+can be used to define density models on data consisting of a \emph{D}-dimensional bit
+vectors: $\prob{\bm{x}_{i}|z_{i}=k,\bm{\theta}} = \prd{j=1}{D}\text{\emph{Ber}}(x_{ij}|
+\mu_{jk})=\prd{j=1}{D}\mu_{jk}^{x_{ij}}(1-\mu_{jk})^{1-x_{ij}}$\\
+where $\mu_{jk}$ is the probability that bit $j$ turns on in cluster $k$.
+\subparagraph{Mixture of experts}
+are build from a discriminative perspective, they relies on the idea that a good
+model different linear method each applying to a different part of the input space.\\
+We can model this by allowing the mixing weights and the mixture densities to be
+input-dependent: 
+\begin{center}
+    $\begin{cases}
+        \prob{y_{i}|\bm{x}_{i},z_{i}=k,\bm{\theta}} = \mathcal{N}(y_{i}|\bm{w}_{k}^{T}
+        \bm{x}_{i},\sigma_{k}^{2}) \\
+        \prob{z_{i}|\bm{x}_{i},\bm{\theta}} = \text{\emph{Cat}}(z_{i}|S(\bm{V}^{T}
+        \bm{x}_{i}))
+    \end{cases}$
+\end{center}
+Useful in solving inverse problems, the ones in which we have to invert a many-to-one
+mapping, for example in robotics where the location of the end effector (hand) $\bm{y}$
+is uniquely determined by the joint angles of the motors, $\bm{x}$.
+
+The overall posterior is then
+\begin{center}
+    \fr{$\prob{y_{i}|\bm{x}_{i},\bm{\theta}} = \su{k}{}\prob{z_{i}=k|\bm{x}_{i},z_{i}=k
+    ,\bm{\theta}}$}
+\end{center}
+
+
+
+
+\paragraph{Strengths}
+
+\paragraph{Weaknesses}
+\begin{itemize}
+    \item Use of a single latent variable to generate the observation
+\end{itemize}
+
+\paragraph{Relationships with other methods}
+\paragraph{Examples of application}
+
+
+%\subsection{Logistic Regression}
+%\paragraph{Purpose}
+%\paragraph{Assumptions}
+%\paragraph{Theory}
+%\paragraph{Strengths}
+%\paragraph{Weaknesses}
+%\paragraph{Relationships with other methods}
+%\paragraph{Examples of application}

@@ -104,7 +104,13 @@ Advantages of Ridge regression on OLS regression:
         will not have much effect on the prediction. In term of predictive accuracy
         \emph{Ridge} regression is more interesting than \emph{PCA} regression.
 \end{itemize}
+\subparagraph{Lasso (Least Absolute Shrinkage and Abosolute Selection Operator)}
+$\hat{\bm{w}}_{Lasso} = sign(\hat{\bm{w}}_{OLS})\left[|\hat{\bm{w}}_{OLS}| -\dfrac{
+\lambda}{2}\right] $
 
+\subparagraph{Elastic-Net}
+In practice Elastic-Net often performs best, since it provides a good combination of
+sparsity and regularization.
 \paragraph{Strengths}
 \begin{itemize}
     \item Simple
@@ -188,3 +194,105 @@ range. A simple form of link function is to use $g=\Phi$, $g$ is then called
 \paragraph{Weaknesses}
 \paragraph{Relationships with other methods}
 \paragraph{Examples of application}
+
+
+\subsection{Learning to rank}
+\paragraph{Purpose}
+Modeling a function being able to rank a set of items.
+
+
+
+\paragraph{Assumptions}
+\paragraph{Theory}
+Let us consider a document $d$ and a query $q$, a standard way to measure the relevance
+between the both is to use $\text{\emph{sim}}(q,d) \triangleq \prob{q|d} = \prd{i=1}{n}
+\prob{q_{i}}{d}$ with $q_{i}$ being the $i^{\text{\emph{th}}}$ word or term of $q$.
+\subparagraph{Pointwise approach}
+for binary relevance labels, we can follow a standard binary classification scheme to
+estimate $\prob{y=1|\bm{x}(q,d)}$, in the case of ordered relevancy labels we can use
+an \tB{\emph{ordinal regression} to predict the rating $\prob{y=r|\bm{x}(q,d)}$}.\\
+However this method does not take into account the location of each document in the 
+list.
+\subparagraph{Pairwise approach}
+to \tB{check the relative relevance of two items rather than absolute relevance}. We 
+can model this kind of data using a binary classifier of the form \tB{$\prob{y_{jk}|
+\bm{x}(q,d_{j})\bm{x}(q,d_{k})} = \sigma\left(f(\bm{x}_{j}) - f(\bm{x}_{k})\right)$} 
+where $f$ is a scoring function, often taken to be linear: $f(\bm{x}) = \bm{w}^{T}
+\bm{x}$.
+
+\subparagraph{Listwise approach}
+we now consider methods looking at the entire list of items at the same time. We can 
+define a total order on a list by specifying a permutation of its indices: $\bm{\pi}$.
+To model the uncertainty about $\bm{\pi}$ we can use the \emph{Plackett-Luce} 
+distribution. $\prob{p(\bm{\pi}|\bm{s})} = \prd{j=1}{m}\dfrac{s_{j}}{\su{u=j}{m}s_{u}}$
+Where $s_{j}=s\left(\pi^{-1}(j)\right)$
+\paragraph{Strengths}
+\paragraph{Weaknesses}
+\paragraph{Relationships with other methods}
+\paragraph{Examples of application}
+\begin{itemize}
+    \item \emph{information retrieval} return a list of the top $k$ more relevant 
+        documents, depending on a given query 
+\end{itemize}
+
+\subsection{Supervised PCA}
+\paragraph{Purpose}
+Also called \emph{Bayesian factor regression} this model take in account $y_{i}$ when
+learning the low dimension embedding.
+\paragraph{Assumptions}
+\paragraph{Theory}
+$\begin{cases}
+    \prob{\bm{z}_{i}} = \mathcal{N}\left(\bm{0}, \bm{I}_{L}\right) \\
+    \prob{y_{i}|\bm{z}_{i}} = \mathcal{N}\left(\bm{w}_{y}^{T}\bm{z}_{i},
+    +\mu_{y},\sigma_{y}^{2}\right) \\
+    \prob{x_{i}|\bm{z}_{i}} = \mathcal{N}\left(\bm{W}_{x}^{T}\bm{z}_{i},
+    +\bm{\mu}_{x},\sigma_{x}^{2}\bm{I}_{D}\right)
+\end{cases}$
+The basic idea compressing $\bm{x}_{i}$ to predict $y_{i}$ can be formulated using
+information theory, in particular we might want to find an encoding distribution
+$\prob{\bm{z}|\bm{x}}$ such that we minimize $\mathbb{I}(X;Z) - \beta\mathbb{I}(X;Y)$.
+Where $\beta\geq 0$, the \emph{information bottleneck} is some parameter controlling 
+the trade-off between compression and predictive accuracy.
+\paragraph{Strengths}
+\paragraph{Weaknesses}
+\paragraph{Relationships with other methods}
+\begin{itemize}
+    \item PCA
+\end{itemize}
+
+\paragraph{Examples of application}
+\begin{itemize}
+    \item predict the movies that you would like knowing who your friends are as well 
+        as the rating from other users
+\end{itemize}
+
+
+\subsection{Partial Least Squares}
+\paragraph{Purpose}
+The key idea is to allow some of the (co)variance in the input features to be explained
+by its own subspace $\bm{z}_{i}^{x}$ and to let the remaining of subspace $\bm{z}_{i}^{
+s}$ be shared between input and output.
+\paragraph{Assumptions}
+\paragraph{Theory}
+$\begin{cases}
+    \prob{\bm{z}_{i}} = \mathcal{N}\left(\bm{z}^{s}_{i}|\bm{0},\bm{I}_{L_{s}}\right)
+    \mathcal{N}\left(\bm{z}^{x}_{i}|\bm{0},\bm{I}_{L_{x}}\right)\\
+    \prob{\bm{y}_{i}|\bm{z}_{i}} = \mathcal{N}\left(\bm{W}_{y}\bm{z}^{s}_{i} + 
+    \bm{\mu}_{y},\sigma^{2}\bm{I}_{D_{y}}
+    \right)\\
+        \prob{\bm{x}_{i}|\bm{z}_{i}} = \mathcal{N}\left(\bm{W}_{x}\bm{z}^{s}_{i} + \bm{B}_{x}
+        \bm{z}^{x}_{i} + \bm{\mu}_{x},\sigma^{2}\bm{I}_{D_{x}}\right)
+\end{cases}$
+\paragraph{Strengths}
+\paragraph{Weaknesses}
+\paragraph{Relationships with other methods}
+\paragraph{Examples of application}
+
+%\subsection{Logistic Regression}
+%\paragraph{Purpose}
+%\paragraph{Assumptions}
+%\paragraph{Theory}
+%\paragraph{Strengths}
+%\paragraph{Weaknesses}
+%\paragraph{Relationships with other methods}
+%\paragraph{Examples of application}

@@ -1,0 +1,44 @@
+\subsection{EM Algorithm}
+\paragraph{Purpose}
+Gradient-based optimizer used to find a local minimum of the \emph{Negative Log 
+Likelihood} can be stuck with the imposed constraint like positive definite covariance*
+matrices, mixing weights having to sum to one.\\
+In a few words \emph{Expectation Maximization (EM)} which alternates between \tB{
+inferring the missing values given the parameters (\emph{E step}), and then optimizing 
+the parameters given the filled in data (M step)}.\\
+The goal is to maximize the log likelihood of the observed data:
+\begin{center}
+    $l(\theta) = \su{i=1}{n}\log(\prob{\bm{x}_{i}|\bm{\theta}}) = 
+    \su{i=1}{n}\log\left(\su{z_{i}}{}\prob{\bm{x}_{i},\bm{z}_{i}|\bm{\theta}}\right)
+    $
+\end{center}
+since the log cannot be pushed inside the sum, it is difficult to optimize, EM gets 
+around this problem in defining the \emph{complete data log likelihood} to be
+$l_c(\bm{\theta}) \triangleq \su{i=1}{n}\log\left(\prob{\bm{x}_{i},\bm{z}_{i}|
+\bm{\theta}}\right)$. But it cannot be computed since $\bm{z}_{i}$ is unknown. So let's
+define the \textbf{expected complete data log likelihood}:
+\begin{center}
+    $Q(\bm{\theta}, \bm{\theta}^{t-1}) = \mathbb{E}\left(l_{c}(\bm{\theta}|\mathcal{D},
+    \bm{\theta}^{t-1})\right)$
+\end{center}
+where $t$ is the current iteration number, $Q$ is called the \textbf{auxiliary 
+function}. \tB{The goal of the \emph{E step} is to compute $Q(\bm{\theta},
+\bm{\theta}^{t-1})$}, in the \emph{M step} we optimize the $Q$ function.
+
+
+\paragraph{Assumptions}
+\paragraph{Theory}
+\paragraph{Strengths}
+\paragraph{Weaknesses}
+\paragraph{Relationships with other methods}
+\paragraph{Examples of application}
+
+
+%\subsection{Logistic Regression}
+%\paragraph{Purpose}
+%\paragraph{Assumptions}
+%\paragraph{Theory}
+%\paragraph{Strengths}
+%\paragraph{Weaknesses}
+%\paragraph{Relationships with other methods}
+%\paragraph{Examples of application}
