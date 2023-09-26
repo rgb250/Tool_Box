@@ -34,6 +34,57 @@ the unknows given the knows:
 \paragraph{Examples of application}
 
 
+\subsection{Kernels}
+\paragraph{Purpose}
+Measuring the similarity between 2 objects that does not require preprocessing them 
+into feature vector format.
+
+\paragraph{Assumptions}
+\paragraph{Theory}
+\begin{itemize}
+    \item \emph{Radial Basis Function (RBF)}, or Gaussian kernel:  $k(\bm{x}, \bm{x}')
+        = e^{\frac{1}{2}(\bm{x} - \bm{x}')^{T}\bm{\Sigma^{-1}}(\bm{x} - \bm{x}')}$
+    \item \emph{Mercer} kernel: kernel for which the \emph{Gram matrix} 
+        $K=\begin{pmatrix}
+            k(\bm{x}_{1}, \bm{x}_{1}) & \cdots & k(\bm{x}_{1}, \bm{x}_{n}) \\
+                                      & \vdots &\\
+            k(\bm{x}_{n}, \bm{x}_{1}) & \cdots & k(\bm{x}_{n}, \bm{x}_{n}) 
+        \end{pmatrix}$ \uB{is positive definite}
+    \item \emph{Linear} kernel: $k(\bm{x},\bm{x}') = \bm{x}^{T}\bm{x}'$, useful if 
+        original data is already high dimensional and features individually informative
+    \item \emph{Matern} kernels: $k(r) = \frac{2^{1-\nu}}{\Gamma(\nu)}\left(\frac{
+        \sqrt{2\nu r}}{l}\right)^{\nu}\bm{K}_{\nu}\left(\frac{\sqrt{2\nu r}}{l}\right)$
+        where $r=\norm{\bm{x} - \bm{x}'}$, $\nu >0$, $l>0$ and $\bm{K}_{\nu}$ a 
+        modified Bessel function. 
+    \item \emph{Probability product} kernels: $k(\bm{x}_{i},\bm{x}_{j}) = 
+        \Su{}{}\prob{\bm{x}|\bm{x}_{i}}^{\rho}\prob{\bm{x}|\bm{x}_{j}}^{\rho}d\bm{x}$
+        where $\rho > 0$, relevant for a probabilistic generative model.
+    \item \emph{Fisher} kernels: $k(\bm{x},\bm{x}') = \bm{g}(\bm{x})^{T}\bm{F}^{-1}
+        \bm{g}(\bm{x}')^{T}$ where $g$ is the gradient of the log-likelihood and 
+        $\bm{F}$ is the Fisher information matrix. 
+\end{itemize}
+\subparagraph{Kernel machines}
+is a GLM where the input feature vector has the form $\phi(\bm{x}) = \left(
+k(\bm{x}, \bm{\mu}_{k})\right)_{1\leq k\leq K}$ where $\bm{\mu}_{k}$ being the kth 
+centroid.
+We can use any of the sparsity-promoting priors for $\bm{w}$ to efficiently select a 
+subset of the training exemplars, it is \uB{sparse vector machine}.
+We can get even greater sparsity by using \emph{ARD/SBL} resulting in a method called
+the Relevance Vector Machine (RVM).
+\subparagraph{Kernel trick}
+Rather than defining our feature vector in terms of kernels, $\phi(\bm{x}) = \left(
+k(\bm{x},\bm{x}_{i})\right)_{1\leq i\leq n}$, we can instead work with the original 
+feature vectors $\bm{x}$ but modify algorithm so that we replace all inner product 
+$\sP{\bm{x}}{\bm{x}'}$ with a call to the kernel function $\k(\bm{x}, \bm{x}')$.
+
+
+\paragraph{Strengths}
+\paragraph{Weaknesses}
+\paragraph{Relationships with other methods}
+\paragraph{Examples of application}
+\begin{itemize}
+    \item comparing documents
+\end{itemize}
 
 
 %\subsection{Logistic Regression}
