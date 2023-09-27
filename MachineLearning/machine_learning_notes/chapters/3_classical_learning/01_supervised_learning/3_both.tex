@@ -66,6 +66,69 @@ The overall posterior is then
 \paragraph{Examples of application}
 
 
+\subsection{Support Vector Machines (SVMs)}
+\paragraph{Purpose}
+The \tB{combination of the \emph{kernel trick} plus a modified loss function 
+allowing \emph{sparsity}}, meaning that the prediction will only depend on a
+subset of the training data called \emph{support vectors}. The overall 
+process is known as a \emph{Support Vector Machine}.\\
+Because of sparsity encoding in the loss function instead of in the prior, 
+kernel encoding through a trick instead of being an explicit part of the 
+model,\tB{SVMs do not provide probabilistic outputs}.
+\subparagraph{SVMs for regression}
+with \emph{kernalized ridge regression} the solution $\bm{w}$ depends on all 
+the training inputs. We should then use a variant of \emph{Huber loss} 
+function: the \tB{\textit{epsilon insensitive loss function}}: 
+\begin{center}
+    \fr{$L_{\epsilon}\left(y-\hat{y}\right) = 
+    \begin{cases}
+        0 & \Leftarrow \lvert y-\hat{y}\rvert < \epsilon \\
+        \lvert y-\hat{y}\rvert -\epsilon &\Leftarrow \lvert y-\hat{y}\rvert 
+            \geq \epsilon    
+    \end{cases}$}
+\end{center}
+meaning that any point lying inside an $\epsilon\text{-\textbf{tube}}$ a
+around the prediction is not penalized: $J=C\su{i=1}{n}L_{\epsilon}\left(
+y_{i} - \hat{y}_{i}\right) + \frac{1}{2}\norm{\bm{w}}^{2}$, with $C=\frac{1}{
+\lambda}$ is a \emph{regularization constant}.\\
+It can be shown that \tB{optimal solution has the form $\hat{\bm{w}} = \su{i}{
+}\alpha_{i} \bm{x}_{i}$, where $\alpha_{i}\geq 0$}. It turns out that \tB{
+$\bm{\alpha}$ is sparse as we don't care about errors which are smaller than 
+$\epsilon$. The $\bm{x}_{i}$ for which $\alpha_{i}>0$ are the \textbf{support 
+vectors}}.\\
+Then we have $\hat{y}(\bm{x}) = \hat{w}_{0} + \hat{\bm{w}}\bm{x}  = \hat{w}_{0}
++ \su{i}{}\alpha_{i}\bm{x}_{i}^{T}\bm{x} = \su{i}{}\alpha_{i}k(\bm{x},\bm{x}_{i})$
+
+\subparagraph{Classification}
+we consider now the \emph{hinge loss}:
+\begin{center}
+    $L_{hinge}(y,\eta) = \max\left(0, 1-y\eta\right) = \left(1-y\eta\right)_{+}$
+\end{center}
+where $\eta=f(\bm{x})$ is our 'confidence' in choosing label $y=1$ however it does not
+need to have any probabilistic semantics.\\
+The overall objective has the form $\min_{\bm{w}:w_{0}}\frac{1}{2}\norm{\bm{w}}^{2} +
+C\su{i=1}{n}\left(1-y_{i},f(\bm{x}_{i})\right)$. Same principle as in regression, but
+this time \tB{$\hat{y}(\bm{x}) = sgn\left(f(\bm{x})\right) = sgn\left(\hat{w}_{0} +
+\hat{\bm{w}}^{T}\bm{x}\right)= sgn\left(\hat{w}_{0} + \su{i=1}{n}\alpha_{i}k(\bm{x}_{i}
+,\bm{x})\right)$}
+
+
+\paragraph{Assumptions}
+\paragraph{Theory}
+\paragraph{Strengths}
+\begin{itemize}
+    \item computational advantages over probabilistic model
+\end{itemize}
+
+\paragraph{Weaknesses}
+\begin{itemize}
+    \item issues for multi-class classification due to the non-probabilistic 
+        aspect of the model
+\end{itemize}
+
+\paragraph{Relationships with other methods}
+\paragraph{Examples of application}
+
 %\subsection{Logistic Regression}
 %\paragraph{Purpose}
 %\paragraph{Assumptions}

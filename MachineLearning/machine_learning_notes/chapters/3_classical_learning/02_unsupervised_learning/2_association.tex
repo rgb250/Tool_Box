@@ -73,9 +73,38 @@ We can get even greater sparsity by using \emph{ARD/SBL} resulting in a method c
 the Relevance Vector Machine (RVM).
 \subparagraph{Kernel trick}
 Rather than defining our feature vector in terms of kernels, $\phi(\bm{x}) = \left(
-k(\bm{x},\bm{x}_{i})\right)_{1\leq i\leq n}$, we can instead work with the original 
-feature vectors $\bm{x}$ but modify algorithm so that we replace all inner product 
-$\sP{\bm{x}}{\bm{x}'}$ with a call to the kernel function $\k(\bm{x}, \bm{x}')$.
+k(\bm{x},\bm{x}_{i})\right)_{1\leq i\leq n}$, \tR{we can instead work with the 
+original feature vectors $\bm{x}$ but modify algorithm so that we replace all inner 
+product $\sP{\bm{x}}{\bm{x}'}$ with a call to the kernel function 
+$k(\bm{x}, \bm{x}')$}.
+
+\subparagraph{Kernalized model}
+\begin{itemize}
+    \item \emph{Nearest Neighbor (Classification)}: in using $\norm{\bm{x}_{i}
+        -\bm{x}_{i'}}^{2}_{2} = \sP{\bm{x}_{i}}{\bm{x}_{i}}  +
+        \sP{\bm{x}_{i'}}{\bm{x}_{i'}} -2\sP{\bm{x}_{i}}{\bm{x}_{i'}}$
+    \item \emph{K-medoids (Clustering)}: similar to K-means, but instead of
+        representing each cluster's centroid by the mean of all data vectors
+        assigned to this cluster, we make each centroid be one of the data 
+        vectors themselves. \uB{When we update the centroids, we look at each 
+        object that belong to the cluster and measure the sum of its 
+        distance to all others in the same cluster} with: $m_{k} = 
+        \argmin_{i:z_{i}=k}\su{i':z_{i'}=k}{}
+        \norm{\bm{x}_{i}-\bm{x}_{i'}}^{2}_{2}$ where $z_{i} = \argmin_{k} 
+        d(i,m_{k})$
+    \item \emph{Ridge Regression}: using the matrix inversion lemme, $\bm{w}_{
+        Ridge} = \bm{X}_{T}\left(\bm{X}\bm{X}^{T}+\lambda\bm{I}_{n}\right)^{
+        -1}\bm{y}$, we can partially kernalize this by replacing $\bm{X}
+        \bm{X}^{T}$ with the \emph{Gram matrix}. Let's define \uB{\textbf{dual
+        variables} $\bm{\alpha} \triangleq \left(\bm{K}+\lambda\bm{I}_{n}
+        \right)\bm{y}$} then we rewrite the \uB{\textit{primal variables} 
+        $\bm{w}= \bm{X}^{T}\alpha$}$=\su{i=1}{n}\alpha_{i}\bm{x}_{i}^{T}\bm{x}
+        _{i} = \su{i=1}{n}\alpha_{i}k(\bm{x}_{i},\bm{x})$
+    \item \emph{PCA}: \uB{from the eigenvectors of the inner product matrix 
+        $\bm{X}\bm{X}^{T}$, allowing to produce a nonlinear embedding using
+        kernel trick}. The mathematical demonstration is long and not 
+        important.
+\end{itemize}
 
 
 \paragraph{Strengths}

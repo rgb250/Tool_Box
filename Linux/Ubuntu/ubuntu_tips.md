@@ -1,9 +1,20 @@
 
 # 1) Packages
-## a. How to install packages
+## a. How to install/uninstall packages
 - Deb
 ```bash
 sudo dpkg -i package_deb  # dpkg --> Debian Package Management System
+sudo dpkg -P package_deb  # P for purge to remove config files as well
+```
+- Snap
+```bash
+sudo snap install package_snap  # install
+sudo snap remove package_snap   # remove
+```
+- Apt
+```bash
+sudo apt-get remove package_snap  # install 
+sudo apt-get  package_snap        # remove
 ```
 ## b. How to check the list of packages
 - Apt-get
@@ -23,7 +34,16 @@ sudo dpkg -i package_deb  # dpkg --> Debian Package Management System
     ```bash
     snap search <keyword>  # search for all packages containing <keyword>
     ```
-# 2) Networks
+# 2) Compressed files
+- ''tar.gz'' files
+    ```bash
+    tar -xvzf <compressed_file_name>.tar.gz  # x --> collect and extract,
+    v --> verbose, z --> tells tar to decompress the archive using gzip,
+    f --> tells tar the path of the compressed file
+    ```
+
+
+# 3) Networks
 ## a. Speedtest from 
 ```bash
 speedtest
