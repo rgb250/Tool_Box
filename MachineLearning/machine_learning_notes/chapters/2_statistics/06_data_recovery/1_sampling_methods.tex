@@ -1,16 +1,69 @@
-\subsection{Monte Carlo}
+\subsection{Monte Carlo approximation}
+\paragraph{Purpose}
+computing the distribution of a random variable's function using the change of variables formula can
+be difficult.\\
+As simple and powerful alternative is to \tB{generate $S$ samples $(x_{s})_{1\leq s\leq S}$ from the 
+distribution}.
+\paragraph{Theory}
+Given the samples we can approximate the distribution of $f(X)$ by using the empirical 
+distribution of $\left\{f(x_{s})\right\}_{1\leq s\leq S}$\\
+We can use Monte Carlo to approximate the expected value of any function of a random variable:
+\begin{center}
+    \fr{$\E{f(X)} = \Su{}{}f(x)p(x)dx\approx \dfrac{1}{S}\su{s=1}{S}f(x_{s})$}
+\end{center}
+where $x_{s}\hookrightarrow p(X)$. This called Monte Carlo integration
+\paragraph{Accuracy}
+It increases with sample size.\\
+In denoting $\mu = \E{f(X)}$ the exact mean and $\hat{\mu}$ the MC approximation, one can show that
+\begin{center}
+    $(\hat{\mu} - \mu) \hookrightarrow \mathcal{N}\left(0, \dfrac{\sigma^{2}}{S}\right)$
+\end{center}
+where $\sigma^{2} = \V{f(X)}$ \uB{this is a consequence of central-limit theorem}, of course 
+$\sigma^{2}$ is unknown.\\
+\tR{$\sqrt{\frac{\hat{\sigma}^{2}}{S}}$ is called the \emph{standard error} and is an estimate of our
+uncertainty about our estimate $\mu$}
 
-
+\paragraph{Strengths}
+\begin{itemize}
+    \item function only evaluated in places where there is non-negligible probability: advantage over
+        numerical integration 
+\end{itemize}
+\paragraph{Examples}
+\begin{itemize}
+    \item estimating $\pi$
+\end{itemize}
 
 \subsection{Bootstrap}
 \paragraph{Purpose}
-In practice 32 bootstrap seems to be a good compromise between speed and accuracy.
-\paragraph{Assumptions}
+In practice 32 bootstrap seems to be a good compromise between speed and accuracy.\\
+\tB{It is a Monte Carlo technique to approximate the sampling distribution.}
 \paragraph{Theory}
+If we knew the true parameters $\theta^{*}$ we could generate $S$ fake datasets of size
+$N$ from the distribution $\forall (i,s)\in\inter{1}{n}\times\inter{1}{s}, x^{s}_{i}
+\hookrightarrow p(\cdot|\theta^{*})$\\
+We could then compute our estimator from each sample: $\hat{\theta}^{s} = f(x^{s})$.\\
+Then 2 approaches:
+\begin{itemize}
+    \item \emph{parametric}: generate the samples using $\hat{\theta}(\mathcal{D})$ as
+        $\theta$ is unknown
+    \item \emph{non-parametric}: sample the $\left(x^{s}\right)_{1\leq s\leq S}$ with
+        replacement from the original $\mathcal{D}$ and then compute induced 
+        distribution
+\end{itemize}
+
+\paragraph{Connection between $\hat{\theta}^{s} = \hat{\theta}(x^{s})$ and $\theta^{s}
+\hookrightarrow p(\cdot|\mathcal{D})$}
+Conceptually quite different, but in the common case the prior is not very strong
+they can be quite similar. 
+One can think of the \tB{bootstrap distribution distribution as a "poor man's" 
+posterior}.
+
+
 \paragraph{Strengths}
-\paragraph{Weaknesses}
-\paragraph{Relationships with other methods}
-\paragraph{Examples of application}
+\begin{itemize}
+    \item Useful \uB{when the estimator is a complex function of of the true parameter}
+\end{itemize}
+
 
 %\subsection{Logistic Regression}
 %\paragraph{Purpose}

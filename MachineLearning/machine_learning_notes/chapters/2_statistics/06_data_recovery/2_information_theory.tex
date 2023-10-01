@@ -1,1 +1,56 @@
-\subsection{KL divergence}
+\subsection{Entropy}
+\paragraph{Purpose}
+It is a \tB{measure of the uncertainty in a random variable}.
+\paragraph{Theory}
+\begin{center}
+    \fr{$\mathbb{H}(X) \triangleq -\su{k=1}{K}\prob{X=k}\log\left(p(X=k)\right)$}
+\end{center}
+The discrete distribution with \uB{maximum entropy is the uniform distribution},
+conversely the one with \uB{minimum entropy is any delta-function} that puts all its
+mass on one state.
+
+
+\subsection{Kullback-Leibler (KL) divergence}
+\paragraph{Purpose}
+It is a \tB{measure of dissimilarity of 2 probability distribution $p$ and $q$}.
+\paragraph{Theory}
+\tB{\begin{align*}
+    \mathbb{KL}(p||q) &= \su{k=1}{K}p_{k}\log\left(\dfrac{p_{k}}{q_{k}}\right)\\
+                      &= \su{k=1}{K}p_{k}\log(p_{k}) - \su{k=1}{K}p_{k}\log(q_{k})\\
+                      &= -\mathbb{H}(p) + \mathbb{H}(p,q)
+\end{align*}}
+Where $\mathbb{H}(p,q)$ is called \emph{cross entropy}, \tB{being the average number of
+bits needed to encode data coming from a source with distribution $p$ when we use model
+$q$ to define our codebook}.
+
+\subsection{Mutual information}
+\paragraph{Purpose}
+Correlation coefficient is quite restrictive, a more general approach is to determine
+\tB{how similar the joint distribution $p(X,Y)$ is to the factorized distribution $p(X)
+p(Y)$}
+
+\paragraph{Theory}
+\subparagraph{Discrete}
+\begin{center}
+    \fr{$\mathbb{I}(X,Y) \triangleq \mathbb{KL}\left(p(X,Y)||p(X)p(Y)\right) =
+    \mathbb{H}(X)- \mathbb{H}(X|Y) = \mathbb{H}(Y)-\mathbb{H}(Y|X)$}
+\end{center}
+where $\mathbb{H}(Y|X)$ is the \tB{\emph{conditional entropy}} defined as 
+\tB{$\mathbb{H}(Y|X) =\Sigma_{x}p(x)\mathbb{H}(Y|X=x)$}
+Thus we can interpret the \tR{\emph{Mutual Information} between $X$ and $Y$ as the 
+reduction in uncertainty about $X$ after observing Y, or, by symmetry about $Y$ after
+observing $X$}.
+
+\subparagraph{Continuous}
+Quantizing can have significant impact on the results, we could then try to estimate
+many different bin sizes and locations to finally compute the maximum MI achieved 
+called \emph{maximal information coefficient}:
+\begin{center}
+    $m(x,y) = \dfrac{\max_{G\in\mathcal{G}(x,y)}\mathbb{I}\left(X(G),Y(G)\right)}{
+    \log\left(min(x,y)\right)}$
+\end{center}
+where $\mathcal{G}(x,y)$ is the set of 2d grids of size $x\times y$ and $X(G), Y(G)$
+represents a discretization of the variable onto the grid.
+\tB{$MIC\triangleq\max_{x,y:xy<B}m(x,y)$}
+
+

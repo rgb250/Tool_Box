@@ -9,24 +9,23 @@ As by decreasing the magnitude of the pseudo counts, we can lessen the impact of
 prior, we can argue that the most non-informative prior is: 
 $$\lm{\epsilon}{0} Beta(\epsilon, \epsilon) = Beta(0, 0)$$
 Called the \emph{Haldane prior}, it is an improper prior.\\
-In general it is advisable to perform a some kind of sensitivity analysis, in which one
+In general \uB{it is advisable to perform a some kind of \textbf{sensitivity analysis}, in which one
 checks how much one's conclusions or prediction change in response to change in the 
-modelling assumptions which includes the choice of the prior and the likelihood as well.
+modelling assumptions which includes the choice of the prior and the likelihood as well}.
 If the conclusion are relatively insensitive to the modelling assumption, one can have
 more confidence in the results.
 \subsection{Jeffreys priors}
 Harold Jeffreys designed a general purpose technique for creating non-informative priors.
-The key observation is that if $p(\phi)$ is non-informative then any re-parametrization
-of the prior, such as $\theta=h(\phi)$ for some function $h$ should also be 
-non-informative.
+The key observation is that \uB{if $p(\phi)$ is non-informative then any re-parametrization
+of the prior, such as $\theta=h(\phi)$ for some function $h$ should also be non-informative}.
 \begin{itemize}
 	\item Start with a variable change: $p_{\theta}(\theta) = p_{\phi}(\phi)\left|\dfrac{d\phi}{d\theta}\right|$
 	\item Consider the following constraint: $p_{\phi}(\phi)\propto
 		\sqrt{\mathcal{I}(\phi)}$, where $\mathcal{I}(\phi)$ is the Fisher 
-		information.\\ $\mathcal{I}(\phi) \triangleq - \E{2 \times 
-		\dfrac{d\log\left(p(X|\phi)\right)}{d\phi}}$. This a measure of the
-		curvature of the expected negative log likelihood and hence a measure of
-		stability of the MLE.
+        information.\\ \tB{$\mathcal{I}(\phi) \triangleq - \E{2 \times 
+		\dfrac{d\log\left(p(X|\phi)\right)}{d\phi}}$}. This a measure of the
+        curvature of the expected negative log likelihood and hence a \tB{measure of stability of
+        the MLE}.
 	\item Now $\dfrac{d\log(p(x|\theta))}{d\theta} = 
 		\dfrac{d\log(p(X|\phi))}{d\phi}\dfrac{d\phi}{d\theta}$
 	\item $\mathcal{I}(\theta) = \mathcal{I}(\phi)
@@ -44,6 +43,6 @@ avoids forcing things to be too close to the prior mean.
 
 \subsection{Mixture of conjugate priors}
 Conjugate priors simplify the computation of robust priors, but are often not robust, and 
-not flexible enough to encode our prior knowledge. However it turns out that a mixture of
-conjugate priors is also conjugate, and seem to be a good compromise.
+not flexible enough to encode our prior knowledge. However \tB{it turns out that a mixture of
+conjugate priors is also conjugate, and seem to be a good compromise}.
 

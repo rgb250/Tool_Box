@@ -66,6 +66,15 @@ The overall posterior is then
 \paragraph{Examples of application}
 
 
+\subsection{ARD: Automatic Relevance Determination}
+\paragraph{Purpose}
+\paragraph{Assumptions}
+\paragraph{Theory}
+\paragraph{Strengths}
+\paragraph{Weaknesses}
+\paragraph{Relationships with other methods}
+\paragraph{Examples of application}
+
 \subsection{Support Vector Machines (SVMs)}
 \paragraph{Purpose}
 The \tB{combination of the \emph{kernel trick} plus a modified loss function 
@@ -111,23 +120,52 @@ C\su{i=1}{n}\left(1-y_{i},f(\bm{x}_{i})\right)$. Same principle as in regression
 this time \tB{$\hat{y}(\bm{x}) = sgn\left(f(\bm{x})\right) = sgn\left(\hat{w}_{0} +
 \hat{\bm{w}}^{T}\bm{x}\right)= sgn\left(\hat{w}_{0} + \su{i=1}{n}\alpha_{i}k(\bm{x}_{i}
 ,\bm{x})\right)$}
-
+\subparagraph{The large margin principle}
+our goal is to derive a \emph{discriminative function} $f(x)$ which will be linear in the feature
+space implied by the choice of kernel. Hence: $\bm{x} = \bm{x}_{\perp} + 
+r\frac{\bm{x}}{\norm{\bm{w}}}$ where $r$ is the distance of $\bm{x}$ from the decision boundary 
+whose normal vector is $\bm{w}$, and $\bm{x}_{\perp}$ is the orthogonal projection of $\bm{x}$a 
+onto this boundary. Hence $f(\bm{x}) = \bm{w}^{T}\bm{x} +w_{0} = \left(\bm{x}^{T}\bm{x}_{\perp}
++ w_{0}\right) + r\frac{\bm{w}^{T}\bm{w}}{\norm{\bm{x}}}$. As $f(\bm{x}_{\perp}) = 0$ 
+$\bm{w}^{T}\bm{x} +w_{0} = 0$ Hence $f(\bm{x}) = r\frac{\bm{w}^{T}\bm{wl}}{\norm{\bm{x}}}$.
+Finally \tB{$r = \frac{f(\bm{x})}{\norm{\bm{x}}}$, the distance that we would like to make as large 
+as possible, in order to clearly separate the input}.
+\subparagraph{Regularization parameter \emph{C}}
+it \tB{controls the number of errors we are willing to tolerate on the training set}, it is chosen by
+cross-validation, \uB{an efficient way to chose \emph{C} is to develop a path following algorithm in 
+the spirit of \emph{ARS}}.
 
 \paragraph{Assumptions}
 \paragraph{Theory}
 \paragraph{Strengths}
 \begin{itemize}
     \item computational advantages over probabilistic model
+    \item \tB{\emph{kernel trick} $\rightarrow$ prevent underfitting}: ensuring that the feature 
+        vector is sufficiently rich that a linear classifier can separate
+    \item \tB{\emph{sparsity} \& \emph{large margin principles} $\rightarrow$  prevent overfitting}: 
+        ensure that we do not use all the basis functions
+
 \end{itemize}
 
 \paragraph{Weaknesses}
 \begin{itemize}
     \item issues for multi-class classification due to the non-probabilistic 
-        aspect of the model
+        aspect of the model: \uB{output scores are not on a calibrate scale}
 \end{itemize}
 
 \paragraph{Relationships with other methods}
 \paragraph{Examples of application}
+
+\subsection{MODEL COMPARISON}
+\paragraph{Comparison of discriminative kernel methods}
+\begin{itemize}
+    \item \emph{L1VM}: $l_{1}$-regularized vector machine
+    \item \emph{L2VM}: $l_{2}$-regularized vector machine
+    \item \emph{SVM}: Support Vector Machine
+    \item \emph{RVM}: Relevance Vector Machine
+\end{itemize}
+
+
 
 %\subsection{Logistic Regression}
 %\paragraph{Purpose}

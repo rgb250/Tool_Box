@@ -1,4 +1,3 @@
-% Naive Bayes Classifiers
 \subsection{Naive Bayes classifiers}
 \paragraph{Purpose}
 \tR{Classifying vectors of discrete-valuated features $x\in\left\{i
@@ -66,8 +65,8 @@ probability to optimize the conditional $\prob{C|\bm{x}}$}
 \end{itemize}
 
 
-% Linear/Quadratic Discriminant Analysis
 \subsection{Linear/Quadratic Discriminant Analysis}
+\paragraph{Purpose}
 \uB{It consists in defining the class conditional densities in a 
 generative classifier}: $\prob{\bm{x}|y=c,\bm{\theta}} = \mathcal{N}
 \left(\bm{x}, \bm{\mu}_{c},\bm{\Sigma}_{c}\right)$\\
@@ -78,7 +77,18 @@ As for a generative classifier we have the following equation:
         \overbrace{\prob{y=c|\bm{\theta}}}^{\text{\emph{class prior}}}}{
     \su{c'}{}\prob{y=c'|\bm{\theta}} \prob{\bm{x}|y=c',\bm{\theta}}}$
 \end{center}
-\paragraph{Purpose of Quadratic Discriminant Analysis}
+
+\paragraph{Assumptions}
+\begin{itemize}
+    \item Independent \tB{variables are normal for each level} of the
+        grouping variable.
+    \item \tB{Homoscedasticity} for LDA: variances \uB{among group} 
+        variables are the same across levels of predictors.
+    \item \uB{Independence of the observations}.
+\end{itemize}
+
+
+\paragraph{Theory of Quadratic Discriminant Analysis}
 \begin{center}
     $\prob{y=c|\bm{x},\bm{\theta}} = \dfrac{|2\pi\Sigma_{c}|^{
     -\frac{1}{2}}\exp\left(-\frac{1}{2}[\bm{x}-\bm{\mu}_{c}]^{T}\Sigma_{
@@ -89,7 +99,8 @@ As for a generative classifier we have the following equation:
 \tB{The threshold of this results will be a quadratic function of 
 $\bm{x}$.}
 
-\paragraph{Purpose of Linear Discriminant Analysis}
+\paragraph{Theory of Linear Discriminant Analysis}
+\subparagraph{LDA}
 Same equation than above but this time, \tB{$\forall c\in \inter{1}{C} 
 \Sigma_{c} = \Sigma$}, \tB{then quadratic term $\bm{x}^{T}\Sigma^{-1}
 \bm{x}$ will cancel out from numerator and denominator}.
@@ -105,27 +116,51 @@ evidence is considered as a constant, we have:
 Note also that we have exactly: \tR{$\prob{y=c|\bm{x},\bm{\theta}} =
 \dfrac{e^{\bm{\beta}_{c}^{T}\bm{x} + \gamma_{c}}}{\su{c'}{}e^{\bm{\beta
 }_{c'}^{T}\bm{x} + \gamma_{c'}}} = S(\bm{\eta})_{c}$}. With $\eta=\left(
-\bm{\beta}_{c}\bm{x} +\gamma_{c}\right)_{1\leq c\leq C}$
+\bm{\beta}^{T}_{c}\bm{x} +\gamma_{c}\right)_{1\leq c\leq C}$
 We recognize the \emph{softmax} function.
+\subparagraph{RDA}
+Regularized Discriminant Analysisa, assuming the covariance matrix is shared across the classes as in
+LDA, we perform MAP estimation of $\bm{\Sigma}\hookrightarrow\text{ \emph{InverseWishart}}\left(
+\text{\emph{diag}}\left(\hat{\bm{\Sigma}}_{mle}\right), \nu_{0}\right)$ then:
+\begin{center}
+    $\hat{\bm{\Sigma}} = \lambda\text{\emph{diag}}\left(\hat{\bm{\Sigma}}_{mle}\right) + (1-\lambda)
+    \hat{\bm{\Sigma}}_{mle}$
+\end{center}
+where $\lambda$ controls the amount of regularization which is related to the strength of the prior
+$\nu_{0}$
 
-\paragraph{Assumptions}
+
+\paragraph{Strengths}
 \begin{itemize}
-    \item Independent \tB{variables are normal for each level} of the
-        grouping variable.
-    \item \tB{Homoscedasticity} for LDA: variances \uB{among group} 
-        variables are the same across levels of predictors.
-    \item \uB{Independence of the observations}.
+    \item more common MVN(Multivariate Normal) model which is the most widely used joint probability
+        density function for continuous variables.
+    \item good simplicity-efficiently trade-off 
 \end{itemize}
 
-
-\paragraph{Theory}
-\paragraph{Strengths}
 \paragraph{Weaknesses}
 \begin{itemize}
     \item Multicollinearity: predictive power can decrease with an 
         increased correlation between predictor variables.
 \end{itemize}
 
+\paragraph{Relationships with other methods}
+\begin{itemize}
+    \item ANOVA
+    \item Logistic Regression
+    \item PCA: look for linear combination of variables which best explain the model
+    \item Nearest Shrunken Centroids
+\end{itemize}
+
+\paragraph{Examples of application}
+
+
+
+\subsection{Nearest shrunken centroids classifier}
+\paragraph{Purpose}
+\paragraph{Assumptions}
+\paragraph{Theory}
+\paragraph{Strengths}
+\paragraph{Weaknesses}
 \paragraph{Relationships with other methods}
 \paragraph{Examples of application}
 

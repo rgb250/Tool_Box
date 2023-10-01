@@ -91,10 +91,10 @@ And:
 \begin{itemize}
     \item \tB{Skewness}: $\E{\left[ \dfrac{X-\mu_{X}}{\sigma_{X}} \right]^{3}}$, indicates
         the direction (negative $\rightarrow$ left tail is longer, positive $\rightarrow$ 
-        right tail is longer) and relative magnitude of a distribution's deviation from
-        the normal distribution.
-    \item \tB{Kurtosis}: $\E{\left[ \dfrac{X-\mu_{X}}{\sigma_{X}} \right]^{4}}$, measures
-        the outliers, data within one standard deviation will not contribute a lot to the 
+        right tail is longer) and relative magnitude of a distribution's \uB{deviation from
+        the normal distribution}.
+    \item \tB{Kurtosis}: $\E{\left[ \dfrac{X-\mu_{X}}{\sigma_{X}} \right]^{4}}$, \uB{measures
+        the outliers}, data within one standard deviation will not contribute a lot to the 
         kurtosis values conversely data exceeding one standard deviation will contribute a
         lot because of the fourth power.
 \end{itemize}
@@ -129,7 +129,8 @@ $\mu$ and $\sigma>0$ are the mean and standard deviation of $X$ then:
 \paragraph{Theorem weak law of large numbers:}
 Let $\prth{X}{i}{1}{n}\text{: independent \& identically distributed RV}$
 \begin{center}
-	$\lm{n}{\infty}\Prob{\left|\overline{S}_{n}-\mu\right|\geq\epsilon}=0$ with $\overline{S}_{n}=\dfrac{1}{n}\su{ {i=1}}{n}X_{i}$
+    \fr{$\forall \epsilon \in \mathbb{R}_{+}: \lm{n}{\infty}\Prob{\left|\overline{S}_{n}-\mu\right|
+            \geq \epsilon}=0$ with $\overline{S}_{n}=\dfrac{1}{n}\su{ {i=1}}{n}X_{i}$}
 \end{center}
 \paragraph{Convergence in probability}
 Suppose $\prth{X}{i}{1}{n}$ is a sequence of random variables de-
@@ -157,7 +158,9 @@ population distribution, the distribution of the standardized sample mean
 is approximately standard normal with better approximations obtained with
 the larger sample size.
 \begin{center}
-    $\begin{cases}\prth{X}{i}{1}{n}\hookrightarrow ?(\mu,\sigma^{2})\\ n\rightarrow\infty\end{cases} \Rightarrow \dfrac{\overline{X}-\mu}{\frac{\sigma}{\sqrt{n}}} \hookrightarrow \mathcal{N}(0, 1)$
+    \tR{$\begin{cases}\prth{X}{i}{1}{n}\hookrightarrow ?(\mu,\sigma^{2})\\ n\rightarrow\infty
+        \end{cases} \Rightarrow \dfrac{\overline{X}-\mu}{\frac{\sigma}{\sqrt{n}}} \hookrightarrow 
+    \mathcal{N}(0, 1)$}
 \end{center}
 \subsection{Convergence in distribution}
 Consider $X$ with its cumulative density function $F$ and $\prth{X}{i}{1}{n}$ with their 

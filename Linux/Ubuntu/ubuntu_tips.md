@@ -1,4 +1,3 @@
-
 # 1) Packages
 ## a. How to install/uninstall packages
 - Deb
@@ -34,6 +33,15 @@ sudo apt-get  package_snap        # remove
     ```bash
     snap search <keyword>  # search for all packages containing <keyword>
     ```
+## e. How to update and upgrade
+- Apt-get
+```bash
+sudo apt-get update && sudo apt-get upgrade  
+```
+- Snap 
+```bash
+sudo snap refresh
+```
 # 2) Compressed files
 - ''tar.gz'' files
     ```bash
@@ -55,3 +63,14 @@ speedtest
     - ``Latency``: test measuring the response on the network when it is not in use.
     - ``Download``: latency is measured while the download test is in progress to see how it is affected by the download activity on the network.
     - ``Upload``: latency is measured while the upload test is in progress to see how it is affected by the upload activity on the network.
+
+# 4 File system
+## a. /opt
+Folder in which to install add-on applications
+
+# 5 Environment Variables
+## a. $PATH
+```bash
+export PATH="</path/to/add>:$PATH"  # to add the folder "/path/to/add" to the environment variable $PATH
+```
+Doing this in terminal will just remain effective as long as the session is open, to add it permanently we have to add it in ``~/.bashrc`` file, then source it.  

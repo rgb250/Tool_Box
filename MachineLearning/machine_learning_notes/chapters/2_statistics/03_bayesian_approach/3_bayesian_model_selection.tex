@@ -24,13 +24,13 @@ This valid since $p(\mathcal{D}|m)$ is constant. However when comparing models w
 to know how to compute the marginal likelihood, $p(\mathcal{D}|m)$. In general this can
 be quite hard, since we have to integrate over all possible parameter values, but when
 we have a conjugate prior, it is easy to compute.\\
-Let $p(\bm{\theta})=\dfrac{q(\bm{\theta})}{Z_{0}}$ be our prior, where $q(\bm{\theta})$
-is an unnormalized distribution, and $Z_{0}$ is the normalization constant of the prior.
+Let $p(\bm{\theta})=\dfrac{q(\bm{\theta})}{Z_{0}}$ be our prior, where \tB{$q(\bm{\theta})$
+is an unnormalized distribution}, and $Z_{0}$ is the normalization constant of the prior.
 Let $p(\mathcal{D}|\bm{\theta})=\dfrac{q(\mathcal{D}|\bm{\theta})}{Z_{l}}$ be the 
 likelihood, where $Z_{l}$ contains any constant factors in the likelihood. Finally let
 $p(\bm{\theta}|\mathcal{D})=\dfrac{q(\bm{\theta}|\mathcal{D})}{Z_{N}}$ be our posterior
-where $q(\bm{\theta}|\mathcal{D})=q(\mathcal{D}|\bm{\theta})q(\bm{\theta})$ is the 
-unnormalized posterior, and $Z_{N}$ is the normalization constant of the posterior.\\
+where \tB{$q(\bm{\theta}|\mathcal{D})=q(\mathcal{D}|\bm{\theta})q(\bm{\theta})$ is the 
+unnormalized posterior}, and $Z_{N}$ is the normalization constant of the posterior.\\
 We have:
 $
 \begin{cases}
@@ -78,13 +78,13 @@ $M_{1}$.\\
     \dfrac{\left.\frac{p(M_{1}|\mathcal{D})}{p(M_{0}|\mathcal{D})}\right\}\text{\emph{Posterior odds}}}{\left.\frac{p(M_{1})}{p(M_{0})}\right\}\text{\emph{Prior odds}}}
 $$}
 \begin{itemize}
-    \item \emph{Posterior odds}: quantifies relative plausibility of the rival hypotheses
-        \textbf{after} having seen the data.
-    \item \emph{Bayes Factor}, $BF_{1,0}$, quantifies the evidence provided by the data, 
+    \item \emph{Posterior odds}: quantifies relative \uB{plausibility} of the rival hypotheses
+        \uB{\textbf{after} having seen the data}.
+    \item \emph{Bayes Factor}, $BF_{1,0}$, \tB{quantifies the evidence provided by the data}, 
         this is like a likelihood ratio, except we integrate out the parameters, which 
         allows us to compare models of different complexity.
-    \item \emph{Prior odds}: quantifies relative plausibility of the rival hypotheses
-        \textbf{before} seeing the data.
+    \item \emph{Prior odds}: quantifies relative \uB{plausibility} of the rival hypotheses
+        \uB{\textbf{before} seeing the data}.
 \end{itemize}
 
  

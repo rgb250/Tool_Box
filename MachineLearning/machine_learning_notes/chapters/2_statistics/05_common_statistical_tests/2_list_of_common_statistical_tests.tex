@@ -27,7 +27,7 @@ Define the prior distribution with a \emph{Beta}($a,b$) distribution\\
 
 
 \subsection{$\chi^{2}$ test}
-Either used to test \emph{goodness-of-fit} and \emph{independence} between 2 variables.
+Either \tB{used to test \emph{goodness-of-fit} or \emph{independence} between 2 variables}.
 It checks either if there is a significant difference between the expected and observed 
 frequencies.
 \begin{itemize}
@@ -40,30 +40,27 @@ frequencies.
 \begin{itemize}
     \item simple random sample
     \item sample with a sufficiently large size is assumed, for small sample size see Cash test
-    \item expected cell count has to be adequate, a rule of thumb is at least 5 for 2-by-2
+    \item \uB{expected cell count has to be adequate}, a rule of thumb is at least 5 for 2-by-2
         table and 5 or more in 80\% of cells in larger tables.
     \item Independence of the observations
 \end{itemize}
 
 \paragraph{Frequentist}
-$\chi^{2} = \su{i=1}{n}\dfrac{\left(\frac{O_{i}}{N} - p_{i} \right)^{2}}{p_{i}}
-\begin{cases}
-    O_{i}\text{: number of observations of type }i \\
+\tB{$\chi^{2} = \su{i=1}{n}\dfrac{\left(\frac{O_{i}}{N} - p_{i} \right)^{2}}{p_{i}}$}: 
+$\begin{cases}
+    O_{i}\text{: \uB{number of observations} of type }i \\
     N\text{: total number of observations}\\
-    n\text{: number of cells in the table.}
-    p_{i}\text{: expected proportions of the fraction of type}i\text{ in the population.}
-\end{cases}
-$
-
+    n\text{: number of cells in the table.}\\
+    p_{i}\text{: \uB{expected proportions of the fraction} of type }i\text{ in the population.}
+\end{cases}$
 \paragraph{Bayesian}
 Does not exist, see \emph{contingency table}\\
-
 \textit{\hyperref[statistical_method_table]{Return to the table.}}
 
 
 \subsection{Exact test of goodness-of-fit}
-Unlike the conventional statistical tests, there is no \emph{test statistic}, we directly
-compute the \emph{p-value} under the null hypothesis.
+Unlike the conventional statistical tests, \tB{there is no \emph{test statistic}, we directly
+compute the \emph{p-value} under the null hypothesis}.
 The most common use are for dichotomous nominal variables or multinomial variables.
 
 \paragraph{Assumptions}
@@ -111,12 +108,12 @@ students is higher among the women than among the men.
     \hline
     \end{tabular}
 \end{center}
-The conditional on the margins of the table is distributed as $\text{\emph{Hypergeometric}}(a+c, a+b, c+d)$ meaning $a + c$ draws from a population with $a + b$ success and $c+d$ 
-failures.
+\tB{The conditional on the margins of the table is distributed as $\text{\emph{Hypergeometric}}(a+c,
+    a+b, c+d)$ meaning $a + c$ draws from a population with $a + b$ success and $c+d$ failures.}
 The probability of obtaining such set of values is given by
 \begin{center}
-    $p = \dfrac{{{a+b}\choose{a}}\times{{c+d}\choose{c}}}{{{n}\choose{a+c}}}
-    = \dfrac{{{a+b}\choose{b}}\times{{c+d}\choose{d}}}{{{n}\choose{b+d}}}$
+    \tB{$p = \dfrac{{{a+b}\choose{a}}\times{{c+d}\choose{c}}}{{{n}\choose{a+c}}}
+    = \dfrac{{{a+b}\choose{b}}\times{{c+d}\choose{d}}}{{{n}\choose{b+d}}}$}
 \end{center}
 
 \paragraph{Bayesian}
@@ -128,16 +125,16 @@ Does not exist, see \emph{contingency table} \\
 \subsection{G-test}
 
 It's a likelihood-ratio or a maximum likelihood statistical significance test. 
-Either used to test \emph{goodness-of-fit} and \emph{independence} between 2 variables.
+\tB{Either used to test \emph{goodness-of-fit} and \emph{independence} between 2 variables.}
 It checks either if there is a significant difference between the expected and observed 
-frequencies. This test tends to replace $\chi^{2}$\emph{-test}
+frequencies. \uB{This test tends to replace $\chi^{2}$\emph{-test}}
 \begin{itemize}
     \item \emph{goodness-of-fit}: expected frequencies are computed with a theoretical 
         relationship between observed frequencies
     \item \emph{independence}: expected frequencies are computed with observed frequencies
         from the other sample
-    \item \emph{repeated tests}: first variable is analysed with a goodness-of-fit and the
-        second one represents the repetition of the experiments multiple times. Thus it
+    \item \emph{repeated tests}: \uB{first variable is analysed with a goodness-of-fit and the
+        second one represents the repetition of the experiments multiple times}. Thus it
         allows to assess the goodness-of-fit on a large sample instead of multiple lower
         samples. Expected frequencies is a theoretical relationship between the observed
         frequencies segmented in groups by the modalities of the second variable.
@@ -146,7 +143,6 @@ frequencies. This test tends to replace $\chi^{2}$\emph{-test}
 
 \paragraph{Assumptions}
 \begin{itemize}
-    \item 
     \item Expected count must not be small in any modality.
 \end{itemize}
 
@@ -176,7 +172,7 @@ $\begin{cases}
 \end{cases}$
 
 \begin{center}
-    $G = 2\su{i=1}{m}O_{i}\times\ln\left(\dfrac{O_{i}}{E_{i}}\right)$
+    \tB{$G = 2\su{i=1}{m}O_{i}\times\ln\left(\dfrac{O_{i}}{E_{i}}\right)$}
 \end{center}
 
 $$
@@ -192,8 +188,8 @@ Then we multiply by $-2$ to get \emph{G-test} that is asymptotically equivalent 
 
 
 \subsection{Cochran's Q test}
-It checks if $k$ treatments have identical effect, the response can take only 2 possible 
-outcomes and a second variable segments the treatments.
+\uB{It checks if $k$ treatments have identical effect, the response can take only 2 possible 
+outcomes} and a second variable segments the treatments.
 
 \begin{center}
     \begin{tabularx}{.65\textwidth}{|*{5}{c|}}
@@ -231,7 +227,7 @@ $\begin{cases}
 \end{cases}$
 
 \begin{center}
-    $
+    \fr{$
     T = k(k-1)\dfrac{\su{j=1}{k}\left(x_{\cdot j} - \frac{N}{k}\right)^{2}}{
     \su{i=1}{b}x_{i\cdot}\left(k-x_{i\cdot}\right)}
     \begin{cases}
@@ -241,7 +237,7 @@ $\begin{cases}
         X_{i\cdot}\text{: row total for the }i\text{th block} \\
         N\text{: grand total}
          
-    \end{cases}$
+\end{cases}$}
 \end{center}
 
 For significance level $\alpha$, the asymptotic critical region is 
@@ -256,20 +252,19 @@ Does not exist, see \emph{contingency table} \\
 \subsection{Sign test}
 It is a statistical method to test for consistent differences between pairs of 
 observations, such as the weight of subjects before and after treatment.
-For comparisons of paired observations $(x, y)$ the \emph{sign-test} is most useful if 
-comparison can only be expressed as $x>y,~x=y,\text{ or } x<y$.
-If instead the differences can be expressed in numeric quantities it is worthy to use 
-\emph{t-test} or \emph{Wilcoxon signed-rank test} will usually have greater power than
+For comparisons of paired observations $(x, y)$ the \emph{sign-test} is \tB{most useful if 
+comparison can only be expressed as $x>y,~x=y,\text{ or } x<y$}.
+If instead the differences can be expressed \uB{in numeric quantities it is worthy to use 
+\emph{t-test} or \emph{Wilcoxon signed-rank test}} will usually have greater power than
 the sign test to detect consistent differences.
 
 \paragraph{Frequentist}
-Let $p=\Prob{X>Y}$, then
+Let $p=\Prob{X>Y}$, then \\
 $\begin{cases}
-    H_{0}:~p=0.5\text{ meaning that given a random pair of measurements }(x_{i}, y_{i})
-    \text{ then }x_{i}\text{ and }y_{i}\text{are equally likely to be larger than the
-    other}\\
+    H_{0}:~p=0.5\text{ meaning that given }(x_{i}, y_{i})
+    \text{ each element is equally likely to be larger than the other}\\
     H_{a}:~p\neq 0.5
-\end{cases}$
+\end{cases}$\\
 Pairs are omitted for which there is no differences so that there is a potential reduced
 sample of $m$ pairs.\\
 The statistics $W$ is defined as follow:
@@ -299,8 +294,8 @@ Let $\forall i\in\inter{1}{n},~Z_{i} = X_{i} - Y_{i}$
 
 
 \subsection{Contingency coefficients: Cramér's V}
-To quantify associations between 2 paired samples in a contingency table, it is based
-on $\chi^{2}$ and varies from 0 (no association) to 1 (complete association).
+To \tB{quantify associations between 2 paired samples in a contingency table, it is based
+on $\chi^{2}$} and varies from 0 (no association) to 1 (complete association).
 \paragraph{Frequentist}
 Let a sample of size $n$ of the simultaneously distributed variable $A$ and $B$.
 $\forall (i,j)\in\inter{1}{r}\times\inter{1}{c},~n_{ij} = \text{\emph{Card}}\left(
@@ -309,7 +304,8 @@ Then $\chi^{2} = \su{(i,j)\in\inter{1}{r}\times\inter{1}{c}}{}\dfrac{\left(n_{ij
 n_{i\cdot}\times n_{\cdot j}}{n}\right)^{2}}{\frac{n_{i\cdot}\times n_{\cdot j}}{n}}$\\
 Finally the Cramér's V with bias correction is: 
 \begin{center}
-    $V = \sqrt{\dfrac{\max\left(0, \frac{\chi^{2}}{n} - \frac{(r-1)(c-1)}{n}\right)}{\min\left(r-\frac{(r-1)^{2}}{n-1}-1, c-\frac{(c-1)^{2}}{n-1}-1\right)}}$
+    \fr{$V = \sqrt{\dfrac{\max\left(0, \frac{\chi^{2}}{n} - \frac{(r-1)(c-1)}{n}\right)}{\min\left(
+    r-\frac{(r-1)^{2}}{n-1}-1, c-\frac{(c-1)^{2}}{n-1}-1\right)}}$}
 \end{center}
 
 \paragraph{Assumptions}
@@ -332,8 +328,8 @@ Finally the Cramér's V with bias correction is:
 \subsection{Contingency table from a Bayesian perspective}
 To test the independence hypothesis between 2 variables.
 \paragraph{Bayesian}
-Let's consider 4 sampling plans, depending on which sampling plan is chosen the Bayes
-factor formula will change.
+Let's consider 4 sampling plans, \uB{depending on which sampling plan is chosen the Bayes
+factor formula will change}.
 \begin{itemize}
     \item \emph{Poisson} sampling scheme: Each cell count is considered as random and so
         is the grand total, the cells are Poisson distributed. This design often occurs
@@ -347,9 +343,9 @@ factor formula will change.
 Bayes factors are often difficult to compute, as they are obtained by integrating out over
 the entire parameter space, a process that is non-trivial when the integrals are 
 high-dimensional and intractable. \\
-Then we will use the 4 Bayes Factor developed by \emph{Gunnel and Dickey in 1974}, because
+Then \uB{we will use the 4 Bayes Factor developed by \emph{Gunnel and Dickey in 1974}, because
 they only require computation of common functions such as gamma functions, for which 
-numerical approximation are already available.\\
+numerical approximation are already available}.\\
 Here the logic: the Bayes Factor $BF^{i+1}_{01}$ computed at the observation $i+1$, 
 contains the information up to the step $i$ with the extra information of the step $i+1$. 
 We can then see $BF^{i+1}_{01}$ as the Bayes factor of the observation $i+1$ conditioned
@@ -375,8 +371,8 @@ Finally thanks to the successive conditionalization the Bayes Factor are easy to
 
 
 \subsection{Wilconox test}
-Non parametric test, used to test the location of a population based on a data sample or 
-to compare the locations of two populations using two matching samples.\\
+Non parametric test, \uB{used to test the location of a population based on a data sample or 
+to compare the locations of two populations using two matching samples}.\\
 It is a good alternative of the \emph{t-test} when the mean is not of interest for the 
 studied population.
 \paragraph{Frequentist}
@@ -386,8 +382,8 @@ a paired sample.
     \item $\forall i\in\inter{1}{n},~\left|x_{i}\right|$
     \item Sort the $\left(\left|x_{i}\right|\right)_{1\leq i\leq n}$ and assign a rank
         $\left(R_{i}\right)_{1\leq i\leq n}$
-    \item The test statistic i $T=\su{i=1}{n}sgn\left(X_{i}\right)R_{i}$
-    \item Produce a \emph{p-value} by computing T to its distribution under the null
+    \item The test statistic \tB{$T=\su{i=1}{n}sgn\left(X_{i}\right)R_{i}$}
+    \item Produce a \emph{p-v} by computing T to its distribution under the null
         hypothesis.
 \end{enumerate}
 We will provide the logic for a one-sample test, the two-sample follows the same logic but
@@ -423,10 +419,10 @@ Test for a randomly selected values $x$ and $y$ from 2 populations, $\Prob{x\leq
 Let $(n_{1}, n_{2})\mathcal{N}_{*}^{2}$ and $\left(x_{i}\right)_{1\leq i\leq n_{1}}$
 and $\left(y_{i}\right)_{1\leq i\leq n_{2}}$ both samples independent of each other.\\
 Then
-$\begin{cases}
+\tB{$\begin{cases}
     U_{1} = n_{1}n_{2} + \frac{n_{1}(n_{1} + 1)}{2} - R_{1} \\
     U_{2} = n_{1}n_{2} + \frac{n_{2}(n_{2} + 2)}{2} - R_{2} 
-\end{cases}$
+\end{cases}$}
 $R_{1}, R_{2}$ being the sum of the ranks in groups 1 and 2. \\
 Note that $AUC_{1}=\dfrac{U_{1}}{n_{1}n_{2}}$ meaning \emph{U}-statistics is related to
 the area under the receiver operating characteristic.
@@ -444,10 +440,10 @@ the area under the receiver operating characteristic.
 \paragraph{Weaknesses}
 
 \subsection{Kruksal-Wallis test}
-Non-parametrical to test if samples originate from the same distribution.
+Non-parametrical to \tB{test if samples originate from the same distribution}.
 \paragraph{Frequentist}
 Let $N$ be the number of observations across all groups, $g$ number of groups, $n_{i}$ the
-number of observation in the group $i$, $r_{ij}$ the rank of observation $j$ from group 
+number of observation in the group $i$, $r_{ij}$ the rank of observation $j$ from group
 $i$.\\
 And 
 $\begin{cases}
@@ -478,7 +474,7 @@ $\begin{cases}
 \paragraph{Weaknesses}
 
 \subsection{Friedman test}
-Non-parametric statistical test, analogu of the \emph{repeated-measures ANOVA}.
+Non-parametric statistical test, \tB{analog of the \emph{repeated-measures ANOVA}}.
 It use to detect differences in treatments across multiple test attempts.
 \paragraph{Frequentist}
 \begin{itemize}
@@ -486,7 +482,8 @@ It use to detect differences in treatments across multiple test attempts.
     and a single observation at the intersetion of each block and treatment. Then 
     calculate the ranks.
     \item $\overline{r}_{\cdot j} = \dfrac{1}{n}\su{i=1}{n}r_{ij}$
-    \item The test statistic is given by $Q = \dfrac{12n}{k(k+1)}\su{j=1}{k}\left(\overline{r}_{\cdot j} - \dfrac{k+1}{2}\right)^{2}$
+    \item The test statistic is given by \tB{$Q = \dfrac{12n}{k(k+1)}\su{j=1}{k}\left(\overline{r}_{
+        \cdot j} - \dfrac{k+1}{2}\right)^{2}$}
     Note that the value of $Q$ does need to be adjusted for tied values in data.
     \item Finally when n or k is large ($n>15 or k>4$) the probability distribution of $Q$ can be approximated by
     a $\chi^{2}$ distribution.
@@ -500,12 +497,13 @@ It use to detect differences in treatments across multiple test attempts.
 \paragraph{Weaknesses}
 
 \subsection{Sperman test}
-It assesses how well the relationship between 2 variables can be described using a monotonic function.
+It \tB{assesses how well the relationship between 2 variables can be described using a monotonic 
+function}.
 Let $X, Y$ be 2 random variables, and $R$ the function transforming the realization of a random variable.
 
 \paragraph{Frequentist}
-$r_{s} = \rho_{R(X), R(Y)} = \dfrac{Cov\left(R(X), R(Y)\right)}{\sigma_{R(X)}\sigma_{R(Y)}}
-\begin{cases}
+\tB{$r_{s} = \rho_{R(X), R(Y)} = \dfrac{Cov\left(R(X), R(Y)\right)}{\sigma_{R(X)}\sigma_{R(Y)}}$}
+$\begin{cases}
 \rho:\text{ Pearson correlation coefficient applied to the rank variables} \\
 Cov\left(R(X), R(Y)\right)
 \end{cases}$
@@ -517,7 +515,7 @@ Cov\left(R(X), R(Y)\right)
 This coefficient is essentially a normalized measurement of the covariance such that the result
 has a value $-1$ and 1
 \paragraph{Frequentist}
-$\rho_{X, Y} = \dfrac{Cov\left(X, Y\right)}{\sigma_{X}\sigma_{Y}}$
+\tB{$\rho_{X, Y} = \dfrac{Cov\left(X, Y\right)}{\sigma_{X}\sigma_{Y}}$}
 \paragraph{Assumptions}
 \paragraph{Strengths}
 \paragraph{Weaknesses}
@@ -526,14 +524,16 @@ $\rho_{X, Y} = \dfrac{Cov\left(X, Y\right)}{\sigma_{X}\sigma_{Y}}$
 \end{itemize}
 
 \subsection{Repeated-measures ANOVA}
-Used in repeated measure design, meaning when we measure multiple time the same variable
-taken on the same or matched subject either under different conditions or at different periods.
+Used in repeated measure design, meaning \uB{when we measure multiple time the same variable
+taken on the same or matched subject either under different conditions or at different periods}.
 \paragraph{Frequentist}
 Here $F = \dfrac{\frac{SS_{treatment}}{df_{treatment}}}{\frac{SS_{error}}{df_{error}}}$
-In a \emph{between-subjects} design there is a element of variance due to individual difference that 
-is combined with the treatment and error term, meaning: $SS_{total} = SS_{treatment} + SS_{error}$
-In a \emph{repeated-measure} design it is possible to partition subject variability from the
-treatment and error term, meaning $SS_{total} = SS_{treatment(excluding indivdual differences) + SS_{subjects} + SS_{error}}$
+In a \tB{\emph{between-subjects}} design there is a element of variance due to individual 
+difference that is combined with the treatment and error term, meaning: \tB{$SS_{total} = SS_{
+treatment} + SS_{error}$}
+In a \tB{\emph{repeated-measure}} design it is possible to partition subject variability from the
+treatment and error term, meaning \tB{$SS_{total} = SS_{treatment(excluding~indivdual~differences) +
+SS_{subjects} + SS_{error}}$}
 
 \paragraph{Assumptions}
 \begin{itemize}
@@ -626,15 +626,14 @@ distribution which is the specific \emph{F-distribution}  which has degrees of f
 the numerator and denominator of the \emph{F-statistic}.\\
 Concerning inferences to build the confidence interval we need the \tB{\emph{standard error} (the
 standard deviation of the means) that is $\sqrt{\dfrac{MS_{within}}{n_{i}}}$}\\
-
-Numerically we have:\\
-Given 2 samples with means $\mu_{1}$ and $\mu_{2}$, same variance $\sigma^{2}$ and $n=n_{1}+n_{2}$
-observations.
+Let's detail the case where $p=2$ meaning comparison of  2 samples:
+with means $\mu_{1}$ and $\mu_{2}$, and the same variance $\sigma^{2}$ and
+finally $n=n_{1}+n_{2}$ observations.
 Model: 
 \begin{center}
-	$\forall (j,i)\in\inter{1}{2}\times\inter{1}{n_{j}}y_{ij} = \mu_{i} + \epsilon_{ij} = \mu + \alpha_{j} + \epsilon_{ij}$
+	$\forall (j,i)\in\inter{1}{2}\times\inter{1}{n_{j}}y_{ij} = \mu_{j} + \epsilon_{ij} = \mu + \alpha_{j} + \epsilon_{ij}$
 \end{center}
-$\alpha_{j}=\mu_{j}-\mu$ is called (treatment-) effect
+\uB{$\alpha_{j}=\mu_{j}-\mu$} is called (treatment-) effect
 
 Decomposition:
 \begin{align*}
@@ -643,11 +642,11 @@ Decomposition:
 	=& \su{{j=1}}{n_{1}}\left(y_{1j}-\overline{y_{1}}+\overline{y_{1}}-\overline{y}\right)^{2}
 	+ \su{{j=1}}{n_{2}}\left(y_{2j}-\overline{y_{2}}+\overline{y_{2}}-\overline{y}\right)^{2}\\
 	=& \underbrace{(n_{1}-1)s_{1}^{2} + (n_{2}-1)s_{2}^{2}}_{SS_{within}} +
-	\underbrace{n_{1}(\overline{y}_{1}-\overline{y}) + 
-	n_{2}(\overline{y}_{2})-\overline{y}^{2}}_{SS_{between}}
+    \underbrace{n_{1}(\overline{y}_{1}-\overline{y})^{2} + 
+	n_{2}(\overline{y}_{2}-\overline{y})^{2}}_{SS_{between}}
 \end{align*}
-$SS_{between}$ corresponds to squared enumerator $(\overline{y}_{1} - \overline{y}_{2})^{2}$ of
-the statistic: 
+\tB{$SS_{between}$ corresponds to squared enumerator $(\overline{y}_{1} - \overline{y}_{2})^{2}$ of
+the statistic}: 
 \begin{align*}
 	SS_{between} =& n_{1}(\overline{y}_{1}-\overline{y})^{2} + 
 	n_{2}(\overline{y}_{2}-\overline{y})^{2}\\
@@ -656,12 +655,12 @@ the statistic:
 	\overline{y}_{2}}{n_{1}+ n_{2}}\right)^{2}\\
 	=& \dfrac{n_{1}n_{2}}{n_{1}+n_{2}}\left(\overline{y}_{1}-\overline{y}_{2}\right)^{2}
 \end{align*}
-$SS_{within}$ corresponds to denominator of \emph{t-statistic}:
+\tB{$SS_{within}$ corresponds to denominator of \emph{t-statistic}}:
 $s=\sqrt{\dfrac{(n_{1}-1)s_{1}^{2}+(n_{2}-1)s_{2}^{2}}{n_{1}+n_{2}-2}}$\\
 Pooled variance that is an estimate of the fixed common variance $\sigma^{2}$ underlying various
 populations that have different means.
-$\hat{\sigma}=\dfrac{(n_{1}-1)s_{1}^{2}+(n_{2}-1)s_{2}^{2}}{(n_{1}-1)+(n_{2}-1)}$
-Null hypothesis $H_{0}:\mu_{1}=\mu_{2}$ or $\alpha_{1}=\alpha_{2}=0$
+$\hat{\sigma}=\dfrac{(n_{1}-1)s_{1}^{2}+(n_{2}-1)s_{2}^{2}}{(n_{1}-1)+(n_{2}-1)}$\\
+Null hypothesis $H_{0}:\mu_{1}=\mu_{2}$ or $\alpha_{1}=\alpha_{2}=0$ \\
 \emph{F-test}
 $\left(\overline{Y}_{1}-\overline{Y}_{2}\right)\hookrightarrow \mathcal{N}\left(\mu_{1}-\mu_{2},
 \left(\frac{1}{n_{1}}+\frac{1}{n_{2}}\right)\sigma^{2}\right)\\
@@ -670,7 +669,7 @@ $\left(\overline{Y}_{1}-\overline{Y}_{2}\right)\hookrightarrow \mathcal{N}\left(
 \E{MS_{between}}=\E{\frac{n_{1}n_{2}}{n_{1}+n_{2}}\left[\overline{Y}_{1}-\overline{Y}_{2}
 \right]^{2}} = \sigma^{2}+\frac{n_{1}n_{2}}{n_{1}+n_{2}}(\mu_{1}-\mu_{2})^{2}\\
 \E{MS_{whithin}}=\sigma^{2}\\
-F = \dfrac{MS_{between}}{MS_{within}}$
+F = \dfrac{MS_{between}}{MS_{within}}$\\
 Here $F=t^{2}$\\
 \begin{align*}
 	\text{Degrees of freedom} =& n - 1\\
@@ -678,8 +677,9 @@ Here $F=t^{2}$\\
 \end{align*}
 \begin{itemize}
 	\item $SS_{within}$ and $SS_{between}$ are independent
-	\item under $H_{0}$ $\E{MS_{between}} = \E{MS_{within}} = \sigma^{2}$
-	\item under $H_{a}$ $\E{MS_{between}}>\sigma^{2}$ and $\E{MS_{within}} = \sigma^{2}$
+    \item \tB{under $H_{0}~\E{MS_{between}} = \E{MS_{within}} = \sigma^{2}$}
+	\item \tB{under $H_{a}~\E{MS_{between}}>\sigma^{2}$ and $\E{MS_{within}} =
+        \sigma^{2}$}
 \end{itemize}
 Hence $$ F= \dfrac{MS_{between}}{MS_{within}}\hookrightarrow F_{m-1,n-m}$$
 In the case of 2 groups (``\emph{t-test}'') we received:
@@ -688,14 +688,12 @@ $$ \overline{y}_{1}-\overline{y}_{2} \pm t_{n-2,1-\frac{\alpha}{2}}s\sqrt{\frac{
 
 
 \paragraph{Assumptions}
-\begin{center}
-	The statistical model for which one-way ANOVA is appropriate is that the
-	\begin{itemize}
-		\item (Quantitative) Outcomes for each group are normally distributed
-		\item Outcome variances are all equal to  ($\sigma^{2}$)
-		\item The errors are assumed to be independent.
-	\end{itemize}
-\end{center}
+The statistical model for which one-way ANOVA is appropriate is that the
+\begin{itemize}
+    \item (Quantitative) Outcomes for each group are normally distributed
+    \item Outcome variances are all equal to  ($\sigma^{2}$)
+    \item The errors are assumed to be independent.
+\end{itemize}
 \paragraph{Strengths}
 \paragraph{Weaknesses}
 
@@ -707,8 +705,7 @@ test statistic follows a \emph{Student's t-test}.\\
 Most test statistics have the form $t=\dfrac{Z}{s}$, $Z$ may be sensitive to 
 the alternative hypothesis, whereas $s$ isa scaling parameter allowing to determine
 the distribution \emph{t}.
-\subsection{One-sample}
-\paragraph{Frequentist}
+\paragraph{One-sample}
 $$
 t = \dfrac{\overline{x} - \mu_{0}}{\frac{s}{\sqrt{n}}},
 \begin{cases}
@@ -727,23 +724,48 @@ of the population sample means $\left(\overline{x}_{s}\right)_{1\leq s\leq S}$.\
 \paragraph{Weaknesses}
 
 
-\subsection{Slope of a regression line}
+\paragraph{Slope of a regression line}
 Suppose one is fitting: $Y = \alpha + \beta x + \epsilon$, where $x$ is known and $\alpha$ and $\beta$ are unknown
 and finally $\epsilon \hookrightarrow \mathcal{N(0, 1)}$.
 Symbols with hat will refer to estimators.
-\paragraph{Frequentist}
-$$t_{score} = \dfrac{\hat{\beta} - \beta_{0}}{SE_{\hat{\beta}}} \hookrightarrow \mathcal{N}(0, 1)$$
+\begin{center}
+    \tB{$t_{score} = \dfrac{\hat{\beta} - \beta_{0}}{SE_{\hat{\beta}}} \hookrightarrow 
+    \mathcal{T}_{n-2}$}
+\end{center}
+The standard error of the slope coefficient:
+$\begin{cases}
+    SE_{\hat{\beta}} &= \dfrac{\sqrt{\frac{1}{n-2}\su{i=1}{n}\left(y_{i}-
+    \hat{y}_{i}\right)^{2}}}{
+    \sqrt{\su{i=1}{n}\left(x_{i} - \overline{x}\right)^{2}}}\\
+                SSR &= \su{i=1}{n}\hat{\epsilon}^{2}_{i} = \left(y_{i} - \hat{y}_{i}
+                \right)
+\end{cases}$
 
+\paragraph{Independent 2-sample t-test}
+\subparagraph{Equal sample sizes and variance}
+$\begin{cases}
+    t = \dfrac{\overline{X}_{1}-\overline{X}_{2}}{s_{p}\sqrt{\frac{2}{n}}} \\
+    s_{p} = \sqrt{\dfrac{s_{X_{1}}^{2} + s_{X_{2}}^{2}}{2}}
+\end{cases}$
+
+\subparagraph{Unequal sample sizes and similar variances ($\frac{1}{2}<\frac{s_{X_{1}}}
+{s_{X_{2}}}<2$)}:
+$\begin{cases}
+    t = \dfrac{\overline{X}_{1}-\overline{X}_{2}}{s_{p}\sqrt{\frac{1}{n_{1}} + 
+    \frac{1}{n_{2}}}} \\
+    s_{p} = \sqrt{\dfrac{(n_{1}-1)s_{X_{1}}^{2} + (n_{2}-1)s_{X_{2}}^{2}}{n_{1} + n_{2}
+    -2}}
+\end{cases}$
+
+\subparagraph{Unequal sample sizes and unequal variances ($s_{X_{1}} > 2s_{X_{2}}$ 
+or $s_{X_{2}} > 2s_{X_{1}}$)}:
+$\begin{cases}
+    t = \dfrac{\overline{X}_{1}-\overline{X}_{2}}{s_{\Delta}} \\
+    s_{\Delta} = \sqrt{\dfrac{s_{X_{1}}^{2}}{n_{1}}+\dfrac{s_{X_{2}}^{2}}{n_{2}}}
+\end{cases}$
+
+\paragraph{Dependent t-test for paired samples}
+$t=\dfrac{\overline{X}_{D} - \mu_{0}}{\frac{s_{D}}{\sqrt{n}}}$
 \paragraph{Assumptions}
 \paragraph{Strengths}
 \paragraph{Weaknesses}
-
-\subsection{Paired / Unpaired  t-test}
-Depending on if the samples are paired or not and the differences between means and variances, the formula will be different. 
-It is not worthful to dive in these formulas.
-\paragraph{Frequentist}
-\paragraph{Assumptions}
-\paragraph{Strengths}
-\paragraph{Weaknesses}
-
-Weimprove

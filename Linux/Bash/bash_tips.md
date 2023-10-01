@@ -89,7 +89,8 @@ find /dir_path -regextype sed -regex ".*/regex"  # search of "sed" type, ".*/" i
 ```
 
 
-# for the process
+# Process Information
+```bash
 ps aux  # ps aux --> a: process of all users, u: process's users/owner x: process not attached to a terminal 
 ps aux | sed -n "1p; /<regex_word>/p"  # to search for a given regular expression while keeping the header.
 cat /proc/<PID>/cmdline  # provide the command line that called the process <PID>
@@ -99,6 +100,7 @@ jobs -1  # displays the status of all stopped and background jobs in the current
 fg  # bring a process to the foreground
 bg  # bring a process to the background
 nohup vlc &  # nohup ignore all SIGHUP (hangup) signals, sent when terminal is closed
+```
 
 ## Zip a list of files
 ````bash
