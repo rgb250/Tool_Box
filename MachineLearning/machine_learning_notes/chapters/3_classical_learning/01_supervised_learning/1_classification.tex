@@ -152,14 +152,32 @@ $\nu_{0}$
 \end{itemize}
 
 \paragraph{Examples of application}
+\begin{itemize}
+    \item bankruptcy prediction
+    \item dimension reduction for face recognition
+\end{itemize}
 
 
 
-\subsection{Nearest shrunken centroids classifier}
+\subsection{Nearest Shrunken Centroids Classifier}
 \paragraph{Purpose}
+The basic idea is to perform \tB{MAP estimation for diagonal \emph{LDA} with a 
+sparsity-promoting (Laplace) prior} 
 \paragraph{Assumptions}
 \paragraph{Theory}
+Define the class-specific feature mean $\mu_{cj}$ in terms of the class-independent 
+feature mean $m_{j}$ and a class-specific offset $\Delta_{cj}$ Thus:
+\begin{center}
+    $\mu_{jc} = m_{j} + \Delta_{cj}$
+\end{center}
+We will then put a prior on the $\Delta_{cj}$ terms to encourage them to be strictly
+zero and compute MAP estimate.
+
 \paragraph{Strengths}
+\begin{itemize}
+    \item Sparsity $\rightarrow$ more interpretable model
+\end{itemize}
+
 \paragraph{Weaknesses}
 \paragraph{Relationships with other methods}
 \paragraph{Examples of application}
@@ -266,28 +284,6 @@ $
 \end{itemize}
 
 
-\subsection{Nearest Shrunken Centroids Classifier}
-\paragraph{Purpose}
-The basic idea is to perform \tB{MAP estimation for diagonal \emph{LDA} with a 
-sparsity-promoting (Laplace) prior} 
-\paragraph{Assumptions}
-\paragraph{Theory}
-Define the class-specific feature mean $\mu_{cj}$ in terms of the class-independent 
-feature mean $m_{j}$ and a class-specific offset $\Delta_{cj}$ Thus:
-\begin{center}
-    $\mu_{jc} = m_{j} + \Delta_{cj}$
-\end{center}
-We will then put a prior on the $\Delta_{cj}$ terms to encourage them to be strictly
-zero and compute MAP estimate.
-
-\paragraph{Strengths}
-\begin{itemize}
-    \item Sparsity $\rightarrow$ more interpretable model
-\end{itemize}
-
-\paragraph{Weaknesses}
-\paragraph{Relationships with other methods}
-\paragraph{Examples of application}
 
 %\subsection{Logistic Regression}
 %\paragraph{Purpose}

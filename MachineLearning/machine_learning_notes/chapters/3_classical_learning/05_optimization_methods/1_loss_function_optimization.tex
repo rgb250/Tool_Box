@@ -34,6 +34,52 @@ function}. \tB{The goal of the \emph{E step} is to compute $Q(\bm{\theta},
 \paragraph{Examples of application}
 
 
+\subsection{Backpropagation Algorithm}
+\paragraph{Purpose}
+Useful for Neural Network's loss function is non-convex function of its parameters. 
+It is common to use first-order online methods such as stochastic gradient descent.
+\paragraph{Assumptions}
+\paragraph{Theory}
+Let's assume a model with just one hidden layer, it is helpful to distinguish the pre- and 
+post-synaptic values of a neuron, that is before and after applying the non-linearity.\\
+Then $\bm{x}_{n}$, the $n^{th}$ input, $\bm{a}_{n} = \bm{V}\bm{x}_{n}$ be the pre-synaptic hidden
+layer and $\bm{z}_{n} = g(\bm{a}_{n})$ be the pro-synaptic hidden layer where $g$ is some transfer
+function. More succinctly:
+\begin{center}
+    $\bm{x}_{n} \xrightarrow{\bm{V}} \bm{a}_{n} \xrightarrow{g} \bm{z}_{n} \xrightarrow{\bm{W}}
+    \bm{b}_{n} \xrightarrow{h} \hat{\bm{y}}$
+\end{center}
+$\bm{\theta}=\left(\bm{V},\bm{W}\right)$ the first and second layer weight matrices.
+
+With $K$ outputs the negative linear loss is given by
+\begin{itemize}
+    \item \emph{regression}: $J(\bm{\theta})=-\su{n}{}\su{k}{}\left(\hat{y}_{nk}(\bm{\theta})-y_{nk}
+        \right)$
+    \item \emph{classification}: $J(\bm{\theta})=-\su{n}{}\su{k}{}y_{nk}\log\left(\hat{y}_{nk}(\bm{
+            \theta})\right)$
+\end{itemize}
+Our task is to compute $\Delta_{\bm{\theta}}J$, \tB{we will derive this for each $n$ separately, the
+overall gradient is obtained by summing over $n$}
+
+\begin{enumerate}
+    \item \emph{output layer}: $\nabla_{\bm{w}_{k}}J_{n} = \dfrac{\partial J_{n}}{\partial b_{nk}}
+        \nabla_{\bm{w}_{k}} = \dfrac{\partial J_{n}}{\partial b_{nk}}\bm{z}_{n}$ since $b_{nk}=\bm{
+        w}_{k}^{T}\bm{z}_{n}$
+    \item considering $J_{n}$ as a squared penalty: $\dfrac{\partial J_{n}}{\partial b_{nk}} 
+        \triangleq \sigma_{nk}^{w}=(\hat{y}_{nk}-y_{nk})$ being the error signal, so the overall 
+        gradient $\nabla_{\bm{w}_{k}}J_{n} = \sigma^{w}_{nk}\bm{z}_{n}$
+    \item \emph{input layer}: $\nabla_{v_{j}}J_{n}=\dfrac{\partial J_{n}}{\partial a_{nj}}
+        \nabla_{v_{j}}a_{nj}\triangleq \delta_{nj}^{v}\bm{x}_{n}$
+\end{enumerate}
+
+
+
+\paragraph{Strengths}
+\paragraph{Weaknesses}
+\paragraph{Relationships with other methods}
+\paragraph{Examples of application}
+
+
 %\subsection{Logistic Regression}
 %\paragraph{Purpose}
 %\paragraph{Assumptions}

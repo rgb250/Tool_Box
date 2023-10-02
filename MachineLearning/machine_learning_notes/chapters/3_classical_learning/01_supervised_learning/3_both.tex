@@ -10,7 +10,7 @@ It is the simplest form of \emph{Latent Variable Models (LVMs)} is when $z_{i}\i
 
 \paragraph{Assumptions}
 \paragraph{Theory}
-We use a discrete prior $p(z_{i}) = \text{\emph{Cat}}(\bm{\ conda install -c conda-forge juliapi})$ and the likelihood
+We use a discrete prior $p(z_{i}) = \text{\emph{Cat}}(\bm{\pi})$ and the likelihood
 $p(\bm{x}_{i}|z_{i} = k)$, finally the \textbf{mixture model} is :
 \begin{center}
     $\prob{\bm{x}_{i}|\bm{\theta}} = \su{k=1}{K}\pi_{k}\prob{\bm{x}_{i}|z_{i}=k,
@@ -421,6 +421,41 @@ simply $f_{m}$. This know as \textbf{stacking}.
         sequentially
 \end{itemize}
 
+
+\subsection{Multi-layer Perceptron}
+\paragraph{Purpose}
+It is a \tB{series of logistic regression models stacked on top of each other}, with the final layer
+being another logistic regression or a linear regression model.
+
+\paragraph{Assumptions}
+\paragraph{Theory}
+For a three layers regression problem the model has the form:
+$\begin{cases}
+    \prob{y|\bm{x},\bm{\theta}} &= \mathcal{N}\left(y|\bm{w}^{T}\bm{z}(\bm{x}), \sigma^{2}\right)\\
+    \bm{z}(\bm{x}) &= g(\bm{V}\bm{x})
+\end{cases}$
+where \tB{$g$ is a non-linear activation function} (usually the logistic function), \uB{$\bm{V}$ is 
+the weight matrix from the input to the hidden nodes} and \uB{$\bm{w}$ is the weight vector from 
+hidden nodes to the output}.
+\begin{figure}[H]
+    \begin{center}
+        \includegraphics[width=.5\textwidth]{./chapters/3_classical_learning/01_supervised_learning/3_images/1_neural_network_one_hl.png}
+    \end{center}
+    \caption{caption}
+    \label{fig:1_neural_network_one_hl}
+\end{figure}
+\subparagraph{Convolutional Neural Networks}
+It is an MLP in which \tB{the hidden units have local receptive fields}, and in which \tB{the weights
+are \emph{tied} or \emph{shared} across the image in order to reduce the number of parameters}. 
+Intuitively the \tB{effect of such spatial parameter tying is that any useful features that are 
+"discovered" in some portion of the image can be re-used everywhere else without having to be
+independently learned}. The resulting network then exhibits \emph{translation invariance} meaning
+it can classify patterns no matter where they occur inside the input image.
+
+\paragraph{Strengths}
+\paragraph{Weaknesses}
+\paragraph{Relationships with other methods}
+\paragraph{Examples of application}
 
 
 %\subsection{Logistic Regression}
