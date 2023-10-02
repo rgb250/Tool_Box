@@ -26,32 +26,22 @@ data compression.}
 
 \subsection{Factor Analysis}
 \paragraph{Purpose}
-To have a representation power through latent variables.
+To have a representation power through latent variables.\\
+It can be thought of as a way of specifying a joint density model on $\bm{x}$ using
+a small number of parameters.
 \paragraph{Assumptions}
 \paragraph{Theory}
 Let's consider 
-$\begin{cases}
+\tB{$\begin{cases}
     \prob{\bm{z}_{i}} = \mathcal{N}\left(\bm{z}_{i}|\bm{\mu}_{0},\bm{\Sigma}_{0}
     \right) \\
     \prob{\bm{x}_{i}|\bm{z}_{i},\bm{\theta}} = \mathcal{N}\left(\bm{W}\bm{z}_{i}+
         \bm{\mu},\bm{\Phi}\right)
-\end{cases}$
+\end{cases}$}
 where $\bm{D}$ is a $D\times L$ matrix knows as \emph{factor loading matrix} and $\Phi$
 is a $D\times D$ covariance matrix, which is diagonal as we aim to force $\bm{z}_{i}$
 to explain correlation.
 This model is then called \textbf{Factor Analysis}.
-\subsection{Model selection}
-for FA and PPCA ideally we can compute $L = \argmax_{L} \prob{L|\mathcal{D}}$ but
-in practice we will use approximation like BIC a better approach is to perform 
-exhaustive search over all candidates of $L$ while using a relevancy determination 
-technique.
-\paragraph{Strengths}
-\begin{itemize}
-    \item Use of real-valued latent variable $\bm{z}_{i}\in\mathbb{R}^{L}$
-\end{itemize}
-\paragraph{Weaknesses}
-\paragraph{Relationships with other methods}
-\paragraph{Examples of application}
 
 \subsection{Principal Components Analysis}
 \paragraph{Purpose}
@@ -69,7 +59,7 @@ minimize the average reconstruction error:
 \end{center}
 where $\bm{\hat{x}}_{i} = \bm{W}\bm{z}_{i}$ subject to the constraint that $\bm{W}$
 is orthonormal. 
-\subsection{Model selection}
+\subparagraph{Model selection}
 
 We can plot the \emph{scree plot} : $E(\mathcal{D}_{train}, L)$ vs $L$, with $E$ being
 the error reconstruction. 
@@ -140,6 +130,7 @@ $\prob{\bm{z}_{t}} = \prd{j=1}{L}\mathbb{P}_{j}\left(z_{tj}\right)$
 \paragraph{Weaknesses}
 \paragraph{Relationships with other methods}
 \paragraph{Examples of application}
+
 
 %\subsection{Logistic Regression}
 %\paragraph{Purpose}

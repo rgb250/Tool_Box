@@ -68,6 +68,46 @@ The overall posterior is then
 
 \subsection{ARD: Automatic Relevance Determination}
 \paragraph{Purpose}
+To get greater sparsity 
+\paragraph{Assumptions}
+\paragraph{Theory} 
+Relying on empirical bayes, whereby we integrate oute $\bm{w}$ and maximize the 
+marginal likelihood $\tau$.
+\subparagraph{Linear Regression}
+Let's consider weight precisions by $\alpha_{j}=\frac{1}{\tau_{j}^{2}}$ and the 
+measurement precision by $\beta=\frac{1}{\sigma^{2}}$:
+\begin{center}
+    $\begin{cases}
+        \prob{y|\bm{x},\bm{w},\beta} = \mathcal{N}\left(y|\bm{w}^{T}\bm{x},\frac{1}{
+            \beta}\right) \\
+            \prob{\bm{w}} = \mathcal{N}(\bm{w}|0,\bm{A}^{-1})
+    \end{cases}$
+\end{center}
+where $\bm{A}=\text{\emph{diag}}(\bm{\alpha})$
+To regularize the problem we may pu a conjugate prior on each precision $\alpha_{j}
+\hookrightarrow \text{\emph{Gamma}}(a, b)$ and $\beta \hookrightarrow \text{\emph{
+Gamma}}(c, d)$
+When performing EB point estimation will use the improper prior $a=b=c=d=0$ which
+results in \tB{maximal sparsity}.
+\subparagraph{Sparsity}
+If $\hat{\alpha}_{j} \approx 0$ we find $\hat{w}_{j}\approx \hat{w}^{mle}_{j}$ since
+the Gaussian prior shrinking $w_{j}$ towards 0 has zero precision.\\
+However if we find that \uB{$\hat{\alpha}_{j}\rightarrow\infty$ then the prior is very 
+confident that $w_{j}=0$ and hence that feature $j$ is "irrelevant"}.
+\subparagraph{Logistic Regression}
+uses iteratively reweighted $l_{1}$ algorithm.
+
+\paragraph{Strengths}
+\paragraph{Weaknesses}
+\paragraph{Relationships with other methods}
+\paragraph{Examples of application}
+
+
+
+\subsection{Sparse coding}
+\paragraph{Purpose}
+Sparse priors for unsupervised learning, here we relax the constraint that $\bm{W}$
+is orthogonal. 
 \paragraph{Assumptions}
 \paragraph{Theory}
 \paragraph{Strengths}
@@ -163,6 +203,222 @@ the spirit of \emph{ARS}}.
     \item \emph{L2VM}: $l_{2}$-regularized vector machine
     \item \emph{SVM}: Support Vector Machine
     \item \emph{RVM}: Relevance Vector Machine
+    \item \emph{GP}: Gaussian Process
+\end{itemize}
+\begin{itemize}
+    \item \emph{speed} $\rightarrow$ use RVM
+    \item \emph{well-calibrated probabilistic outputs} $\rightarrow$ GP
+\end{itemize}
+the only circumstances under which using an SVM seems sensible is the structured output
+case, where likelihood-based methods can be slow.
+
+
+\subsection{Gaussian Processes}
+\paragraph{Purpose}
+It defines a prior over functions, which can be converted into a posterior over 
+functions once we have seen some data.\\
+They \tB{can be thought of as a Bayesian alternative to the kernel methods}.
+\paragraph{Assumptions}
+\paragraph{Theory}
+\subparagraph{Regression}
+Let the prior on the regression function be GP denoted by
+$f(\bm{x}) \hookrightarrow \text{\emph{GP}}(m(\bm{x}), k(\bm{x},\bm{x}'))$ where
+$m(\bm{x})$ is the mean function and $k(\bm{x}, \bm{x}')$ is the kernel or covariance 
+function.
+\paragraph{Strengths}
+\paragraph{Weaknesses}
+\paragraph{Relationships with other methods}
+\paragraph{Examples of application}
+\begin{itemize}
+    \item noise-free GP regression is a computationally cheap proxy for the behavior
+        of a complex simulator such as a weather forecasting program.
+\end{itemize}
+
+
+
+
+\subsection{Classification And Regression Trees (CART)}
+\paragraph{Purpose}
+\paragraph{Assumptions}
+\paragraph{Theory}
+\begin{center}
+    $f(\bm{x}) = \E{y|\bm{x}} = \su{m=1}{M}w_{m}\mathbbm{1}_{\{\bm{x}\in R_{m}\}}
+\su{m=1}{M}w_{m}\phi(\bm{x};\bm{v}_{m})$
+\end{center}
+where $R_{m}$ is the m'th region $w_{m}$ is the mean response in this region and 
+$\bm{v}_{m}$ encodes the choice of variable to split on.
+\subparagraph{Growing a tree}
+\begin{center}
+    \fr{$(j^{*},t^{*}) = \argmin_{J\in\left\{j\in\inter{1}{D}\right\}} \min_{t\in\mathcal{T}_{
+j}} \text{\emph{cost}}(\{\bm{x}_{i},y_{i}:x_{ij}\leq t\}) + \text{\emph{cost}}(
+\{\bm{x}_{i},y_{i}:x_{ij}> t\})$}
+\end{center}
+where the set of possible thresholds $\mathcal{T}_{j}$ for feature $j$ can be obtained
+by sorting the unique values of $x_{ij}$
+\subparagraph{Cost}
+\begin{itemize}
+    \item \emph{Regression}: \emph{cost}$(\mathcal{D})=\su{i\in\mathcal{D}}{}\left(
+        y_{i}-\overline{y}\right)^{2}$
+    \item \emph{Classification}:  knowing that $\hat{\pi}_{c} = \frac{1}{|\mathcal{D}|}
+        \su{i\in\mathcal{D}}{}\mathbbm{1}_{\{y_{i}=c\}}$ 
+        \begin{itemize}
+            \item \emph{Misclassification Rate}: $\frac{1}{|\mathcal{D}|}\su{i\in
+                \mathcal{D}}{}\mathbbm{1}_{\{y_{i}\neq\hat{y}\}}$
+            \item \emph{Entropy} $\mathbb{H}(\hat{\bm{\pi}}_{c}) =-\su{c=1}{C}\hat{\pi}
+                _{c}\log\left(\hat{\pi}_{c}\right)$
+            \item \emph{Gini index}: $\su{c=1}{C}\hat{\pi}_{c} (1-\hat{\pi}_{c})$, 
+        \end{itemize}
+\end{itemize}
+Cross-entropy and Gini measures are very similar and more sensitive to changes in class
+probability than is the misclassification rate, finally they favor \emph{pure nodes}
+\subparagraph{Pruning}
+As stopping growing the tree to prevent overfitting would provoke to miss making any
+splits because of feature on its own has little predictive power.\\
+\uB{Growing a "full" tree then performing \emph{pruning} is better}.
+\subparagraph{Random Forest}
+\tB{to reduce the variance of an estimate, we can train M different trees on
+different subsets of the data}, randomly chosen with replacement and compute:
+\begin{center}
+    $f(\bm{x}) = \su{m=1}{M}\dfrac{1}{M}f_{m}(\bm{x})$
+\end{center}
+where $f_{m}$ is the \emph{m}'th tree. This called \tB{\textbf{bagging (bootstrap 
+aggregating)}}\\
+Simply re-running the sample learning algorithm on different subsets of the data can
+result in highly correlated predictors.\\
+\tB{The \textbf{random forest} technique tries to decorrelate the base learners by 
+learning trees based on a randomly chosen subset of input variables as well as a
+randomly chosen subset of data cases} (observations). 
+
+
+
+
+ 
+
+
+\paragraph{Strengths}
+\begin{itemize}
+    \item easy to interpret
+    \item handle mixed discrete and continuous input
+    \item insensitive to monotone transformation of the inputs (because the splits
+        are based on ranking the data points)
+    \item automatic variable selection 
+    \item relatively robust to outliers
+    \item scale well to large datasets
+    \item can be modified to handle missing inputs
+\end{itemize}
+
+
+\paragraph{Weaknesses}
+\begin{itemize}
+    \item less accurate that other kinds of model (partly due to the greedy nature of
+        the tree construction)
+    \item unstable: small changes to the input data can have large effect on the 
+        structure of the tree (due to hierarchical nature of the tree-growing process)
+    \item causing errors at the top can affect the rest of the tree
+\end{itemize}
+
+\paragraph{Relationships with other methods}
+\paragraph{Examples of application}
+
+\subsection{Generalized Additive models}
+\paragraph{Purpose}
+To create a nonlinear model with multiple inputs: $f(\bm{x}) = \alpha + \su{i=1}{D}f_{
+i}(x_{i})$
+\paragraph{Assumptions}
+\paragraph{Theory}
+The loss function in regression setting:
+$J\left(\alpha,(f_{i})_{1\leq i\leq D}\right) = \su{i=1}{n}\left(y_{i}-\alpha -
+\su{j=1}{D}f_{i}(x_{ij})\right)^{2} + \su{j=1}{D}\lambda_{j}\Su{}{}f_{j}^{''}(t_{j})^{
+2}dt_{j}$ where $\lambda_{j}$ is the strength of the regularizer for $f_{j}$
+\subparagraph{Multivariate Adaptive Regression Splines (MARS)}
+We create an ANOVA decomposition:
+$f(\bm{x}) = \beta_{0} + \su{j=1}{D}f_{j}(x_{j}) + \su{j,k}{}f_{jk}(x_{j},x_{k}) + 
+\su{j,k,l}{}f_{j,k,l}(x_{j}, x_{k}, x_{l}) + \cdots$
+\paragraph{Strengths}
+\paragraph{Weaknesses}
+\paragraph{Relationships with other methods}
+\paragraph{Examples of application}
+
+\subsection{Boosting}
+\paragraph{Purpose}
+It is a greedy algorithm for fitting adaptive basis-function models \tB{$f(\bm{x}) = 
+w_{0} + \su{m=1}{M}w_{m}\phi_{m}(\bm{x})$}, where $\phi_{m}$ are generated by an
+algorithm called \textbf{weak learner}. \uB{This algorithm works by applying the weak
+learner sequentially to weighted versions of the data, where more weight is given to
+examples that were misclassified by earlier rounds.}\\
+This weak learner can be any classification or regression algorithm, but \tB{it common
+to use CART model}.\\
+\tB{Boosting is very resistant to overfitting.}\\
+\subparagraph{Forward stagewise additive modeling}
+The goal of boosting is to solve the following optimization problem:
+\begin{center}
+    $\min_{f}\su{i=1}{n}L(y_{i},f(\bm{x}_{i}))$
+\end{center}
+$f^{*}(\bm{x}) = \argmin_{f(\bm{x})}$
+
+\begin{enumerate}
+    \item initialise by defining $f_{0}(\bm{x}) = \argmin_{\gamma}\su{i=1}{n}L\left(
+        y_{i},f(\bm{x};\gamma)\right)$, for example if we use squared error we can
+        set $f_{0}(\bm{x})=\overline{y}$
+    \item at iteration $m$ we compute $(\beta_{m},\gamma_{m}) = \argmin_{\beta,\gamma}
+        \su{i=1}{n}L\left(y_{i},f_{m-1}(\bm{x}_{i})+\beta\phi(\bm{x}_{i};\gamma)
+        \right)$
+    \item $f_{m}(\bm{x}) = f_{m-1}(\bm{x}) + \beta_{m}\phi_{m}(\bm{x}_{i};\gamma)$
+\end{enumerate}
+
+\begin{center}
+    \begin{tabular}{|*{5}{c|}}
+    \hline
+    \textbf{Name} & \textbf{Loss}& \textbf{Derivate}& \textbf{$f{*}$} & \textbf{Algorithm}\\
+    \hline
+    \emph{Squared error} & $\frac{1}{2}\left(y_{i}-f(\bm{x}_{i})\right)^{2}$ & 
+    $y_{i}-f(\bm{x}_{i})$ & $\E{y|\bm{x}_{i}}$ & \emph{L2Boosting}\\
+    \hline
+    \emph{Absolute error} & $|y_{i}-f(\bm{x}_{i}|$ & 
+    $sgn(y_{i}-f(\bm{x}_{i}))$ & \emph{median}$(y|\bm{x}_{i})$ & \emph{Gradient 
+    Boosting}\\
+    \hline
+    \emph{Exponential loss} & $\exp\left(-y_{i},f(\bm{x}_{i})\right)$ & $-y_{i}\exp(
+    -y_{i}f(\bm{x}_{i}))$ & $\frac{1}{2}\log\left(\frac{\pi_{i}}{1 - \pi_{i}}\right)$&
+    \emph{AdaBoost}\\
+    \hline
+    \emph{Logloss} & $\log\left(1+e^{-y_{i}f(\bm{x}_{i})}\right)$ & $-y_{i}-\pi_{i}$ &
+    $\frac{1}{2}\log\left(\frac{\pi_{i}}{1 - \pi_{i}}\right)$ & \emph{LogitBoost}\\
+    \hline
+    \end{tabular}
+\end{center}
+where $\pi=\sigma\left(2f(\bm{x})\right)$
+
+
+\paragraph{Assumptions}
+\paragraph{Theory}
+\paragraph{Strengths}
+\paragraph{Weaknesses}
+\paragraph{Relationships with other methods}
+\paragraph{Examples of application}
+
+\subsection{Ensemble learning}
+\paragraph{Purpose}
+Refers to learning a weighted combination of base models of the form:
+$f(y|\bm{x},\bm{\pi}) = \su{m\in\mathcal{M}}{}w_{m}f_{m}(y|\bm{x})$ where $w_{m}$ are
+the tunable parameters.
+\paragraph{Assumptions}
+\paragraph{Theory}
+\subparagraph{Stacking}
+To estimate the weights we can use : $\hat{\bm{w}} = \displaystyle\argmin_{\bm{
+w}}\su{i=1}{n}L\left(y_{i},\su{m=1}{M}w_{m}\hat{f}_{m}^{-i}(\bm{x})\right)$, with 
+$\hat{f}_{m}^{-i}(\bm{x}$ being the predictor obtained by training on data excluding
+$(\bm{x}_{i},y_{i})$. It would allow to avoid overfitting that would produce in using
+simply $f_{m}$. This know as \textbf{stacking}.
+\paragraph{Strengths}
+\paragraph{Weaknesses}
+\paragraph{Relationships with other methods}
+\paragraph{Examples of application}
+\begin{itemize}
+    \item analogy with neural networks: $f_{m}$ representing the $m^{th}$ hidden unit 
+        and $w_{m}$ are the outputs layer weights
+    \item analogy with boosting: where the weights on the base models are determined 
+        sequentially
 \end{itemize}
 
 

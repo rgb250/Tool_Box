@@ -62,6 +62,13 @@ into feature vector format.
     \item \emph{Fisher} kernels: $k(\bm{x},\bm{x}') = \bm{g}(\bm{x})^{T}\bm{F}^{-1}
         \bm{g}(\bm{x}')^{T}$ where $g$ is the gradient of the log-likelihood and 
         $\bm{F}$ is the Fisher information matrix. 
+    \item \emph{Epanechnikov} kernel: $k(x)\triangleq \frac{3}{4}(1-x^{2})\mathbbm{1}_{
+        \left\{|x|\leq 1\right\}}$, compact support (useful for efficiently reasons 
+        since one can use fast nearest neighbor methods to evaluate density) but not
+        continuous derivatives at the boundaries of its support
+    \item \emph{Tri-cube} kernel: $k(x)\triangleq \frac{3}{4}(1-|x|^{3})^{3}
+        \mathbbm{1}_{\left\{|x|\leq 1\right\}}$, having compact support and two 
+        continuous derivatives at the boundary of its support.
 \end{itemize}
 \subparagraph{Kernel machines}
 is a GLM where the input feature vector has the form $\phi(\bm{x}) = \left(
@@ -105,6 +112,18 @@ $k(\bm{x}, \bm{x}')$}.
         kernel trick}. The mathematical demonstration is long and not 
         important.
 \end{itemize}
+\subparagraph{Kernel Density Estimation (KDE)}
+Instead of estimating $\bm{\mu}_{k}$ we can allocate one cluster center per data point 
+so $\bm{\mu}_{i} = \bm{x}_{i}$ then the model becomes: $\prob{\bm{x}|\mathcal{D}} =
+\dfrac{1}{n}\su{i=1}{n}\mathcal{N}(\bm{x}|\bm{x}_{i}, \sigma^{2}\bm{I})$
+That we can generalize with:
+\begin{center}
+    \fr{$\hat{p}(\bm{x}) = \dfrac{1}{n}\su{i=1}{n}k_{h}(\bm{x} - \bm{x}_{i})$}
+\end{center}
+This is called \emph{Parzen window density estimator} or \emph{Kernel Density 
+Estimator}.\\
+
+
 
 
 \paragraph{Strengths}

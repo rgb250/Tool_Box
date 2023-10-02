@@ -14,16 +14,16 @@ each feature, and $D$ the number of features.
 As a \emph{generative} model, meaning of the form:
 $\prob{y=c|\bm{x}, \bm{\theta}} \propto \prob{\bm{x}|y=c,\bm{\theta}}
 \prob{y=c|\bm{\theta}}$. The key of such models is the possibility
-to specify a suitable form for the class-conditional density 
-$\prob{\bm{x}|y=c, \bm{\theta}}$ which definees what kind of data we 
-expect to see in each class. And with the independence assumption we 
+to \tR{specify a suitable form for the class-conditional density 
+$\prob{\bm{x}|y=c, \bm{\theta}}$ which defines what kind of data we 
+expect to see in each class}. And with the independence assumption we 
 have:
 \begin{center}
     \tB{$\prob{\bm{x}|y=c, \bm{\theta}} = \prd{j=1}{D}\prob{x_{j}|y=c,\bm{\theta}_{jc}}$}
 \end{center}
-with all $\prob{x_{j}|y=c,\bm{\theta}_{jc}}$ being able to 
+with all \tB{$\prob{x_{j}|y=c,\bm{\theta}_{jc}}$ being able to 
 follow a \textit{normal}, \textit{bernoulli} or \textit{multinoulli} 
-distribution.\\
+distribution}.\\
 \uB{Training a NBC consists in computing the MLE or the MAP estimate for 
 the parameters.}\\
 For a single observation
@@ -123,8 +123,8 @@ Regularized Discriminant Analysisa, assuming the covariance matrix is shared acr
 LDA, we perform MAP estimation of $\bm{\Sigma}\hookrightarrow\text{ \emph{InverseWishart}}\left(
 \text{\emph{diag}}\left(\hat{\bm{\Sigma}}_{mle}\right), \nu_{0}\right)$ then:
 \begin{center}
-    $\hat{\bm{\Sigma}} = \lambda\text{\emph{diag}}\left(\hat{\bm{\Sigma}}_{mle}\right) + (1-\lambda)
-    \hat{\bm{\Sigma}}_{mle}$
+    \fr{$\hat{\bm{\Sigma}} = \lambda\text{\emph{diag}}\left(\hat{\bm{\Sigma}}_{mle}
+        \right) + (1-\lambda) \hat{\bm{\Sigma}}_{mle}$}
 \end{center}
 where $\lambda$ controls the amount of regularization which is related to the strength of the prior
 $\nu_{0}$
@@ -265,6 +265,29 @@ $
     \item Speech recognition
 \end{itemize}
 
+
+\subsection{Nearest Shrunken Centroids Classifier}
+\paragraph{Purpose}
+The basic idea is to perform \tB{MAP estimation for diagonal \emph{LDA} with a 
+sparsity-promoting (Laplace) prior} 
+\paragraph{Assumptions}
+\paragraph{Theory}
+Define the class-specific feature mean $\mu_{cj}$ in terms of the class-independent 
+feature mean $m_{j}$ and a class-specific offset $\Delta_{cj}$ Thus:
+\begin{center}
+    $\mu_{jc} = m_{j} + \Delta_{cj}$
+\end{center}
+We will then put a prior on the $\Delta_{cj}$ terms to encourage them to be strictly
+zero and compute MAP estimate.
+
+\paragraph{Strengths}
+\begin{itemize}
+    \item Sparsity $\rightarrow$ more interpretable model
+\end{itemize}
+
+\paragraph{Weaknesses}
+\paragraph{Relationships with other methods}
+\paragraph{Examples of application}
 
 %\subsection{Logistic Regression}
 %\paragraph{Purpose}
