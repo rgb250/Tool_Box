@@ -15,18 +15,18 @@ out". The corners correspond to sparse solutions which lie on the coordinate axe
 contrast when we grow the $l_{2}$ ball it can intersect the objective at any point, 
 there are no "corners" so there is no preference for sparsity. 
 \paragraph{Strengths}
+
+\paragraph{Weaknesses}
 \begin{itemize}
     \item can give quite different results if the data is slightly perturbed
 \end{itemize}
-
-\paragraph{Weaknesses}
 \paragraph{Relationships with other methods}
 \paragraph{Examples of application}
 
 \subsection{Regularization path}
 \paragraph{Purpose}
 As we increase $\lambda$, the solution vector $\hat{\bm{w}}(\lambda)$ will tend to get
-sparser, although not necessary monotically. For each feature $j$ we can plot the 
+sparser, although not necessary monotonically. For each feature $j$ we can plot the 
 values $\hat{w}_{j}(\lambda)$ vs $\lambda$ which is known as \emph{regularization path}
 \paragraph{Assumptions}
 \paragraph{Theory}
@@ -35,7 +35,7 @@ values $\hat{w}_{j}(\lambda)$ vs $\lambda$ which is known as \emph{regularizatio
 \paragraph{Relationships with other methods}
 \paragraph{Examples of application}
 
-\subsection{$l_{1}$ algorithms}
+\subsection{Coordinate Descent}
 \paragraph{Purpose}
 These algorithms exploit the fact that one can quickly compute $\hat{\bm{w}}(
 \lambda_{k})$ from $\hat{\bm{w}}(\lambda_{k-1})$ if $\lambda_{k} \approx \lambda_{k-1}$
@@ -47,6 +47,10 @@ $w^{*}_{j} = \argmin_{z}f(\bm{w} + z\bm{e}_{j}) - f(\bm{w})$ with $\bm{e}_{j}$ i
 \emph{j}'th unit vector. 
 
 \paragraph{Strengths}
+\begin{itemize}
+    \item if each one-dimensional optimization problem can be solved analitically
+\end{itemize}
+
 \paragraph{Weaknesses}
 \paragraph{Relationships with other methods}
 \paragraph{Examples of application}

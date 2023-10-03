@@ -1,37 +1,50 @@
 \subsection{Mixture models}
 \paragraph{Purpose}
-It is the simplest form of \emph{Latent Variable Models (LVMs)} is when $z_{i}\in
-\{k\}_{1\leq k\leq K}$. 2 mains application of mixture models:
+It is the \tR{simplest form of \emph{Latent Variable Models (LVMs)} is when $z_{i}\in
+\inter{1}{K}$}.\\
+Two mains application of mixture models:
 \begin{itemize}
-    \item use them as \emph{black-box} density model, $p(\bm{x}_{i})$, useful for data
-        compression, outlier detection and creating generative classifiers
-    \item use for clustering
+    \item use them as \emph{black-box} density model, $p(\bm{x}_{i})$, useful for \tB{data
+        compression, outlier detection and creating generative classifiers}
+    \item use for \tB{clustering}
 \end{itemize}
 
 \paragraph{Assumptions}
 \paragraph{Theory}
-We use a discrete prior $p(z_{i}) = \text{\emph{Cat}}(\bm{\pi})$ and the likelihood
+We use a \tB{discrete prior $p(z_{i}) = \text{\emph{Cat}}(\bm{\pi})$} and the likelihood
 $p(\bm{x}_{i}|z_{i} = k)$, finally the \textbf{mixture model} is :
 \begin{center}
-    $\prob{\bm{x}_{i}|\bm{\theta}} = \su{k=1}{K}\pi_{k}\prob{\bm{x}_{i}|z_{i}=k,
-    \bm{\theta}} = \su{k=1}{K}\pi_{k}\mathbb{P}_{k}\left(\bm{x}_{i}|\bm{\theta}\right)$
+    \tR{$\prob{\bm{x}_{i}|\bm{\theta}} = \su{k=1}{K}\pi_{k}\prob{\bm{x}_{i}|z_{i}=k,
+    \bm{\theta}} = \su{k=1}{K}\pi_{k}\mathbb{P}_{k}\left(\bm{x}_{i}|\bm{\theta}\right)$}
 \end{center}
-where $\mathbb{P}_{k}$ is the $k$'th \emph{base distribution}.
+where \uB{$\mathbb{P}_{k}$ is the $k$'th \emph{base distribution}}.
 \subparagraph{Mixtures of Gaussian}
 Each base distribution in the mixture is a multivariate Gaussian with mean $\mu_{k}$ 
 and covariance matrix $\bm{\Sigma}_{k}$:
-$\prob{\bm{x}_{i}|\bm{\theta}}=\su{k=1}\pi_{k}\mathcal{N}\left(\bm{x}_{i}|\bm{\mu}_{k},
-    \bm{\Sigma_{k}}\right)$\\
-Given a sufficiently large number of mixture components a \tB{Gaussian Mixture Models
+\tB{$\prob{\bm{x}_{i}|\bm{\theta}}=\su{k=1}{K}\pi_{k}\mathcal{N}\left(\bm{x}_{i}|\bm{\mu}_{k},
+    \bm{\Sigma_{k}}\right)$}\\
+Given a sufficiently large number of mixture components a \tR{Gaussian Mixture Models
 (GMMs) can be used to approximate any density defined on $\mathbb{R}^{D}$}.
 \subparagraph{Mixtures of multinoullis}
 can be used to define density models on data consisting of a \emph{D}-dimensional bit
-vectors: $\prob{\bm{x}_{i}|z_{i}=k,\bm{\theta}} = \prd{j=1}{D}\text{\emph{Ber}}(x_{ij}|
-\mu_{jk})=\prd{j=1}{D}\mu_{jk}^{x_{ij}}(1-\mu_{jk})^{1-x_{ij}}$\\
-where $\mu_{jk}$ is the probability that bit $j$ turns on in cluster $k$.
+vectors: \tB{$\prob{\bm{x}_{i}|z_{i}=k,\bm{\theta}} = \prd{j=1}{D}\text{\emph{Ber}}(x_{ij}|
+\mu_{jk})=\prd{j=1}{D}\mu_{jk}^{x_{ij}}(1-\mu_{jk})^{1-x_{ij}}$}\\
+where \uB{$\mu_{jk}$ is the probability that bit $j$ turns on in cluster $k$}.
+\subparagraph{Mixture models for clustering}
+We first fit the mixture model an then compute \uB{$\prob{z_{i}=k|\bm{x}_{i},\bm{\theta}}$ 
+representing the posterior probability that point $i$ belongs to cluster $k$}.\\
+This known as the \emph{responsibility} of cluster $k$ for point $i$ and can be computed using 
+Bayes:
+\begin{center}
+    \fr{$r_{ik} \triangleq \prob{z_{i}=k|\bm{x}_{i},\bm{\theta}} = \dfrac{\prob{z_{i}=k|\bm{\theta}}
+    \prob{\bm{x}_{i}|z_{i}=k,\bm{\theta}}}{\su{k'=1}{K}\prob{z_{i}=k'|\bm{\theta}}\prob{\bm{x}_{i}|
+    z_{i}=k',\bm{\theta}}}$}
+\end{center}
+
 \subparagraph{Mixture of experts}
 are build from a discriminative perspective, they relies on the idea that a good
-model different linear method each applying to a different part of the input space.\\
+model can be achieved in \tB{using multiple different linear method each applying to a different part
+of the input space}.\\
 We can model this by allowing the mixing weights and the mixture densities to be
 input-dependent: 
 \begin{center}
@@ -68,11 +81,11 @@ The overall posterior is then
 
 \subsection{ARD: Automatic Relevance Determination}
 \paragraph{Purpose}
-To get greater sparsity 
+To get \tB{greater sparsity} 
 \paragraph{Assumptions}
 \paragraph{Theory} 
-Relying on empirical bayes, whereby we integrate oute $\bm{w}$ and maximize the 
-marginal likelihood $\tau$.
+Relying on \tB{empirical Bayes, whereby we integrate out $\bm{w}$ and maximize the 
+marginal likelihood} $\tau$.
 \subparagraph{Linear Regression}
 Let's consider weight precisions by $\alpha_{j}=\frac{1}{\tau_{j}^{2}}$ and the 
 measurement precision by $\beta=\frac{1}{\sigma^{2}}$:
@@ -221,10 +234,16 @@ They \tB{can be thought of as a Bayesian alternative to the kernel methods}.
 \paragraph{Assumptions}
 \paragraph{Theory}
 \subparagraph{Regression}
-Let the prior on the regression function be GP denoted by
-$f(\bm{x}) \hookrightarrow \text{\emph{GP}}(m(\bm{x}), k(\bm{x},\bm{x}'))$ where
-$m(\bm{x})$ is the mean function and $k(\bm{x}, \bm{x}')$ is the kernel or covariance 
-function.
+Let the prior on the regression function be GP denoted by:
+\begin{center}
+    \fr{$\begin{cases}
+            f(\bm{x}) &\hookrightarrow \text{\emph{GP}}(m(\bm{x}), k(\bm{x},\bm{x}'))\\
+            m(\bm{x}) &= \E{f(\bm{x})}\text{ \emph{the mean function}}\\
+            k(\bm{x}, \bm{x}') &= \E{\left[f(\bm{x}-m(\bm{x}))\right]\left[f(\bm{x}'-m(\bm{x}'))
+            \right]}\text{ \emph{kernel or covariance function}}
+    \end{cases}$}
+\end{center}
+
 \paragraph{Strengths}
 \paragraph{Weaknesses}
 \paragraph{Relationships with other methods}
@@ -239,21 +258,23 @@ function.
 
 \subsection{Classification And Regression Trees (CART)}
 \paragraph{Purpose}
+Learning useful features directly from the input data
 \paragraph{Assumptions}
 \paragraph{Theory}
 \begin{center}
-    $f(\bm{x}) = \E{y|\bm{x}} = \su{m=1}{M}w_{m}\mathbbm{1}_{\{\bm{x}\in R_{m}\}}
-\su{m=1}{M}w_{m}\phi(\bm{x};\bm{v}_{m})$
+    \fr{$f(\bm{x}) = \E{y|\bm{x}} = \su{m=1}{M}w_{m}\mathbbm{1}_{\{\bm{x}\in R_{m}\}}=
+\su{m=1}{M}w_{m}\phi(\bm{x};\bm{v}_{m})$}
 \end{center}
-where $R_{m}$ is the m'th region $w_{m}$ is the mean response in this region and 
-$\bm{v}_{m}$ encodes the choice of variable to split on.
+where $R_{m}$ is the $m^{th}$ region $v_{m}$ is the mean response in this region and 
+\uB{$\bm{v}_{m}$ encodes the choice of variable to split on and the threshold value on the path from
+the root to the $m^{th}$ leaf}.
 \subparagraph{Growing a tree}
 \begin{center}
-    \fr{$(j^{*},t^{*}) = \argmin_{J\in\left\{j\in\inter{1}{D}\right\}} \min_{t\in\mathcal{T}_{
-j}} \text{\emph{cost}}(\{\bm{x}_{i},y_{i}:x_{ij}\leq t\}) + \text{\emph{cost}}(
-\{\bm{x}_{i},y_{i}:x_{ij}> t\})$}
+    \fr{$(j^{*},t^{*}) = \displaystyle\argmin_{j\in\inter{1}{D}} \displaystyle\min_{t\in
+            \mathcal{T}_{j}} \text{\emph{cost}}(\{\bm{x}_{i},y_{i}:x_{ij}\leq t\}) + \text{\emph{
+        cost}}(\{\bm{x}_{i},y_{i}:x_{ij}> t\})$}
 \end{center}
-where the set of possible thresholds $\mathcal{T}_{j}$ for feature $j$ can be obtained
+where the \uB{set of possible thresholds $\mathcal{T}_{j}$} for feature $j$ can be obtained
 by sorting the unique values of $x_{ij}$
 \subparagraph{Cost}
 \begin{itemize}
@@ -281,7 +302,7 @@ different subsets of the data}, randomly chosen with replacement and compute:
 \begin{center}
     $f(\bm{x}) = \su{m=1}{M}\dfrac{1}{M}f_{m}(\bm{x})$
 \end{center}
-where $f_{m}$ is the \emph{m}'th tree. This called \tB{\textbf{bagging (bootstrap 
+where $f_{m}$ is the $m^{th}$ tree. This called \tB{\textbf{bagging (bootstrap 
 aggregating)}}\\
 Simply re-running the sample learning algorithm on different subsets of the data can
 result in highly correlated predictors.\\
@@ -323,13 +344,32 @@ randomly chosen subset of data cases} (observations).
 \subsection{Generalized Additive models}
 \paragraph{Purpose}
 To create a nonlinear model with multiple inputs: $f(\bm{x}) = \alpha + \su{i=1}{D}f_{
-i}(x_{i})$
+i}(x_{i})$\\
+$f(\bm{x})$ can be mapped to $\prob{y|\bm{x}}$ using a \emph{link funciton} as in Generalized Linear
+Models.
 \paragraph{Assumptions}
 \paragraph{Theory}
+\subparagraph{Smoothing splines}
 The loss function in regression setting:
-$J\left(\alpha,(f_{i})_{1\leq i\leq D}\right) = \su{i=1}{n}\left(y_{i}-\alpha -
+\begin{center}
+    \fr{$J\left(\alpha,(f_{i})_{1\leq i\leq D}\right) = \su{i=1}{n}\left(y_{i}-\alpha -
 \su{j=1}{D}f_{i}(x_{ij})\right)^{2} + \su{j=1}{D}\lambda_{j}\Su{}{}f_{j}^{''}(t_{j})^{
-2}dt_{j}$ where $\lambda_{j}$ is the strength of the regularizer for $f_{j}$
+2}dt_{j}$}   
+\end{center}
+\subparagraph{Backfitting}
+As $\alpha$ is not uniquely identifiable since we can always add or substract constants to any of 
+the $f_{j}$, the convention is $\forall j\in\inter{1}{D},~\su{i=1}{n}f_{j}(x_{ij})=0$, then
+$\hat{\alpha} = \dfrac{1}{n}\su{i=1}{n}y_{i}$.
+Finally to fit the model:
+\begin{enumerate}
+    \item $\hat{f}_{j} \leftarrow \text{\emph{smoother}}\left(\left\{y_{i} - \su{k\neq j}{}\hat{f}_{
+                k}(x_{ik})\right\}_{1\leq i\leq n}\right)$
+        \item $\hat{f}_{j} \leftarrow \hat{f}_{j}- \dfrac{1}{n}\su{k\neq j}{}\hat{f}_{k}(x_{ik})$,
+            ensuring the output is zero mean
+\end{enumerate}
+
+
+ where $\lambda_{j}$ is the strength of the regularizer for $f_{j}$
 \subparagraph{Multivariate Adaptive Regression Splines (MARS)}
 We create an ANOVA decomposition:
 $f(\bm{x}) = \beta_{0} + \su{j=1}{D}f_{j}(x_{j}) + \su{j,k}{}f_{jk}(x_{j},x_{k}) + 
@@ -352,18 +392,19 @@ to use CART model}.\\
 \subparagraph{Forward stagewise additive modeling}
 The goal of boosting is to solve the following optimization problem:
 \begin{center}
-    $\min_{f}\su{i=1}{n}L(y_{i},f(\bm{x}_{i}))$
+    $\displaystyle\min_{f}\su{i=1}{n}L(y_{i},f(\bm{x}_{i}))$
 \end{center}
-$f^{*}(\bm{x}) = \argmin_{f(\bm{x})}$
+$f^{*}(\bm{x}) = \displaystyle\argmin_{f(\bm{x})}=\mathbb{E}_{y|\bm{x}}\left(\left[y-f(\bm{X})
+    \right]^{2}\right) = \E{y|\bm{x}}$
 
 \begin{enumerate}
-    \item initialise by defining $f_{0}(\bm{x}) = \argmin_{\gamma}\su{i=1}{n}L\left(
+    \item initialise by defining $f_{0}(\bm{x}) = \displaystyle\argmin_{\gamma}\su{i=1}{n}L\left(
         y_{i},f(\bm{x};\gamma)\right)$, for example if we use squared error we can
         set $f_{0}(\bm{x})=\overline{y}$
-    \item at iteration $m$ we compute $(\beta_{m},\gamma_{m}) = \argmin_{\beta,\gamma}
+    \item at iteration $m$ we compute $(\beta_{m},\gamma_{m}) = \displaystyle\argmin_{\beta,\gamma}
         \su{i=1}{n}L\left(y_{i},f_{m-1}(\bm{x}_{i})+\beta\phi(\bm{x}_{i};\gamma)
         \right)$
-    \item $f_{m}(\bm{x}) = f_{m-1}(\bm{x}) + \beta_{m}\phi_{m}(\bm{x}_{i};\gamma)$
+    \item $f_{m}(\bm{x}) = f_{m-1}(\bm{x}) + \beta_{m}\phi(\bm{x}_{i};\gamma_{m})$
 \end{enumerate}
 
 \begin{center}

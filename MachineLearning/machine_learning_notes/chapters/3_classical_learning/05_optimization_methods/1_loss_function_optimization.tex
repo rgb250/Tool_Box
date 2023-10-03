@@ -1,25 +1,111 @@
+\subsection{Gradient Descent}
+\paragraph{Purpose}
+Simplest algorithm for unconstrained optimization.
+\paragraph{Theory}
+\subparagraph{Principle}
+\begin{center}
+    \fr{$\bm{\theta}_{k+1}=\bm{\theta}_{k} - \eta_{k}\bm{g}_{k}$}
+\end{center}
+where $\eta_{k}$ is the \emph{step size} or \emph{learning rate}.
+For a given  function to optimize $f: \mathbb{R}^{p}\longrightarrow\mathbb{R}$ being 2 times 
+derivable  with \emph{Taylor's theorem}: \tB{$f\left(\bm{\theta}+\eta\bm{d}\right)\approx f(\bm{
+\theta}) + \eta\bm{g}^{T}\bm{d}$} where \uB{$\bm{d}$ is our descent directions}.\\
+If $\eta$ is chosen small enough then $f(\bm{\theta}+\eta\bm{d})<f(\bm{\theta})$ since the gradient
+will be negative. But we don't want to choose the step size $\eta$ to small, so \uB{let's pick $\eta$
+to minimize $\phi(\eta) = f(\bm{\theta}_{k} + \eta\bm{d}_{k})$} this is called \emph{line 
+minimization} or \tB{\emph{line search}}
+\subparagraph{Zig-zag behavior} exact line search satisfies \tB{$\eta_{k}=\displaystyle\argmin_{\eta>
+0} \phi(\eta)$}. A necessary condition for the optimum is \tB{$\phi'(\eta) = 0$}, by the chain rule 
+$\phi'(\eta) = \bm{g}^{T}\bm{d}$ where $\bm{g} = f'(\bm{\theta}, \eta\bm{d})$ is the gradient at the
+end of the step. So \uB{we either have $\bm{g}=\bm{0}$ meaning that we found a stationary point or 
+$\bm{g}\perp \bm{d}$ meaning that exact search stops at a point where the local gradient is 
+perpendicular to the search direction}.
+
+
+\paragraph{Weaknesses}
+\begin{itemize}
+    \item setting the \emph{step size}: too large steps can induce failing to converge, too small
+        can as well fail to converge because of too long time
+\end{itemize}
+
+\subsection{Newton's method}
+\paragraph{Purpose}
+Takes the curvature of the space, the Hessian matrix, into account, it is belong to the family of
+\emph{second order} optimization methods
+\paragraph{Theory}
+It consists to update:
+\begin{center}
+    \fr{$\bm{\theta}_{k+1} = \bm{\theta}_{k} -\eta_{k}\bm{H}^{-1}_{k}\bm{g}_{k}$}
+\end{center}
+Consider making a second-order Taylor series approximation of $f(\bm{\theta})$ around $\bm{\theta}_{
+k}$: 
+$f_{quad}(\bm{\theta}) = f_{k} + \bm{g}^{T}_{k}(\bm{\theta} -\bm{\theta}_{k}) + \dfrac{1}{2}(\bm{
+\theta} -\bm{\theta}_{k})\bm{H}_{k}(\bm{\theta} -\bm{\theta}_{k})$.\\
+That can be rewrite as
+\begin{center}
+    $f_{quad}(\bm{\theta}) = \bm{\theta}^{T}\bm{A}\bm{\theta} + \bm{b}^{T}\bm{\theta} + c
+    \begin{cases}
+        \bm{A} &= \frac{1}{2}\bm{H}_{k}\\
+        \bm{b} &= \bm{g}_{k} - \bm{H}_{k}\bm{\theta}_{k}\\
+        \bm{c} &= f_{k} - \bm{g}^{T}_{k}\bm{\theta}_{k} + \frac{1}{2}\bm{\theta}_{k}^{T}\bm{H}_{k}
+        \bm{\theta}_{k}
+    \end{cases}$
+\end{center}
+The minimum of $f_{quad}$ is at \tB{$\bm{\theta} = -\frac{1}{2}\bm{A}^{-1}\bm{b}=\bm{\theta}_{k}-
+\bm{H}^{-1}_{k}\bm{g}_{k}$}
+Thus the Newton step \tB{$\bm{d}_{k} = -\bm{H}^{-1}_{k}\bm{g}_{k}$ is what should be added to 
+$\bm{\theta}_{k}$} to minimize the second order approximation of around $\bm{\theta}_{k}$
+\paragraph{Strengths}
+\begin{itemize}
+    \item Faster than usual gradient descent
+\end{itemize}
+
+
+\subsection{Online learning and stochastic optimization}
+\paragraph{Purpose}
+Instead of of minimizing regret with respect to the past, \tB{we want to minimize expected loss in 
+the future}.
+\paragraph{Theory}
+\tB{$f(\bm{\theta}) = \E{f(\bm{\theta},\bm{z})}$} where the expectation is taken over future data.\\
+One way to optimize this \emph{stochastic objective} such as the above equation, is to perform the
+update \tB{$\bm{\theta}_{k+1} = proj_{\Theta}\left(\bm{\theta}_{k} - \eta_{k}\bm{g}_{k}\right)$}
+where $proj_{\mathcal{V}}(\bm{v}) = \displaystyle\argmin_{\bm{w}\in\mathcal{V}}\norm{\bm{w}-\bm{v}}^{
+2}$ that is the projection of vector $\bm{v}$ onto space $\mathcal{V}$.\\
+In practice \uB{it is usually better to randomly permute the data and sample without replacement}, 
+and then to repeat. A single such pass over the entire data set is called and 
+\textbf{\emph{epoch}}.\\
+In this offline cases, it is often better to compute the gradient of a \emph{mini-batch} of $B$
+data cases. \uB{If $B=1$ this is standard Stochastic Gradient Descent, and if $B=n$ this is standard
+Gradient Descent} typically $B\approx 100$ is used.
+
+\paragraph{Strengths}
+\begin{itemize}
+    \item online learning, useful for streaming data
+\end{itemize}
+
+
+
 \subsection{EM Algorithm}
 \paragraph{Purpose}
 Gradient-based optimizer used to find a local minimum of the \emph{Negative Log 
-Likelihood} can be stuck with the imposed constraint like positive definite covariance*
+Likelihood} can be stuck with the imposed constraint like positive definite covariance
 matrices, mixing weights having to sum to one.\\
 In a few words \emph{Expectation Maximization (EM)} which alternates between \tB{
 inferring the missing values given the parameters (\emph{E step}), and then optimizing 
 the parameters given the filled in data (M step)}.\\
-The goal is to maximize the log likelihood of the observed data:
+The \tR{goal is to maximize the log likelihood of the observed data}:
 \begin{center}
-    $l(\theta) = \su{i=1}{n}\log(\prob{\bm{x}_{i}|\bm{\theta}}) = 
-    \su{i=1}{n}\log\left(\su{z_{i}}{}\prob{\bm{x}_{i},\bm{z}_{i}|\bm{\theta}}\right)
-    $
+    \fr{$l(\theta) = \su{i=1}{n}\log(\prob{\bm{x}_{i}|\bm{\theta}}) = 
+    \su{i=1}{n}\log\left(\su{z_{i}}{}\prob{\bm{x}_{i},\bm{z}_{i}|\bm{\theta}}\right)$}
 \end{center}
 since the log cannot be pushed inside the sum, it is difficult to optimize, EM gets 
 around this problem in defining the \emph{complete data log likelihood} to be
-$l_c(\bm{\theta}) \triangleq \su{i=1}{n}\log\left(\prob{\bm{x}_{i},\bm{z}_{i}|
-\bm{\theta}}\right)$. But it cannot be computed since $\bm{z}_{i}$ is unknown. So let's
-define the \textbf{expected complete data log likelihood}:
+\tB{$l_c(\bm{\theta}) \triangleq \su{i=1}{n}\log\left(\prob{\bm{x}_{i},\bm{z}_{i}|
+\bm{\theta}}\right)$}. But it cannot be computed since $\bm{z}_{i}$ is unknown. So let's
+define the \tR{\textbf{expected complete data log likelihood}}:
 \begin{center}
-    $Q(\bm{\theta}, \bm{\theta}^{t-1}) = \mathbb{E}\left(l_{c}(\bm{\theta}|\mathcal{D},
-    \bm{\theta}^{t-1})\right)$
+    \tR{$Q(\bm{\theta}, \bm{\theta}^{t-1}) = \mathbb{E}\left(l_{c}(\bm{\theta})|\mathcal{D},
+    \bm{\theta}^{t-1}\right)$}
 \end{center}
 where $t$ is the current iteration number, $Q$ is called the \textbf{auxiliary 
 function}. \tB{The goal of the \emph{E step} is to compute $Q(\bm{\theta},

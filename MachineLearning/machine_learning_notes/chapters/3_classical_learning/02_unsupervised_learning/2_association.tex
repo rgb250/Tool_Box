@@ -1,9 +1,13 @@
-\subsection{Directed graphical models}
+\subsection{Directed graphical models (Bayes nets)}
 \paragraph{Purpose}
-Relevant to compactly represent the joint distribution $\prob{\bm{x}|\bm{\theta}}$ and 
+Relevant to \tB{compactly represent the joint distribution} $\prob{\bm{x}|\bm{\theta}}$ and 
 then \textit{infer} one set of variables given another, and how \textit{learn} the
 parameters of this distribution.
 \paragraph{Assumptions}
+\begin{itemize}
+    \item Conditional independence
+\end{itemize}
+
 \paragraph{Theory}
 \subparagraph{Graph terminology}
 let's consider a \emph{graph} $G=(\mathcal{V}, \mathcal{E})$ consisting of a set of 
@@ -12,21 +16,27 @@ $\mathcal{E} = \left\{(s,t): s,t\in\mathcal{V}^{2}\right\}$
 \begin{itemize}
     \item \emph{Cycle}: series a cycle to be a series of nodes such that we can get 
         back to where we started by following edges.
-    \item \emph{DAG}: Directed Acyclic Graph is a drected graph without cycles.
+    \item \emph{DAG}: Directed Acyclic Graph is a directed graph without cycles.
     \item \emph{Tree}: Undirected graph without cycles.
     \item \emph{Forest}: set of trees
 \end{itemize}
 A \textbf{Directed Graphical Model (DGM)} are more commonly known as \emph{Bayesian 
 Networks}.\\
-In partitionning the data into \emph{visible variables} $\bm{x}_{v}$ and \emph{hdden
+\subparagraph{Inference}
+In partitioning the data into \emph{visible variables} $\bm{x}_{v}$ and \emph{hidden
 variables} $\bm{x}_{h}$, inference refers to computing the posterior distribution of 
-the unknows given the knows:
+the unknown given the knows:
 \begin{center}
-    $\prob{\bm{x}_{h}|\bm{x}_{v},\bm{\theta}} = \dfrac{p(\bm{x}_{h}, \bm{x}_{v}|
+    \fr{$\prob{\bm{x}_{h}|\bm{x}_{v},\bm{\theta}} = \dfrac{p(\bm{x}_{h}, \bm{x}_{v}|
     \bm{\theta})}{p(\bm{x}_{v}|\bm{\theta})} = \dfrac{p(\bm{x}_{h}, \bm{x}_{v}|
-\bm{\theta})}{\su{\bm{x'}_{h}}{}p(\bm{x'}_{h}, \bm{x}_{v}|\bm{\theta})}$
+\bm{\theta})}{\su{\bm{x'}_{h}}{}p(\bm{x'}_{h}, \bm{x}_{v}|\bm{\theta})}$}
 \end{center}
-
+\subparagraph{Learning}
+The aim is to compute a MAP estimate of the parameters given data:
+\tB{$\hat{\bm{\theta}} = \displaystyle\argmax_{\bm{\theta}}\su{i=1}{n}\log\left(\bm{x}_{i,v}|\bm{
+\theta} \right) + \log\left(\prob{\bm{\theta}}\right)$}.\\
+In adopting a Bayesian view, the parameter are unknown variables and should also be inferred,
+thus to a Bayesian there is no distinction between inference and learning.
 
 \paragraph{Strengths}
 \paragraph{Weaknesses}
@@ -36,7 +46,7 @@ the unknows given the knows:
 
 \subsection{Kernels}
 \paragraph{Purpose}
-Measuring the similarity between 2 objects that does not require preprocessing them 
+\tR{Measuring the similarity between 2 objects} that does not require preprocessing them 
 into feature vector format.
 
 \paragraph{Assumptions}
@@ -71,8 +81,8 @@ into feature vector format.
         continuous derivatives at the boundary of its support.
 \end{itemize}
 \subparagraph{Kernel machines}
-is a GLM where the input feature vector has the form $\phi(\bm{x}) = \left(
-k(\bm{x}, \bm{\mu}_{k})\right)_{1\leq k\leq K}$ where $\bm{\mu}_{k}$ being the kth 
+is a Generalized Linear Model where the input feature vector has the form $\phi(\bm{x}) = \left(
+k(\bm{x}, \bm{\mu}_{k})\right)_{1\leq k\leq K}$ where $\bm{\mu}_{k}$ being the $k^{th}$ 
 centroid.
 We can use any of the sparsity-promoting priors for $\bm{w}$ to efficiently select a 
 subset of the training exemplars, it is \uB{sparse vector machine}.
@@ -96,8 +106,8 @@ $k(\bm{x}, \bm{x}')$}.
         vectors themselves. \uB{When we update the centroids, we look at each 
         object that belong to the cluster and measure the sum of its 
         distance to all others in the same cluster} with: $m_{k} = 
-        \argmin_{i:z_{i}=k}\su{i':z_{i'}=k}{}
-        \norm{\bm{x}_{i}-\bm{x}_{i'}}^{2}_{2}$ where $z_{i} = \argmin_{k} 
+        \displaystyle\argmin_{i:z_{i}=k}\su{i':z_{i'}=k}{}
+        \norm{\bm{x}_{i}-\bm{x}_{i'}}^{2}_{2}$ where $z_{i} = \displaystyle\argmin_{k} 
         d(i,m_{k})$
     \item \emph{Ridge Regression}: using the matrix inversion lemme, $\bm{w}_{
         Ridge} = \bm{X}_{T}\left(\bm{X}\bm{X}^{T}+\lambda\bm{I}_{n}\right)^{

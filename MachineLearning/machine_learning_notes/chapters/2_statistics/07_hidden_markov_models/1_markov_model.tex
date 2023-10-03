@@ -1,4 +1,4 @@
-\subsection{Basics}
+\subsection{Markov Models}
 \paragraph{Definition}
 It \tB{assumes that $X_{t}$ captures all the relevant information for predicting the future}.
 If we assume discrete time steps the \tB{joint distribution} is:
@@ -9,6 +9,9 @@ If we assume discrete time steps the \tB{joint distribution} is:
 \emph{homogeneous}, \emph{stationary} or \emph{time-invariant}}.\\
 This assumption allows us to model an arbitrary of variables using a fixed number of parameters, such
 models are called \tB{\textbf{stochastic process}}.
+\paragraph{Assumptions}
+\tB{$x_{t+1} \perp (x_{k})_{1\leq k\leq t-1}|x_{t}$, meaning the future is independent of the past 
+given the present}, is called the \emph{first order Markov assumption.}
 
 \paragraph{Transition matrix}
 \uB{When $X_{t}$ is discrete} the conditional distribution $\prob{X_{t}|X_{t-1}}$ can be written as 
@@ -32,15 +35,19 @@ X_{t-1}=i}$ being the probability of going from state $i$ to $j$}. Each row of t
 \end{itemize}
 
 
-\subsection{Basics}
+\subsection{Hidden Markov Models}
 \paragraph{Definition}
 It consists of a discrete-time discrete-state Markov chain, with hidden states $z_{t}\in\{k\}_{1\leq
 k\leq K}$.\\
 The corresponding joint distribution has the form:
-$\prob{\left(\bm{z}_{t}\right)_{1\leq t\leq T}, \left(\bm{x}_{t}\right)_{1\leq t\leq T}} = 
+\begin{center}
+    \fr{$\prob{\left(\bm{z}_{t}\right)_{1\leq t\leq T}, \left(\bm{x}_{t}\right)_{1\leq t\leq T}} = 
 \prob{\left(\bm{z}_{t}\right)_{1\leq t\leq T}}
 \prob{\left(\bm{z}_{t}\right)_{1\leq t\leq T}| \left(\bm{x}_{t}\right)_{1\leq t\leq T}}  =
-\left[\prob{z_{1}}\prd{t=2}{T}\prob{z_{t}|z_{t-1}}\right] = \prd{t=2}{T}\prob{\bm{x}_{t}|z_{t}}$
+\left[\prob{z_{1}}\prd{t=2}{T}\prob{z_{t}|z_{t-1}}\right]\prd{t=2}{T}\prob{\bm{x}_{t}|z_{t}}$}   
+\end{center}
+
+
 \begin{itemize}
     \item \emph{discrete}: $\prob{\bm{x}_{t}=l|z_{t}=k,\bm{\theta}} = \text{\emph{Beta}}(k,l)$
     \item \emph{discrete}: $\prob{\bm{x}_{t}|z_{t}=k,\bm{\theta}} = \mathcal{N}(\bm{x}_{t}|

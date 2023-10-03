@@ -1,10 +1,10 @@
 \subsection{Bayesian Variable Selection}
 \paragraph{Purpose}
-Let $\gamma_{j}: 
+Let \tB{$\gamma_{j}: 
 \begin{cases}
-    \gamma_{j} = 1 \Leftarrow \text{feature } j \text{is relevant}\\
+    \gamma_{j} = 1 \Leftarrow \text{feature } j \text{ is relevant}\\
     \gamma_{j} = 0 \Leftarrow \text{otherwise}\\
-\end{cases}$ our goal is to compute the posterior over models:
+\end{cases}$} our goal is to compute the posterior over models:
 \begin{center}
     $\prob{\gamma|\mathcal{D}} = \dfrac{e^{-f(\gamma)}}{\su{\gamma'}{}e^{-f(\gamma')}}$
 \end{center}
@@ -14,7 +14,7 @@ where the cost function is defined by $f(\gamma) \triangleq -\left[\log\left(\pr
 \paragraph{Assumptions}
 \paragraph{Theory}
 \subparagraph{Spike and slab model}
-remember that posterior is given by $\prob{\bm{\gamma}|\mathcal{D}}\approx \prob{
+remember that posterior is given by $\prob{\bm{\gamma}|\mathcal{D}}\propto \prob{
 \mathcal{D}|\bm{\gamma}}\prob{\bm{\gamma}}$.\\
 It is common to use the following prior $\prob{\bm{\gamma}} = \prd{j=1}{D}\text{
 \emph{Ber}}(\gamma_{j}|\pi_{0}) = \pi_{0}^{\norm{\gamma}_{0}}(1-\pi_{0})^{D-\norm{
@@ -55,13 +55,13 @@ assuming that we want to find the MAP model.
         current model to be all models than can be reached by flipping a single bit
         of $\gamma$}
     \item Orthogonal least squares: we start from an empty set of variables and we 
-        add the best feature $j^{*} = \argmin_{j\notin\bm{\gamma}_{t}}\min_{\bm{w}}
-        \norm{\bm{y}-\bm{X}_{\bm{\gamma}_{t}\cup j}\bm{w}}^{2}$ 
+        add the best feature \tB{$j^{*} = \displaystyle\argmin_{j\notin\bm{\gamma}_{t}}\displaystyle
+            \min_{\bm{w}}\norm{\bm{y}-\bm{X}_{\bm{\gamma}_{t}\cup j}\bm{w}}^{2}$} 
     \item Orthogonal matching pursuits: as Orthogonal least squares is somewhat 
         expensive, a simplification is to freeze the current weight and then pick the 
-        next feature to add by solving $j^{*} = \argmin_{j\notin\bm{\gamma}_{t}}
-        \min_{\beta} \norm{\bm{y}-\bm{X}\bm{w}_{t} - \beta\bm{x}_{:,j}}^{2}$.
-        $\beta = \frac{\bm{x}_{:,j}^{T}\bm{r}_{t}}{\norm{\bm{x}_{:,j}}^{2}}$, where
+        next feature to add by solving \tB{$j^{*} = \displaystyle\argmin_{j\notin\bm{\gamma}_{t}}
+        \displaystyle\min_{\beta} \norm{\bm{y}-\bm{X}\bm{w}_{t} - \beta\bm{x}_{\cdot j}}^{2}$}. And
+        $\beta = \dfrac{\bm{x}_{\cdot j}^{T}\bm{r}_{t}}{\norm{\bm{x}_{\cdot j}}^{2}}$, where
         $\bm{r} = \bm{y}-\bm{X}\bm{w}_{t}$
     \item Backward selection: starts with all variables in the model and deletes the
     \item Bayesian matching pursuits: similar to OMP except it uses a Bayesian marginal

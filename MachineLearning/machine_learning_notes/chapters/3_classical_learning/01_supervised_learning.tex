@@ -1,3 +1,29 @@
+
+With the \tB{\emph{generative} approach we create a joint model of the form $\prob{y,\bm{x}}$, and
+then to condition on $\bm{x}$, thereby deriving $\prob{y|\bm{x}}$}.\\
+Alternatively, \tB{fitting directly a model of the form $\prob{y|\bm{x}}$ is a \emph{
+discriminative} approach}.
+
+\begin{itemize}
+    \item \emph{Easy to fit}: generative classifiers is usually very easy
+    \item \emph{Fit classes separately?}: in a generative classifier we estimate the parameters 
+        of each class conditional density independently
+    \item \emph{Handle missing features easily?}: in a generative classifier there is a natural way
+        to handle missing data: $\prob{\bm{x}_{i},r_{i}|\bm{\theta},\bm{\phi}} = \prob{r_{i}|\bm{
+        x}_{i},\bm{\phi}}\prob{\bm{x}_{i}|\bm{\theta}}$ where $\bm{\phi}$ are the parameters
+        controlling whether the item is observed or not. Missing completely at random (MCAR): $\prob{
+        r_{i}|\bm{x}_{i},\bm{\phi}} = \prob{r_{i}|\bm{x}^{0}_{i}|\bm{\phi}}$, missing at random 
+        (MAR): $\prob{r_{i}|\bm{x}_{i},\bm{\phi}} = \prob{r_{i}|\bm{x}^{0}_{i},\bm{\phi}}$
+    \item \emph{Can handle unlabeled training data?}: Fairly easy to using generative models
+    \item \emph{Symmetric in inputs and outputs?}: We can run a generative model "backward" and 
+        infer probable inputs given the output by computing $\prob{\bm{x}|y}$
+    \item \emph{Can handle feature preprocessing?}: discriminative methods allow to preprocess the
+        input in arbitrary ways, by replacing $\bm{x}$ with $\phi(\bm{x})$
+    \item \emph{Well-calibrated probabilities?}: discriminative models are usually better calibrated
+        in terms of their probability estimates.
+\end{itemize}
+
+
 \section{Classification}
 \input{chapters/3_classical_learning/01_supervised_learning/1_classification.tex}
 

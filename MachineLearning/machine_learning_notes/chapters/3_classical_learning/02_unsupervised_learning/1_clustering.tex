@@ -1,34 +1,63 @@
 \subsection{\emph{K-means} algorithm}
 \paragraph{Purpose}
-Consider a \emph{GMM} in which  we make the following assumptions $\bm{\Sigma}_{k}=
-\sigma^{2}\bm{I}_{D}$ is fixed and $\pi_{k} = \frac{1}{K}$, then only the cluster 
+Consider a \emph{Gaussian Mixture Models} in which  we make the following assumptions \tB{$\bm{\Sigma
+}_{k}= \sigma^{2}\bm{I}_{D}$} is fixed and \tB{$\pi_{k} = \frac{1}{K}$}, then only the cluster 
 centers $\mu_{k}\in\mathbb{R}^{D}$ have to be estimated.\\
-Now consider $\prob{z_{i} = k|\bm{x}_{i},\bm{\theta}} \approx \mathbbm{1}_{\{k=z_{i}^{
-*}\}}$, where $z_{i}^{*} = \argmax_{k}\prob{z_{i} = k}|\bm{x}_{i},\bm{\theta}$.
+ 
+\paragraph{Assumptions}
+\paragraph{Theory}
+Now consider \tB{$\prob{z_{i} = k|\bm{x}_{i},\bm{\theta}} \approx \mathbbm{1}_{\{k=z_{i}^{
+*}\}}$}, where \tB{$z_{i}^{*} = \argmax_{k}\prob{z_{i} = k|\bm{x}_{i},\bm{\theta}}$}.\\
 As we are making a hard assignment of points to clusters, this is sometimes called 
-\emph{hard EM}. Since we assumed an equal spherical covariance matrix for each cluster 
-we have $z_{i}^{*} = \argmin_{k}\norm{\bm{x}_{i} -\bm{\mu}_{k}}_{2}^{2}$\\
-The \emph{M step} updates each cluster center by computing the mean of all points 
-assigned to it:
-$\bm{\mu}_{k} = \dfrac{1}{n_{k}}\su{i:z_{i}=k}{}\bm{x}_{i}$.
+\emph{hard EM}. \tR{Since we assumed an equal spherical covariance matrix for each cluster 
+we have $z_{i}^{*} = \argmin_{k}\norm{\bm{x}_{i} -\bm{\mu}_{k}}_{2}^{2}$}\\
+The \uB{\emph{M step} updates each cluster center} by computing the mean of all points 
+assigned to it: \tB{$\bm{\mu}_{k} = \dfrac{1}{n_{k}}\su{i:z_{i}=k}{}\bm{x}_{i}$}.\\
 Since K-means is not a proper EM algorithm it is not maximizing likelihood, instead 
 \uB{it can be interpreted as a greedy algorithm minimizing a loss function related to 
 data compression.}
- 
+\paragraph{Strengths}
+\paragraph{Weaknesses}
+\paragraph{Relationships with other methods}
+\begin{itemize}
+    \item Gaussian Mixture
+\end{itemize}
+
+\paragraph{Examples of application}
+
+
+\subsection{Vector Quantization}
+\paragraph{Purpose}
+\uB{Suppose performing lossy compression of some real-valued vectors} 
+$\bm{x}_{i}\in\mathbb{R}^{D}$.\\
+The basic idea is to replace each real-valued vector $\bm{x}_{i}\in\mathbb{R}^{D}$ with a discrete
+symbol $z_{i}\in\inter{1}{K}$ being an index into a \emph{codebook} of $K$ prototypes $\bm{\mu}_{k}
+\in\mathbb{R}^{D}$
+\paragraph{Theory}
+Each data vector is encoded by using the index of the most similar prototype where similarity is
+measured in terms of Euclidean distance:
+\begin{center}
+    $\text{\emph{encode}}(\bm{x}_{i}) = \displaystyle\argmin_{k}\norm{\bm{x}_{i}-\bm{\mu}_{k}}^{2}$
+\end{center}
+Here a cost function measuring the quality of the codebook by computing the \emph{reconstruction
+error}:
+\begin{center}
+    \fr{$J(\bm{\mu},\bm{z}|K,\bm{X}) \triangleq \dfrac{1}{N}\su{i=1}{N}\su{i=1}{N}\norm{\bm{x}_{i}-
+    decode(encode(\bm{x}_{i}))}^{2} = \dfrac{1}{N}\su{i=1}{N}\norm{\bm{x}_{i}-\bm{\mu}_{z_{i}}}^{2}$}
+\end{center}
 
 \paragraph{Assumptions}
-\paragraph{Theory}
 \paragraph{Strengths}
 \paragraph{Weaknesses}
 \paragraph{Relationships with other methods}
 \paragraph{Examples of application}
 
-
 \subsection{Factor Analysis}
 \paragraph{Purpose}
-To have a representation power through latent variables.\\
-It can be thought of as a way of specifying a joint density model on $\bm{x}$ using
-a small number of parameters.
+Getting a \tB{bigger representation power through latent variables than Mixture models in using
+real-valued latent variable $\bm{z}_{i}\in\mathbb{R}^{L}$}.\\
+It can be thought of as a \uB{way of specifying a joint density model on $\bm{x}$ using
+a small number of parameters}.
 \paragraph{Assumptions}
 \paragraph{Theory}
 Let's consider 
@@ -38,10 +67,40 @@ Let's consider
     \prob{\bm{x}_{i}|\bm{z}_{i},\bm{\theta}} = \mathcal{N}\left(\bm{W}\bm{z}_{i}+
         \bm{\mu},\bm{\Phi}\right)
 \end{cases}$}
-where $\bm{D}$ is a $D\times L$ matrix knows as \emph{factor loading matrix} and $\Phi$
-is a $D\times D$ covariance matrix, which is diagonal as we aim to force $\bm{z}_{i}$
-to explain correlation.
-This model is then called \textbf{Factor Analysis}.
+where $\bm{W}$ is a $D\times L$ matrix knows as \tR{\emph{factor loading matrix}} and \uB{$\Phi$
+is a $D\times D$ covariance matrix, which is diagonal as we aim to force $\bm{z}_{i}$ to explain
+correlation}.
+
+
+\subsection{Mixture of Factor Analyzers}
+\paragraph{Purpose}
+While Factor Analysis assumes that data lives on a low dimensional \emph{linear} manifold, in reality
+most data is better modeled by some form of low dimensional \emph{curved} manifold.\\
+We can \tB{approximate a curved manifold by a piecewise linear manifold}
+\paragraph{Assumptions}
+\paragraph{Theory}
+Let the $k^{th}$ linear subspace of dimensionality $L_{k}$ be represented by $\bm{W}_{k}$.
+Suppose we have a latent indicator $q_{i}\in\inter{1}{k}$ specifying which subspace we should use 
+to generate the data. Here the model:
+\begin{center}
+    \fr{$\begin{cases}
+            \prob{\bm{x}_{i}|\bm{z}_{i},q_{i}=k, \bm{\theta}} &= \mathcal{N}\left(\bm{x}_{i}|\bm{W}_{
+                k}\bm{z}_{i}, \Psi\right)\\
+                    \prob{\bm{z}_{i}|\bm{\theta}} &= \mathcal{N}\left(\bm{z}_{i}|\bm{0}, \bm{I}
+                    \right)\\
+                        \prob{q_{i}|\bm{\theta}} &= \text{\emph{Cat}}\left(q_{i}|\bm{\pi}\right)
+    \end{cases}$}
+\end{center}
+
+\paragraph{Strengths}
+\begin{itemize}
+    \item it is a good density model for high-dimensional real-valued data
+\end{itemize}
+
+\paragraph{Weaknesses}
+\paragraph{Relationships with other methods}
+\paragraph{Examples of application}
+
 
 \subsection{Principal Components Analysis}
 \paragraph{Purpose}
@@ -54,13 +113,12 @@ Suppose we want to find an orthogonal set of $L$ linear basis vectors $\bm{w}_{j
 \mathbb{R}^{D}$ and the corresponding scores $\bm{z}_{i}\in\mathbb{R}^{L}$ such that we
 minimize the average reconstruction error:
 \begin{center}
-    $\bm{J}(\bm{W}, \bm{Z}) = \dfrac{1}{n}\su{i=1}{n}\norm{\bm{x}_{i} - 
-    \bm{\hat{x}}_{i}}^{2}$
+    \fr{$\bm{J}(\bm{W}, \bm{Z}) = \dfrac{1}{n}\su{i=1}{n}\norm{\bm{x}_{i} - 
+    \bm{\hat{x}}_{i}}^{2}$}
 \end{center}
-where $\bm{\hat{x}}_{i} = \bm{W}\bm{z}_{i}$ subject to the constraint that $\bm{W}$
-is orthonormal. 
+where \uB{$\bm{\hat{x}}_{i} = \bm{W}\bm{z}_{i}$} subject to the constraint that \tR{$\bm{W}$
+is orthonormal}. 
 \subparagraph{Model selection}
-
 We can plot the \emph{scree plot} : $E(\mathcal{D}_{train}, L)$ vs $L$, with $E$ being
 the error reconstruction. 
 A related quantity is the fraction of variance explained defined as $F\left(
@@ -85,14 +143,14 @@ A related quantity is the fraction of variance explained defined as $F\left(
 Useful when data is categorical rather than real-valued
 \paragraph{Assumptions}
 \paragraph{Theory}
-Let $\bm{X}\in\mathcal{M}_{np}(\{c\}_{1\leq c\leq C})$ and we assume that each $x_{ij}$
-is generated from a latent variable $\bm{z}_{i}\in\mathbb{R}^{L}$.
-$\begin{cases}
+Let $\bm{X}\in\mathcal{M}_{np}(\inter{1}{c})$ and \uB{we assume that each $x_{ij}$
+is generated from a latent variable $\bm{z}_{i}\in\mathbb{R}^{L}$}.
+\tB{$\begin{cases}
     \prob{\bm{z}_{i}} = \mathcal{N}(\bm{0}, \bm{I}) \\
-    \prob{\bm{x}_{i}|\bm{z}_{i},\bm{\theta}} = \prod{j=1}{p}\text{\emph{Cat}}\left(
+    \prob{\bm{x}_{i}|\bm{z}_{i},\bm{\theta}} = \prd{j=1}{p}\text{\emph{Cat}}\left(
         x_{ij}|\mathcal{S}\left(\bm{W}_{j}^{T}\bm{z}_{i} + \bm{w}_{0j}\right)
     \right)
-\end{cases}$
+\end{cases}$}
 where $\bm{W}\in\mathbb{R}^{L\times M}$ is the factor loading matrix for response $j$ 
 and $\bm{w}_{0j}\in\mathbb{R}^{M}$ is the offset term for response $j$.
 To fit the model in using a modified version of EM: infer a Gaussian approximation to 
@@ -110,6 +168,21 @@ It is a symmetric unsupervised version of PLS, it allows each view to have its o
 "private" subspace, but there is also a shared space.
 \paragraph{Assumptions}
 \paragraph{Theory}
+\tB{If we have 2 observed variables $\bm{x}_{i}$ and $\bm{y}_{i}$ then we have 3 latents variables:
+$\bm{z}^{s}_{i}\in\mathbb{R}^{L_{0}}$ which is shared, $\bm{z}^{x}_{i}\in\mathbb{R}^{L_{x}}$ and 
+$\bm{z}^{x}_{i}\in\mathbb{R}^{L_{x}}$ which are private} :
+\begin{center}
+    \fr{$\begin{cases}
+        \prob{\bm{z}_{i}} &= \mathcal{N}\left(\bm{z}^{s}_{i}|\bm{0},\bm{I}_{L_{s}}\right) 
+        \mathcal{N}\left(\bm{z}^{x}_{i}|\bm{0},\bm{I}_{L_{x}}\right) 
+        \mathcal{N}\left(\bm{z}^{y}_{i}|\bm{0},\bm{I}_{L_{y}}\right)\\ 
+        \prob{\bm{x}_{i}|\bm{z}_{i}} &= \mathcal{N}\left(\bm{x}_{i}|\bm{B}_{x}\bm{z}_{i} +
+        \bm{W}_{x}\bm{z}^{s}_{i} + \bm{\mu}_{x}, \sigma^{2}\bm{I}_{D_{x}}\right)\\
+        \prob{\bm{y}_{i}|\bm{z}_{i}} &= \mathcal{N}\left(\bm{y}_{i}|\bm{B}_{y}\bm{z}_{i} +
+        \bm{W}_{y}\bm{z}^{s}_{i} + \bm{\mu}_{y}, \sigma^{2}\bm{I}_{D_{y}}\right)
+    \end{cases}$}
+\end{center}
+
 \paragraph{Strengths}
 \paragraph{Weaknesses}
 \paragraph{Relationships with other methods}
@@ -120,8 +193,8 @@ It is a symmetric unsupervised version of PLS, it allows each view to have its o
 When we want to deconvolve mixed signals into their constituent parts.\\
 \tB{Unlike PCA, we relax the Gaussian assumption about latent variable, now the 
 distribution can be any non-Gaussian distribution.}
-The reason the Gaussian distribution is disallowed as a source prior in ICA is that 
-it does not permit unique recovery of the sources.
+\uB{The reason the Gaussian distribution is disallowed as a source prior in ICA is that 
+it does not permit unique recovery of the sources.}
 
 \paragraph{Assumptions}
 \paragraph{Theory}

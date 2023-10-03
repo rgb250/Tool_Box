@@ -165,13 +165,16 @@ The basic idea is to perform \tB{MAP estimation for diagonal \emph{LDA} with a
 sparsity-promoting (Laplace) prior} 
 \paragraph{Assumptions}
 \paragraph{Theory}
-Define the class-specific feature mean $\mu_{cj}$ in terms of the class-independent 
-feature mean $m_{j}$ and a class-specific offset $\Delta_{cj}$ Thus:
+Define the \tB{class-specific feature mean $\mu_{cj}$} in terms of the \tB{class-independent 
+feature mean $m_{j}$} and a \tB{class-specific offset $\Delta_{cj}$} Thus:
 \begin{center}
-    $\mu_{jc} = m_{j} + \Delta_{cj}$
+    \fr{$\mu_{jc} = m_{j} + \Delta_{cj}$}
 \end{center}
 We will then put a prior on the $\Delta_{cj}$ terms to encourage them to be strictly
-zero and compute MAP estimate.
+zero and compute MAP estimate.\\
+\tB{If for feature $j$ $\forall c\in\inter{1}{C}\delta_{cj} = 0$ then feature $j$ will no play role
+in the classification decision}, since $\mu_{cj}$ will be independent of $c$.\\
+Thus feature that are not discriminative are automatically ignored.
 
 \paragraph{Strengths}
 \begin{itemize}
@@ -181,15 +184,14 @@ zero and compute MAP estimate.
 \paragraph{Weaknesses}
 \paragraph{Relationships with other methods}
 \paragraph{Examples of application}
+\begin{itemize}
+    \item Gene expression classification
+\end{itemize}
 
 
 \subsection{Logistic Regression}
 \paragraph{Purpose}
-With the generative approach we create a joint model of the form $\prob{y,\bm{x}}$, and
-then to condition on $\bm{x}$, thereby deriving $\prob{y|bm{x}}$, it is the \emph{
-generative} approach.\\
-Alternatively, fitting directly a model of the form $\prob{y|\bm{x}}$ is a \emph{
-discriminative} approach.
+For binary classification. 
 \paragraph{Assumptions}
 \begin{itemize}
     \item Independence
@@ -223,9 +225,9 @@ This called \textit{cross-entropy}
 
 \subsection{Fisher's Linear Discriminant Analysis (FLDA)}
 \paragraph{Purpose}
-An alternative way to the above discriminant analysis is to reduce the dimensionality
+An alternative way to the above discriminant analysis is to \uB{reduce the dimensionality
 of the features $\bm{x}\in\mathbb{R}^{D}$ and then fit a Multivariate Normal to the 
-resulting low-dimensional features $\bm{z}\in \mathbb{R}^{L}$.\\
+resulting low-dimensional features $\bm{z}\in \mathbb{R}^{L}$}.\\
 \emph{PCA} would not be a good idea because it is unsupervised and the low-dimensional
 resulting features would not be optimal for the classification problem.\\
 A better option would be to \uB{find a matrix $\bm{W}$ such that the low-dimensional 
@@ -240,18 +242,18 @@ model}, this is the \emph{FLDA}.
 \paragraph{Theory}
 For $2$ classes
 Let us define 
-$\begin{cases}
+\tB{$\begin{cases}
     \mu_{1} = \frac{1}{N_{1}}\su{i:y_{i}=1}{}\bm{x}_{i}\\
     \mu_{2} = \frac{1}{N_{2}}\su{i:y_{i}=2}{}\bm{x}_{i}
-\end{cases}$,
-and $m_{k} = \bm{w}^{T}\bm{\mu}_{k}$ being the projection of each mean onto the line
-$\bm{w}$. Also let $z_{i}=\bm{w}^{T}\bm{x}_{i}$ be the projection of the data onto the 
+\end{cases}$},
+and \tB{$m_{k} = \bm{w}^{T}\bm{\mu}_{k}$} being the projection of each mean onto the line
+$\bm{w}$. Also let \bm{$z_{i}=\bm{w}^{T}\bm{x}_{i}$} be the projection of the data onto the 
 line $\bm{w}$.\\
-The goal is to find $\bm{w}$ such that we maximize the distance between the means,
-$m_{1} - m_{2}$, while also ensuring the projected clusters are "tight":
+The goal is to \tR{find $\bm{w}$ such that we maximize the distance between the means,
+$m_{1} - m_{2}$, while also ensuring the projected clusters are "tight"}:
 \begin{center}
-    $\bm{J}(\bm{w}) = \dfrac{(m_{f} - m_{1})^{2}}{s_{1}^{2} + s_{2}^{2}}
-    = \dfrac{\bm{w}^{T}\bm{S}_{B}\bm{w}}{\bm{w}^{T}\bm{S}_{W}\bm{w}}$
+    \fr{$\bm{J}(\bm{w}) = \dfrac{(m_{2} - m_{1})^{2}}{s_{1}^{2} + s_{2}^{2}}
+    = \dfrac{\bm{w}^{T}\bm{S}_{B}\bm{w}}{\bm{w}^{T}\bm{S}_{W}\bm{w}}$}
 \end{center}
 with the \emph{between-class scatter matrix}: $\bm{S}_{B} = \left(\mu_{2} - \mu_{1}
 \right)\left(\mu_{2} - \mu_{1}\right)^{T}$ and \emph{within-class scatter matrix}:
@@ -276,6 +278,7 @@ $
 \begin{itemize}
     \item Linear Discriminant Analysis
     \item PCA
+    \item ANOVA
 \end{itemize}
 
 \paragraph{Examples of application}
@@ -283,7 +286,7 @@ $
     \item Speech recognition
 \end{itemize}
 
-
+\subsection{}
 
 %\subsection{Logistic Regression}
 %\paragraph{Purpose}
