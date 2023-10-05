@@ -64,6 +64,25 @@ posterior}.
     \item Useful \uB{when the estimator is a complex function of of the true parameter}
 \end{itemize}
 
+\subsection{Monte Carlo Inference}
+\paragraph{Sampling from a Gaussian (Box-Muller method)}
+The idea is we sample uniformly from a unit radius circle and then use the change of variables to
+derive samples from spherical 2d Gaussian.
+
+\paragraph{Rejection sampling}
+\subparagraph{Basic idea}
+we create a \emph{proposal distribution} $q(x)$ which satisfies 
+
+\paragraph{Importance sampling}
+\subparagraph{Basic idea}
+The idea is to draw samples $\bm{x}$ in regions which have high probability $\prob{\bm{x}}$
+
+\subsection{Particle filtering}
+it is a Monte Carlo algorithm for recursive Bayesian inference
+
+\subsection{Annealing methods}
+COMPLETE
+
 
 %\subsection{Logistic Regression}
 %\paragraph{Purpose}
@@ -73,3 +92,4 @@ posterior}.
 %\paragraph{Weaknesses}
 %\paragraph{Relationships with other methods}
 %\paragraph{Examples of application}
+

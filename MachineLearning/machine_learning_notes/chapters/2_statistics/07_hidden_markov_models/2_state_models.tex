@@ -60,7 +60,49 @@ non-stationary.
 
 \subsection{Inference in LG-SSM (Linear Gaussian - State Space Models)}
 \paragraph{Kalman filtering algorithm}
-It is Kalman filter is an algorithm for exact Bayesian filtering for linear-Gaussian 
-state space models that sequentially cokmputes $\prob{\bm{z}_{t}|\left(\bm{y}_{k}
+It is Kalman filter is an \tB{algorithm for exact Bayesian filtering for linear-Gaussian 
+state space models} that sequentially computes $\prob{\bm{z}_{t}|\left(\bm{y}_{k}
 \right)_{1\leq k\leq t}}$ for each $t$.
+
+\subparagraph{Prediction step}
+\begin{align*}
+    \prob{\bm{z}_{t}|\bm{y}_{1:t-1},\bm{u}_{1:t}} &= \Su{}{}\mathcal{N}\left(\bm{z}_{t}|\bm{A}_{t}
+    \bm{z}_{t-1}+\bm{B}_{t}\bm{u}_{t},\bm{Q}_{t}\right)\mathcal{N}\left(\bm{z}_{t-1}|\bm{\mu}_{t-1},
+\bm{\Sigma}_{t-1}\right)d\bm{z}_{t-1}\\
+                                                  &= \mathcal{N}\left(\bm{z}_{t}|\bm{\mu}_{t|t-1}
+                                                  ,\bm{\Sigma}_{t|t-1}\right)\\
+        \bm{\mu}_{t|t-1} &\triangleq \bm{A}_{t}\bm{\mu}_{t-1} + \bm{B}_{t}\bm{u}_{t}\\
+        \bm{\Sigma}_{t|t-1} &\triangleq \bm{A}_{t}\bm{\Sigma}_{t-1}\bm{A}_{t}^{T} + \bm{Q}_{t}\\
+\end{align*}
+
+\subparagraph{Measurement step}
+Can be computed using Bayes rule:\\
+$\prob{\bm{z}_{t}|\bm{y}_{t},\bm{y}_{1:t-1},\bm{u}_{1:t}}\propto\prob{\bm{y}_{t}|\bm{z}_{t},\bm{u}_{
+1:t}}\prob{\bm{z}_{t}|\bm{y}_{1:t-1},\bm{u}_{1:t}}$.
+We show that this is given by:
+$\begin{cases}
+    \prob{\bm{z}_{t}|\bm{y}_{1:t},\bm{u}_{t}}  &= \mathcal{N}\left(\bm{z}_{t}|\bm{\mu}_{t},\bm{\Sigma
+    _{t}}\right)\\
+            \bm{\mu}_{t} &= \bm{\mu}_{t|t-1} + \bm{K}_{t}\bm{r}_{t}\\
+            \bm{\Sigma}_{t} &= \left(\bm{I}-\bm{K}_{t}\bm{C}_{t}\right)\bm{\Sigma}_{t|t-1}
+\end{cases}$
+where $\bm{r}_{t}$ is the residual given by the difference between our predicted observation and the 
+actual observation:
+$\begin{cases}
+    \bm{r}_{t}\triangleq \bm{y}_{t} - \hat{\bm{y}}_{t} \\
+    \hat{\bm{y}}_{t} \triangleq \E{\bm{y}_{t}|\bm{y}_{1:t-1},\bm{u}_{1:t}} = \bm{C}_{t}\bm{\mu}_{
+    t|t-1} + \bm{D}_{t}\bm{u}_{t}
+\end{cases}$
+and $K_{t}$ is the Kalman gain matrix given by $\bm{K}_{t}\triangleq \bm{\Sigma}_{t|t-1}\bm{C}^{T}_{
+t}\bm{S}^{-1}_{t}$
+where $\bm{S}_{t}\triangleq Cov(\bm{r}_{t}|\bm{y}_{1:t-1},\bm{u}_{1:t})$
+
+\paragraph{The Kalman smoothing algorithm}
+In offline stting we can wait until all the data has arrived and then compute $\prob{\bm{z}_{t}|
+\bm{y}_{1:T}}$. By conditioning on past and future data our uncertainty will be significantly reduced.
+
+\paragraph{Comparison to the forwards-backwards algorithm for HMMs}
+It turns out that we can rewrite the Kalman smoother in a modified form which makes it more similar 
+to forwards-backwards for HMMs.
+
 

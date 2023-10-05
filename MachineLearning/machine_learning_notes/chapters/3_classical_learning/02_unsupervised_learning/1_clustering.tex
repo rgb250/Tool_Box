@@ -204,6 +204,44 @@ $\prob{\bm{z}_{t}} = \prd{j=1}{L}\mathbb{P}_{j}\left(z_{tj}\right)$
 \paragraph{Relationships with other methods}
 \paragraph{Examples of application}
 
+
+\subsection{Clustering}
+
+\paragraph{Purpose}
+2 kinds of inputs we might use, \emph{similarity-based clustering} the input to the algorithm is an
+$N\times N$ dissimilarity matrix. In \emph{feature-based clustering} the input to the algorithm
+is an $N\times D$ feature matrix or design matrix $\bm{X}$.
+
+
+\paragraph{Assumptions}
+\paragraph{Theory}
+\subparagraph{Measuring dissimilarity}
+$\Delta(\bm{x}_{i}, \bm{x}_{i'}) = \su{j=1}{D}\Delta_{j}(x_{ij},x_{i'j})$
+\begin{itemize}
+    \item \emph{Squared distance} $\Delta_{j}(x_{ij},x_{i'j}) = (x_{ij}-x_{i'j})^{2}$
+    \item \emph{correlation} (useful for time-series of real-valued data) 
+        $\Delta_{j}(x_{ij},x_{i'j}) = Cor(\bm{x}_{i},\bm{x}_{i'})$
+    \item \emph{l1 distance} $\Delta_{j}(x_{ij},x_{i'j}) = |x_{ij}-x_{i'j}|$
+    \item \emph{ordinal variables} any dissimilarity functions for quantitative function
+    \item \emph{categorical distance} $\Delta_{j}(x_{ij},x_{i'j}) = \su{j=1}{D}\matbbm{1}_{\{x_{ij}
+        \neq x_{i'j}\}}$
+\end{itemize}
+
+\paragraph{Measuring dis(similarity)}
+\paragraph{Evaluating the output of clustering methods}
+The validation of clustering structures is the most difficult and frustrating part of cluster
+analysis
+\subparagraph{Purity}
+$purity\triangleq \su{i}{}\dfrac{N_{i}}{N}p_{i}$
+\subparagraph{Rand index}
+\subparagraph{Mutual information}
+\subparagraph{Varation of information}
+
+\paragraph{Strengths}
+\paragraph{Weaknesses}
+\paragraph{Relationships with other methods}
+\paragraph{Examples of application}
+
 \subsection{Dirichlet Process}
 \paragraph{Purpose}
 \paragraph{Assumptions}

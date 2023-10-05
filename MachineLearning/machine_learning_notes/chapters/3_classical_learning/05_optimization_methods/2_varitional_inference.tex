@@ -1,0 +1,24 @@
+\subsection{Basics}
+Suppose $p^{*}\left(\bm{x}\right)$ is our true but intractable distribution and $q(\bm{x})$
+is some approximation chosen from some tractable family, such as a multivariate Gaussian.\\
+In using:
+\begin{center}
+    \fr{$\mathbb{KL}\left(p^{*}||q\right)=\su{\bm{x}}{}q(\bm{x})\log\left(\dfrac{q(\bm{X})}{p^{*}(
+    \bm{x})}\right)$}
+\end{center}
+
+\subparagraph{Mean field method}
+We assume the posterior is fully factorized approximation of the form:
+$q(\bm{x}) = \prd{i}{}q_{i}(\bm{x}_{i})$
+The goal is to solve the optimization problem $\displaystyle\min \mathbb{KL}(q||p)$
+
+\subsection{Variational Bayes}
+When we want to infer the parameters themselves, if we make a fully factorized approximation
+$\prob{\bm{\theta}|\mathcal{D}}\approx\prd{k}{}q(\bm{\theta}_{k})$
+
+\subsection{Variational Bayes EM}
+TO COMPLETE
+\paragraph{The proposal distribution}
+
+\subsection{Gibbs sampling}
+TO COMPLETE
