@@ -1,0 +1,60 @@
+\subsection{Principal Components Analysis}
+\paragraph{Purpose}
+Consider the \emph{FA} model where we constrain $\Phi = \sigma^{2}\bm{I}$ and $\bm{W}$
+to be orthonormal. It can be shown that when $\sigma^{2}$ tends to 0, this model 
+reduces to classical PCA, otherwise it will be \emph{Probabilistic PCA}.
+\paragraph{Assumptions}
+\paragraph{Theory}
+Suppose we want to find an orthogonal set of $L$ linear basis vectors $\bm{w}_{j}\in
+\mathbb{R}^{D}$ and the corresponding scores $\bm{z}_{i}\in\mathbb{R}^{L}$ such that we
+minimize the average reconstruction error:
+\begin{center}
+    \fr{$\bm{J}(\bm{W}, \bm{Z}) = \dfrac{1}{n}\su{i=1}{n}\norm{\bm{x}_{i} - 
+    \bm{\hat{x}}_{i}}^{2}$}
+\end{center}
+where \uB{$\bm{\hat{x}}_{i} = \bm{W}\bm{z}_{i}$} subject to the constraint that \tR{$\bm{W}$
+is orthonormal}. 
+\subparagraph{Model selection}
+We can plot the \emph{scree plot} : $E(\mathcal{D}_{train}, L)$ vs $L$, with $E$ being
+the error reconstruction. 
+A related quantity is the fraction of variance explained defined as $F\left(
+\mathcal{D}_{train}, L\right) = \dfrac{\su{j=1}{L}\lambda_{j}}{\su{j'=1}{L_{max}}
+\lambda_{j'}}$
+
+\paragraph{Strengths}
+\begin{itemize}
+    \item \emph{PCA} is the best low rank approximation to the data
+\end{itemize}
+
+\paragraph{Weaknesses}
+\begin{itemize}
+    \item It is not a proper generative model of the data, in providing more latent 
+        dimensions it will be able to better approximate the test data
+\end{itemize}
+\paragraph{Relationships with other methods}
+\paragraph{Examples of application}
+
+\subsection{PCA for categorical data}
+\paragraph{Purpose}
+Useful when data is categorical rather than real-valued
+\paragraph{Assumptions}
+\paragraph{Theory}
+Let $\bm{X}\in\mathcal{M}_{np}(\inter{1}{c})$ and \uB{we assume that each $x_{ij}$
+is generated from a latent variable $\bm{z}_{i}\in\mathbb{R}^{L}$}.
+\tB{$\begin{cases}
+    \prob{\bm{z}_{i}} = \mathcal{N}(\bm{0}, \bm{I}) \\
+    \prob{\bm{x}_{i}|\bm{z}_{i},\bm{\theta}} = \prd{j=1}{p}\text{\emph{Cat}}\left(
+        x_{ij}|\mathcal{S}\left(\bm{W}_{j}^{T}\bm{z}_{i} + \bm{w}_{0j}\right)
+    \right)
+\end{cases}$}
+where $\bm{W}\in\mathbb{R}^{L\times M}$ is the factor loading matrix for response $j$ 
+and $\bm{w}_{0j}\in\mathbb{R}^{M}$ is the offset term for response $j$.
+To fit the model in using a modified version of EM: infer a Gaussian approximation to 
+the posterior $\prob{\bm{z}_{i}|\bm{x}_{i},\bm{\theta}}$ in the E step and then to 
+maximize $\bm{\theta} = \left(\bm{W}_{j},\bm{w}_{0j}\right)_{1\leq j\leq p}$ in M step.
+
+\paragraph{Strengths}
+\paragraph{Weaknesses}
+\paragraph{Relationships with other methods}
+\paragraph{Examples of application}
+

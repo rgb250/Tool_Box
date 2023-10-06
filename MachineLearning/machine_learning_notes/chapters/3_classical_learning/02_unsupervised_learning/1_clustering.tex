@@ -1,3 +1,42 @@
+\subsection{Clustering in general}
+
+\paragraph{Purpose}
+2 kinds of inputs we might use, \emph{similarity-based clustering} the input to the algorithm is an
+$N\times N$ dissimilarity matrix. In \emph{feature-based clustering} the input to the algorithm
+is an $N\times D$ feature matrix or design matrix $\bm{X}$.
+
+
+\paragraph{Assumptions}
+\paragraph{Theory}
+\subparagraph{Measuring dissimilarity}
+$\Delta(\bm{x}_{i}, \bm{x}_{i'}) = \su{j=1}{D}\Delta_{j}(x_{ij},x_{i'j})$
+\begin{itemize}
+    \item \emph{Squared distance} $\Delta_{j}(x_{ij},x_{i'j}) = (x_{ij}-x_{i'j})^{2}$
+    \item \emph{correlation} (useful for time-series of real-valued data) 
+        $\Delta_{j}(x_{ij},x_{i'j}) = Cor(\bm{x}_{i},\bm{x}_{i'})$
+    \item \emph{l1 distance} $\Delta_{j}(x_{ij},x_{i'j}) = |x_{ij}-x_{i'j}|$
+    \item \emph{ordinal variables} any dissimilarity functions for quantitative function
+     \item \emph{categorical distance} $\Delta_{j}(x_{ij},x_{i'j}) = \su{j=1}{D}\mathbbm{1}_{\{x_{ij}
+         \neq x_{i'j}\}}$
+\end{itemize}
+
+\paragraph{Measuring dis(similarity)}
+\paragraph{Evaluating the output of clustering methods}
+The validation of clustering structures is the most difficult and frustrating part of cluster
+analysis
+\subparagraph{Purity}
+$purity\triangleq \su{i}{}\dfrac{N_{i}}{N}p_{i}$
+\subparagraph{Rand index}
+\subparagraph{Mutual information}
+\subparagraph{Varation of information}
+
+\paragraph{Strengths}
+\paragraph{Weaknesses}
+\paragraph{Relationships with other methods}
+\paragraph{Examples of application}
+
+
+
 \subsection{\emph{K-means} algorithm}
 \paragraph{Purpose}
 Consider a \emph{Gaussian Mixture Models} in which  we make the following assumptions \tB{$\bm{\Sigma
@@ -102,65 +141,6 @@ to generate the data. Here the model:
 \paragraph{Examples of application}
 
 
-\subsection{Principal Components Analysis}
-\paragraph{Purpose}
-Consider the \emph{FA} model where we constrain $\Phi = \sigma^{2}\bm{I}$ and $\bm{W}$
-to be orthonormal. It can be shown that when $\sigma^{2}$ tends to 0, this model 
-reduces to classical PCA, otherwise it will be \emph{Probabilistic PCA}.
-\paragraph{Assumptions}
-\paragraph{Theory}
-Suppose we want to find an orthogonal set of $L$ linear basis vectors $\bm{w}_{j}\in
-\mathbb{R}^{D}$ and the corresponding scores $\bm{z}_{i}\in\mathbb{R}^{L}$ such that we
-minimize the average reconstruction error:
-\begin{center}
-    \fr{$\bm{J}(\bm{W}, \bm{Z}) = \dfrac{1}{n}\su{i=1}{n}\norm{\bm{x}_{i} - 
-    \bm{\hat{x}}_{i}}^{2}$}
-\end{center}
-where \uB{$\bm{\hat{x}}_{i} = \bm{W}\bm{z}_{i}$} subject to the constraint that \tR{$\bm{W}$
-is orthonormal}. 
-\subparagraph{Model selection}
-We can plot the \emph{scree plot} : $E(\mathcal{D}_{train}, L)$ vs $L$, with $E$ being
-the error reconstruction. 
-A related quantity is the fraction of variance explained defined as $F\left(
-\mathcal{D}_{train}, L\right) = \dfrac{\su{j=1}{L}\lambda_{j}}{\su{j'=1}{L_{max}}
-\lambda_{j'}}$
-
-\paragraph{Strengths}
-\begin{itemize}
-    \item \emph{PCA} is the best low rank approximation to the data
-\end{itemize}
-
-\paragraph{Weaknesses}
-\begin{itemize}
-    \item It is not a proper generative model of the data, in providing more latent 
-        dimensions it will be able to better approximate the test data
-\end{itemize}
-\paragraph{Relationships with other methods}
-\paragraph{Examples of application}
-
-\subsection{PCA for categorical data}
-\paragraph{Purpose}
-Useful when data is categorical rather than real-valued
-\paragraph{Assumptions}
-\paragraph{Theory}
-Let $\bm{X}\in\mathcal{M}_{np}(\inter{1}{c})$ and \uB{we assume that each $x_{ij}$
-is generated from a latent variable $\bm{z}_{i}\in\mathbb{R}^{L}$}.
-\tB{$\begin{cases}
-    \prob{\bm{z}_{i}} = \mathcal{N}(\bm{0}, \bm{I}) \\
-    \prob{\bm{x}_{i}|\bm{z}_{i},\bm{\theta}} = \prd{j=1}{p}\text{\emph{Cat}}\left(
-        x_{ij}|\mathcal{S}\left(\bm{W}_{j}^{T}\bm{z}_{i} + \bm{w}_{0j}\right)
-    \right)
-\end{cases}$}
-where $\bm{W}\in\mathbb{R}^{L\times M}$ is the factor loading matrix for response $j$ 
-and $\bm{w}_{0j}\in\mathbb{R}^{M}$ is the offset term for response $j$.
-To fit the model in using a modified version of EM: infer a Gaussian approximation to 
-the posterior $\prob{\bm{z}_{i}|\bm{x}_{i},\bm{\theta}}$ in the E step and then to 
-maximize $\bm{\theta} = \left(\bm{W}_{j},\bm{w}_{0j}\right)_{1\leq j\leq p}$ in M step.
-
-\paragraph{Strengths}
-\paragraph{Weaknesses}
-\paragraph{Relationships with other methods}
-\paragraph{Examples of application}
 
 \subsection{Canonical Correlation Analysis}
 \paragraph{Purpose}
@@ -205,49 +185,64 @@ $\prob{\bm{z}_{t}} = \prd{j=1}{L}\mathbb{P}_{j}\left(z_{tj}\right)$
 \paragraph{Examples of application}
 
 
-\subsection{Clustering}
 
+\subsection{DBSCAN: Density-Based Spatial Clustering of Applications with Noise}
 \paragraph{Purpose}
-2 kinds of inputs we might use, \emph{similarity-based clustering} the input to the algorithm is an
-$N\times N$ dissimilarity matrix. In \emph{feature-based clustering} the input to the algorithm
-is an $N\times D$ feature matrix or design matrix $\bm{X}$.
-
-
+Given a set of points in some space $(p_{i})_{1\leq i\leq n}\in\mathcal{S}^{n}$, it \uB{groups
+together points that are closely packed together}, making then as \tB{outliers points that lie alone
+in low density regions}.
 \paragraph{Assumptions}
 \paragraph{Theory}
-\subparagraph{Measuring dissimilarity}
-$\Delta(\bm{x}_{i}, \bm{x}_{i'}) = \su{j=1}{D}\Delta_{j}(x_{ij},x_{i'j})$
+\subparagraph{Definition}
+Let $\epsilon\in\mathbb{R}$ the \uB{radius of a neighborhood} with respect to some points, 
+$\rho_{min}$ a threshold of point count. Consider 2 points $p$ and $q$.
 \begin{itemize}
-    \item \emph{Squared distance} $\Delta_{j}(x_{ij},x_{i'j}) = (x_{ij}-x_{i'j})^{2}$
-    \item \emph{correlation} (useful for time-series of real-valued data) 
-        $\Delta_{j}(x_{ij},x_{i'j}) = Cor(\bm{x}_{i},\bm{x}_{i'})$
-    \item \emph{l1 distance} $\Delta_{j}(x_{ij},x_{i'j}) = |x_{ij}-x_{i'j}|$
-    \item \emph{ordinal variables} any dissimilarity functions for quantitative function
-     \item \emph{categorical distance} $\Delta_{j}(x_{ij},x_{i'j}) = \su{j=1}{D}\mathbbm{1}_{\{x_{ij}
-         \neq x_{i'j}\}}$
+    \item $\#\left\{m:~\norm{m-p}<\epsilon\right\} > \rho_{min} \Rightarrow p\text{ is \tB{\textbf{
+                    core point}}}$
+    \item 
+        $\begin{cases}
+            p\text{ is a core point} \\
+            \norm{q-p} < \epsilon
+        \end{cases} \Rightarrow~q\text{ is \tB{\textbf{directly reachable from}} } p$
+    \item Let $n\in\mathbb{N}$ .
+$\exists (m_{i})_{1\leq i\leq n}\in\mathcal{S}^{n},
+        \begin{cases}
+            (m_{1} = p) \wedge (m_{n} = q)\\
+            \forall i\in\inter{1}{n-1}~m_{i+1}\text{ is directly reachable from }m_{i}
+        \end{cases}\Rightarrow q\text{ \tB{\emph{is reachable from}} } p$
+    \item Points that are \uB{not reachable from a core point are considered as \emph{outliers}}
+    \item If there is a point $m$ from which 2 points $p$ and $q$ are reachable from $m$ then $p$ and
+        $q$ are \tB{density-connected}
+\end{itemize}
+\subparagraph{Algorithm}
+\begin{enumerate}
+    \item For each point $m$, count the number of points at a distance lower than $\epsilon$ from $m$
+    \item Identify the core points, the ones having a neighborhood count greater than $\rho_{min}$
+    \item Delimit clusters with the reachable property of the different core points.
+    \item For each non-core points assign it to the closer cluster being at a distance lower than
+        $\epsilon$, if no cluster is found consider this point as noise.
+\end{enumerate}
+
+
+\paragraph{Strengths}
+\begin{itemize}
+    \item Number of cluster does not need to be specified
+    \item Clusters are \uB{arbitrary-shaped}
+    \item Robust to outliers
 \end{itemize}
 
-\paragraph{Measuring dis(similarity)}
-\paragraph{Evaluating the output of clustering methods}
-The validation of clustering structures is the most difficult and frustrating part of cluster
-analysis
-\subparagraph{Purity}
-$purity\triangleq \su{i}{}\dfrac{N_{i}}{N}p_{i}$
-\subparagraph{Rand index}
-\subparagraph{Mutual information}
-\subparagraph{Varation of information}
-
-\paragraph{Strengths}
 \paragraph{Weaknesses}
-\paragraph{Relationships with other methods}
-\paragraph{Examples of application}
+\begin{itemize}
+    \item For a given border point that is reachable by multiple clusters, the cluster with which 
+        it will be associated with depends on the database order.
+    \item Due to euclidean distance to measure distance between 2 points, DBSCAN can suffer from 
+        "curse of dimensionality"
+    \item Cannot cluster well data sets with large differences in densities, since $\rho_{min}$ and
+        $\epsilon$ would not be set appropriately for each cluster.
+    \item If the data is not well understood, choosing meaningful $\rho_{min}$ and $\epsilon$
+        is difficult.
+\end{itemize}
 
-\subsection{Dirichlet Process}
-\paragraph{Purpose}
-\paragraph{Assumptions}
-\paragraph{Theory}
-\paragraph{Strengths}
-\paragraph{Weaknesses}
 \paragraph{Relationships with other methods}
 \paragraph{Examples of application}
 
@@ -263,6 +258,14 @@ the number of clusters
 \paragraph{Relationships with other methods}
 \paragraph{Examples of application}
 
+\subsection{Dirichlet Process}
+\paragraph{Purpose}
+\paragraph{Assumptions}
+\paragraph{Theory}
+\paragraph{Strengths}
+\paragraph{Weaknesses}
+\paragraph{Relationships with other methods}
+\paragraph{Examples of application}
 
 \subsection{Spectral Clustering}
 \paragraph{Purpose}
