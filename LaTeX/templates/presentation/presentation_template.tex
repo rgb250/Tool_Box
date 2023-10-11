@@ -1,0 +1,203 @@
+\documentclass[10pt]{beamer}  
+% documentclass options:
+%	10pt | 11pt | 12pt       --> font size
+%	a4paper | letterpaper    --> paper size & format
+% 	draft                    --> draft mode
+% 	onecolumn | twocolumn    --> multiple columns
+%	felqn | leqno            --> formula-specific
+%	landscape                --> landscape mode
+%	onside | twoside         --> single or double sided documents
+%	notitlepage | title page --> titlepage behavior
+%	openright | openany      --> chapter opening page
+% book can be replaced with:
+%	article --> short document that does not contain parts & chapters
+%	report  --> quite long document containing chapters
+%	book    --> real book as in litterature
+%	letter  --> cover letter, etc..
+%	slides  --> ONLY use with beamer
+
+%% Page, margins size 
+% \usepackage[margins=1in]{geometry}
+
+%% For accented character printing
+\usepackage[T1]{fontenc} % T1 --> support characters of european languages
+
+%% Bibliography
+\usepackage[backend=biber]{biblatex}          % --> import biblatex package using the helper program 'biber' that sorts the bibliography entries and provide all the relevant information to package 'biblatex'. First run pdflatex, then biber and again pdflatex.
+\addbibresource{mathematics_template.bib}                 % --> import the bibliography file
+
+%% For handling characters from Latin Modern family 
+\usepackage{lmodern}
+
+%% Handle hypertext links without altering KOMA library
+\usepackage{scrhack}
+
+%% Make table of content clickable
+% \usepackage[pdfpagelabels]{hyperref} % pdfpagelabels --> change the (invisible) numbering style of the title page
+%\hypersetup{
+%    colorlinks,
+%    citecolor=black,
+%    filecolor=black,
+%    linkcolor=black,
+%    urlcolor=black
+%}
+
+%% Adapt spelling rules depending of the language
+\usepackage[english]{babel}
+
+%% Handle command without precising the number of arguments.
+\usepackage{xargs}
+
+%% Libraries of mathematical purposes.
+\usepackage{amsmath}  % --> correctly print mathematical characters
+\usepackage{amssymb}  % --> extended symbol collection
+\usepackage{amsthm}   % --> theorem like-structures
+\usepackage{bm}       % --> bold font in mathematical mode.
+\usepackage{bbm}      % --> bold fond for numbers
+\usepackage{blkarray} % --> indexing (rows & columns) matrices
+\usepackage{dsfont}   % --> to access to the symbol of mathematics sets via \mathbb
+
+%% Alphabetical indexed list.
+\usepackage{enumitem}
+
+%% Libraries to display number depending on the chose typography.
+\usepackage{siunitx} % --> Scientific notation
+%\sisetup{locale= FR,exponent-product=.} % --> French Adaptation for example 5,6.10²
+%\DeclareSIUnit\year{ann\'{e}ee}         % --> French Adaptation for year unit
+
+%% Handle image position
+\usepackage{float}      % --> to envelop content that cannot be broken over a page
+\usepackage{subcaption} % --> captions below images or sub images
+
+
+%% Formatting
+\usepackage{xcolor}         % --> use color
+\usepackage{color,soulutf8} % --> underlining
+\definecolor{bleudefrance}{rgb}{.19, .55, .91}
+\definecolor{pakistangreen}{rgb}{.0, .4, .0}
+\definecolor{rossocorsa}{rgb}{0.83, 0.0, 0.0}
+\definecolor{persimmon}{rgb}{0.93, 0.35, 0.0}
+\definecolor{deepblue}{rgb}{0,0,0.5}
+\definecolor{deepred}{rgb}{0.6,0,0}
+\definecolor{deepgreen}{rgb}{0,0.5,0}
+
+%% Anotation
+\usepackage{todonotes}
+\newcommand{\Moi}[1]{\todo[color = teal!40]{#1}}
+\newcommand{\Cnsl}[1]{\todo[color = pakistangreen!40]{#1}}
+\newcommand{\MeG}[1]{\todo[color = rossocorsa!40]{#1}}
+
+%% Redundant notation:
+\newcommandx{\hb}[1]{\widehat{\beta_{#1}}}
+\newcommandx{\prth}[3]{\left( #1_{#2} \right)_{1\leq #2 \leq #3}}
+\newcommandx{\prtH}[4]{\left( #1_{#2} \right)_{#3\leq #2 \leq #4}}
+
+%% Square results
+\newcommand{\fr}[1]{\fcolorbox{rossocorsa}{white}{#1}}
+\newcommand{\frB}[1]{\fcolorbox{bleudefrance}{white}{#1}}
+\newcommand{\frG}[1]{\fcolorbox{pakistangreen}{white}{#1}}
+\newcommand{\frN}[1]{\fcolorbox{black}{white}{#1}}
+
+%% Color underlining
+\newcommandx{\uN}[1]{\setulcolor{black}\ul{#1}}
+\newcommandx{\uR}[1]{\setulcolor{rossocorsa}\ul{#1}}
+\newcommandx{\uB}[1]{\setulcolor{bleudefrance}\ul{#1}}
+\newcommandx{\uG}[1]{\setulcolor{pakistangreen}\ul{#1}}
+\newcommandx{\uT}[1]{\setulcolor{teal}\ul{#1}}
+\newcommandx{\uO}[1]{\setulcolor{persimmon}\ul{#1}}
+
+%% Text in color 
+\newcommandx{\tR}[1]{\textcolor{rossocorsa}{#1}}
+\newcommandx{\tB}[1]{\textcolor{bleudefrance}{#1}}
+\newcommandx{\tG}[1]{\textcolor{pakistangreen}{#1}}
+\newcommandx{\tT}[1]{\textcolor{teal}{#1}}
+\newcommandx{\tO}[1]{\textcolor{persimmon}{#1}}
+
+%% Mathematics writting | symbols
+\newcommandx{\inter}[2]{\left[\![#1, #2]\!\right]}                % --> interval
+\newcommandx{\lm}[2]{{\displaystyle \lim_{#1 \rightarrow #2}}}    % --> limit
+\DeclareMathOperator*{\argmax}{arg\,max}                          % --> argmax
+\DeclareMathOperator*{\argmin}{arg\,min}                          % --> argmin
+\newcommandx{\Su}[2]{{\displaystyle \int_{#1}^{#2}}}              % --> integral
+\newcommandx{\su}[2]{{\displaystyle \sum_{#1}^{#2}}}              % --> sum (sigma)
+\newcommandx{\prd}[2]{{\displaystyle \prod_{#1}^{#2}}}            % --> product (pi)
+\newcommandx{\prob}[1]{\mathbb{P}\left(#1\right)}                 % --> probability P(A)
+\newcommandx{\Prob}[1]{\mathbb{P}\left(\left\{#1 \right\}\right)} % --> probability P({A})
+\newcommandx{\ProbC}[2]{\mathbb{P}_{\left\{#1\right\}}\left(\left\{#2\right\}\right)} % --> conditionnal probability
+\newcommandx{\E}[1]{\mathbb{E}\left(#1\right)}               % --> expecting
+\newcommandx{\V}[1]{\mathbb{V}\left(#1\right)}               % --> variance
+\newcommandx{\norm}[1]{\left\lVert#1\right\rVert}            % --> norm symbol
+\newcommandx{\sP}[2]{\langle\left. #1\right\vert #2 \rangle} % --> dot product
+
+%% Provide the slide number
+\setbeamertemplate{page number in head/foot}[appendixframenumber]
+
+
+\usetheme{Warsaw}
+\usecolortheme{beaver}
+
+\title{Abstract of the introduction to \emph{Statistical Learning}}
+\author{Siger}
+
+
+\begin{document}
+\pagenumbering{Alph} % change the (invisible) numbering style of the title page
+\maketitle
+
+\pagenumbering{arabic} % change the (invisible) numbering style of the title page
+
+% \insertframenumber/\inserttotalframenumber
+
+\AtBeginSection[]
+{
+    \begin{frame}
+        \frametitle{Table of Contents}
+        \tableofcontents[currentsection]
+    \end{frame}
+}
+
+
+\section{Introduction}
+\begin{frame}
+    \frametitle{Introduction}
+
+    \begin{block}
+        This is important information
+    \end{block}
+    
+    \begin{alertblock}
+        This is important information
+    \end{alertblock}
+    
+    \begin{exampleblock}
+        This is important information
+    \end{exampleblock}
+    
+\end{frame}
+
+
+\section{Linear Algebra}
+\begin{frame}
+    \frametitle{Linear Algebra}
+\end{frame}
+
+\subsection{Eigen Vectors}
+\begin{frame}
+    \frametitle{Eigen Vectors}
+\end{frame}
+
+
+\subsection{Characteristic polynomial}
+\begin{frame}
+    \frametitle{Characteristic polynomial}
+    \begin{columns}[T] % contents are top vertically aligned
+        \begin{column}{5cm}
+            First column
+        \end{column}
+        \begin{column}{5cm}
+            Second column
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\end{document}

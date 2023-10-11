@@ -27,15 +27,16 @@ distribution}.\\
 \uB{Training a NBC consists in computing the MLE or the MAP estimate for 
 the parameters.}\\
 For a single observation
-$\prob{x_{i}, y_{i}|\bm{\theta}} = \prob{y_{i}|\bm{\pi}}\prd{j}{}\prob{x_{ij}|\bm{\theta}_{j}} = 
+$\prob{\bm{x}_{i}, y_{i}|\bm{\theta}} = \prob{y_{i}|\bm{\pi}}\prd{j}{}\prob{x_{ij}|\bm{\theta}_{j}}= 
 \prd{c}{}\pi_{c}^{\mathbbm{1}(y_{i}=c)}\prd{j}{}\prd{c}{}\prob{x_{ij}|
-\theta_{jc}}^{\mathbbm{1}(y_{i}=c)}
+\bm{\theta}_{jc}}^{\mathbbm{1}(y_{i}=c)}
 $\\ 
 Hence the \tB{\emph{log-likelihooh}:
-$\log\left(\mathcal{D}|\theta\right) = \su{c=1}{C}N_{c}\log(\pi_{c}) + 
+    $\log\left(\mathcal{D}|\bm{\theta}\right) = \su{c=1}{C}N_{c}\log(\pi_{c}) + 
 \su{j=1}{D}\su{c=1}{C}\su{i:y_{i}=c}{}\log\left(\prob{x_{ij}|
 \bm{\theta}_{jc}}\right)$}\\
-By optimizing the above equation we are able to find the $\left(\theta_{jc}\right)_{1\leq j \leq D,~ 1\leq c\leq C}$ and we can then use them to
+By optimizing the above equation we are able to find the $\left(\bm{\theta}_{jc}\right)_{\substack{
+1\leq j \leq D\\ 1\leq c\leq C}}$ and we can then use them to
 predict the output of an observation $\bm{x}$ as: $\prob{y=c|\bm{x},\mathcal{D}} \propto \prob{y=c|\mathcal{D}}\prd{j=1}{D}\prob{x_{j}|y=c,\mathcal{D}}$
 
 \paragraph{Strengths}
@@ -129,6 +130,29 @@ LDA, we perform MAP estimation of $\bm{\Sigma}\hookrightarrow\text{ \emph{Invers
 where $\lambda$ controls the amount of regularization which is related to the strength of the prior
 $\nu_{0}$
 
+\paragraph{MLE for discriminant analysis}
+\begin{center}
+    $\log\left(\prob{\mathcal{D}|\bm{\theta}}\right) = \su{i=1}{n}\su{c=1}{C}\mathbbm{1}_{\{y_{i}=c
+    \}}\log(\pi_{c}) + \su{c=1}{C}\su{i:y_{i}=c}{}\log\left(\mathcal{N}\left(\bm{x}|\bm{\mu}_{c},
+    \bm{\Sigma}_{c}\right)\right)$
+\end{center}
+And we find 
+$\begin{cases}
+    \hat{\bm{\mu}}_{c} &= \dfrac{1}{N_{c}}\su{i:y_{i}=c}{}\bm{x}_{i} \\
+    \hat{\bm{\Sigma}}_{c} &= \dfrac{1}{N_{c}}(\bm{x}_{i}-\hat{\bm{\mu}}_{c})(\bm{x}_{i}-
+    \hat{\bm{\mu}}_{c})^{T}
+\end{cases}$
+
+\paragraph{Strategies for preventing overfitting}
+\begin{itemize}
+    \item use a diagonal covariance matrix for each class
+    \item use a full/diagonal covariance matrix \tB{shared across the classes}
+    \item use a \uB{full covariance matrix but impose a prior and then integrate it out}
+    \item \uB{project the data into a low dimensional subspace} and fit the Gaussian there
+\end{itemize}
+
+
+
 
 \paragraph{Strengths}
 \begin{itemize}
@@ -172,7 +196,7 @@ feature mean $m_{j}$} and a \tB{class-specific offset $\Delta_{cj}$} Thus:
 \end{center}
 We will then put a prior on the $\Delta_{cj}$ terms to encourage them to be strictly
 zero and compute MAP estimate.\\
-\tB{If for feature $j$ $\forall c\in\inter{1}{C}\delta_{cj} = 0$ then feature $j$ will no play role
+\tB{If for feature $j$ $\forall c\in\inter{1}{C}\Delta_{cj} = 0$ then feature $j$ will no play role
 in the classification decision}, since $\mu_{cj}$ will be independent of $c$.\\
 Thus feature that are not discriminative are automatically ignored.
 
