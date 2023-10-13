@@ -4,9 +4,9 @@ can he or she reasonably expect?
 # Table of Contents
 
 ## 1) Formal definition
-Let us define $P$ a set of players $n$, $card(P) = n$, and a function such as $\nu: 2^{N} \rightarrow \mathbb{R}$ and $\nu(\empty) = 0$. 
+Let us define $P$ a set of players, $card(P) = n$, and a function such as $\nu: 2^{N} \rightarrow \mathbb{R}$ and $\nu(\empty) = 0$. 
 If $S$ is a coalition of players, then $\nu(S)$, called the worth coalition $S$ describes the total expected sum of payoffs the members of $S$ can obtain by cooperation.
-The Shapley value is one way to distribute teh total gains to the players, assuming that they all collaborate. 
+The Shapley value is one way to distribute the total gains to the players, assuming that they all collaborate. 
 $$
 \begin{align*}
 \varphi(\nu) &= \displaystyle\sum_{S\subseteq N/\{i\}}

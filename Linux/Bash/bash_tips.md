@@ -88,6 +88,12 @@ speedtest-cli --secure
 find /dir_path -regextype sed -regex ".*/regex"  # search of "sed" type, ".*/" is fundamental! 
 ```
 
+# SEARCH IN FILES
+```bash
+grep --color --include=.py -rl -iE '<regex_pattern>'  # display the list of .py files located in the curent directories and its child directories containing <regex_pattern>
+```
+use ``--color=always`` for grep use inside a pipeline.
+
 
 # Process Information
 ```bash
