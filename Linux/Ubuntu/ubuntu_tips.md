@@ -43,11 +43,13 @@ sudo apt-get update && sudo apt-get upgrade
 sudo snap refresh
 ```
 # 2) Compressed files
-- ''tar.gz'' files
+- ``tar.gz`` files
     ```bash
-    tar -xvzf <compressed_file_name>.tar.gz  # x --> collect and extract,
-    v --> verbose, z --> tells tar to decompress the archive using gzip,
-    f --> tells tar the path of the compressed file
+    tar -xvzf <compressed_file_name>.tar.gz  
+    # x --> collect and extract,
+    # v --> verbose,
+    # z --> tells tar to decompress the archive using gzip,
+    # f --> tells tar the path of the compressed file
     ```
 
 
