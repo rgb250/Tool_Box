@@ -1,8 +1,8 @@
 In Frequentist decision theory there is a loss function and a likelihood, but there
 is no prior and hence no posterior or posterior expected loss. Thus there is no 
 automatic way of deriving an optimal estimator, unlike the Bayesian case.\\
-Instead, we are free to choose any estimator or decision procedure $\delta: \mathcal{X}
-\rightarrow \mathcal{A}$ we want.\\
+\uB{Instead, we are free to choose any estimator or decision procedure $\delta: 
+\mathcal{X} \rightarrow \mathcal{A}$ we want}.\\
 Having chosen an estimator, we define its \tR{expected loss or risk} as follows
 \tR{
 \begin{center}
@@ -11,12 +11,12 @@ Having chosen an estimator, we define its \tR{expected loss or risk} as follows
 \delta(\tilde{\mathcal{D}})\right)p(\tilde{\mathcal{D}})d\tilde{\mathcal{D}}$   
 \end{center}
 }
-where $\tilde{\mathcal{D}}$ is data sampled from 'nature's distribution' which is 
-represented by parameter $\theta^{*}$.
+where $\tilde{\mathcal{D}}$ is data sampled from 'nature's distribution' represented by
+parameter $\theta^{*}$.\\
 Whereas the \tR{Bayesian posterior expected loss}: 
 \tR{
 \begin{center}
-    $p(a, \mathcal{D, \pi}) \triangleq \mathbb{E}_{p(\theta|\mathcal{D},\pi)}\left(
+    $p(a|\mathcal{D, \pi}) \triangleq \mathbb{E}_{p(\theta|\mathcal{D},\pi)}\left(
         L(\theta, a)\right) = \Su{\Theta}{}L(\theta, \bm{a})p(\theta|\mathcal{D}, \pi)
         d\theta
     $
@@ -43,7 +43,7 @@ expected risk: \tR{$\delta_{B} \triangleq \displaystyle\argmin_{\delta} R_{B}(\d
 
 \subparagraph{Connection Bayesian and Frequentist approaches to decision theory.}
 \begin{itemize}
-    \item \emph{Theorem 1} \uB{A Bayes estimator can be optained by minimizing the 
+    \item \emph{Theorem 1} \uB{A Bayes estimator can be obtained by minimizing the 
             posterior expected loss for each $\bm{x}$}
     \item \emph{Theorem 2} \tB{Every admissible frequentist decision rule is a Bayes 
             decision rule with respect to some possibly improper prior distribution}.
@@ -72,7 +72,7 @@ distribution $p(\cdot|\theta^{*})$ in order to evaluate the risk. However it mig
 the case that some estimators are worse than others regardless of the value of 
 $\theta^{*}$.\\
 In particular \tB{if for $\theta \in \Theta, R(\theta, \delta_{1}) \leq R(\theta, 
-    \delta_{2})$ bayesthen we say that $\delta_{1}$ \textbf{dominates} $\delta_{2}$}.\\
+    \delta_{2})$ then we say that $\delta_{1}$ \textbf{dominates} $\delta_{2}$}.\\
 An estimator is said to be \textbf{admissible} if it is not strictly dominated by any 
 other estimator.\\
 \textbf{Admissibility is not enough}

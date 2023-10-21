@@ -1,6 +1,6 @@
 \subsection{Basics}
 \paragraph{Definition}
-It is an hidden Markov models, except the hidden states are continuous.
+It is an hidden Markov models, except the \tB{hidden states are continuous}.
 The model can be written in the following generic form: 
 \fr{$\begin{cases}
     \bm{z}_{t} = g(\bm{u}_{t}, \bm{z}_{t-1}, \bm{\epsilon}_{t}) \\
@@ -61,8 +61,8 @@ non-stationary.
 \subsection{Inference in LG-SSM (Linear Gaussian - State Space Models)}
 \paragraph{Kalman filtering algorithm}
 It is Kalman filter is an \tB{algorithm for exact Bayesian filtering for linear-Gaussian 
-state space models} that sequentially computes $\prob{\bm{z}_{t}|\left(\bm{y}_{k}
-\right)_{1\leq k\leq t}}$ for each $t$.
+state space models} that sequentially computes $\prob{\bm{z}_{t}|\bm{y}_{1:t}}$
+for each $t$.
 
 \subparagraph{Prediction step}
 \begin{align*}
@@ -78,7 +78,7 @@ state space models} that sequentially computes $\prob{\bm{z}_{t}|\left(\bm{y}_{k
 \subparagraph{Measurement step}
 Can be computed using Bayes rule:\\
 $\prob{\bm{z}_{t}|\bm{y}_{t},\bm{y}_{1:t-1},\bm{u}_{1:t}}\propto\prob{\bm{y}_{t}|\bm{z}_{t},\bm{u}_{
-1:t}}\prob{\bm{z}_{t}|\bm{y}_{1:t-1},\bm{u}_{1:t}}$.
+1:t}}\prob{\bm{z}_{t}|\bm{y}_{1:t-1},\bm{u}_{1:t}}$.\\
 We show that this is given by:
 $\begin{cases}
     \prob{\bm{z}_{t}|\bm{y}_{1:t},\bm{u}_{t}}  &= \mathcal{N}\left(\bm{z}_{t}|\bm{\mu}_{t},\bm{\Sigma

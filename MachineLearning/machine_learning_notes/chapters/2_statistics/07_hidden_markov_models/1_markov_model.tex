@@ -3,7 +3,7 @@
 It \tB{assumes that $X_{t}$ captures all the relevant information for predicting the future}.
 If we assume discrete time steps the \tB{joint distribution} is:
 \begin{center}
-    \fr{$\prob{\left(X_{t}\right)_{1\leq t\leq T}} = \prob{X_{1}}\prd{t=2}{T}\prob{X_{t}|X_{t-1}}$}
+    \fr{$\prob{X_{1:T}} = \prob{X_{1}}\prd{t=2}{T}\prob{X_{t}|X_{t-1}}$}
 \end{center}
 \uB{if the transition function $\prob{X_{t}|X_{t-1}}$ is independent of time then the chain is called
 \emph{homogeneous}, \emph{stationary} or \emph{time-invariant}}.\\
@@ -40,28 +40,28 @@ For a steps $m+n$ , \tB{$\bm{A}(m+n) = \bm{A}(m) + \bm{A}(n)$}
     \end{itemize}
 \end{itemize}
 \paragraph{MLE for Markov language models}
-The probability of any particular sequence of length T is given by:
+The \uB{probability of any particular sequence of length T} is given by:
 \begin{center}
     $
-\prob{(x_{t})_{1\leq t\leq T}|\bm{\theta}} = \pi(x_{1})\prd{t=2}{T}A(x_{t-1},x_{t}) = 
-\prd{j=1}{K}\pi_{j}^{\mathbbm{1}_{\{x_{1}=j\}}}\prd{t=2}{T}\prd{j=1}{K}\prd{i=1}{K}
-A_{jk}^{\mathbbm{1}_{\{x_{t}=j,x_{t-1}=i\}}}
+\prob{x_{1:T}|\bm{\theta}} = \pi(x_{1})\prd{t=2}{T}A(x_{t-1},x_{t}) = 
+\prd{i=1}{K}\pi_{i}^{\mathbbm{1}_{\{x_{1}=i\}}}\prd{t=2}{T}\prd{j=1}{K}\prd{i=1}{K}
+A_{ij}^{\mathbbm{1}_{\{x_{t}=j,x_{t-1}=i\}}}
 $
 \end{center}
 
 Then the log-likelihood of a set of sequences $\mathcal{D}=\left\{\bm{x}_{i}\right\}_{1\leq i\leq n}$
 :
 \begin{center}
-    \fr{$\log\left(\prob{\mathcal{D}|\bm{\theta}}\right) = \su{i=1}{n}\log\left(\prob{\bm{x_{i}}|\bm{
-            \theta}}\right) = \su{j}{}N_{j}^{1}\log(\pi_{j}) + \su{j}{}\su{k}{}N_{jk}\log(A_jk)$}
+    \fr{$\log\left(\prob{\mathcal{D}|\bm{\theta}}\right) = \su{n=1}{N}\log\left(\prob{\bm{x}_{n}|\bm{
+            \theta}}\right) = \su{i}{}N_{i}^{(1)}\log(\pi_{i}) + \su{i}{}\su{j}{}N_{ij}\log(a_{ij})$}
 \end{center}
-where $\hat{\pi}_{j}=\dfrac{N_{j}^{1}}{\su{j}{}N_{j}^{1}}$ and 
-$\hat{A}_{jk}=\dfrac{N_{jk}}{\su{k}{}N_{jk}}$
+where $\hat{\pi}_{i}=\dfrac{N_{i}^{(1)}}{\su{i'}{K}N_{i'}^{(1)}}$ and 
+$\hat{a}_{ij}=\dfrac{N_{ij}}{\su{j'}{K}N_{ij'}}$
 
 \paragraph{Stationary distribution of a Markov chain}
 We can interpret Markov models as stochastic dynamical systems, where we hop from one state to 
-another at each time step, we are then often interested in the long term distribution over states, 
-called \emph{stationary distribution}.\\
+another at each time step, we are then often interested in the \tB{long term 
+distribution over states, called \emph{stationary distribution}}.\\
 Considering the transition matrix $\bm{A}$ defined by $\bm{A}_{ij}=\prob{X_{t}=j|X_{t-1}=i}$ and 
 the probability to be at a given state at time t $\bm{\pi}$ defined by $\pi_{t}(j)=\prob{X_{t}=j}$.\\
 \tB{If we ever reach a stage where $\bm{\pi}=\bm{\pi}\bm{A}$ then we have reached the \emph{
@@ -71,17 +71,16 @@ stationary distribution}}.\\
 
 \subsection{Hidden Markov Models}
 \paragraph{Definition}
-It consists of a discrete-time discrete-state Markov chain, with hidden states $z_{t}\in\{k\}_{1\leq
-k\leq K}$.\\
+It consists of a discrete-time, \tB{discrete-state Markov chain, with hidden states} 
+$z_{t}\in\{k\}_{1\leq k\leq K}$.\\
 The corresponding joint distribution has the form:
 \begin{center}
-    \fr{$\prob{\left(\bm{z}_{t}\right)_{1\leq t\leq T}, \left(\bm{x}_{t}\right)_{1\leq t\leq T}} = 
-\prob{\left(\bm{z}_{t}\right)_{1\leq t\leq T}}
-\prob{\left(\bm{z}_{t}\right)_{1\leq t\leq T}| \left(\bm{x}_{t}\right)_{1\leq t\leq T}}  =
+    \fr{$\prob{\bm{z}_{1:T}, \bm{x}_{1:T}} = \prob{\bm{z}_{1:T}}
+\prob{\bm{x}_{1:T}|\bm{z}_{1:T}}=
 \left[\prob{z_{1}}\prd{t=2}{T}\prob{z_{t}|z_{t-1}}\right]\prd{t=2}{T}\prob{\bm{x}_{t}|z_{t}}$}   
 \end{center}
 
-
+It's common to have for:
 \begin{itemize}
     \item \emph{discrete} observations: $\prob{\bm{x}_{t}=l|z_{t}=k,\bm{\theta}} = \text{\emph{Beta}}
         (k,l)$
@@ -106,46 +105,46 @@ The corresponding joint distribution has the form:
 
 \paragraph{Types of inferences}
 \begin{itemize}
-    \item \textbf{Filtering}: \tB{computing the \emph{belief state} $\prob{z_{t}|(\bm{x}_{k})_{
-        1\leq k\leq t}}$ online or recursively as the data streams in}. The name "filtering" is due 
-        to the noise reduction induced with the hidden state estimating  using the current 
-        $\prob{z_{t}|\bm{x}_{t}}$
-    \item \textbf{Smoothing}: \tB{computing $\prob{z_{t}|(\bm{x}_{k})_{1\leq k\leq t}}$ offline 
-        given all the evidence} 
-    \item \textbf{Fixed Lag Smoothing}: \tB{computing $\prob{z_{t-l}|(\bm{x}_{k})_{1\leq k\leq t}}$
-        that is an interesting compromise between online and offline estimation}. It provides better 
-        performance than filtering but incurs a slight delay. \uB{Changing the lag size, one can 
-        trade off \emph{accuracy} vs \emph{delay}}
-    \item \textbf{Prediction}: \tB{computing $\prob{z_{t+h}|(\bm{x}_{k}})_{1\leq k\leq t}$ where
-        $h>0$ is called the \emph{prediction horizon}}. For example $h=1$ implies $\prob{z_{t+2}
-    |(\bm{x}_{k})_{1\leq k\leq t}} = \su{z_{t+1}}{}\su{z_{t+1}}{}\prob{z_{t+2}|z_{t+1}}
-    \prob{z_{t+1}|z_{t}} \prob{z_{t}|(\bm{x}_{k})_{1\leq k\leq t}}$
-    \item \textbf{MAP estimation}: \tB{computing $\displaystyle\argmin_{(\bm{z}_{k})_{1\leq k\leq t}
-            }$ which is most probable state sequence}.
-    \item \textbf{Posterior samples}: \tB{if there is more that one plausible interpretation of the
-            data, it can be useful to sample from the posterior $(\bm{z}_{k})_{1\leq k\leq t} 
-        \hookrightarrow \prob{(\bm{z}_{k})_{1\leq k\leq t}|(\bm{z}_{k})_{1\leq k\leq t}}$}
-    \item \textbf{Probability of the evidence}: \tB{compute $\prob{(\bm{x}_{k})_{1\leq k\leq t}}=
-        \su{\bm{z}}{}\prob{(\bm{z}_{k})_{1\leq k\leq t}, (\bm{x}_{k})_{1\leq k\leq t}}$} meaning
-        summing up over all hidden paths. Can be used to classify sequences for model-based 
-        clustering, anomaly detection
+    \item \textbf{Filtering}: \tB{computing the \emph{belief state} $\prob{z_{t}|
+        \bm{x}_{1:t}}$} \tR{online or recursively as the data streams in}. The name
+        \uB{"filtering" is due to the noise reduction induced with the hidden state 
+        estimating}  using the current $\prob{z_{t}|\bm{x}_{t}}$
+    \item \textbf{Smoothing}: \tB{computing $\prob{z_{t}|\bm{x}_{1:t}}$} \tR{offline}
+        given all the evidence 
+    \item \textbf{Fixed Lag Smoothing}: \tB{computing $\prob{z_{t-l}|\bm{x}_{1:t}}$}
+        that is an \uB{interesting compromise between online and offline} estimation.
+        It provides better performance than filtering but incurs a slight delay.
+        \uB{Changing the lag size, one can trade off \emph{accuracy} vs \emph{delay}}
+    \item \textbf{Prediction}: \tB{computing $\prob{z_{t+h}|\bm{x}_{1:t}}$} where
+        \tR{$h>0$ is called the \emph{prediction horizon}}. For example $h=2$ implies 
+        $\prob{z_{t+2} |\bm{x}_{1:t}} = \su{z_{t+1}}{}\su{z_{t}}{}\prob{z_{t+2}|
+        z_{t+1}} \prob{z_{t+1}|z_{t}} \prob{z_{t}|\bm{x}_{1:t}}$
+    \item \textbf{MAP estimation}: \tB{computing $\displaystyle\argmin_{(\bm{z}_{k})_{
+                1\leq k\leq t}}$} which is most probable state sequence.
+    \item \textbf{Posterior samples}: if there is more that one plausible 
+        interpretation of the data, it can be useful to sample from the posterior 
+        $\bm{z}_{1:t} \hookrightarrow \prob{\bm{z}_{1:t}|\bm{x}_{1:t}}$
+    \item \textbf{Probability of the evidence}: \tB{compute $\prob{\bm{x}_{1:t}}=
+        \su{\bm{z}_{1:t}}{}\prob{\bm{z}_{1:t}, \bm{x}_{1:t}}$} meaning summing up 
+        over all hidden paths. Can be used to classify sequences for model-based 
+        clustering, anomaly detection.
 \end{itemize}
 
 \subsection{Inference HMMs}
 \paragraph{The forward algorithm}
-\subparagraph{Purpose} recursively \tB{computing the filtered marginals} $\prob{z_{t}|(\bm{x})_{1\leq
-k \leq t}}$ in a hidden Markov model.
+\subparagraph{Purpose} recursively \tB{computing the filtered marginals} 
+$\prob{z_{t}|\bm{x}_{1:t}}$ in a hidden Markov model.
 \subparagraph{Steps}
 \begin{enumerate}
-    \item \emph{Prediction step}: computing the \emph{one-step-ahead predictive density} acting as 
-        the new prior for time $t$: $\prob{z_{t}|(\bm{x})_{1\leq k \leq t}} = \su{i}{}\prob{z_{t}=j|
-        z_{t-1}=i}\prob{z_{t-1}=i| (\bm{x})_{1\leq k \leq t}}$
-    \item \emph{Update step}: we absorb the observed data from time t using Bayes rule:
-        $\alpha_{t}(j) \triangleq \prob{z_{t}=j| (\bm{x})_{1\leq k \leq t}} = \prob{z_{t}=j| \bm{x},
-        (\bm{x})_{1\leq k \leq t-1}} = \frac{1}{Z_{t}}\prob{\bm{x}_{t}|z_{t}=j} \prob{z_{t}=j| \bm{x}
-    , (\bm{x})_{1\leq k \leq t-1}}$ where  the normalization constant is $Z_{t} \triangleq \prob{
-\bm{x}_{t}|(\bm{x})_{1\leq k \leq t-1}} = \su{j}{}\prob{z_{t}=j|(\bm{x})_{1\leq k \leq t-1}}\prob{
-\bm{x}_{t}|z_{t}=j}$
+    \item \emph{Prediction step}: computing the \emph{one-step-ahead predictive 
+        density} acting as the new prior for $t$:\\ $\prob{z_{t}|\bm{x}_{1:t}} =
+        \su{i}{} \prob{z_{t}=j| z_{t-1}=i}\prob{z_{t-1}=i|\bm{x}_{1:t}}$
+    \item \emph{Update step}: we absorb the observed data from $t$ using Bayes rule:\\
+        $\alpha_{t}(j) \triangleq \prob{z_{t}=j| \bm{x}_{1:t}} = \prob{z_{
+            t}=j| \bm{x}_{t}, \bm{x}_{1:t-1}} = \frac{1}{Z_{t}}\prob{\bm{x}_{
+        t}|z_{t}=j} \prob{z_{t}=j| \bm{x}_{t}, \bm{x}_{1:t-1}}$ 
+        where  the normalization constant is $Z_{t} \triangleq \prob{\bm{x}_{t}|
+        \bm{x}_{1:t-1}}=\su{j}{}\prob{z_{t}=j|\bm{x}_{1:t-1}}\prob{\bm{x}_{t}|z_{t}=j}$
 \end{enumerate}
 The distribution \tB{$\prob{z_{t}|\bm{x}_{1:t}}$ is called the (filtered) belief state at time t},
 it is a vector of $K$ numbers denoted $\bm{\alpha}_{t}$
@@ -185,7 +184,7 @@ It takes $O(K^{2}T)$ time since at each step we perform a $K\times K$
 
 \paragraph{The Viterbi Algorithm}
 \subparagraph{Purpose}
-\tB{Compute the most probable sequence of states} in a chain-structured graphical model: \tB{$z^{*}=
+\tB{Compute the most probable sequence of states} in a chain-structured graphical model: \tB{$\bm{z}^{*}=
 \displaystyle\argmax_{\bm{z}_{1:T}}\prob{\bm{z}_{1:T}|\bm{x}_{1:T}}$}.\\
 This is equivalent to computing a shortest path through \textit{trellis diagram} where the nodes are 
 possible states at each time step and the node and edge weights are log probabilities.
@@ -233,12 +232,14 @@ It is $O(K^{2}T)$
 \paragraph{Forwards filtering, backwards sampling}
 \subparagraph{Purpose}
 Sample paths from posterior: $\bm{z}^{s}_{1:T} \hookrightarrow \prob{\bm{z}_{1:T}|\bm{x}_{1:T}}$
-Without being obliged to perform forward-backwards pass and then an additional forward sampling pass.
+\uB{Without being obliged to perform forward-backwards pass} and then an additional 
+forward sampling pass.
 \subparagraph{Steps}
 The key insight is that to do forward pass and then perform sampling in the backward pass we can
-write the joint from right to left using $\prob{\bm{z}_{1:T}|\bm{x}_{1:T}} = \prob{z_{T}|\bm{x}_{1:T}
+write the joint from right to left using
+$\prob{\bm{z}_{1:T}|\bm{x}_{1:T}} = \prob{z_{T}|\bm{x}_{1:T}
 }\prd{t=T-1}{1}\prob{z_{t}|z_{t+1},\bm{x}_{1:T}}$\\
-Then we can sample $z_{t}$ given future sampled states using:
+Then we can sample $z_{t}$ given future sampled states using:\\
 $z^{s}_{t} \hookrightarrow\prob{z_{t}|z_{t+1:T},\bm{x}_{1:T}} = \prob{z_{t}|z_{t+1},\cancel{\bm{z}_{
 t+2:T}}, \cancel{\bm{x}_{t+1:T}}} =  \prob{z_{t+1}|z_{t+1}^{s},\bm{x}_{1:t}}$\\
 

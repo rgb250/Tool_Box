@@ -99,6 +99,12 @@ grep --color --include=.py -rl -iE '<regex_pattern>'  # display the list of .py 
 ```
 use ``--color=always`` for grep use inside a pipeline.
 
+# Replace string in files
+```bash
+sed -i -e 's/to_replace/replacement/g' ./path_file  # -i --> --in-place
+# -e --> --expression, consider the expression just after as a script
+```
+
 
 # Process Information
 ```bash
