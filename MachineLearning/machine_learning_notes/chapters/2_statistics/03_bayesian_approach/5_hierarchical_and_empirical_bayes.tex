@@ -26,17 +26,18 @@ one becomes:
 		\hline
 		\textbf{Method} & \textbf{Definition} \\
 		\hline
-		Maximum likelihood & $\hat{\theta} = \argmax_{\theta} 
+		Maximum likelihood & $\hat{\theta} = \displaystyle\argmax_{\theta} 
 		p(\mathcal{D}|\theta)$ \\
 		\hline
-		MAP estimation & $\hat{\theta} = \argmax_{\theta} 
+		MAP estimation & $\hat{\theta} = \displaystyle\argmax_{\theta} 
 		p(\mathcal{D}|\theta)p(\theta|\eta)$ \\
-		ML-II (Empirical Bayes) & $\hat{\eta}=\argmax_{\eta}\Su{}{}
-		p(\mathcal{D}|\theta)p(\theta|\eta)d\theta = \argmax_{\eta}p(\mathcal{D}|
+		\hline
+		ML-II (Empirical Bayes) & $\hat{\eta}=\displaystyle\argmax_{\eta}\Su{}{}
+		p(\mathcal{D}|\theta)p(\theta|\eta)d\theta = \displaystyle\argmax_{\eta}p(\mathcal{D}|
 		\eta)$ \\
 		\hline
-		MAP-II & $\hat{\eta}=\argmax_{\eta}\Su{}{}
-		p(\mathcal{D}|\theta)p(\theta|\eta)p(\eta)d\theta = \argmax_{\eta}p(
+		MAP-II & $\hat{\eta}=\displaystyle\argmax_{\eta}\Su{}{}
+		p(\mathcal{D}|\theta)p(\theta|\eta)p(\eta)d\theta = \displaystyle\argmax_{\eta}p(
 		\mathcal{D}| \eta)p(\eta)$\\
 		\hline
 		Full Bayes & $p(\theta, \eta|\mathcal{D}) \approx p(\mathcal{D}|\theta)

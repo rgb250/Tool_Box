@@ -18,12 +18,14 @@ models, which can predict many things, must spread their probability mass thinly
 hence will not obtain as large a probability for any given data set as simpler models.}
 
 \subsection{Computing the marginal likelihood (evidence)}
+\paragraph{Use of conjugate prior}
 For a fixed model we often write:
 $$p(\bm{\theta}|\mathcal{D},m) \propto p(\bm{\theta}|m)p(\mathcal{D}|\bm{\theta},m)$$
-This valid since $p(\mathcal{D}|m)$ is constant. However when comparing models we need
-to know how to compute the marginal likelihood, $p(\mathcal{D}|m)$. In general this can
-be quite hard, since we have to integrate over all possible parameter values, but when
-we have a conjugate prior, it is easy to compute.\\
+We ignore the normalization constant $\prob{\mathcal{D}|m}$ as it is constant with reference to
+$\bm{\theta}$. However \uB{when comparing models we need
+to know how to compute the marginal likelihood, $p(\mathcal{D}|m)$}. In general this can
+be quite hard, since we have to integrate over all possible parameter values, but \uB{when
+we have a conjugate prior, it is easy to compute}.\\
 Let $p(\bm{\theta})=\dfrac{q(\bm{\theta})}{Z_{0}}$ be our prior, where \tB{$q(\bm{\theta})$
 is an unnormalized distribution}, and $Z_{0}$ is the normalization constant of the prior.
 Let $p(\mathcal{D}|\bm{\theta})=\dfrac{q(\mathcal{D}|\bm{\theta})}{Z_{l}}$ be the 
@@ -34,14 +36,15 @@ unnormalized posterior}, and $Z_{N}$ is the normalization constant of the poster
 We have:
 $
 \begin{cases}
-	p(\bm{\theta})= \dfrac{p(\mathcal{D}|\bm{\theta})p(\bm{\theta})}{p(\mathcal{D})}\\
-	\dfrac{q(\bm{\theta}|\mathcal{D})}{Z_{N}} = \dfrac{q(\mathcal{D}|\bm{\theta})
+    p(\bm{\theta}|\mathcal{D}) &= \dfrac{p(\mathcal{D}|\bm{\theta})p(\bm{\theta})}{p(\mathcal{D})}\\
+    \dfrac{q(\bm{\theta}|\mathcal{D})}{Z_{N}} &= \dfrac{q(\mathcal{D}|\bm{\theta})
 	q(\bm{\theta})}{Z_{l}Z_{0}p(\mathcal{D})}\\
-	p(\mathcal{D}) = \dfrac{Z_{N}}{Z_{0}Z_{l}}
+        p(\mathcal{D}) &= \dfrac{Z_{N}}{Z_{0}Z_{l}}
 \end{cases}
 $
 
  
+\paragraph{BIC and AIC}
 Simpler approach
 \begin{itemize}
 	\item \textbf{BIC} In general $p(\mathcal{D}|m) = \Su{}{}p(\mathcal{D}|\bm{\theta})p(\bm{\theta}|m)d\bm{
@@ -55,20 +58,30 @@ Simpler approach
 		an approximation to the marginal likelihood. The penalty of AIC is less
 		than BIC, it causes AIC pick more complex models. That \tB{can be better for 
 		predictive accuracy}.
-	\item Effect of the prior.\\
-		If the prior is unknown, the correct Bayesian procedure is to put a prior
-		on the prior. That is we should put a prior on the hyper-parameter 
-		$\alpha$ as well as the parameters $\bm{w}$. To compute the marginal 
-		likelihood we should integrate out all unknowns, we should compute:
-		\tB{$\Su{}{}\Su{}{}p(\mathcal{D}|\bm{w})p(\bm{w}|\alpha,m)p(\alpha|m)
-		d\bm{w}d\alpha$}
-		A computational shortcut is to optimize $\alpha$ rather than integrating
-		it out. That is, we use \tG{$p(\mathcal{D}|m)\approx\Su{}{}p(\mathcal{D}
-		\bm{w})p(\bm{w}|\alpha,m)d\bm{w}$}.
-		where \tG{$\hat{\alpha} = \displaystyle \argmax_{\alpha} p(\mathcal{D}|
-			\alpha,m) = \displaystyle \argmax_{\alpha}\Su{}{}p(\mathcal{D}|
-		\bm{w})p(\bm{w}|\hat{\alpha},m)d\bm{w}$}
 \end{itemize}
+
+\paragraph{Use of Empirical Bayes}
+The way to chose the prior is not always clear, for posterior inference it is not an issue as the 
+likelihood often overwhelm the prior, but when computing the marginal likelihood the prior plays a
+much more important role. Indeed, we are averaging likelihood over all possible parameter settings 
+as weighted by the prior.\\
+If the prior is unknown the correct Bayesian procedure is to to \tB{put a prior on the prior} 
+(hierarchical Bayes).\\
+In the case of a linear regression we can use a prior of the form $\prob{\bm{w}}=\mathcal{N}(\bm{0},
+\alpha^{-1}\bm{I})$, then 
+\begin{center}
+    $\prob{\mathcal{D}|m} = \Su{}{}\Su{}{}\prob{\mathcal{D}|\bm{w}}\prob{\bm{w}|\alpha,m}
+    \prob{\alpha|m}d\bm{w}d\alpha$
+\end{center}
+\tB{The higher up we go in the Bayesian hierarchy the less sensitive are the results to the
+prior settings.}
+A computational shortcut is to optimize $\alpha$ rather than integrating it out. That is, we use\\
+\tG{$p(\mathcal{D}|m)\approx\Su{}{}p(\mathcal{D}|\bm{w})p(\bm{w}|\hat{\alpha},m)d\bm{w}$}. where 
+\tG{$\hat{\alpha} = \displaystyle \argmax_{\alpha} p(\mathcal{D}| \alpha,m) = \displaystyle 
+\argmax_{\alpha}\Su{}{}p(\mathcal{D}| \bm{w})p(\bm{w}|\hat{\alpha},m)d\bm{w}$}
+This is Empirical Bayes.
+
+
 \subsection{Bayes Factors}
 When prior on models is uniform, then model selection is equivalent to picking the model
 with the highest marginal likelihood. Now suppose we just have two models we are 

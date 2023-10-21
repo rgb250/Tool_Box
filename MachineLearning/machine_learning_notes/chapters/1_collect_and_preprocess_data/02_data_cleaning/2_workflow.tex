@@ -1,11 +1,11 @@
 \section{Inspection} 
 Detect unexpected behavior in the data.
 \begin{itemize}
-    \item \textbf{Data profiling}: summary statistics about the data, see \href{https://github.com/ydataai/ydata-profiling}{ydata-profiling} in Python.
+    \item \textbf{Data profiling}: summary statistics about the data, see \href{https://github.com/ydataai/ydata-profiling}{\textit{ydata-profiling}} in Python.
     \item \textbf{Visualizations}: visualize the data using statistical metrics, see
-        \href{https://plotly.com/python/}{plotly}
+        \href{https://plotly.com/python/}{\textit{plotly}}
     \item \textbf{Software packages}: to note and check the constraints regarding the data
-        see \href{https://pypi.org/project/pydeequ/}{pydeequ}
+        see \href{https://pypi.org/project/pydeequ/}{\textit{pydeequ}}
 \end{itemize}
 
 \section{Cleaning} 
@@ -24,10 +24,15 @@ Fix or remove anomalies discovered in the above phase.
     \item \textbf{Missing values}: 
         \begin{itemize}
             \item Drop: only if the missing values in a column rarely and randomly occur.
-            \item Impute: many methods, \textit{mean} is relevant when data is not skewed 
-                otherwise we should use \textit{median}. A linear regression or a hot-deck
-                (copying of values) approach can be taken as well, and more interestingly 
-                a \textit{k-nearest} method approach.
+            \item Impute: many methods,  
+                \begin{itemize}
+                    \item \textit{mean} is relevant when data is not skewed
+                    \item \textit{median} otherwise
+                    \item \textit{hot-deck} imputes from a randomly selected similar record
+                    \item \textit{polynomial interpolation} approximate the data with a polynomial 
+                    \item \textit{linear regression} imputes from prediction 
+                    \item \textit{k-nearest} imputes depending on a set of closet observations
+                \end{itemize}
             \item Flag: let the missing value as it is.
         \end{itemize}
     \item Outliers: Remove outliers only if they are harmful for the chosen model.

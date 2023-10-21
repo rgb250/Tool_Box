@@ -48,21 +48,32 @@ As it based on RDDs, being immutable, GraphX is unsuitable for grpahs that
 need to be updated.
 
 # Installation
-- Go to the [Download Apache Spark page](https://spark.apache.org/downloads.html)
-- Select and download the desired version
-- Install/Unzip the downloaded file
+- Select and download the desired version in the below links:
+    - [Hadoop Apache page](https://hadoop.apache.org/releases.html)
+    - [Download Apache Spark page](https://spark.apache.org/downloads.html) 
+- Install/Unzip the downloaded files
 - For Linux add for example in bashrc:
     ```bash
+    # Hadoop
+    export HADOOP_HOME="/opt/hadoop-3.3.6"
+    export LD_LIBRARY_PATH="$HADOOP_HOME/lib/native" 
+
+    # Spark
     export SPARK_VERSION=3.3.3  # useful to use library like pydeequ
     export SPARK_HOME="/opt/spark-3.3.3-bin-hadoop3"
     export PATH="$PATH:$SPARK_HOME/bin:$SPARK_HOME/sbin"
     export PYSPARK_PYTHON=~/miniconda3/envs/data_cleaning/bin/python
     ```
-- To use it in python
+- To use it in *jupyter notebook*
     - download the package ``findspark``
     - then 
         ```python
         import findspark  # package to access spark installation 
         findspark.init()  # locate spark , thanks to SPARK_HOME
         ```
+- Some extra steps to use in *Pycharm*
+    - in the config file set ``PYTHONPATH`` and ``SPARK_HOME``:
+    ![Environment Variables](./images/1_pycharm_var.png)
+    - in the project structure add the below 2 last paths:
+    ![Root paths](./images/2_pycharm_roots.png)
 

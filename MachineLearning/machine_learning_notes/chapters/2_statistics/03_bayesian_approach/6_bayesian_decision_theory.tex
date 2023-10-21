@@ -1,21 +1,22 @@
-\tB{We can formalize any given statistical decision problem as a game against nature} (as 
+We can formalize any given \tB{statistical decision problem as a game against nature} (as 
 opposed to a game against other strategic players, which is the topic of game theory).
-\tB{In this game, nature picks a state or parameter or label, $y\in \mathcal{Y}$, unknown
-to us, and then generates an observation, $\bm{x}\in\mathcal{X}$ which we get to see. We
-then have to make a decision, that is, we have to choose an action $a$ from some 
-\textbf{action space} $\mathcal{A}$. Finally we incur some \textbf{loss}, $L(y, a)$, which
-measures how compatible our action $a$ is with nature's hidden state $y$.}\\
-Our goal is to devise a decision procedure or policy, $\delta: \mathcal{X}\rightarrow
-\mathcal{A}$ which specifies the optimal action for each possible input which specifies the optimal action for each possible input, meaning the action that minimizes the expected 
-loss:
-$$ \delta(\bm{x}) = \argmin_{{a\in \mathcal{A}}} \E{{L(y, a)}}$$
+In this game, nature picks a state or parameter or \tB{label, $y\in \mathcal{Y}$, unknown
+to us}, and then \tB{generates an observation, $\bm{x}\in\mathcal{X}$} which we get to see. We
+then have to make a decision, that is, \tB{we have to choose an action $a$} from some 
+\textbf{action space} $\mathcal{A}$. Finally we incur some \textbf{loss}, \tB{$L(y, a)$, which
+measures how compatible our action $a$ is with nature's hidden state $y$}.\\
+Our goal is \tB{to derive a decision procedure or policy, $\delta: \mathcal{X}\rightarrow
+\mathcal{A}$ which specifies the optimal action for each possible input} which specifies the optimal
+action for each possible input, meaning the \tR{action that minimizes the expected 
+loss}:
+$$ \tR{\delta(\bm{x}) = \argmin_{{a\in \mathcal{A}}} \E{{L(y, a)}}} $$
 In the Bayesian vision, the expected value of $y$ given the data we have seen so far, 
 whereas in the frequentist vision the expected value refers to $x$ and $y$ that we expect
 to see in the future.\\
-\tO{In the Bayesian vision the optimal action having observed $\bm{x}$ is defined as the 
-action $a$ that minimizes the \textbf{posterior expected loss}:
-$$ \rho(a|\bm{x})\triangleq\mathbb{E}_{p(y|x)}\left(L(y, a)\right) = \su{y}{}L(y, a)
-p(y|x)$$}
+In the Bayesian vision the optimal action having observed $\bm{x}$ is defined as 
+\tB{the action $a$ that minimizes the \textbf{posterior expected loss}}:
+$$ \tB{\rho(a|\bm{x})\triangleq\mathbb{E}_{p(y|x)}\left(L(y, a)\right) = \su{y}{}L(y,
+a) p(y|x)}$$
 Hence the \tR{Bayes estimator also called Bayes decision rule is given by:
 $$\delta(\bm{x}) = \argmax_{a\in\mathcal{A}}\rho(\bm{a}|\bm{x})$$}
 
@@ -74,31 +75,6 @@ $$\delta(\bm{x}) = \argmax_{a\in\mathcal{A}}\rho(\bm{a}|\bm{x})$$}
         where $L_{FN}$ is the cost of a false negative and $L_{FP}$ the cost of a false
         positive.
 
-    \item \textbf{ROC curves} From the below table \\
-        \begin{tabular}{|cc|*{3}{c|}}
-            \hline
-            \multicolumn{2}{|c}{\textbf{Headers}} & \multicolumn{2}{|c|}{\textbf{Truth}} &
-            \textbf{Count}\\
-            \hline
-            \multirow{2}{*}{\textbf{Estimate}} & 1 & $TP$ & $FP$ & $\hat{N}_{+}=TP + FP$\\
-                                               & 0 & $FN$ & $TN$ & $\hat{N}_{-}=FN + TN$\\
-            \hline
-            \multicolumn{2}{|c|}{\textbf{Count}} & $N_{+}=TP+FN$ & $N_{-}=FP+TN$ 
-                                               & $N=N_{+}+N_{-}=\hat{N}_{+}+\hat{N}_{-}$\\
-            \hline
-        \end{tabular}\\
-        we can generate the \emph{confusion matrix} is the below table\\
-        \begin{tabular}{|*{3}{c|}}
-            \hline
-            \textbf{Headers} & $\bm{y=1}$ & $\bm{y=0}$\\
-            \hline
-            $\bm{\hat{y}=1}$ & $\dfrac{TP}{N}$ (sensitivity/recall) 
-                           & $\dfrac{FP}{N}$ (error type I/ false alarm) \\
-            \hline
-            $\bm{\hat{y}=0}$ & $\dfrac{FN}{N}$ (error type II/ missed detection) 
-                           & $\dfrac{TN}{N}$ (specificity) \\
-            \hline
-        \end{tabular}
     \item \textbf{Precision recall curves}
         When trying to detect a rare event the number of negatives is very large, hence
         comparing \emph{sensitivity} and \emph{the error of type I} is not very 
@@ -112,4 +88,95 @@ $$\delta(\bm{x}) = \argmax_{a\in\mathcal{A}}\rho(\bm{a}|\bm{x})$$}
     \item \textbf{F-scores} is the \emph{harmonic mean of precision and recall}:\\
         $F_{1} \triangleq \dfrac{2}{\frac{1}{precision} + \frac{1}{recall}}$
 \end{itemize}
+
+
+\paragraph{Receiver Operating Characteristic (ROC) curve}
+From the below table \\
+\begin{tabular}{|cc|*{3}{c|}}
+    \hline
+    \multicolumn{2}{|c}{\textbf{Headers}} & \multicolumn{2}{|c|}{\textbf{Truth}} &
+    \textbf{Count}\\
+    \hline
+    \multirow{2}{*}{\textbf{Estimate}} & 1 & $TP$ & $FP$ & $\hat{N}_{+}=TP + FP$\\
+                                       & 0 & $FN$ & $TN$ & $\hat{N}_{-}=FN + TN$\\
+    \hline
+    \multicolumn{2}{|c|}{\textbf{Count}} & $N_{+}=TP+FN$ & $N_{-}=FP+TN$ 
+                                       & $N=N_{+}+N_{-}=\hat{N}_{+}+\hat{N}_{-}$\\
+    \hline
+\end{tabular}\\
+we can generate the \emph{confusion matrix} is the below table\\
+\begin{tabular}{|*{3}{c|}}
+    \hline
+    \textbf{Headers} & $\bm{y=1}$ & $\bm{y=0}$\\
+    \hline
+    $\bm{\hat{y}=1}$ & $\dfrac{TP}{N}$ (sensitivity/recall) 
+                   & $\dfrac{FP}{N}$ (error type I/ false alarm) \\
+    \hline
+    $\bm{\hat{y}=0}$ & $\dfrac{FN}{N}$ (error type II/ missed detection) 
+                   & $\dfrac{TN}{N}$ (specificity) \\
+    \hline
+\end{tabular}
+
+Consider \tB{$f(\bm{x})$ a measure of our confidence that $y=1$} like $f=\sigma$, 
+however it does not need to be probabilistic simply being monotonically related to 
+$\prob{y=1|\bm{x}}$. Let \tB{$\tau$ be  some threshold parameter}, then our 
+classification rule is 
+$\mathbbm{1}_{\{f(\bm{x})> \tau\}}$. We can then compute TPR(True Positive Rate) also
+known as sensibility recall by using \tB{$TPR=\frac{TP}{N_{+}}\approx\prob{\hat{y}=1|
+y=1}$}.
+As well we are able to compute FPR(False Positive Rate) by using \tB{$FPR=\frac{FP}{
+N_{-}} \approx \prob{\hat{y}=1|y=0}$}\\
+\tB{ROC is achieved by computing the above TPR and FPR for different value of $\tau$}
+Note that 
+\begin{itemize}
+    \item classifying \uB{everything as negative ($\tau = 1$)} leads to $TPR=0$ and 
+        $FPR=0$
+    \item classifying \uB{everything as positive ($\tau = 0$)} leads to $TPR=1$ and 
+        $FPR=1$
+    \item a system working randomly will be close to the diagonal line $TPR=FPR$
+\end{itemize}
+AUC (Area Under the Curve) summarize the ROC curve
+
+
+\begin{figure}[H]
+    \begin{center}
+        \includegraphics[width=.5\textwidth]{chapters/2_statistics/03_bayesian_approach/images/2_roc_curves_distrib.png}
+    \end{center}
+    \caption{Receiver Operating Characteristic curve with distribution illustration}
+    \label{fig:2_roc_curves_distrib}
+\end{figure}
+In binary classification the \uB{class prediction for each instance is often made based
+on a continuous random variable $X$} , which is the score computed for the instance 
+(the estimated probability in logistic regression).\\
+X follows a probability density $f_{1}(x)$ if the instance belongs to the class 
+"positive" and $f_{0}(x)$ otherwise.\\
+Therefore 
+$\begin{cases}
+    TPR(\tau) = \Su{\tau}{\infty}f_{1}(x)dx \\
+    FPR(\tau) = \Su{\tau}{\infty}f_{0}(x)dx
+\end{cases}$
+and ROC curve plots parametrically $TPR(\tau)$ versus $FPR(\tau)$ with $\tau$ a varying
+parameter.\\
+Note that this $\tau$ is fundamentally the same that the one above which was squash in
+the interval $[0, 1]$
+
+
+\begin{figure}[H]
+    \begin{center}
+        \includegraphics[width=\textwidth]{chapters/2_statistics/03_bayesian_approach/images/1_roc_curve_with_table.png}
+    \end{center}
+    \caption{Receiver Operating Characteristic curve}
+    \label{fig:1_roc_curve_with_table}
+\end{figure}
+In the above table we have the following formula :
+\begin{itemize}
+    \item $D9:~SUM(\$B\$7:B9) \rightarrow$ Cumulative Lives
+    \item $E9:~SUM(\$C\$7:C9) \rightarrow$ Cumulative Dies
+    \item $F9:~1 - D9/\$D\$17 \rightarrow$ False Positive Rate ($1-\frac{TN}{N_{+}}$)
+    \item $G9:~1 - E9/\$E\$17 \rightarrow$ True Positive Rate ($1-\frac{FN}{N_{-}}$)
+    \item $H9:~(F10-F9)*G9 \rightarrow$ Area Under the Curve
+\end{itemize}
+
+
+
 

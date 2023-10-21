@@ -77,6 +77,11 @@ Expression like '\d' or '\w' does not exist in basic bash.
 |\< \>| Start End of word
 
 
+# PRINT
+```bash
+echo "${PATH//:/$'\n'}"  # in $PATH replace each ':' with '\n'
+# note that second '/' indicates replacing all occurrences
+```
 # INTERNET CONNECTION
 Use **speedtest-cli**
 ```bash
