@@ -10,7 +10,7 @@ If we assume discrete time steps the \tB{joint distribution} is:
 This assumption allows us to model an arbitrary of variables using a fixed number of parameters, such
 models are called \tB{\textbf{stochastic process}}.
 \paragraph{Assumptions}
-\tB{$x_{t+1} \perp (x_{k})_{1\leq k\leq t-1}|x_{t}$, meaning the future is independent of the past 
+\tB{$x_{t+1} \perp x_{1:t-1}|x_{t}$, meaning the future is independent of the past 
 given the present}, is called the \emph{first order Markov assumption.}
 
 \paragraph{Transition matrix}
@@ -72,12 +72,12 @@ stationary distribution}}.\\
 \subsection{Hidden Markov Models}
 \paragraph{Definition}
 It consists of a discrete-time, \tB{discrete-state Markov chain, with hidden states} 
-$z_{t}\in\{k\}_{1\leq k\leq K}$.\\
+$z_{t}\in\inter{1}{K}$.\\
 The corresponding joint distribution has the form:
 \begin{center}
     \fr{$\prob{\bm{z}_{1:T}, \bm{x}_{1:T}} = \prob{\bm{z}_{1:T}}
 \prob{\bm{x}_{1:T}|\bm{z}_{1:T}}=
-\left[\prob{z_{1}}\prd{t=2}{T}\prob{z_{t}|z_{t-1}}\right]\prd{t=2}{T}\prob{\bm{x}_{t}|z_{t}}$}   
+\left[\prob{z_{1}}\prd{t=2}{T}\prob{z_{t}|z_{t-1}}\right]\prd{t=1}{T}\prob{\bm{x}_{t}|z_{t}}$}   
 \end{center}
 
 It's common to have for:
@@ -109,7 +109,7 @@ It's common to have for:
         \bm{x}_{1:t}}$} \tR{online or recursively as the data streams in}. The name
         \uB{"filtering" is due to the noise reduction induced with the hidden state 
         estimating}  using the current $\prob{z_{t}|\bm{x}_{t}}$
-    \item \textbf{Smoothing}: \tB{computing $\prob{z_{t}|\bm{x}_{1:t}}$} \tR{offline}
+    \item \textbf{Smoothing}: \tB{computing $\prob{z_{t}|\bm{x}_{1:T}}$} \tR{offline}
         given all the evidence 
     \item \textbf{Fixed Lag Smoothing}: \tB{computing $\prob{z_{t-l}|\bm{x}_{1:t}}$}
         that is an \uB{interesting compromise between online and offline} estimation.
@@ -132,23 +132,24 @@ It's common to have for:
 
 \subsection{Inference HMMs}
 \paragraph{The forward algorithm}
-\subparagraph{Purpose} recursively \tB{computing the filtered marginals} 
-$\prob{z_{t}|\bm{x}_{1:t}}$ in a hidden Markov model.
+\subparagraph{Purpose} recursively \tB{computing the filtered marginals}: for $j\in\inter{1}{K}~
+\prob{z_{t}=j|\bm{x}_{1:t}}$ in a hidden Markov model.
 \subparagraph{Steps}
 \begin{enumerate}
     \item \emph{Prediction step}: computing the \emph{one-step-ahead predictive 
-        density} acting as the new prior for $t$:\\ $\prob{z_{t}|\bm{x}_{1:t}} =
+        density} acting as the new prior for $t$:\\ $\prob{z_{t}=j|\bm{x}_{1:t}} =
         \su{i}{} \prob{z_{t}=j| z_{t-1}=i}\prob{z_{t-1}=i|\bm{x}_{1:t}}$
     \item \emph{Update step}: we absorb the observed data from $t$ using Bayes rule:\\
         $\alpha_{t}(j) \triangleq \prob{z_{t}=j| \bm{x}_{1:t}} = \prob{z_{
             t}=j| \bm{x}_{t}, \bm{x}_{1:t-1}} = \frac{1}{Z_{t}}\prob{\bm{x}_{
-        t}|z_{t}=j} \prob{z_{t}=j| \bm{x}_{t}, \bm{x}_{1:t-1}}$ 
+        t}|z_{t}=j} \prob{z_{t}=j|\bm{x}_{1:t-1}}$ 
         where  the normalization constant is $Z_{t} \triangleq \prob{\bm{x}_{t}|
         \bm{x}_{1:t-1}}=\su{j}{}\prob{z_{t}=j|\bm{x}_{1:t-1}}\prob{\bm{x}_{t}|z_{t}=j}$
 \end{enumerate}
 The distribution \tB{$\prob{z_{t}|\bm{x}_{1:t}}$ is called the (filtered) belief state at time t},
 it is a vector of $K$ numbers denoted $\bm{\alpha}_{t}$
-Considering $\odot$ being the \emph{Hadamard product} representing elementwise vector multiplication.
+Considering $\odot$ being the \emph{Hadamard product} representing element-wise vector 
+multiplication.
 \begin{center}
     \fr{$\bm{\alpha}_{t} \propto \bm{\psi}_{t} \odot \bm{\Psi}^{T}\bm{\alpha}_{t-1}$}
 \end{center}
@@ -157,7 +158,7 @@ i,j)=\prob{z_{t}=j|z_{t-1}=i}$ is the transition matrix.
 
 \paragraph{Forwards-Backwards algorithm}
 \subparagraph{Purpose}
-\tB{Computing smoothed marginals $\prob{z_{t}=j|\bm{x}_{1:t}}$} using offline inference.
+\tB{Computing smoothed marginals $\prob{z_{t}=j|\bm{x}_{1:T}}$} using offline inference.
 \subparagraph{Basic idea}
 The key decompositions relies on the fact that \tB{we can break the chain into two parts: the \emph{
 past} and the \emph{future} by conditioning on $z_{t}$}\\
@@ -169,11 +170,12 @@ posterior marginal}.\\
 We previously described how to recursively compute the $\alpha$'s in a \emph{left-to-right} fashion.
 We now describe how to recursively compute the $\beta$'s in a \emph{right-to-left} fashion.
 \begin{align*}
-    \beta_{t-1}(i) &= \prob{\bm{x}_{1:T}|z_{t-1}=i}\\
+    \beta_{t-1}(i) &= \prob{\bm{x}_{t:T}|z_{t-1}=i}\\
                    &= \su{j}{}\prob{z_{t}=j,\bm{x}_{t},\bm{x}_{t+1:T}|z_{t-1}=i}\\
-                   &= \su{j}{}\prob{\bm{x}_{t+1:T},z_{t}=j}\prob{z_{t}=j,\bm{x}_{t}|z_{t-1}=i}\\
-                   &= \su{j}{}\prob{\bm{x}_{t+1:T},z_{t}=j}\prob{\bm{x}_{t}=j|z_{t}=j}\prob{z_{t}=j|
-                   z_{t-1}=i}\\
+                   &= \su{j}{}\prob{\bm{x}_{t+1:T}|z_{t}=j, \cancel{z_{t-1}=i}, \cancel{\bm{x}_{t}}}
+                   \prob{z_{t}=j,\bm{x}_{t}|z_{t-1}=i}\\
+                   &= \su{j}{}\prob{\bm{x}_{t+1:T},z_{t}=j}\prob{\bm{x}_{t}|z_{t}=j,
+                       \cancel{z_{t-1}=i}}\prob{z_{t}=j|z_{t-1}=i}\\
                    &= \su{j}{}\beta_{j}(j)\psi_{t}(j)\psi(i,j)
 \end{align*}
 In matrix-vector form: \tB{$\bm{\beta}=\bm{\Psi}\left(\bm{\psi}_{t}\odot\bm{\beta}_{t}\right)$}
@@ -247,7 +249,7 @@ The sampling distribution is given by:
 \begin{align*}
     \prob{z_{t}=i|z_{t+1}=j,\bm{x}_{1:t}}
     &= \prob{z_{t}|z_{t+1},\bm{x}_{1:t},\cancel{\bm{x}_{t+1}}}\\
-    &= \dfrac{\prob{z_{t+1},z_{t}|\bm{x}_{1:t+1}}}{\prob{z_{t+1},z_{t}|\bm{x}_{1:t+1}}}\\
+    &= \dfrac{\prob{z_{t+1},z_{t}|\bm{x}_{1:t+1}}}{\prob{z_{t+1}|\bm{x}_{1:t+1}}}\\
     &\propto \dfrac{\prob{\bm{x}_{t+1}|z_{t+1},\cancel{z_{t}},\cancel{\bm{x}_{1:t}}}\prob{z_{t+1},
             z_{t}|\bm{x}_{1:t}}}{\prob{z_{t+1},z_{t}|\bm{x}_{1:t+1}}}\\
     &= \dfrac{\prob{\bm{x}_{t+1}|z_{t+1}}\prob{z_{t+1}|z_{t},\cancel{\bm{x}_{1:t}}}\prob{z_{t}|
