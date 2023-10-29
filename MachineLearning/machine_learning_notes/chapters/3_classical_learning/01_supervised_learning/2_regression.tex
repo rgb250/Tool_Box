@@ -199,6 +199,8 @@ range.
 \subsection{Learning to rank}
 \paragraph{Purpose}
 Modeling a function being able to rank a set of items.
+Suppose we have a query $q$ and a set of documents $(d_{i})_{1\leq i\leq n}$ and we would like to 
+sort these documents in decreasing order of relevance. 
 
 \paragraph{Assumptions}
 \paragraph{Theory}
@@ -241,14 +243,14 @@ learning the low dimension embedding.
 \paragraph{Theory}
 $\begin{cases}
     \prob{\bm{z}_{i}} = \mathcal{N}\left(\bm{0}, \bm{I}_{L}\right) \\
-    \prob{y_{i}|\bm{z}_{i}} = \mathcal{N}\left(\bm{w}_{y}^{T}\bm{z}_{i},
+    \prob{y_{i}|\bm{z}_{i}} = \mathcal{N}\left(\bm{w}_{y}^{T}\bm{z}_{i}
     +\mu_{y},\sigma_{y}^{2}\right) \\
-    \prob{x_{i}|\bm{z}_{i}} = \mathcal{N}\left(\bm{W}_{x}^{T}\bm{z}_{i},
+    \prob{\bm{x}_{i}|\bm{z}_{i}} = \mathcal{N}\left(\bm{W}_{x}^{T}\bm{z}_{i}
     +\bm{\mu}_{x},\sigma_{x}^{2}\bm{I}_{D}\right)
-\end{cases}$
-The basic idea compressing $\bm{x}_{i}$ to predict $y_{i}$ can be formulated using
-information theory, in particular we might want to find an encoding distribution
-$\prob{\bm{z}|\bm{x}}$ such that we minimize $\mathbb{I}(X;Z) - \beta\mathbb{I}(X;Y)$.
+\end{cases}$\\
+The \uB{basic idea compressing $\bm{x}_{i}$ to predict $y_{i}$ can be formulated using
+information theory}, in particular we might want to find an encoding distribution
+\tB{$\prob{\bm{z}|\bm{x}}$ such that we minimize $\mathbb{I}(X;Z) - \beta\mathbb{I}(X;Y)$}.
 Where $\beta\geq 0$, the \emph{information bottleneck} is some parameter controlling 
 the trade-off between compression and predictive accuracy.
 \paragraph{Strengths}
@@ -267,8 +269,8 @@ the trade-off between compression and predictive accuracy.
 
 \subsection{Partial Least Squares}
 \paragraph{Purpose}
-The key idea is to allow some of the (co)variance in the input features to be explained
-by its own subspace $\bm{z}_{i}^{x}$ and to let the remaining of subspace $\bm{z}_{i}^{
+The key idea is to \tB{allow some of the (co)variance in the input features to be explained
+by its own subspace $\bm{z}_{i}^{x}$} and to let the remaining of subspace $\bm{z}_{i}^{
 s}$ be shared between input and output.
 \paragraph{Assumptions}
 \paragraph{Theory}
@@ -280,7 +282,9 @@ $\begin{cases}
     \right)\\
         \prob{\bm{x}_{i}|\bm{z}_{i}} = \mathcal{N}\left(\bm{W}_{x}\bm{z}^{s}_{i} + \bm{B}_{x}
         \bm{z}^{x}_{i} + \bm{\mu}_{x},\sigma^{2}\bm{I}_{D_{x}}\right)
-\end{cases}$
+\end{cases}$\\
+\uB{We should choose $L$ large enough so that the shared subspace does not capture covariate specific
+variations}.
 \paragraph{Strengths}
 \paragraph{Weaknesses}
 \paragraph{Relationships with other methods}

@@ -1,13 +1,13 @@
 \subsection{Naive Bayes classifiers}
 \paragraph{Purpose}
-\tR{Classifying vectors of discrete-valuated features $x\in\left\{i
-\right\}_{1\leq i \leq K}^{D}$}, where $K$ is the number of values for
-each feature, and $D$ the number of features.
+\tR{Classifying vectors of discrete-valuated features $x\in\inter{1}{K}^{D}$}, where $K$ is the 
+number of values that each feature is able to take, and $D$ the number of features.
 
 \paragraph{Assumptions}
 \begin{itemize}
-    \item \tB{Features are conditionally independent given the class 
-        label}
+    \item \tB{Features are conditionally independent given the class label}: $\forall (j,j')\in
+        \inter{1}{D}^{2}, j\neq j'\Rightarrow \bm{x}_{j}\perp\bm{x}_{j'}|y=c$
+    \item \uB{Independence of the observations}.
 \end{itemize}
 
 \paragraph{Theory}
@@ -81,7 +81,7 @@ As for a generative classifier we have the following equation:
 
 \paragraph{Assumptions}
 \begin{itemize}
-    \item Independent \tB{variables are normal for each level} of the
+    \item Features are normally distributed in each class
         grouping variable.
     \item \tB{Homoscedasticity} for LDA: variances \uB{among group} 
         variables are the same across levels of predictors.
@@ -91,10 +91,10 @@ As for a generative classifier we have the following equation:
 
 \paragraph{Theory of Quadratic Discriminant Analysis}
 \begin{center}
-    $\prob{y=c|\bm{x},\bm{\theta}} = \dfrac{|2\pi\Sigma_{c}|^{
+    $\prob{y=c|\bm{x},\bm{\theta}} = \dfrac{|2\pi\det(\Sigma_{c})|^{
     -\frac{1}{2}}\exp\left(-\frac{1}{2}[\bm{x}-\bm{\mu}_{c}]^{T}\Sigma_{
-    c}^{-1}[\bm{x}-\bm{\mu}_{c}]\right)\pi_{c}}{\su{c'}{}|2\pi\Sigma_{
-    c'}|^{-\frac{1}{2}}\exp\left(-\frac{1}{2}[\bm{x}-\bm{\mu}_{c'}]^{T}
+    c}^{-1}[\bm{x}-\bm{\mu}_{c}]\right)\pi_{c}}{\su{c'}{}|2\pi\det(\Sigma_{c'})
+    |^{-\frac{1}{2}}\exp\left(-\frac{1}{2}[\bm{x}-\bm{\mu}_{c'}]^{T}
     \Sigma_{c'}^{-1}[\bm{x}-\bm{\mu}_{c'}]\right)\pi_{c'}}$
 \end{center}
 \tB{The threshold of this results will be a quadratic function of 
@@ -104,13 +104,13 @@ $\bm{x}$.}
 \subparagraph{LDA}
 Same equation than above but this time, \tB{$\forall c\in \inter{1}{C} 
 \Sigma_{c} = \Sigma$}, \tB{then quadratic term $\bm{x}^{T}\Sigma^{-1}
-\bm{x}$ will cancel out from numerator and denominator}.
-Then by considering the above cancellation and the fact that 
-evidence is considered as a constant, we have:
+\bm{x}$ will cancel out from numerator and denominator}. Also 
+Then by considering the above cancellation and the fact that $\Sigma$ is diagonal as 
+well as the evidence is considered as a constant, we have:
 \tB{
 \begin{align*}
     \prob{y=c|\bm{x},\bm{\theta}} & \propto \exp\left(\log(\pi_{c})+\bm{
-        \mu}_{c}^{T}\Sigma^{-1}\bm{x}\bm{\mu}_{c}\right)\\
+        \mu}_{c}^{T}\Sigma^{-1}\bm{x}\right)\\
     &= \exp\left(\bm{\beta}_{c}^{T}\bm{x} + \gamma_{c}\right)
     \end{align*}
 }
@@ -212,6 +212,72 @@ Thus feature that are not discriminative are automatically ignored.
     \item Gene expression classification
 \end{itemize}
 
+\subsection{Fisher's Linear Discriminant Analysis (FLDA)}
+\paragraph{Purpose}
+An alternative way to the above discriminant analysis is to \uB{reduce the dimensionality
+of the features $\bm{x}\in\mathbb{R}^{D}$ and then fit a Multivariate Normal to the 
+resulting low-dimensional features $\bm{z}\in \mathbb{R}^{L}$}.\\
+\emph{PCA} would not be a good idea because it is unsupervised and the low-dimensional
+resulting features would not be optimal for the classification problem.\\
+A better option would be to \uB{find a matrix $\bm{W}$ such that the low-dimensional 
+data can be classified as well as possible using a Gaussian class-conditional density 
+model}, this is the \emph{FLDA}.
+\paragraph{Assumptions}
+\begin{itemize}
+    \item Gaussian class-conditional: reasonable since we are computing linear 
+        combination of potentially non-Gaussian features.
+\end{itemize}
+
+\paragraph{Theory}
+For $2$ classes
+Let us define 
+\tB{$\begin{cases}
+        \bm{\mu}_{1} = \frac{1}{N_{1}}\su{i:y_{i}=1}{}\bm{x}_{i}\\
+        \bm{\mu}_{2} = \frac{1}{N_{2}}\su{i:y_{i}=2}{}\bm{x}_{i}
+\end{cases}$},
+and \tB{$m_{k} = \bm{w}^{T}\bm{\mu}_{k}$} being the projection of each mean onto the line
+$\bm{w}$. Also let \tB{$z_{i}= \bm{w}^{T}\bm{x}_{i}$} be the projection of the data onto the 
+line $\bm{w}$ and finally \tB{$s_{k}^{2}=\su{i:y_{i}=k}{}(z_{i}-m_{k})^{2}$}.\\
+The goal is to \tR{find $\bm{w}$ such that we maximize the distance between the means,
+$m_{1} - m_{2}$, while also ensuring the projected clusters are "tight"}:
+\begin{center}
+    \fr{$\bm{J}(\bm{w}) = \dfrac{(m_{2} - m_{1})^{2}}{s_{1}^{2} + s_{2}^{2}}
+    = \dfrac{\bm{w}^{T}\bm{S}_{B}\bm{w}}{\bm{w}^{T}\bm{S}_{W}\bm{w}}$}
+\end{center}
+with the \emph{between-class scatter matrix}: $\bm{S}_{B} = \left(\mu_{2} - \mu_{1}
+\right)\left(\mu_{2} - \mu_{1}\right)^{T}$ and \emph{within-class scatter matrix}:
+$
+\bm{S}_{W} =\su{i:y_{i}=1}{}\left(\bm{x}_{i} - \bm{\mu}_{1}\right) \left(\bm{x}_{i} - 
+\bm{\mu}_{1}\right)^{T} + \su{i:y_{i}=2}{}\left(\bm{x}_{i} - \bm{\mu}_{2}\right)\left(
+\bm{x}_{i} - \bm{\mu}_{2}\right)^{T}
+$
+One can show that $J(\bm{w})$ is maximized when $\bm{S}_{B}\bm{w} = \lambda\bm{S}_{W}\bm{w}\bm{w}$
+where $\lambda = \dfrac{\bm{w}^{T}\bm{S}_{B}\bm{w}}{\bm{w}^{T}\bm{S}_{W}\bm{w}}$. \tB{If $
+\bm{S}_{W}$ is invertible we can convert it to a regular eigenvalue problem: $\bm{S}_{W}^{-1}
+\bm{S}_{B}\bm{w}= \lambda\bm{w}$
+}
+
+\paragraph{Strengths}
+\begin{itemize}
+    \item Classification in taking in account the response label.
+\end{itemize}
+
+\paragraph{Weaknesses}
+\begin{itemize}
+    \item FLDA is restricted to using $L\leq C-1$ dimensions, regardless of $D$.
+\end{itemize}
+
+\paragraph{Relationships with other methods}
+\begin{itemize}
+    \item Linear Discriminant Analysis
+    \item PCA
+    \item ANOVA
+\end{itemize}
+
+\paragraph{Examples of application}
+\begin{itemize}
+    \item Speech recognition
+\end{itemize}
 
 \subsection{Logistic Regression}
 \paragraph{Purpose}
@@ -247,70 +313,6 @@ This called \textit{cross-entropy}
 \paragraph{Relationships with other methods}
 \paragraph{Examples of application}
 
-\subsection{Fisher's Linear Discriminant Analysis (FLDA)}
-\paragraph{Purpose}
-An alternative way to the above discriminant analysis is to \uB{reduce the dimensionality
-of the features $\bm{x}\in\mathbb{R}^{D}$ and then fit a Multivariate Normal to the 
-resulting low-dimensional features $\bm{z}\in \mathbb{R}^{L}$}.\\
-\emph{PCA} would not be a good idea because it is unsupervised and the low-dimensional
-resulting features would not be optimal for the classification problem.\\
-A better option would be to \uB{find a matrix $\bm{W}$ such that the low-dimensional 
-data can be classified as well as possible using a Gaussian class-conditional density 
-model}, this is the \emph{FLDA}.
-\paragraph{Assumptions}
-\begin{itemize}
-    \item Gaussian class-conditional: reasonable since we are computing linear 
-        combination of potentially non-Gaussian features.
-\end{itemize}
-
-\paragraph{Theory}
-For $2$ classes
-Let us define 
-\tB{$\begin{cases}
-    \mu_{1} = \frac{1}{N_{1}}\su{i:y_{i}=1}{}\bm{x}_{i}\\
-    \mu_{2} = \frac{1}{N_{2}}\su{i:y_{i}=2}{}\bm{x}_{i}
-\end{cases}$},
-and \tB{$m_{k} = \bm{w}^{T}\bm{\mu}_{k}$} being the projection of each mean onto the line
-$\bm{w}$. Also let \bm{$z_{i}=\bm{w}^{T}\bm{x}_{i}$} be the projection of the data onto the 
-line $\bm{w}$.\\
-The goal is to \tR{find $\bm{w}$ such that we maximize the distance between the means,
-$m_{1} - m_{2}$, while also ensuring the projected clusters are "tight"}:
-\begin{center}
-    \fr{$\bm{J}(\bm{w}) = \dfrac{(m_{2} - m_{1})^{2}}{s_{1}^{2} + s_{2}^{2}}
-    = \dfrac{\bm{w}^{T}\bm{S}_{B}\bm{w}}{\bm{w}^{T}\bm{S}_{W}\bm{w}}$}
-\end{center}
-with the \emph{between-class scatter matrix}: $\bm{S}_{B} = \left(\mu_{2} - \mu_{1}
-\right)\left(\mu_{2} - \mu_{1}\right)^{T}$ and \emph{within-class scatter matrix}:
-$
-\su{i:y_{i}=1}{}\left(\bm{x}_{i} - \bm{\mu}_{1}\right) \left(\bm{x}_{i} - 
-\bm{\mu}_{1}\right)^{T} + \su{i:y_{i}=2}{}\left(\bm{x}_{i} - \bm{\mu}_{2}\right)\left(
-\bm{x}_{i} - \bm{\mu}_{2}\right)^{T}
-$
-
-
-\paragraph{Strengths}
-\begin{itemize}
-    \item Classification in taking in account the response label.
-\end{itemize}
-
-\paragraph{Weaknesses}
-\begin{itemize}
-    \item FLDA is restricted to using $L\leq C-1$ dimensions, regardless of $D$.
-\end{itemize}
-
-\paragraph{Relationships with other methods}
-\begin{itemize}
-    \item Linear Discriminant Analysis
-    \item PCA
-    \item ANOVA
-\end{itemize}
-
-\paragraph{Examples of application}
-\begin{itemize}
-    \item Speech recognition
-\end{itemize}
-
-\subsection{}
 
 %\subsection{Logistic Regression}
 %\paragraph{Purpose}

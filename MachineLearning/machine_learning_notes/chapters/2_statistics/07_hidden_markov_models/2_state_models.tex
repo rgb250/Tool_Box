@@ -4,19 +4,23 @@ It is an hidden Markov models, except the \tB{hidden states are continuous}.
 The model can be written in the following generic form: 
 \fr{$\begin{cases}
     \bm{z}_{t} = g(\bm{u}_{t}, \bm{z}_{t-1}, \bm{\epsilon}_{t}) \\
-    \bm{y}_{t} = h(\bm{z}_{t}, \bm{u}_{t-1}, \bm{\delta}_{t})
+    \bm{y}_{t} = h(\bm{z}_{t}, \bm{u}_{t}, \bm{\delta}_{t})
 \end{cases}$}
 where $\bm{z}_{t}$ is the hidden state $\bm{u}_{t}$ is an optimal input or control signal, $\bm{y}_{
-t}$ is the observation is the \emph{transition model}, $h$ is the \emph{observation model} and $\bm{
+t}$ is the observation, $g$ is the \emph{transition model}, $h$ is the \emph{observation model} and 
+$\bm{
 \epsilon}_{t}$ is the system noise at time $t$.
 \begin{itemize}
     \item \emph{transition model}: $\bm{z}_{t} = \bm{A}_{t}\bm{z}_{t-1} + \bm{B}_{t}\bm{u}_{t} +
         \bm{\epsilon}_{t}$
     \item \emph{observation model} $\bm{y}_{t} = \bm{C}_{t}\bm{z}_{t} + \bm{D}_{t}\bm{u}_{t} + \bm{
-        \epsilon}_{t}$
+        \delta}_{t}$
     \item \emph{system noise}: $\bm{\epsilon}_{t}\hookrightarrow \mathcal{N}(\bm{0}, \bm{Q}_{t})$
     \item \emph{observation noise}: $\bm{\delta}_{t}\hookrightarrow \mathcal{N}(\bm{0}, \bm{R}_{t})$
 \end{itemize}
+This model is called a Linear-Gaussian State Space Model (LG-SSM), if the parameters $\bm{\theta}_{t}
+= (\bm{A}_{t},\bm{B}_{t},\bm{C}_{t},\bm{D}_{t},\bm{Q}_{t},\bm{R}_{t})$ are independent of time, the
+model is called \emph{stationary}.
 
 \subsection{Time Series Forecasting}
 The idea is to create a generative model of the data in terms of latent processes which capture 

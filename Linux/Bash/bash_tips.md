@@ -97,7 +97,11 @@ find /dir_path -regextype sed -regex ".*/regex"  # search of "sed" type, ".*/" i
 ```bash
 grep --color --include=.py -rl -iE '<regex_pattern>'  # display the list of .py files located in the curent directories and its child directories containing <regex_pattern>
 ```
-use ``--color=always`` for grep use inside a pipeline.
+use ``--color=always`` for grep use inside a pipeline, if it is with ``less`` and add
+``-r``.
+```bash
+grep --color=always --include=.py -rl -iE '<regex_pattern>' | less -r
+```
 
 # Replace string in files
 ```bash

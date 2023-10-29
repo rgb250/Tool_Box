@@ -64,10 +64,8 @@ The overall posterior is then
     \fr{$\prob{y_{i}|\bm{x}_{i},\bm{\theta}} = \su{k}{}\prob{z_{i}=k|\bm{x}_{i},z_{i}=k
     ,\bm{\theta}}$}
 \end{center}
-
-
-
-
+ This model can be easily generalized to discrete data using the exponential family.
+The model is usually fit with \emph{Expectation-Maximization} technique.
 \paragraph{Strengths}
 
 \paragraph{Weaknesses}
@@ -97,7 +95,7 @@ measurement precision by $\beta=\frac{1}{\sigma^{2}}$:
     \end{cases}$
 \end{center}
 where $\bm{A}=\text{\emph{diag}}(\bm{\alpha})$
-To regularize the problem we may pu a conjugate prior on each precision $\alpha_{j}
+To regularize the problem we may put a conjugate prior on each precision $\alpha_{j}
 \hookrightarrow \text{\emph{Gamma}}(a, b)$ and $\beta \hookrightarrow \text{\emph{
 Gamma}}(c, d)$
 When performing EB point estimation will use the improper prior $a=b=c=d=0$ which
@@ -164,24 +162,24 @@ Then we have $\hat{y}(\bm{x}) = \hat{w}_{0} + \hat{\bm{w}}\bm{x}  = \hat{w}_{0}
 \subparagraph{Classification}
 we consider now the \emph{hinge loss}:
 \begin{center}
-    $L_{hinge}(y,\eta) = \max\left(0, 1-y\eta\right) = \left(1-y\eta\right)_{+}$
+    \fr{$L_{hinge}(y,\eta) = \max\left(0, 1-y\eta\right) = \left(1-y\eta\right)_{+}$} 
 \end{center}
 where $\eta=f(\bm{x})$ is our 'confidence' in choosing label $y=1$ however it does not
 need to have any probabilistic semantics.\\
 The overall objective has the form $\min_{\bm{w}:w_{0}}\frac{1}{2}\norm{\bm{w}}^{2} +
-C\su{i=1}{n}\left(1-y_{i},f(\bm{x}_{i})\right)$. Same principle as in regression, but
+C\su{i=1}{n}\left(1-y_{i}f(\bm{x}_{i})\right)_{+}$. Same principle as in regression, but
 this time \tB{$\hat{y}(\bm{x}) = sgn\left(f(\bm{x})\right) = sgn\left(\hat{w}_{0} +
 \hat{\bm{w}}^{T}\bm{x}\right)= sgn\left(\hat{w}_{0} + \su{i=1}{n}\alpha_{i}k(\bm{x}_{i}
 ,\bm{x})\right)$}
 \subparagraph{The large margin principle}
 our goal is to derive a \emph{discriminative function} $f(x)$ which will be linear in the feature
 space implied by the choice of kernel. Hence: $\bm{x} = \bm{x}_{\perp} + 
-r\frac{\bm{x}}{\norm{\bm{w}}}$ where $r$ is the distance of $\bm{x}$ from the decision boundary 
-whose normal vector is $\bm{w}$, and $\bm{x}_{\perp}$ is the orthogonal projection of $\bm{x}$a 
-onto this boundary. Hence $f(\bm{x}) = \bm{w}^{T}\bm{x} +w_{0} = \left(\bm{x}^{T}\bm{x}_{\perp}
-+ w_{0}\right) + r\frac{\bm{w}^{T}\bm{w}}{\norm{\bm{x}}}$. As $f(\bm{x}_{\perp}) = 0$ 
-$\bm{w}^{T}\bm{x} +w_{0} = 0$ Hence $f(\bm{x}) = r\frac{\bm{w}^{T}\bm{wl}}{\norm{\bm{x}}}$.
-Finally \tB{$r = \frac{f(\bm{x})}{\norm{\bm{x}}}$, the distance that we would like to make as large 
+r\frac{\bm{w}}{\norm{\bm{w}}}$ where $r$ is the distance of $\bm{x}$ from the decision boundary 
+whose normal vector is $\bm{w}$, and $\bm{x}_{\perp}$ is the orthogonal projection of $\bm{x}$
+onto this boundary. Hence $f(\bm{x}) = \bm{w}^{T}\bm{x} +w_{0} = \left(\bm{w}^{T}\bm{x}_{\perp}
++ w_{0}\right) + r\frac{\bm{w}^{T}\bm{w}}{\norm{\bm{w}}}$. As $f(\bm{x}_{\perp}) = 0$,
+$\bm{w}^{T}\bm{x}_{\perp} +w_{0} = 0$ Hence $f(\bm{x}) = r\frac{\bm{w}^{T}\bm{w}}{\norm{\bm{w}}}$.
+Finally \tB{$r = \frac{f(\bm{x})}{\norm{\bm{w}}}$, the distance that we would like to make as large 
 as possible, in order to clearly separate the input}.
 \subparagraph{Regularization parameter \emph{C}}
 it \tB{controls the number of errors we are willing to tolerate on the training set}, it is chosen by
@@ -231,6 +229,8 @@ case, where likelihood-based methods can be slow.
 It defines a prior over functions, which can be converted into a posterior over 
 functions once we have seen some data.\\
 They \tB{can be thought of as a Bayesian alternative to the kernel methods}.
+In Python we can use the library \href{https://gpflow.github.io/GPflow/develop/index.html}{\emph{
+GPflow}}
 \paragraph{Assumptions}
 \paragraph{Theory}
 \subparagraph{Regression}
@@ -239,10 +239,47 @@ Let the prior on the regression function be GP denoted by:
     \fr{$\begin{cases}
             f(\bm{x}) &\hookrightarrow \text{\emph{GP}}(m(\bm{x}), k(\bm{x},\bm{x}'))\\
             m(\bm{x}) &= \E{f(\bm{x})}\text{ \emph{the mean function}}\\
-            k(\bm{x}, \bm{x}') &= \E{\left[f(\bm{x}-m(\bm{x}))\right]\left[f(\bm{x}'-m(\bm{x}'))
+            k(\bm{x}, \bm{x}') &= \E{\left[f(\bm{x})-m(\bm{x})\right]^{T}\left[f(\bm{x}')-m(\bm{x}')
             \right]}\text{ \emph{kernel or covariance function}}
     \end{cases}$}
 \end{center}
+For any finite set of points, this process defines a joint Gaussian:
+$\prob{\bm{f}|\bm{X}} = \mathcal{N}\left(\bm{f}[\bm{\mu},\bm{K}\right)$.\\
+Where $\bm{K}$ is defined by $k_{ij}=k(\bm{x}_{i}, \bm{x}_{j})$ and $\bm{\mu}=\left(m(\bm{x}_{i})
+\right)_{1\leq i\leq n}$\\
+Let's consider the case where we predict using noise-free observation.
+Suppose we observe a \tB{training observation set $\mathcal{D}=\left\{(\bm{x}_{i},f_{i})\right\}_{1
+\leq i\leq n}$}, where $f_{i} = f(\bm{x}_{i})$ is the noise-free observation of the function 
+evaluated at $\bm{x}_{i}$. Given a test set $\bm{X}_{*}$ of size $n_{*}\times D$ we want to predict
+the function output $\bm{f}_{*}$.
+\tB{The Gaussian Process will act as an \emph{interpolator} of the training data}.
+\begin{center}
+    \tB{$\begin{bmatrix}
+        \bm{f}\\
+        \bm{f}_{*}
+    \end{bmatrix}
+    \hookrightarrow\mathcal{N}\left(
+        \begin{bmatrix}
+            \bm{\mu}\\
+            \bm{\mu}_{*}
+        \end{bmatrix},
+        \begin{bmatrix}
+            \bm{K} & \bm{K}_{*}\\
+            \bm{K}_{*}^{T} & \bm{K}_{**}
+        \end{bmatrix}
+    \right)$}
+\end{center}
+where $\bm{K}=k(\bm{X},\bm{X})$, $\bm{K}_{*}=k(\bm{X},\bm{X}_{*})$ and $\bm{K}_{**}=k(\bm{X}_{*},
+\bm{X}_{*})$. By teh standard rules for conditioning Gaussians, the prosterior has the following 
+form:
+\fr{$\begin{cases}
+    \prob{\bm{f}_{*}|\bm{X}_{*},\bm{X},\bm{f}} &= \mathcal{N}(\bm{f}_{*}|\bm{\mu}_{*},
+    \bm{\Sigma}_{*})\\
+    \bm{\mu}_{*} &= \bm{\mu}(\bm{X}_{*}) + \bm{K}_{*}^{T}\bm{K}^{-1}\left(\bm{f}-\bm{\mu}(\bm{X})
+    \right)\\
+        \bm{\Sigma}_{*} &= \bm{K}_{**} - \bm{K}_{*}^{T}\bm{K}^{-1}\bm{K}_{*}
+\end{cases}$}
+
 
 \paragraph{Strengths}
 \paragraph{Weaknesses}
@@ -265,7 +302,7 @@ Learning useful features directly from the input data
     \fr{$f(\bm{x}) = \E{y|\bm{x}} = \su{m=1}{M}w_{m}\mathbbm{1}_{\{\bm{x}\in R_{m}\}}=
 \su{m=1}{M}w_{m}\phi(\bm{x};\bm{v}_{m})$}
 \end{center}
-where $R_{m}$ is the $m^{th}$ region $v_{m}$ is the mean response in this region and 
+where $R_{m}$ is the $m^{th}$ region \tB{$w_{m}$ is the mean response in this region} and 
 \uB{$\bm{v}_{m}$ encodes the choice of variable to split on and the threshold value on the path from
 the root to the $m^{th}$ leaf}.
 \subparagraph{Growing a tree}
@@ -285,9 +322,9 @@ by sorting the unique values of $x_{ij}$
         \begin{itemize}
             \item \emph{Misclassification Rate}: $\frac{1}{|\mathcal{D}|}\su{i\in
                 \mathcal{D}}{}\mathbbm{1}_{\{y_{i}\neq\hat{y}\}}$
-            \item \emph{Entropy} $\mathbb{H}(\hat{\bm{\pi}}_{c}) =-\su{c=1}{C}\hat{\pi}
-                _{c}\log\left(\hat{\pi}_{c}\right)$
-            \item \emph{Gini index}: $\su{c=1}{C}\hat{\pi}_{c} (1-\hat{\pi}_{c})$, 
+            \item \emph{Entropy} \tB{$\mathbb{H}(\hat{\bm{\pi}}_{c}) =-\su{c=1}{C}\hat{\pi}
+                _{c}\log\left(\hat{\pi}_{c}\right)$}
+            \item \emph{Gini index}: \tB{$\su{c=1}{C}\hat{\pi}_{c} (1-\hat{\pi}_{c})$}, 
         \end{itemize}
 \end{itemize}
 Cross-entropy and Gini measures are very similar and more sensitive to changes in class
@@ -297,7 +334,7 @@ As stopping growing the tree to prevent overfitting would provoke to miss making
 splits because of feature on its own has little predictive power.\\
 \uB{Growing a "full" tree then performing \emph{pruning} is better}.
 \subparagraph{Random Forest}
-\tB{to reduce the variance of an estimate, we can train M different trees on
+\tB{to \textbf{reduce the variance of an estimate}, we can train M different trees on
 different subsets of the data}, randomly chosen with replacement and compute:
 \begin{center}
     $f(\bm{x}) = \su{m=1}{M}\dfrac{1}{M}f_{m}(\bm{x})$
@@ -343,8 +380,8 @@ randomly chosen subset of data cases} (observations).
 
 \subsection{Generalized Additive models}
 \paragraph{Purpose}
-To create a nonlinear model with multiple inputs: $f(\bm{x}) = \alpha + \su{i=1}{D}f_{
-i}(x_{i})$\\
+To create a nonlinear model with multiple inputs: $f(\bm{x}) = \alpha + \su{j=1}{D}f_{
+j}(x_{j})$\\
 $f(\bm{x})$ can be mapped to $\prob{y|\bm{x}}$ using a \emph{link funciton} as in Generalized Linear
 Models.
 \paragraph{Assumptions}
@@ -352,8 +389,8 @@ Models.
 \subparagraph{Smoothing splines}
 The loss function in regression setting:
 \begin{center}
-    \fr{$J\left(\alpha,(f_{i})_{1\leq i\leq D}\right) = \su{i=1}{n}\left(y_{i}-\alpha -
-\su{j=1}{D}f_{i}(x_{ij})\right)^{2} + \su{j=1}{D}\lambda_{j}\Su{}{}f_{j}^{''}(t_{j})^{
+    \fr{$J\left(\alpha,(f_{j})_{1\leq j\leq D}\right) = \su{i=1}{n}\left(y_{i}-\alpha -
+\su{j=1}{D}f_{j}(x_{ij})\right)^{2} + \su{j=1}{D}\lambda_{j}\Su{}{}f_{j}^{''}(t_{j})^{
 2}dt_{j}$}   
 \end{center}
 \subparagraph{Backfitting}
@@ -394,17 +431,23 @@ The goal of boosting is to solve the following optimization problem:
 \begin{center}
     $\displaystyle\min_{f}\su{i=1}{n}L(y_{i},f(\bm{x}_{i}))$
 \end{center}
-$f^{*}(\bm{x}) = \displaystyle\argmin_{f(\bm{x})}=\mathbb{E}_{y|\bm{x}}\left(\left[y-f(\bm{X})
-    \right]^{2}\right) = \E{y|\bm{x}}$
+If we use squared error loss the optimal estimate is given by: $f^{*}(\bm{x}) = \displaystyle
+\argmin_{f(\bm{x})}=\mathbb{E}_{y|\bm{x}}\left(\left[y-f(\bm{X}) \right]^{2}\right) = \E{y|\bm{x}}$\\
+For binary classification we can use the logloss which is a convex upper bound on 0-1 loss. One can
+show that $f^{*}(\bm{x}) = \dfrac{1}{2}\log\left(\dfrac{\prob{\hat{y}=1|\bm{x}}}{\prob{\hat{y}=-1|
+\bm{x}}}\right)$
 
 \begin{enumerate}
     \item initialise by defining $f_{0}(\bm{x}) = \displaystyle\argmin_{\gamma}\su{i=1}{n}L\left(
         y_{i},f(\bm{x};\gamma)\right)$, for example if we use squared error we can
-        set $f_{0}(\bm{x})=\overline{y}$
+        set $f_{0}(\bm{x})=\overline{y}$ and if we use log-loss or exponential loss we can set       
+        $f_{0}=\frac{1}{2}\log\left(\frac{\hat{\pi}}{1-\hat{\pi}}\right)$ where $\hat{\pi} = 
+        \frac{1}{n}\su{i=1}{n}\mathbbm{1}_{\{y_{i}=1\}}$
     \item at iteration $m$ we compute $(\beta_{m},\gamma_{m}) = \displaystyle\argmin_{\beta,\gamma}
-        \su{i=1}{n}L\left(y_{i},f_{m-1}(\bm{x}_{i})+\beta\phi(\bm{x}_{i};\gamma)
-        \right)$
-    \item $f_{m}(\bm{x}) = f_{m-1}(\bm{x}) + \beta_{m}\phi(\bm{x}_{i};\gamma_{m})$
+        \su{i=1}{n}L\left(y_{i},f_{m-1}(\bm{x}_{i})+\beta\phi(\bm{x}_{i};\gamma) 
+        \right)$ where $\phi$ is generated by the \emph{weak learner} algorithm.
+    \item $f_{m}(\bm{x}) = f_{m-1}(\bm{x}) + \nu\beta_{m}\phi(\bm{x}_{i};\gamma_{m})$ where $\nu\in
+        [0,1]$ is a step-size parameter.
 \end{enumerate}
 
 \begin{center}
