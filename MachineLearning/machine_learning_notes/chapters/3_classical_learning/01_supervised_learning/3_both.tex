@@ -1,3 +1,48 @@
+\subsection{Mutlt-task}
+\paragraph{Purpose}
+To fit many related classification or regression models at the same time, as it is often reasonable
+to assume the input-output mappings is similar across these different models.
+
+\paragraph{Assumptions}
+\begin{itemize}
+    \item Input/Output mapping
+\end{itemize}
+
+\paragraph{Theory}
+\subparagraph{Hierarchical Bayes for multi-task learning}
+Let consider $y_{ij}$ the response of the $i^{th}$ item in group $j$ with $(i,j)\in\inter{1}{N_{j}}
+\times\inter{1}{J}$.\\
+Although some groups may have lot of data, there is often a long tail where the majority of groups
+have little data. Thus we can't reliably fit each model separately but we don't want to use the
+same model for all the groups. As a compromise, \tB{we can fit a separate model for each group but
+encourage the model parameters to be similar across the groups}. More precisely:
+\begin{center}
+    $\begin{cases}
+        \E{y_{ij}|\bm{x}_{ij}} = g(\bm{x}_{ij}^{T}\bm{\beta}_{j}) \\
+        \bm{\beta}_{j} \hookrightarrow \mathcal{N}\left(\bm{\beta}_{*}, \sigma_{j}^{2}\bm{I}\right)\\
+        \bm{\beta}_{*} \hookrightarrow \mathcal{N}\left(\bm{\mu}, \sigma_{*}^{2}\bm{I}\right)
+    \end{cases}$
+\end{center}
+$\bm{\beta}_{j}$ is a coefficient vector associated with the group $j$.\\
+Also \uB{groups with small sample size borrow statistical strength from the groups with larger sample
+size because the $\bm{\beta}_{j}$'s are correlated via the latent common parents $\bm{\beta}_{*}$}.\\
+The term $\sigma_{j}^{2}$ controls how much group $j$ depends on the common parents and the 
+$\sigma_{*}^{2}$ term controls the strength of the overall prior.
+\paragraph{Strengths}
+\begin{itemize}
+    \item Performance improvement
+\end{itemize}
+
+\paragraph{Weaknesses}
+\paragraph{Relationships with other methods}
+\paragraph{Examples of application}
+\begin{itemize}
+    \item Determine the test scores for a given student in a given school without using as many 
+        models as school count
+    \item Personal spam filtering: 
+\end{itemize}
+
+
 \subsection{Mixture models}
 \paragraph{Purpose}
 It is the \tR{simplest form of \emph{Latent Variable Models (LVMs)} is when $z_{i}\in
@@ -109,6 +154,10 @@ confident that $w_{j}=0$ and hence that feature $j$ is "irrelevant"}.
 uses iteratively reweighted $l_{1}$ algorithm.
 
 \paragraph{Strengths}
+\begin{itemize}
+    \item Resilient against uninformative features
+\end{itemize}
+
 \paragraph{Weaknesses}
 \paragraph{Relationships with other methods}
 \paragraph{Examples of application}
@@ -380,10 +429,10 @@ randomly chosen subset of data cases} (observations).
 
 \subsection{Generalized Additive models}
 \paragraph{Purpose}
-To create a nonlinear model with multiple inputs: $f(\bm{x}) = \alpha + \su{j=1}{D}f_{
-j}(x_{j})$\\
-$f(\bm{x})$ can be mapped to $\prob{y|\bm{x}}$ using a \emph{link funciton} as in Generalized Linear
-Models.
+To create a nonlinear model with multiple inputs: \tB{$f(\bm{x}) = \alpha + \su{j=1}{D}f_{
+j}(x_{j})$}\\
+\uB{$f(\bm{x})$ can be mapped to $\prob{y|\bm{x}}$ using a \emph{link funciton}} as in Generalized 
+Linear Models.
 \paragraph{Assumptions}
 \paragraph{Theory}
 \subparagraph{Smoothing splines}
