@@ -131,6 +131,84 @@ sparsity and regularization.
 \paragraph{Examples of application}
 
 
+\subsection{Least Angle Regression Shrinkage}
+\paragraph{Purpose}
+Instead of updating only one variable at a time, inducing slow converging, we can use \uB{\emph{
+Active set} methods that update many variables at a time}. They add or remove a few variables at
+a time so they can take a long time if they started far from the solution.\\
+Suppose $\mathcal{A}_{k}$ is the active set of variables at the 
+beginning of the $k^{th}$ step and let $\beta_{\mathcal{A}_{k}}$ be the
+coefficient vector for these variables at this step, there will be 
+$k-1$ nonzero values and the one just entered will be zero.\\
+If \uB{$\bm{r}_{k}=\bm{y}-\bm{X}_{\mathcal{A}_{k}}\beta_{\mathcal{A}_{k}}$}
+is the current residual, then the direction for this step is:
+\begin{center}
+	$\delta_{k}=(\bm{X}_{\mathcal{A}_{k}^{T}}\bm{X}_{\mathcal{A}_{k}^{T}})^{-1}\bm{X}_{\mathcal{A}_{k}^{T}}^{T}\bm{r}_{k}$
+\end{center}
+The name ``least angle'' arises from a geometrical interpretation of 
+this process; $\bm{u}_{k}$ makes the smallest (and equal) angle with
+each of the predictors in $\mathcal{A}_{k}$
+\paragraph{Assumptions}
+\paragraph{Theory}
+Active methods exploit the fact that one can quickly compute $\hat{\bm{w}}(\lambda_{k})$ from 
+$\hat{\lambda}(\lambda_{k-1})$ if $\lambda_{k}\approx\lambda_{k-1}$ this is known as \textbf{warm
+starting}.
+
+\subparagraph{Least Angle Regression}
+\begin{enumerate}
+	\item \uB{Standardize the predictors} to have mean zero an unit 
+		norm.\\ \uB{Start with the residual $\bm{r}=\bm{y}-
+		\overline{\bm{y}}$}, and for all $j\in\inter{1}{p},~\beta_{j}=0$
+    \item Find the predictor $x_{j}$ most correlated with $\bm{r}$
+    \item For $j\in\inter{1}{p}$
+    \begin{itemize}
+        \item Move $\beta_{j}$ from 0 to its least-squares coefficient
+            $\dfrac{\sP{\bm{x}_{j}}{\bm{r}}}{\sP{\bm{x}_{j}}{\bm{x}_{j}}}$, then recompute 
+            $\bm{r}$. Find the predictor $x_{k}$ most correlated with the new $\bm{r}$
+        \item Move $\beta_{k}$ from 0 to its least-squares coefficient
+            $\dfrac{\sP{\bm{x}_{k}}{\bm{r}}}{\sP{\bm{x}_{k}}{\bm{x}_{k}}}$, then recompute 
+            $\bm{r}$. Find the predictor $x_{l}$ most correlated with the new $\bm{r}$\dots
+        \item Move $\beta_{j}$ and $\beta_{k}$ in the direction defined
+            by their joint least squares coefficient of the current
+            residual on $(x_{j},x_{k})$, until some other 
+            competitor $x_{l}$ has as much correlation with the
+            current residual.
+    \end{itemize}
+	\item After $\min(N-1, p)$ steps, we arrive at the
+		full least-squares solution.
+\end{enumerate}
+
+\subparagraph{Least Angle Regression: Lasso Modification}
+\begin{itemize}
+	\item[4a] If a non-zero coefficient hits zero, drop its variable from the
+		active set of varibalbes and recompute the current joint least squares
+		direction
+\end{itemize}
+
+
+\paragraph{Strengths}
+\begin{itemize}
+	\item Numerically efficient when $p\gg n$
+	\item As fast as forward selection and has the same order of complexity as OLS
+	\item Produces a full piecewise linear solution path
+	\item Stable
+	\item Esealy modified to produce for other estimators like the Lasso
+\end{itemize}
+
+\paragraph{Weaknesses}
+\begin{itemize}
+    \item Because LARS is based upon iterative refitting of the residuals, it would
+		appears to be especially sensitive to the effect noise.
+\end{itemize}
+
+\paragraph{Relationships with other methods}
+\begin{itemize}
+    \item Least Squares
+\end{itemize}
+
+\paragraph{Examples of application}
+
+
 \subsection{Generalized Linear Models (GLMs)}
 Models in which the \tR{output density is in the exponential family} and in which \tR{the mean
 parameters are a linear combination of the inputs}, passed through a possibly nonlinear
@@ -199,6 +277,8 @@ range.
 \subsection{Learning to rank}
 \paragraph{Purpose}
 Modeling a function being able to rank a set of items.
+Suppose we have a query $q$ and a set of documents $(d_{i})_{1\leq i\leq n}$ and we would like to 
+sort these documents in decreasing order of relevance. 
 
 \paragraph{Assumptions}
 \paragraph{Theory}
@@ -241,14 +321,14 @@ learning the low dimension embedding.
 \paragraph{Theory}
 $\begin{cases}
     \prob{\bm{z}_{i}} = \mathcal{N}\left(\bm{0}, \bm{I}_{L}\right) \\
-    \prob{y_{i}|\bm{z}_{i}} = \mathcal{N}\left(\bm{w}_{y}^{T}\bm{z}_{i},
+    \prob{y_{i}|\bm{z}_{i}} = \mathcal{N}\left(\bm{w}_{y}^{T}\bm{z}_{i}
     +\mu_{y},\sigma_{y}^{2}\right) \\
-    \prob{x_{i}|\bm{z}_{i}} = \mathcal{N}\left(\bm{W}_{x}^{T}\bm{z}_{i},
+    \prob{\bm{x}_{i}|\bm{z}_{i}} = \mathcal{N}\left(\bm{W}_{x}^{T}\bm{z}_{i}
     +\bm{\mu}_{x},\sigma_{x}^{2}\bm{I}_{D}\right)
-\end{cases}$
-The basic idea compressing $\bm{x}_{i}$ to predict $y_{i}$ can be formulated using
-information theory, in particular we might want to find an encoding distribution
-$\prob{\bm{z}|\bm{x}}$ such that we minimize $\mathbb{I}(X;Z) - \beta\mathbb{I}(X;Y)$.
+\end{cases}$\\
+The \uB{basic idea compressing $\bm{x}_{i}$ to predict $y_{i}$ can be formulated using
+information theory}, in particular we might want to find an encoding distribution
+\tB{$\prob{\bm{z}|\bm{x}}$ such that we minimize $\mathbb{I}(X;Z) - \beta\mathbb{I}(X;Y)$}.
 Where $\beta\geq 0$, the \emph{information bottleneck} is some parameter controlling 
 the trade-off between compression and predictive accuracy.
 \paragraph{Strengths}
@@ -267,8 +347,8 @@ the trade-off between compression and predictive accuracy.
 
 \subsection{Partial Least Squares}
 \paragraph{Purpose}
-The key idea is to allow some of the (co)variance in the input features to be explained
-by its own subspace $\bm{z}_{i}^{x}$ and to let the remaining of subspace $\bm{z}_{i}^{
+The key idea is to \tB{allow some of the (co)variance in the input features to be explained
+by its own subspace $\bm{z}_{i}^{x}$} and to let the remaining of subspace $\bm{z}_{i}^{
 s}$ be shared between input and output.
 \paragraph{Assumptions}
 \paragraph{Theory}
@@ -280,7 +360,9 @@ $\begin{cases}
     \right)\\
         \prob{\bm{x}_{i}|\bm{z}_{i}} = \mathcal{N}\left(\bm{W}_{x}\bm{z}^{s}_{i} + \bm{B}_{x}
         \bm{z}^{x}_{i} + \bm{\mu}_{x},\sigma^{2}\bm{I}_{D_{x}}\right)
-\end{cases}$
+\end{cases}$\\
+\uB{We should choose $L$ large enough so that the shared subspace does not capture covariate specific
+variations}.
 \paragraph{Strengths}
 \paragraph{Weaknesses}
 \paragraph{Relationships with other methods}

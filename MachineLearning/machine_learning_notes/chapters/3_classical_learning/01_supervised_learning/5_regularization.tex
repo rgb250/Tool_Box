@@ -39,12 +39,29 @@ values $\hat{w}_{j}(\lambda)$ vs $\lambda$ which is known as \emph{regularizatio
 \paragraph{Purpose}
 These algorithms exploit the fact that one can quickly compute $\hat{\bm{w}}(
 \lambda_{k})$ from $\hat{\bm{w}}(\lambda_{k-1})$ if $\lambda_{k} \approx \lambda_{k-1}$
-this is known as \emph{warm starting}.
+this is known as \emph{warm starting}.\\
+Useful when it is hard to optimize all the variables simultaneously 
 \paragraph{Assumptions}
 \paragraph{Theory}
-\subparagraph{Coordinate descent}
-$w^{*}_{j} = \argmin_{z}f(\bm{w} + z\bm{e}_{j}) - f(\bm{w})$ with $\bm{e}_{j}$ is the 
-\emph{j}'th unit vector. 
+\subparagraph{Aim of Coordinate descent}
+We solve for the $j^{th}$ coefficient with all the others held fixed: 
+\begin{center}
+    \fr{$w^{*}_{j} = \displaystyle\argmin_{z}f(\bm{w} + z\bm{e}_{j}) - f(\bm{w})$} with $\bm{e}_{j}$
+    is the \emph{j}'th unit vector. 
+\end{center}
+
+
+\subparagraph{Algorithm for Lasso}
+\begin{enumerate}
+    \item Initialise $\bm{w} = \left(\bm{X}^{T}\bm{X} + \lambda\bm{I}\right)^{-1}\bm{X}^{T}y$
+    \item Repeat until convergence:\\for $j\in\inter{1}{D}$
+        \begin{itemize}
+            \item $\alpha_{j} = 2\su{i=1}{n}x_{ij}^{2}$
+            \item $c_{j} = 2\su{i=1}{n}x_{ij}(y_{i} - \bm{w}^{T}\bm{x}_{i} + w_{j}x_{ij})$
+            \item $w_{j} = soft\left(\dfrac{c_{j}}{\alpha_{j}}, \dfrac{\lambda}{\alpha_{j}}\right)$
+        \end{itemize}
+\end{enumerate}
+
 
 \paragraph{Strengths}
 \begin{itemize}

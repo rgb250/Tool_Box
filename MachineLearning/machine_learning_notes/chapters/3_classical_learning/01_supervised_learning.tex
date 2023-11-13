@@ -1,4 +1,3 @@
-
 With the \tB{\emph{generative} approach we create a joint model of the form $\prob{y,\bm{x}}$, and
 then to condition on $\bm{x}$, thereby deriving $\prob{y|\bm{x}}$}.\\
 Alternatively, \tB{fitting directly a model of the form $\prob{y|\bm{x}}$ is a \emph{
@@ -14,7 +13,7 @@ discriminative} approach}.
         controlling whether the item is observed or not. Missing completely at random (MCAR): $\prob{
         r_{i}|\bm{x}_{i},\bm{\phi}} = \prob{r_{i}|\bm{x}^{0}_{i}|\bm{\phi}}$, missing at random 
         (MAR): $\prob{r_{i}|\bm{x}_{i},\bm{\phi}} = \prob{r_{i}|\bm{x}^{0}_{i},\bm{\phi}}$
-    \item \emph{Can handle unlabeled training data?}: Fairly easy to using generative models
+    \item \emph{Can handle unlabeled training data?}: Fairly easy in using generative models
     \item \emph{Symmetric in inputs and outputs?}: We can run a generative model "backward" and 
         infer probable inputs given the output by computing $\prob{\bm{x}|y}$
     \item \emph{Can handle feature preprocessing?}: discriminative methods allow to preprocess the

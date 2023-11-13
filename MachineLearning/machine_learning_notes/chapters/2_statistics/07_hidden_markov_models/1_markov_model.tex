@@ -137,14 +137,15 @@ It's common to have for:
 \subparagraph{Steps}
 \begin{enumerate}
     \item \emph{Prediction step}: computing the \emph{one-step-ahead predictive 
-        density} acting as the new prior for $t$:\\ $\prob{z_{t}=j|\bm{x}_{1:t}} =
-        \su{i}{} \prob{z_{t}=j| z_{t-1}=i}\prob{z_{t-1}=i|\bm{x}_{1:t}}$
+        density} acting as the new prior for $t$:\\ $\prob{z_{t}=j|\bm{x}_{1:t-1}} =
+        \su{i}{} \prob{z_{t}=j| z_{t-1}=i}\prob{z_{t-1}=i|\bm{x}_{1:t-1}}$
     \item \emph{Update step}: we absorb the observed data from $t$ using Bayes rule:\\
         $\alpha_{t}(j) \triangleq \prob{z_{t}=j| \bm{x}_{1:t}} = \prob{z_{
             t}=j| \bm{x}_{t}, \bm{x}_{1:t-1}} = \frac{1}{Z_{t}}\prob{\bm{x}_{
         t}|z_{t}=j} \prob{z_{t}=j|\bm{x}_{1:t-1}}$ 
         where  the normalization constant is $Z_{t} \triangleq \prob{\bm{x}_{t}|
-        \bm{x}_{1:t-1}}=\su{j}{}\prob{z_{t}=j|\bm{x}_{1:t-1}}\prob{\bm{x}_{t}|z_{t}=j}$
+        \bm{x}_{1:t-1}}=\su{j}{}\prob{\bm{x}_{t}|z_{t}=j}\prob{z_{t}=j|\bm{x}_{1:t-1}}$\\
+        Hint: consider $\bm{x}_{t}\perp\bm{x}_{1:t-1}|z_{t}$
 \end{enumerate}
 The distribution \tB{$\prob{z_{t}|\bm{x}_{1:t}}$ is called the (filtered) belief state at time t},
 it is a vector of $K$ numbers denoted $\bm{\alpha}_{t}$
@@ -176,13 +177,19 @@ We now describe how to recursively compute the $\beta$'s in a \emph{right-to-lef
                    \prob{z_{t}=j,\bm{x}_{t}|z_{t-1}=i}\\
                    &= \su{j}{}\prob{\bm{x}_{t+1:T},z_{t}=j}\prob{\bm{x}_{t}|z_{t}=j,
                        \cancel{z_{t-1}=i}}\prob{z_{t}=j|z_{t-1}=i}\\
-                   &= \su{j}{}\beta_{j}(j)\psi_{t}(j)\psi(i,j)
+                   &= \su{j}{}\beta_{t}(j)\psi_{t}(j)\Psi(i,j)
 \end{align*}
 In matrix-vector form: \tB{$\bm{\beta}=\bm{\Psi}\left(\bm{\psi}_{t}\odot\bm{\beta}_{t}\right)$}
 We can think of this algorithm as passing "messages" from left to right and then from right to
 left and then combining them at each node.
 \subparagraph{Complexity}
-It takes $O(K^{2}T)$ time since at each step we perform a $K\times K$
+It takes $O(K^{2}T)$ time since at each step we perform a $K\times K$\\
+We can think of this algorithm as \uB{passing "messages" from left to right and then from right to 
+left, and then combining them at each node}. Finally 
+\begin{center}
+    \fr{$\gamma_{t}(j) \propto \alpha_{t}(j) \beta_{t}(j)$}
+\end{center}
+
 
 \paragraph{The Viterbi Algorithm}
 \subparagraph{Purpose}
@@ -212,18 +219,18 @@ the backwards pass}.\\
 Let's define the \uB{probability of ending up in state $j$ at time $t$ given that we take the most
 probable path}:
 \begin{center}
-    \fr{$\delta_{t}(j)\triangleq \displaystyle\max_{(z_{k})_{1\leq k\leq t-1}}\prob{\bm{z}_{1:T},
-            z_{t}=j|\bm{x}_{1:t}}$}
+    \fr{$\delta_{t}(j)\triangleq \displaystyle\max_{\bm{z}_{1:t-1}}\prob{\bm{z}_{1:t-1}, z_{t}=j|
+    \bm{x}_{1:t}}$}
 \end{center}
 The key insight is that \tB{the most probable path to state $j$ at time $t$ must consist of the most
 probable path to some other state $i$ at time $t-1$, followed by a transition from $i$ to $j$}.
 \begin{enumerate}
-    \item Hence $\delta_{t}(j) = \displaystyle\max_{i}\delta_{t-i}(i)\psi(i,j)\phi_{t}(j)$
+    \item Hence $\delta_{t}(j) = \displaystyle\max_{i}\delta_{t-i}(i)\Psi(i,j)\psi_{t}(j)$
     \item \uB{Keeping track of the most likely previous state} for each possible state that we end 
-        up: $a_{t}(j) = \displaystyle\argmax_{i}\delta_{t-1}(i)\psi(i,j)\phi_{t}(j)$. It tells us the
+        up: $a_{t}(j) = \displaystyle\argmax_{i}\delta_{t-1}(i)\Psi(i,j)\psi_{t}(j)$. It tells us the
         \uB{most likely previous state on the most probable path to $z_{t}=j$}.
-    \item initialize $\delta_{1}(j)=\pi_{j}\phi_{1}(j)$
-    \item compute the most probable final state $z_{T}^{*}=\displaystyle\argmax_{i}\delta_{T}(i)$
+    \item initialize $\delta_{1}(j)=\pi_{j}\psi_{1}(j)$
+    \item compute the most probable final state $z_{T}^{*}=\displaystyle\argmax_{j}\delta_{T}(j)$
     \item using traceback we can compute the most probable sequence of states: $z_{t}^{*}=a_{t+1}(
         z^{*}_{t+1})$
 \end{enumerate}
