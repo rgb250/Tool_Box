@@ -1,3 +1,14 @@
+- [Multi-index](#multi-index)
+- [Concatenate](#concatenate)
+- [Display in Jupyter](#display-in-jupyter)
+- [Combining overlapping data frames](#combining-overlapping-data-frames)
+- [Chaining](#chaining)
+- [Transforming data](#transforming-data)
+- [Summarizing data](#summarizing-data)
+- [Selecting](#selecting)
+- [Merge Join](#merge-join)
+
+
 # Multi-index
 ```python
 import pandas as pd
@@ -88,6 +99,15 @@ bb = pd.read_csv("data/baseball.csv", index_col="id")
 - ``map()``: element-wise apply
 - ``transform()``: apply function directly, to multiple columns
 - ``agg()``: summary
+
+# Summarizing data
+A flexible way to do it is:
+````python
+df.groupby(['dim1', 'dim2']).agg(
+  new_name1=pd.NameAgg(column='value1', aggfunc="mean"),
+  new_name2=pd.NameAgg(column='value2', aggfunc="count")
+)
+````
 
 # Selecting 
 - hard methods

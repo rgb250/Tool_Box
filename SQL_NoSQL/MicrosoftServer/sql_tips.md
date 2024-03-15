@@ -1,6 +1,6 @@
 - [I) Table operations](#i-table-operations)
   - [1) Creation of table](#1-creation-of-table)
-  - [List of all the tables](#list-of-all-the-tables)
+  - [2) List of all the tables](#2-list-of-all-the-tables)
   - [3) List of columns from table](#3-list-of-columns-from-table)
 - [II) Operations on columns](#ii-operations-on-columns)
   - [1) Change of types](#1-change-of-types)
@@ -9,6 +9,8 @@
   - [4) Aggregation functions](#4-aggregation-functions)
 - [III) Specifities](#iii-specifities)
   - [1) Deal with special name columns](#1-deal-with-special-name-columns)
+- [IV) Join](#iv-join)
+  - [1) Filter table before applying a join](#1-filter-table-before-applying-a-join)
 
 
 # I) Table operations
@@ -22,7 +24,7 @@ IF NOT EXISTS (
     )
 GO
 ````
-## List of all the tables
+## 2) List of all the tables
 ````sql
 SELECT TABLE_CATALOG, TABLE_SCHEMA, TABLE_NAME
 FROM INFORMATION_SCHEMA.TABLES t 
@@ -62,3 +64,12 @@ COUNT(*)
 # III) Specifities
 ## 1) Deal with special name columns
 `[]` to use special column name like `date`, `month`
+
+# IV) Join
+## 1) Filter table before applying a join
+````sql
+SELECT c.Customer, c.State, e.Entry
+FROM Customer c
+LEFT JOIN Entry (SELECT * FROM Employee WHERE Category='D') AS e -- filter step
+   ON c.Customer=e.Customer
+````

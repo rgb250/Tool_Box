@@ -6,3 +6,9 @@ In order to be able to always download and reach package repositories it is good
 ```bash
 conda update --all
 ```
+
+# Python
+## Installing different requirements.txt with pip update
+````bash
+python -m pip install -r requirements.txt  # install packages, handle pip update
+````
