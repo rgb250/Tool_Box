@@ -7,6 +7,12 @@ import datetime as datetime
 
 # String Formatted Date --> Date
 date_standard = datetime.strptime('2023-10-11', format='%Y-%m-%d')
+
+# With time
+date_standard = datetime.strptime(
+    '2023-10-11 15:11:9,3241654',
+    format='%Y-%m-%d %H:%M:%S,%f'  # '%f allows to handle floating seconds'
+) 
  
 # Date --> IsoWeek
 date_isoweek = datetime.strptime('2023-10-11', format='%G%V%u')  # from Python 3.6
