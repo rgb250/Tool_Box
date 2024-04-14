@@ -8,7 +8,7 @@ Having chosen an estimator, we define its \tR{expected loss or risk} as follows
 \begin{center}
  $R(\theta^{*}, \delta) \triangleq \mathbb{E}_{p(\tilde{\mathcal{D}}|\theta^{*})}
 \left(L(\theta^{*}, \delta(\tilde{\mathcal{D}}))\right) = \Su{}{}L\left(\theta^{*},
-\delta(\tilde{\mathcal{D}})\right)p(\tilde{\mathcal{D}})d\tilde{\mathcal{D}}$   
+\delta(\tilde{\mathcal{D}})\right)p(\tilde{\mathcal{D}}|\theta^{*})d\tilde{\mathcal{D}}$   
 \end{center}
 }
 where $\tilde{\mathcal{D}}$ is data sampled from 'nature's distribution' represented by
