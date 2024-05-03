@@ -1,6 +1,6 @@
 We can formalize any given \tB{statistical decision problem as a game against nature} (as 
 opposed to a game against other strategic players, which is the topic of game theory).
-In this game, nature picks a state or parameter or \tB{label, $y\in \mathcal{Y}$, unknown
+In this game, nature picks a state or parameter $\theta$ or \tB{label, $y\in \mathcal{Y}$, unknown
 to us}, and then \tB{generates an observation, $\bm{x}\in\mathcal{X}$} which we get to see. We
 then have to make a decision, that is, \tB{we have to choose an action $a$} from some 
 \textbf{action space} $\mathcal{A}$. Finally we incur some \textbf{loss}, \tB{$L(y, a)$, which
@@ -18,11 +18,13 @@ In the Bayesian vision the optimal action having observed $\bm{x}$ is defined as
 $$ \tB{\rho(a|\bm{x})\triangleq\mathbb{E}_{p(y|x)}\left(L(y, a)\right) = \su{y}{}L(y,
 a) p(y|x)}$$
 Hence the \tR{Bayes estimator also called Bayes decision rule is given by:
-$$\delta(\bm{x}) = \argmax_{a\in\mathcal{A}}\rho(\bm{a}|\bm{x})$$}
+$$\delta(\bm{x}) = \argmin_{a\in\mathcal{A}}\rho(\bm{a}|\bm{x})$$}
+Note that here \uB{we adopted a predictive point of view}, as we took $y$ as reference otherwise it 
+would have been a inferential point of view in taking $\theta$.
 
 \subsection{Bayes estimators for common loss functions}
 \begin{itemize}
-    \item \textbf{MAP} estimate minimizes 0-1 loss: $L(y, a) = \mathbb{I}_{y\neq a}
+    \item \textbf{MAP} estimate minimizes 0-1 loss: $L(y, a) = \mathbbm{1}_{\{y\neq a\}}
 		\begin{cases}
 			0 \text{ if } a = y\\
 			1 \text{ else}
