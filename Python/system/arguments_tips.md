@@ -42,3 +42,13 @@ import pkg_resources  # provide information about packages
 
 print(pkg_resources.get_distribution('xlrd').version)
 ```
+
+# Logging
+
+```python
+import logging
+
+logging.config.fileConfig('path/log/file')
+
+logger = logging.getLogger('simple_example')
+```
