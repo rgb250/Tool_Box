@@ -1,10 +1,25 @@
-\subsection{Entropy}
+Originally developed \tB{to study sending messages from discrete alphabets over a noisy channel}
+(like communication via radio transmission).
+The basic intuition behind information theory is that learning that an unlikely event has occurred
+is more informative than learning that a likely event has occurred.
+\subsection{Shannon entropy}
 \paragraph{Purpose}
 It is a \tB{measure of the uncertainty in a random variable}.
 \paragraph{Theory}
+We have self-information
 \begin{center}
-    \fr{$\mathbb{H}(X) \triangleq -\su{k=1}{K}\prob{X=k}\log\left(\prob{X=k}\right)$}
+    $I(x) = -\log(\prob{x})$
 \end{center}
+Depending of the basis of the used logarithm, the unit can be expressed in \emph{nats} if the base is
+\emph{e} or \emph{bits} if the basis is 2.\\
+One \emph{nat} is the amount of information gained by observing an event of probability $\frac{1}{e}$
+
+
+\begin{center}
+    \fr{$\mathbb{H}(X) \triangleq -\mathbb{E}_{X\hookrightarrow P}(I(x))= -\su{k=1}{K}\prob{X=k}\log\left(\prob{X=k}\right)$}
+\end{center}
+It gives a lower bound on the number of bits needed on average to encode symbols drawn from a 
+distribution $P$.
 The discrete distribution with \uB{maximum entropy is the uniform distribution},
 conversely the one with \uB{minimum entropy is any delta-function} that puts all its
 mass on one state.
@@ -19,6 +34,9 @@ It is a \tB{measure of dissimilarity of 2 probability distribution $p$ and $q$}.
                       &= \su{k=1}{K}p_{k}\log(p_{k}) - \su{k=1}{K}p_{k}\log(q_{k})\\
                       &= -\mathbb{H}(p) + \mathbb{H}(p,q)
 \end{align*}}
+\tB{It gives the extra amount of information needed to send a message containing symbols drawn from
+probability distribution $P$ when we use a code that was designed to minimize the length of messages
+drawn from probability distribution $Q$}
 Where $\mathbb{H}(p,q)$ is called \emph{cross entropy}, \tB{being the average number of
 bits needed to encode data coming from a source with distribution $p$ when we use model
 $q$ to define our codebook}.
@@ -37,6 +55,9 @@ p(Y)$}
 \end{center}
 where $\mathbb{H}(Y|X)$ is the \tB{\emph{conditional entropy}} defined as 
 \tB{$\mathbb{H}(Y|X) =\Sigma_{x}p(x)\mathbb{H}(Y|X=x)$}
+It is \uB{the extra amount of information needed to send a message containing symbols drawn from
+probability distribution $P$ when use a code that was designed to minimize the length of messages
+drawn from probability distribution $Q$}.
 Thus we can interpret the \tR{\emph{Mutual Information} between $X$ and $Y$ as the 
 reduction in uncertainty about $X$ after observing Y, or, by symmetry about $Y$ after
 observing $X$}.

@@ -1,4 +1,51 @@
 \subsection{Basics}
 \paragraph{Defintion}
-Similar to Bayesian Network in its representation dependencies except that
-MRF are undirected and may be cyclic. 
+Similar to Bayesian Network in its representation dependencies except that \tB{MRF are undirected
+and may be cyclic}. 
+
+\paragraph{Conditional independence properties}
+\begin{itemize}
+    \item \textbf{Global Markov} property: for a sets of notes $A, B$ and $C$, \tB{$\bm{x}_{A}
+        \perp_{G} \bm{x}_{B}|\bm{x}_{C}$ \emph{iff} $C$ separates $A$ from $B$ in the graph $G$}.\\
+        Meaning that when we remove the nodes of $C$ there is no way to connect any nodes in $A$ to
+        any nodes in $B$
+    \item \textbf{Undirected local Markov} property: consider the set of nodes rending a given node
+        $N$ \emph{conditionally independent} of all other nodes this is the \tR{Markov blanket}
+        denoted $mb(N) = N\perp\mathcal{V}\backslash cl(N)|mb(N)$, with $cl(N)\triangleq mb(N)\cup
+        \{N\}$ is the \textit{closure} of node $N$. One can show that in a \tB{UGM a node's Markov 
+        blanket is its set of immediate neighbors}.
+    \item \textbf{Pairwise Markov} property: two nodes are conditionally independent given the rest
+        if there is no direct edge between them: \tB{$s\perp N|\mathcal{V}\backslash \{s, N\}
+        \Leftrightarrow G_{sN} = 0$}
+\end{itemize}
+
+\paragraph{Parametrization of MRFs}
+\subparagraph{Hammersley-Clifford}
+A positive distribution \tR{$p(\bm{y})>0$ satisfies the CI properties of an undirected graph $G$ iff
+$p$ can be represented as a product of factors}: 
+\begin{center}
+    \tB{$p(\bm{y}|\bm{\theta}) = \dfrac{1}{Z(\bm{\theta})}\prd{c\in\mathcal{C}}{}\psi_{c}(\bm{y}_{c}|\bm{\theta}_{c})$}
+\end{center}
+where \uB{$\mathcal{C}$ is the set of all (maximal) cliques of $G$, and $Z(\bm{\theta})$ is the 
+\textbf{partition function}} given by $Z(\bm{\theta}) \triangleq \su{\bm{x}}{}\prd{c\in\mathcal{C}}{}\psi_{c}(\bm{y}_{c}|\bm{\theta}_{c})$
+
+\subparagraph{Connection with statistical physics}
+There is a model known as the \tB{Gibbs distribution} which can be written as follows:
+$p(\bm{y}|\bm{\theta}) = \dfrac{1}{Z(\bm{\theta})}\exp\left(E\left(\bm{y}_{c}|\bm{\theta}_{c}\right)\right)$
+where $E(\bm{y}_{c})>0$ is the energy associated with the variables in clique $c$. We can convert 
+this to UGM by defining $\psi_{c}(\bm{y}_{c}|\bm{y}_{c}) = \exp\left(-E(\bm{y}_{c}|\bm{\theta}_{c})\right)$
+
+\subparagraph{Representing potential functions}
+We define the \tB{log potentials as a linear function of the parameters: 
+$\log\left(\psi_{c}(\bm{y}_{c})\right)\triangleq \phi_{c}(\bm{y}_{c})^{T}\bm{\theta}_{c}$} where
+$\phi_{c}(\bm{x}_{c})$ is a feature vector derived from the values of the variables $\bm{y}_{c}$.\\
+The resulting log probability has the form: 
+$\log\left(p(\bm{y}|\bm{\theta})\right)\triangleq
+\su{c}{}\bm{\phi}_{c}(\bm{y}_{c})^{T}\bm{\theta}_{c} - Z(\bm{\theta})$ this also known as a
+maximum entropy
+
+\paragraph{Learning}
+TO DO
+
+\paragraph{Conditional Markov Random Field}
+TO DO

@@ -240,3 +240,11 @@ Properties:
 \paragraph{Conditional Independence}
 $X\perp Y[Z \Leftrightarrow \prob{X,Y|Z}=\prob{X|Z}\prob{Y|Z}$
 
+\paragraph{The chain rule of conditional probabilities}
+Any joint probability distribution over many random variables may be decomposed into conditional
+distribution over only one variable:
+\begin{center}
+    $\prob{x_{1:T}} = \prob{x_{1}}\prd{t=2}{T}\prob{x_{t}|x_{1:t-1}}$
+\end{center}
+
+
