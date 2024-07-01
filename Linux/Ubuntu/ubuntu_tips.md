@@ -42,6 +42,12 @@ sudo apt-get update && sudo apt-get upgrade
 ```bash
 sudo snap refresh
 ```
+## f. Update issue:
+``E: The repository 'http://mirror.serverius.net/ubuntu jammy Release' no longer has a Release file.``\\
+We can fix this issue by going on "Software & Updates", then in "Ubuntu Software" window changing the value of "Download from":
+![002_software_and_updates](./images/002_software_and_updates.png)
+Check the effectiveness in ``/etc/apt/sources.list``
+
 # 2) Compressed files
 - ``tar.gz`` files
     ```bash
