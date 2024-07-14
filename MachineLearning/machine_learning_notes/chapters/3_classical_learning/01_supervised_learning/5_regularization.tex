@@ -1,3 +1,32 @@
+\subsection{$l_{2}$ regularization}
+\paragraph{Purpose}
+
+\paragraph{Assumptions}
+We assume $\prob{\bm{w}} = \prd{j=1}{D}\mathcal{N}(w_{j} |0,\tau^{2})$, where
+$\frac{1}{\tau^{2}}$ controls the strength of the prior! 
+
+\paragraph{Theory}
+The corresponding MAP estimation problem is :
+
+\begin{center}
+    $\argmax{\bm{w}}\su{i=1}{n}\log\left(\mathcal{N}(y_{i}|w_{0} +
+    \bm{w}^{T}\bm{x}_{i}, \sigma^{2})\right) + \su{i=1}{D}\log\left(\mathcal{N}(w_{j}
+|0, \tau^{2})\right)$
+\end{center}
+We can rewrite this as 
+\begin{center}
+    $\dfrac{1}{n}\norm{\bm{y} - \bm{X}\bm{w}}^{2} + \lambda\norm{\bm{w}}^{2}_{2}$
+\end{center}
+The optimal solution is 
+\begin{center}
+    $\bm{w}_{ridge} = \left(\lambda\bm{I}_{D} + \bm{X}^{T}\bm{X}\right)^{-1}\bm{X}^{T}
+    \bm{y}$
+\end{center}
+
+
+
+
+
 \subsection{$l_{1}$ regularization}
 \paragraph{Purpose}
 
