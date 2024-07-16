@@ -2,16 +2,16 @@
 \paragraph{Purpose}
 
 \paragraph{Assumptions}
-We assume $\prob{\bm{w}} = \prd{j=1}{D}\mathcal{N}(w_{j} |0,\tau^{2})$, where
+We assume \tB{$\prob{\bm{w}} = \prd{j=1}{D}\mathcal{N}(w_{j} |0,\tau^{2})$}, where
 $\frac{1}{\tau^{2}}$ controls the strength of the prior! 
 
 \paragraph{Theory}
 The corresponding MAP estimation problem is :
 
 \begin{center}
-    $\argmax{\bm{w}}\su{i=1}{n}\log\left(\mathcal{N}(y_{i}|w_{0} +
+    \frB{$\argmax{\bm{w}}\su{i=1}{n}\log\left(\mathcal{N}(y_{i}|w_{0} +
     \bm{w}^{T}\bm{x}_{i}, \sigma^{2})\right) + \su{i=1}{D}\log\left(\mathcal{N}(w_{j}
-|0, \tau^{2})\right)$
+|0, \tau^{2})\right)$}
 \end{center}
 We can rewrite this as 
 \begin{center}
@@ -23,16 +23,37 @@ The optimal solution is
     \bm{y}$
 \end{center}
 
-
-
+\paragraph{Relationships with other methods}
+\subparagraph{Connection with PCA}
+Let $\bm{X} = \bm{USV}^{T}$ be the \emph{SVD} of $\bm{X}$.
+$\hat{\bm{w}}_{ridge} = \bm{V}\left(\bm{S}^{²} +\lambda\bm{Ij}\right)^{-1}\bm{SU}^{T}\bm{y}$
+Hence 
+\begin{align*}
+    \hat{\bm{y}} &= \bm{X}\hat{\bm{w}}_{ridge}\\
+                 &= \bm{USV}^{T}\bm{V}\left(\bm{S}^{²} +\lambda\bm{Ij}\right)^{-1}\bm{SU}^{T}\bm{y}\\
+                 &= \bm{U\tilde{S}U}^{T}\bm{y}\\
+                 &= \su{j=1}{p}\bm{u}_{j}\bm{\tilde{S}}_{jj}\bm{u}_{j}^{T}\bm{y}
+\end{align*}
+where $\bm{\tilde{S}}_{jj}
+\triangleq \left[\bm{S}\left(\bm{S}^{2} + \lambda\bm{I}\right)^{-1}\bm{S}\right]_{jj} = 
+\dfrac{\sigma_{j}^{2}}{\sigma_{j}^{2} + \lambda}$ and $\sigma_{j}$ are the singular values of 
+$\bm{X}$.
+Therefore 
+\begin{center}
+    \fr{$\hat{\bm{y}} = \bm{X}\hat{\bm{w}}_{ridge} = \su{j=1}{p}\bm{u}_{j}\dfrac{\sigma_{j}^{2}}{
+    \sigma_{j}^{2} + \lambda}\bm{u}_{j}^{T}\bm{y}$}
+\end{center}
+Whereas in ordinary least squares we have:
+$\hat{\bm{y}} = \bm{X}\hat{\bm{w}}_{ols} = \left(\bm{USV}^{T}\right)\left(\bm{VS}^{-1}\bm{U}^{T}
+\bm{y}\right) = \bm{UU}^{T}\bm{y}=\su{j=1}{p}\bm{u}_{j}\bm{u}_{j}^{T}\bm{y}$
 
 
 \subsection{$l_{1}$ regularization}
 \paragraph{Purpose}
 
 \paragraph{Assumptions}
-We assume $\prob{\bm{w}|\lambda} = \prd{j=1}{D}\text{\emph{Lap}}(w_{j}|0,
-\frac{1}{\lambda}) \propto \prd{j=1}{D}e^{-\lambda|w_{j}|}$
+We assume \tB{$\prob{\bm{w}|\lambda} = \prd{j=1}{D}\text{\emph{Lap}}(w_{j}|0,
+\frac{1}{\lambda}) \propto \prd{j=1}{D}e^{-\lambda|w_{j}|}$}
 \paragraph{Theory}
 For penalized negative log likelihood has the form: $f(\bm{w}) = -\log\left(\prob{
 \mathcal{D}|\bm{w}}\right) - \log\left(\prob{\bm{w}|\lambda}\right) = \text{\emph{NLL}}
