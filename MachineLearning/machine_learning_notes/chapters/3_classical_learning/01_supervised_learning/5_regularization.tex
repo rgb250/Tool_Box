@@ -1,5 +1,10 @@
 \subsection{$l_{2}$ regularization}
 \paragraph{Purpose}
+\begin{itemize}
+    \item Prevent overfitting
+    \item Improve condition number 
+
+\end{itemize}
 
 \paragraph{Assumptions}
 We assume \tB{$\prob{\bm{w}} = \prd{j=1}{D}\mathcal{N}(w_{j} |0,\tau^{2})$}, where
@@ -22,8 +27,8 @@ The optimal solution is
     $\bm{w}_{ridge} = \left(\lambda\bm{I}_{D} + \bm{X}^{T}\bm{X}\right)^{-1}\bm{X}^{T}
     \bm{y}$
 \end{center}
-
 \paragraph{Relationships with other methods}
+
 \subparagraph{Connection with PCA}
 Let $\bm{X} = \bm{USV}^{T}$ be the \emph{SVD} of $\bm{X}$.
 $\hat{\bm{w}}_{ridge} = \bm{V}\left(\bm{S}^{²} +\lambda\bm{Ij}\right)^{-1}\bm{SU}^{T}\bm{y}$
@@ -72,6 +77,17 @@ there are no "corners" so there is no preference for sparsity.
 \end{itemize}
 \paragraph{Relationships with other methods}
 \paragraph{Examples of application}
+
+\subsection{Noise Robustness}
+\paragraph{Purpose}
+It can be \tB{much more powerful than shrinking the parameters} 
+\paragraph{Assumptions} 
+\paragraph{Theory}
+\paragraph{Strengths}
+\paragraph{Weaknesses}
+\paragraph{Relationships with other methods}
+\paragraph{Examples of application}
+
 
 \subsection{Regularization path}
 \paragraph{Purpose}
