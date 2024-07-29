@@ -1,0 +1,72 @@
+\subsection{Purpose}
+The \tB{back-propagation} algorithm allows the information from the cost to then flow
+backwards through the network \tB{in order to compute the gradient}.\\
+Actually it refers only to the \tB{method for computing the gradient}, while
+\uB{another algorithm such as stochastic gradient descent is used to perform learning}
+using this gradient.
+
+\subsection{Modeling}
+\paragraph{Chain rule of calculus}
+Let $(\bm{x}, \bm{y}) \in \mathbb{R}^{m} \times \mathbb{R}^{n}$ and $z = f(\bm{y})$ 
+with $f: \mathbb{R}^{n} \longrightarrow \mathbb{R}$
+we have $\nabla_{\bm{x}}z = 
+\begin{bmatrix}
+    \frac{dz}{dx_{1}}\\
+    \vdots \\
+    \frac{dz}{dx_{m}}
+\end{bmatrix}$,
+$\nabla_{\bm{y}}z =
+\begin{bmatrix}
+    \frac{dz}{dy_{1}}\\
+    \vdots \\
+    \frac{dz}{dy_{n}}
+\end{bmatrix}$ and 
+$ \dfrac{\partial\bm{y}}{\partial\bm{x}} = 
+\begin{bmatrix}
+    \frac{dy_{1}}{x_{1}}  & \cdots & \frac{dy_{1}}{x_{m}}\\
+    \vdots                & \ddots & \vdots\\            
+    \frac{dy_{n}}{x_{1}}  & \cdots & \frac{dy_{n}}{x_{m}}
+\end{bmatrix}$
+we have :
+\begin{center}
+    $\nabla_{\bm{x}}z = \left(\dfrac{\partial\bm{y}}{\partial\bm{x}}\right)^{T}
+    \nabla_{\bm{y}}z$
+\end{center}
+
+\paragraph{Back-propagation in fully connected MLP}
+Consider a network of depth $l$, and the matrices of the model 
+$\left(\bm{W}_{j}\right)_{1\leq j\leq l}$ and the bias parameters 
+$\left(\bm{b}_{j}\right)_{1\leq j\leq l}$ then $\bm{x}$ the input vector and 
+$\bm{y}$ the target vector.
+
+\subparagraph{Forward propagation}
+\begin{enumerate}
+    \item $\bm{h}_{0} = \bm{x} $
+    \item for $k \in \inter{1}{l}$
+        \begin{itemize}
+            \item $\bm{a}_{k} = \bm{b}_{k} + \bm{W}_{k}\bm{h}_{k-1}$
+            \item $\bm{h}_{k} = f(\bm{a}_{k})$
+        \end{itemize}
+    \item $\hat{\bm{y}} = \bm{h}_{l}$
+    \item $J = L(\hat{\bm{y}}, \bm{y}) + \lambda\Omega(\theta)$
+        
+\end{enumerate}
+
+\subparagraph{Backward}
+\begin{enumerate}
+    \item $\bm{g} \leftarrow \nabla_{\hat{\bm{y}}}J = \nabla_{\hat{\bm{y}}}L(
+        \hat{\bm{y}}, \bm{y})$ 
+    \item for $k\in\inter{l-1}{1}$
+        \begin{itemize}
+            \item $\bm{g} \leftarrow \nabla_{\bm{a}_{k}}\bm{J} = \bm{g}\odot 
+                f'(\bm{a}_{k})$
+            \item $\nabla_{\bm{b}_{k}}J = \bm{g} + 
+                \lambda\nabla_{\bm{b}_{k}}\Omega(\bm{\theta})$
+            \item $\nabla_{\bm{W}_{k}}J = \bm{g}\bm{h}^{T}_{k-1}
+                + \lambda\nabla_{\bm{W}_{k}}\Omega(\bm{\theta})$
+            \item $\bm{g} \leftarrow \nabla_{\bm{h}_{k-1}}J = \bm{W}_{k}^{T}\bm{g}$
+        \end{itemize}
+        
+\end{enumerate}
+
+
