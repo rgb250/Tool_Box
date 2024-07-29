@@ -17,6 +17,8 @@
 - [4) Review history](#4-review-history)
   - [a. Change commits](#a-change-commits)
 - [5) Credentials](#5-credentials)
+  - [Windows (Personal Access Token)](#windows-personal-access-token)
+  - [SSH (Secure SHell protocol)](#ssh-secure-shell-protocol)
 
 ## 1) Basics
 ### a. Import remote branch
@@ -67,8 +69,11 @@ git <command> --color=always | less -r  # first argument to encode color even in
 ````
 ## 2) Know where config is stored
 
+``git config --list --show-scope`` To get the hierarchy at which a given Git configuration
+occured.
 ![git config --list](./images/get_config_info.png)
-![git config --list](./images/git_config_file.png)
+To get as well the file in which the different configurations have been set replace ``scope``
+with ``origin``.
 
 ## 3) Perform changes 
 ### a. Delete a change or a branch
@@ -113,5 +118,21 @@ git rebase -i HEAD~n  # with n the depth of the past commits
 ````
 Then a window containing the different commit names and the option that can be used on them will be displayed.
 For example we can **drop** a given commit.
+
 ## 5) Credentials
-![Windows Credential](./images/windows_credential.png)
+
+### Windows (Personal Access Token)
+- On GitHub profile go to *settings* > *Developper settings* > *Personal access tokens* > 
+  *Tokens (classic)*
+- Then click on **Generate new token** copy the content in a safe place.
+- Afterward fill the password with the token value previously copied:
+  - ![windows_credential](./images/windows_credential.png)
+  - ![windows_credential_2](./images/windows_credential_2.png)
+- In at least at the local scale be sure that ``credential.helper=manager``, otherwise active it:
+  ````bash
+  git config credential.helper manager  # to apply it to all repositories add <--global> after <config>
+  ````
+
+### SSH (Secure SHell protocol)
+- On GitHub profile go to *settings* > *SSH and GPG keys* 
+- Then add the private key created on the PC that we want to connect to the repository
