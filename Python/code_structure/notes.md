@@ -1,5 +1,6 @@
 - [Module](#module)
 - [Object Oriented Programming](#object-oriented-programming)
+  - [Naming convention](#naming-convention)
 
 # Module
 
@@ -18,3 +19,12 @@ from created_lib import created_module  as cm # we can then use cm.method_1
 ````
 
 # Object Oriented Programming
+
+## Naming convention
+
+````python
+_single_leading_underscore    # from M import * does not import objects whose names start with an _
+single_trailing_underscore_   # prevent conflict with Python's keywords
+__double_leading_underscore   # when naming a class attribute invokes name (inside class FooBar __boo becomes _FooBar__boo)
+__double_leading_and_trailing_underscore__  # 'magic' objects or attributes that live in user-controlled namespaces
+````

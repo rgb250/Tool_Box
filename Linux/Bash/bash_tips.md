@@ -81,6 +81,7 @@ Expression like '\d' or '\w' does not exist in basic bash.
 ```bash
 echo "${PATH//:/$'\n'}"  # in $PATH replace each ':' with '\n'
 # note that second '/' indicates replacing all occurrences
+echo "${PATH//:/$'\n'}" > path_file  # to write the content in a file <path_file>
 ```
 # INTERNET CONNECTION
 Use **speedtest-cli**
