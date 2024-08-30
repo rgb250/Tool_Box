@@ -1,10 +1,32 @@
-# TABLE OF CONTENTS
-1. [STORAGE](#1-storage)
+- [1. STORAGE](#1-storage)
+  - [a. Memory basic](#a-memory-basic)
+    - [Primary Memory](#primary-memory)
+      - [Secondary Memory](#secondary-memory)
+      - [Other memories](#other-memories)
     - [a. Random Access Memory](#a-random-access-memory)
+- [To know the memory usage on UNIX:](#to-know-the-memory-usage-on-unix)
+- [SELECT FILES](#select-files)
+- [SEARCH INSIDE FILES](#search-inside-files)
+- [REGEX](#regex)
+- [PRINT](#print)
+- [INTERNET CONNECTION](#internet-connection)
+  - [Assess internet connection quality](#assess-internet-connection-quality)
+  - [(Secure SHell Protocol) SSH](#secure-shell-protocol-ssh)
+    - [Purpose](#purpose)
+    - [Public-key cryptography](#public-key-cryptography)
+  - [How to produce them](#how-to-produce-them)
+- [SEARCH OVER FILES](#search-over-files)
+- [SEARCH IN FILES](#search-in-files)
+- [Replace string in files](#replace-string-in-files)
+- [Process Information](#process-information)
+  - [Zip a list of files](#zip-a-list-of-files)
+- [Coding](#coding)
+  - [Count number of new lines in a given text](#count-number-of-new-lines-in-a-given-text)
+  - [Loop over an array](#loop-over-an-array)
 
-## 1. STORAGE 
-### a. Memory basic
-#### Primary Memory
+# 1. STORAGE 
+## a. Memory basic
+### Primary Memory
 It refers to all memories directly accessible by the Central Process Unit via data bus.
 For technological and economical purposes there are different forms of primary memory.
 - Random Access Memory: used to store the data, it is the fastest and more expansive memory.
@@ -81,13 +103,44 @@ Expression like '\d' or '\w' does not exist in basic bash.
 ```bash
 echo "${PATH//:/$'\n'}"  # in $PATH replace each ':' with '\n'
 # note that second '/' indicates replacing all occurrences
+echo "${PATH//:/$'\n'}" > path_file  # to write the content in a file <path_file>
 ```
+
 # INTERNET CONNECTION
+## Assess internet connection quality
 Use **speedtest-cli**
 ```bash
 sudo apt install speedtest-cli  # downloads the package
 speedtest-cli --secure
 ```
+## (Secure SHell Protocol) SSH
+### Purpose
+To **use network services securely** over an *unsecured network*, by encrypting content of
+the transmission from an observer between 2 servers.
+
+### Public-key cryptography
+SSH uses Public-key-cryptograph, a cryptography paradigm relying on the use of 2 distinct keys:
+- one ``public`` key
+- one ``private`` key
+
+They are generated with cryptographic algorithms based on mathematical problems called *one-way
+function*\
+One representative algorithm of public-key protocol is *Diffie-Hellman* summarized by the below 
+image:\
+![01_DiffieHellman](./bash_images/2_internet/01_DiffieHellman.png)\
+What is relevant to note is that Alice and Bob **arrive to a common secret key without passing
+the common secret key across the public channel**.
+
+## How to produce them
+- In ``~/.ssh`` folder create a file named ``config``
+- Create both the public and private key:
+    ````bash
+    ssh-keygen -t <type_of_key> -C "commentary about the key's purpose"  # "ed25519" is very popular
+    ````
+- Then edit config like this for exemple:\
+    ![02_config_ssh](./bash_images/2_internet/02_config_ssh.png)
+    Many more arguments can be added.
+
 # SEARCH OVER FILES
 ```bash
 find /dir_path -regextype sed -regex ".*/regex"  # search of "sed" type, ".*/" is fundamental! 
