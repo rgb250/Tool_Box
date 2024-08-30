@@ -3,7 +3,7 @@
 
 ### a. Storing arguments
 ```python
-argument = argparse.Arguments(description='List of arguments to run project P.')
+parser = argparse.Arguments(description='List of arguments to run project P.')
 parser.add_argument(
     '--arg1', dest='argument1', action='store', default='value1',
     help='Argument1 description...')
