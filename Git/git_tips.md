@@ -69,7 +69,7 @@ git <command> --color=always | less -r  # first argument to encode color even in
 ````
 ## 2) Know where config is stored
 
-``git config --list --show-scope`` To get the hierarchy at which a given Git configuration
+``git config --list --show-scop e`` To get the hierarchy at which a given Git configuration
 occured.
 ![git config --list](./images/get_config_info.png)
 To get as well the file in which the different configurations have been set replace ``scope``
@@ -103,6 +103,7 @@ git stash drop stash@{1} # remove the second more recent stash
 ````bash
 git switch branch_merge_into  # move to the branch in which we want to perform changes
 git merge branch_merge_from   # perform the merge in providing the name of the branch from where we want to get data.
+git restore --source stash@{0} --patch -- path/file/for_merge  # allows to merge file <path/file/for_merge> from stash@{0} into HEAD
 ````
 
 ### e. Unmerged conflicts

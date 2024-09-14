@@ -23,6 +23,9 @@
 - [Coding](#coding)
   - [Count number of new lines in a given text](#count-number-of-new-lines-in-a-given-text)
   - [Loop over an array](#loop-over-an-array)
+  - [If Elif Else](#if-elif-else)
+  - [Variables](#variables)
+    - [Environment variables](#environment-variables)
 
 # 1. STORAGE 
 ## a. Memory basic
@@ -184,10 +187,15 @@ find -type f -regex 'pattern' | zip file_list.zip -@  # -@ makes zip read from S
 # Coding
 ## Count number of new lines in a given text
 ````bash
-find -type f -regex '.*/pattern' | wc -l  # wc count the number of words, bits or newlines, the -l argument allows to count newlines
+find -type f -regex '.*/pattern' | wc -l  # wc (word count) count the number of words, bits or newlines, the -l argument allows to count newlines
 ````
 ## Loop over an array
 ````bash
+for word in fsfsd fsfsff mmkoi
+    do
+        echo $word
+    done
+# in a more conventional wa y
 declare -a arr=(
     'fsfsd' 'fsfsff' 'mmkoi'  # create an array named arr
     )
@@ -195,4 +203,24 @@ for word in "${arr[@]}"       # loop over the value of arr
     do
         echo $word
     done
+````
+
+## If Elif Else
+
+````bash
+file_to_remove=/opt/conda/.condarc
+if [ -f "$file_to_remove" ]; then
+    rm -v "$file_to_remove" 
+# elif [ -f "$file_to_remove" == "dont_know" ]; then
+else
+    echo "{$file_to_remove} has not been found"
+fi
+````
+
+## Variables
+
+### Environment variables
+
+````bash
+printenv | less  # display the entire list of environment variables in a constrained window
 ````

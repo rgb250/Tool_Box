@@ -6,6 +6,10 @@
   - [Jira Software](#jira-software)
     - [Key features](#key-features-1)
     - [How to use it](#how-to-use-it-1)
+    - [Create Project](#create-project)
+    - [Create Workflow](#create-workflow)
+    - [Configure Board](#configure-board)
+    - [Issue layout](#issue-layout)
 
 # Altassian
 
@@ -52,3 +56,30 @@ projects
 - Collaboration across dev teams and organization-wide: manage work across dev teams
 from DevOps to QA
 - Reporting: deliver updates on teh progress of key initiatives
+
+### Create Project
+
+- Go to *Create Project > Software development > Kaban > Use template > Select a company-managed project*
+  - You will have something like:
+  ![001_jira_project_creation](./images/001_jira_project_creation.png)
+- Provide Name and Key
+
+### Create Workflow
+
+- Chose a workflow\
+  ![002_jira_workflow_creation](./images/002_jira_workflow_creation.png)
+- The ``Easy Agile Kanban Workflow For Jira`` is quite performant\
+  ![002_jira_workflow_choice](./images/002_jira_workflow_choice.png)
+
+### Configure Board
+
+- Go to the board setting
+  - ![003_jira_board_configure](./images/003_jira_board_configure.png)
+- Then customize as you wish
+  - ![003_jira_board_configure_part_2](./images/003_jira_board_configure_part_2.png)
+- Fix default assignment, by creating columns with the correct name, like this:
+  - ![003_jira_board_configure_part_3](./images/003_jira_board_configure_part_3.png)
+
+### Issue layout
+
+- Click on an issue then ``Configure``
