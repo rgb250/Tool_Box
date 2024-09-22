@@ -1,8 +1,12 @@
 - [What is Terraform ?](#what-is-terraform-)
-- [Ressources](#ressources)
-  - [Syntax](#syntax)
+- [Resource Blocks](#resource-blocks)
   - [In a few words](#in-a-few-words)
-  - [Ressource Blocks](#ressource-blocks)
+  - [Syntax](#syntax)
+- [Resource Types](#resource-types)
+  - [Definition](#definition)
+  - [Providers](#providers)
+    - [Definition](#definition-1)
+    - [Requirements](#requirements)
 - [Workflow](#workflow)
 - [Provisioning Infrastructure](#provisioning-infrastructure)
   - [Planning](#planning)
@@ -13,16 +17,23 @@
 # What is Terraform ?
 
 It is an **infrastructure as code tool** allowing to build, change and version cloud 
-ressources.\
+resources.\
 *Infrastructure as Code (IaC)* tools allow to manage infrastructure with 
 configuration files rather than through a graphical user interface (GUI).\
 HashiCorp and Terraform community have written over 1000 providers to manage 
-ressources on AWS, Azure, GCP, GitHub and many more.
+resources on AWS, Azure, GCP, GitHub and many more.
 
-# Ressources
+# Resource Blocks
+
+## In a few words
+
+They are the most important elements in Terraform language, each resource block 
+**describes one or more infrastructure objects** like virtual networks, compute
+instances or even DNS and many others.
+
 
 ## Syntax
-A ``ressource block`` declares a resource of a **specific type** and a 
+A ``resource block`` declares a resource of a **specific type** and a 
 **specific local name**. Here let's create a *google_compute_instance* resource type
 named *vm_instance*
 ````terraform
@@ -31,15 +42,50 @@ resource "google_compute_instance" "vm_instance" {
     machine_type = "e2-micro"
 }
 ````
+We put the configuration arguments for the resource between the curly brackets ``{}``.
 
-## In a few words
+# Resource Types
 
-They are the most important elements in Terraform language, each ressource block 
-**describes one or more infrastructure objects** like virtual networks, compute
-instances or even DNS and many others.
+## Definition
 
-## Ressource Blocks
+It **determines the kind of infrastructure object the resource manages** and what
+arguments and other attributes the resource supports.
 
+## Providers
+
+### Definition
+It is a **plugin for Terraform offering a collection of resource types**. 
+
+### Requirements
+
+Each Terraform module declares which providers it requires, so that Terraform can 
+install them. A provider requirement consists of:
+- *local name*
+- *source location*
+- *version constraint*
+
+````terraform
+terraform {
+  required_providers {
+    hashicorp-htpp = {            # local name of 
+      source  = "hashicorp/http"  # source location
+      version = "~> 1.0"          # version, '~>' convenient shorthand for allowing the rightmost component of a version to increment
+    }
+    mycloud = {                    
+      source  = "mycorp/mycloud"  
+      version = "~> 1.0"
+    }
+  }
+}
+
+provider "mycloud" {
+  # ...
+}
+
+data "http" "example" {
+  provider = hashicorp-http
+}
+````
 
 # Workflow
 
@@ -58,7 +104,7 @@ instances or even DNS and many others.
 terraform plan
 ````
 It evaluates a Terraform configuration to determine the desired state of all the 
-ressources it declares then compares that desired state to the real infrastructure 
+resources it declares then compares that desired state to the real infrastructure 
 object
 
 ## Applying
@@ -67,7 +113,7 @@ object
 terraform apply
 ````
 Like ``terraform plan`` it performs a plan then carries out the planned changes to 
-each ressource using the relevant infrastructure provider's API.
+each resource using the relevant infrastructure provider's API.
 
 ## Destroying
 
@@ -75,9 +121,9 @@ each ressource using the relevant infrastructure provider's API.
 terraform destroy
 ````
 
-It destroys all of the ressources being managed by the current working directory and 
+It destroys all of the resources being managed by the current working directory and 
 workspace using state data to determine which real world correspond to managed 
-ressources.
+resources.
 
 
 # Terraform language

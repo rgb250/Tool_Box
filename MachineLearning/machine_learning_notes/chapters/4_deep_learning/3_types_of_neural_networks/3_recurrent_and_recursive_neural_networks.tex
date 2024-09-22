@@ -68,7 +68,8 @@ rapidly discarded}.
 \subsection{The Long Short-Term Memory (LSTM) and Gated Recurrent Unit (GRU)}
 \paragraph{Purpose}
 going further with the idea of self-loops, by making the weight of the self-loop
-conditioned on the context rather than fixed.
+conditioned on the context rather than fixed.\\
+\tB{Self-loops produce paths where the grdient can flow for long duration}.
 
 \begin{figure}[H]
     \begin{center}
@@ -84,3 +85,11 @@ ordinary recurrent networks.
 \paragraph{Theory}
 The \textbf{forget gate} unit $f_{i}^{(t)}$ for time step $t$ and cell $i$ that sets
 the weight to a value between 0 and 1
+\begin{center}
+    \frB{$f_{i}^{t} = \sigma\left(b_{i}^{f} + \su{j}{}U_{i,j}^{f}x_{j}^{(t)} +
+    \su{j}{}W_{i,j}^{f}h_{j}^{(t-1)}\right)$}
+\end{center}
+with $\bm{x}^{(t)}$ the current input vector, $\bm{h}^{t}$ the current hidden layer vector
+containing the outputs of all the LSTM cells, and $\bm{b}^{f},~\bm{U}^{f},~\bm{W}^{f}$ are
+respectively biases, input weights and recurrent weights for the forget gates.
+
