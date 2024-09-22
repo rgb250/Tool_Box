@@ -3,7 +3,7 @@
 
 ### a. Storing arguments
 ```python
-argument = argparse.Arguments(description='List of arguments to run project P.')
+parser = argparse.Arguments(description='List of arguments to run project P.')
 parser.add_argument(
     '--arg1', dest='argument1', action='store', default='value1',
     help='Argument1 description...')
@@ -47,8 +47,20 @@ print(pkg_resources.get_distribution('xlrd').version)
 
 ```python
 import logging
+from getpass import getuser
 
-logging.config.fileConfig('path/log/file')
+dict_info_extra = {'user': getuser()}                                       # get username
+FORMAT = '%(asctime)s - %(user)s - %(name)s - %(levelname)s - %(message)s'  # format of the log
+logging.basicConfig(
+    format=FORMAT,
+    level=logging.INFO,
+    encoding='utf-8',
+    handlers=[
+        logging.FileHandler('debug.log', mode='w', encoding='utf-8'),
+        logging.StreamHandler()
+    ]
+)                                                                # creates stream handler and file handler
+logger = logging.getLogger(name=__name__)                        # creates logger
+logger = logging.LoggerAdapter(logger, extra=dict_info_extra)    # feeds FORMAT information with dict_info_extra
 
-logger = logging.getLogger('simple_example')
 ```
