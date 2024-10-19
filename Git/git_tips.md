@@ -16,6 +16,7 @@
   - [e. Unmerged conflicts](#e-unmerged-conflicts)
 - [4) Review history](#4-review-history)
   - [a. Change commits](#a-change-commits)
+  - [b. Squash commits](#b-squash-commits)
 - [5) Credentials](#5-credentials)
   - [Windows (Personal Access Token)](#windows-personal-access-token)
   - [SSH (Secure SHell protocol)](#ssh-secure-shell-protocol)
@@ -119,6 +120,11 @@ git rebase -i HEAD~n  # with n the depth of the past commits
 ````
 Then a window containing the different commit names and the option that can be used on them will be displayed.
 For example we can **drop** a given commit.
+
+### b. Squash commits
+Imagine you want to squash different commit from your $current$ commit to your $n$ previous commit, the above command works, but you are likely to have to fix some
+conflict issues.
+
 
 ## 5) Credentials
 

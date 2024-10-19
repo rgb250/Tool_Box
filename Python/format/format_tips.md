@@ -14,23 +14,32 @@ print(f'{n: 03}')  # method preferred from Python 3.6
 print('%03d' % n)  # valid across all Python versions
 ```
 
+# Fancier output formatting
+
+````python
+x, y = 42_572_654, .2924
+print('{:-9}, {:2.2%}'.format(x, y))  # 42572654, 29,24% 
+
+````
+
+
 ## Conversions with print format
-|Symbol| Meaning                                                                     |
-|:----:|:----------------------------------------------------------------------------|
-|'d'   | Signed integer decimal                                                      |
-|'o'   | Octal: number in base 8                                                     |
-|'x'   | Hexadecimal (lower case): number in base 16                                 |
-|'x'   | Hexadecimal (upper case): number in base 16                                 |
-|'e'   | Exponential notation (lower case), ex.: 5.8e3                               |
-|'E'   | Exponential notation (lower case), ex.: 5.8E3                               |
-|'f'   | Fixed-point notation, ex.: for $p=2,~\pi\rightarrow 3.14$ and  *inf*, *nan* |
-|'F'   | Fixed-point notation, ex.: for $p=2,~\pi\rightarrow 3.14$ and  *INF*, *NAN* |
-|'g'   | General notation, uses (e) for large values, otherwise (f)                  |
-|'G'   | General notation, uses (E) for large values, otherwise (F)                  |
-|'%'   | Percentage, multiplies the number by 100                                    |
-|'b'   | Binary format                                                               |
-|'c'   | Character, converts the integer to the corresponding unicode character      |
-|'s'   | String format, the default format                                           |
+|Symbol| Meaning                                                                              |
+|:----:|:-------------------------------------------------------------------------------------|
+|'d'   | Signed integer decimal                                                               |
+|'o'   | Octal: number in base 8                                                              |
+|'x'   | Hexadecimal (lower case): number in base 16                                          |
+|'x'   | Hexadecimal (upper case): number in base 16                                          |
+|'e'   | Exponential notation (lower case), ex.: 5.8e3                                        |
+|'E'   | Exponential notation (lower case), ex.: 5.8E3                                        |
+|'f'   | Fixed-point notation, ex.: for $p=2,~\pi\rightarrow 3.14$ and  *inf*, *nan*          |
+|'F'   | Fixed-point notation, ex.: for $p=2,~\pi\rightarrow 3.14$ and  *INF*, *NAN*          |
+|'g'   | General notation, uses (e) for large values, otherwise (f) and remove trailing zeros |
+|'G'   | General notation, uses (E) for large values, otherwise (F)                           |
+|'%'   | Percentage, multiplies the number by 100                                             |
+|'b'   | Binary format                                                                        |
+|'c'   | Character, converts the integer to the corresponding unicode character               |
+|'s'   | String format, the default format                                                    |
 
 Exemple
 ```python

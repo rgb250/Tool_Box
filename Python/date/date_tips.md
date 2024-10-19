@@ -56,3 +56,15 @@ Below are the character codes to format the date and time:-
 | %w   |Returns weekday as a decimal number, where 0 is Sunday and 6 is Saturday.                   |
 | %U   |Returns the week number of the year (Sunday as the first day of the week) from 00 to 53     |
 | %W   |Returns the week number of the year (Monday as the first day of the week) from 00 to 53     |
+
+## Change local
+
+For example try to make Python understand the date "*01 JANVIER 2024*":
+
+````python
+from datetime import datetime
+import locale
+locale.setlocale(locale.LC_ALL, 'fr_FR.UTF-8')                           # we will be able to recognize french term
+
+date_standard = datetime.strptime('01 JANVIER 2023', format='%d %B %Y')  # will works perfectly
+````
