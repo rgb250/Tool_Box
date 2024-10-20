@@ -97,6 +97,72 @@ bag.map(lambda record: record['occupation']).take(2)     # take() allows to sele
 
 This object coordinates many Pandas dataframes, partitioned along an index:\
 ![001_dask_intro_dataframe](./images/001_dask_intro_dataframe.png)
+it is defined by:
+
+- ``graph`` with a special set of keys designating partitions  
+- ``name`` allowing to identify which keys in the Dask graph refer to this DataFrame
+- ``empty Pandas object`` containing appropriate metadata (e.g; column name, dtypes, etc...)
+- ``sequence of partition boundaries`` along the index called **division**
+
+There are many applications:
+
+- **Metadata**
+  - Many DataFrame operations rely on knowing the name and dtype of columns. To keep track of
+  this information Dask DataFrame objects have the attribute ``_meta`` which is **an empty
+  DataFame with appropriate column names and dtypes**.
+  - Internally, **Dask DataFrames does its best to propagate the meta information**, it is **done
+  by evaluating the operation on a small sample of fake** data which can be found on the
+  ``_meta_nonempty`` attribute.\
+  Sometimes this operation may fail in user defined functions (e.g. when using ``apply()``), for
+  these cases we should specify the metadata directly meaning avoiding the inference step by
+  using ``meta`` keyword as bellow:
+
+    ````python
+    """ Imaging we want to apply a function foo() on the different partitions of ddf """
+    ddf.map_partitions(
+      foo,
+      meta=pd.DataFrame({'a': [1], 'b': [2]})              # use a data frame mapping the name to dtype, order should be respected
+      # meta={'a': np.dtype(int), 'b': np.dtype(int)}      # dictionary {name: dtype}, order is important as well
+      # meta=(('a', np.dtype(int)), ('b', np.dtype(int)))  # use tuple of tuple (name, dtype)
+    )
+    ````
+
+- **Partitions**
+  - Each partition of the Dask DataFrame corresponds to a Pandas DataFrame, partitions are created by vertically splitting along the index the Dask DataFrame. That's why **it is highly
+  recommended to work with sorted data like this expensive operations (e.g. groupby's, joins,
+  etc...) can be handled in an efficient way**.
+
+  ````python
+  ddf.npartitions  # get the number of partitions of the Dask DataFrame
+  ddf.divisions    # get the index of the partitions, useful if you want to use ddf.loc 
+  ````
+
+  - Usually we lack ``divisions`` information, if we need to perform operations requiring a
+  cleanly partitioned DataFrame we can fix this by calling ``set_index()``
+
+- **Optimization**
+  - *Filter Pushdown*: Filters are executed in the earliest stage in the query
+  - *Avoiding Shuffles*: try to avoid shuffling data between workers, this can be achieved if the
+  column layout is already known meaning if the DataFrame was shuffled on the same column before.
+  For example **executing a ``df.groupby(...).apply(...)`` after a merge operation will not
+  shuffle the data again if the groupby happens on the merge columns**.
+  - We can explore the optimized query:
+
+  ````python
+  ddf.explain()
+  ````
+
+
+- **Groupby**
+
+  - by default ``groupby()`` chooses the number of output partitions based on a few different
+  factors, like the number of grouping keys to guess the cardinality of your data. It is possible
+  to override this behavior with argument ``split_out``
+
+  ````python
+  ddf.groupby('id').value.mean(split_out=8)     # returns 8 partitions
+  ddf.groupby('id').value.mean(split_out=True)  # returns the same as df.npartitions, useful for operations that does not reduce the number of rows very much
+  ````
 
 - **Groupby Apply with Scikit-Learn**
 
