@@ -7,7 +7,9 @@
 - [Summarizing data](#summarizing-data)
 - [Selecting](#selecting)
 - [Merge Join](#merge-join)
-
+- [Pyspark](#pyspark)
+  - [Installation](#installation)
+  - [Apache Arrow](#apache-arrow)
 
 # Multi-index
 ```python
@@ -130,3 +132,16 @@ df.groupby(['dim1', 'dim2']).agg(
 - Melt
   ![reshaping_stack](./images/005_reshaping_melt.png)
 
+# Pyspark
+
+## Installation
+
+````bash
+pip install pyspark
+pip install pyspark[sql]  # to use PyArrow
+````
+
+## Apache Arrow
+
+It is an ``in-memory columnar data format`` used in Spark to efficiently transfer data between
+JVM and Python processes.

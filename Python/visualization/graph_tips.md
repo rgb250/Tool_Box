@@ -12,7 +12,7 @@ df = pd.read_csv('path_of_a_csv_file')
 y, X = df.iloc[:, 0], df.iloc[:, 1:]            # pretend X.shape[1] > 2
 L = list(X)                                     # list of feature names   
 ncols = 3                                       # desired number of columns
-size = (600, 600)                               # height, width
+size = (35, 25)                                 # height, width
 
 nrows = int(round(len(L)/ncols))                # minimum row number considering ncols
 fig, ax = plt.subplots(nrows, ncols, figsize=size)

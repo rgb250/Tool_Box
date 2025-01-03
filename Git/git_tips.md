@@ -16,6 +16,7 @@
   - [e. Unmerged conflicts](#e-unmerged-conflicts)
 - [4) Review history](#4-review-history)
   - [a. Change commits](#a-change-commits)
+  - [b. Squash commits](#b-squash-commits)
 - [5) Credentials](#5-credentials)
   - [Windows (Personal Access Token)](#windows-personal-access-token)
   - [SSH (Secure SHell protocol)](#ssh-secure-shell-protocol)
@@ -69,7 +70,7 @@ git <command> --color=always | less -r  # first argument to encode color even in
 ````
 ## 2) Know where config is stored
 
-``git config --list --show-scope`` To get the hierarchy at which a given Git configuration
+``git config --list --show-scop e`` To get the hierarchy at which a given Git configuration
 occured.
 ![git config --list](./images/get_config_info.png)
 To get as well the file in which the different configurations have been set replace ``scope``
@@ -103,6 +104,7 @@ git stash drop stash@{1} # remove the second more recent stash
 ````bash
 git switch branch_merge_into  # move to the branch in which we want to perform changes
 git merge branch_merge_from   # perform the merge in providing the name of the branch from where we want to get data.
+git restore --source stash@{0} --patch -- path/file/for_merge  # allows to merge file <path/file/for_merge> from stash@{0} into HEAD
 ````
 
 ### e. Unmerged conflicts
@@ -118,6 +120,11 @@ git rebase -i HEAD~n  # with n the depth of the past commits
 ````
 Then a window containing the different commit names and the option that can be used on them will be displayed.
 For example we can **drop** a given commit.
+
+### b. Squash commits
+Imagine you want to squash different commit from your $current$ commit to your $n$ previous commit, the above command works, but you are likely to have to fix some
+conflict issues.
+
 
 ## 5) Credentials
 

@@ -43,6 +43,16 @@ import pkg_resources  # provide information about packages
 print(pkg_resources.get_distribution('xlrd').version)
 ```
 
+## Pip
+
+### ``pipdeptree``
+
+This package allows to display dependencies:
+````bash
+pipdeptree -p numpy     # will display the dependency requirements of numpy
+pipdeptree -r -p numpy  # will display all the package requested a given version of numpy, -r for reverse
+````
+
 # Logging
 
 ```python
@@ -56,11 +66,11 @@ logging.basicConfig(
     level=logging.INFO,
     encoding='utf-8',
     handlers=[
-        logging.FileHandler('debug.log', mode='w', encoding='utf-8'),
-        logging.StreamHandler()
+        logging.FileHandler(filename='debug.log', mode='w'),  # creates stream handler and file handler
+        logging.StreamHandler()                               # creates logger
     ]
-)                                                                # creates stream handler and file handler
-logger = logging.getLogger(name=__name__)                        # creates logger
+)                                                                
+logger = logging.getLogger(name=__name__)                        
 logger = logging.LoggerAdapter(logger, extra=dict_info_extra)    # feeds FORMAT information with dict_info_extra
 
 ```

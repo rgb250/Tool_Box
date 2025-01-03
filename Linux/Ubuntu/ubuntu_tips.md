@@ -1,3 +1,20 @@
+- [1) Packages](#1-packages)
+  - [a. How to install/uninstall packages](#a-how-to-installuninstall-packages)
+  - [b. How to check the list of packages](#b-how-to-check-the-list-of-packages)
+  - [c. How to search a package in the list](#c-how-to-search-a-package-in-the-list)
+  - [e. How to update and upgrade](#e-how-to-update-and-upgrade)
+  - [f. Update issue:](#f-update-issue)
+- [2) Compressed files](#2-compressed-files)
+- [3) Networks](#3-networks)
+  - [a. Speedtest from](#a-speedtest-from)
+- [4 File system](#4-file-system)
+  - [a. /opt](#a-opt)
+- [5 Environment Variables](#5-environment-variables)
+  - [a. $PATH](#a-path)
+- [6 Text editor](#6-text-editor)
+  - [a. Vim](#a-vim)
+    - [Navigating](#navigating)
+
 # 1) Packages
 ## a. How to install/uninstall packages
 - Deb
@@ -82,3 +99,11 @@ Folder in which to install add-on applications
 export PATH="</path/to/add>:$PATH"  # to add the folder "/path/to/add" to the environment variable $PATH
 ```
 Doing this in terminal will just remain effective as long as the session is open, to add it permanently we have to add it in ``~/.bashrc`` file, then source it.  
+
+# 6 Text editor
+## a. Vim
+### Navigating
+- Go to a position, then type ``Ctrl + o`` to go back to the initial previous position, you can
+type ``Ctrl + i`` to go forth this time.
+- For the last change location ``g,`` and newer ``g;`` finally the last location where Insert 
+Mode has been used: ``gi``

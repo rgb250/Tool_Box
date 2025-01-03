@@ -1,6 +1,8 @@
 - [Module](#module)
 - [Object Oriented Programming](#object-oriented-programming)
   - [Naming convention](#naming-convention)
+- [Decorators](#decorators)
+  - [@property](#property)
 
 # Module
 
@@ -28,3 +30,9 @@ single_trailing_underscore_   # prevent conflict with Python's keywords
 __double_leading_underscore   # when naming a class attribute invokes name (inside class FooBar __boo becomes _FooBar__boo)
 __double_leading_and_trailing_underscore__  # 'magic' objects or attributes that live in user-controlled namespaces
 ````
+
+# Decorators
+
+## @property
+
+It allows to use method, as attributes, it is useful when we use methods without arguments

@@ -23,6 +23,10 @@
 - [Coding](#coding)
   - [Count number of new lines in a given text](#count-number-of-new-lines-in-a-given-text)
   - [Loop over an array](#loop-over-an-array)
+  - [Store file list](#store-file-list)
+  - [If Elif Else](#if-elif-else)
+  - [Variables](#variables)
+    - [Environment variables](#environment-variables)
 
 # 1. STORAGE 
 ## a. Memory basic
@@ -144,11 +148,13 @@ the common secret key across the public channel**.
 # SEARCH OVER FILES
 ```bash
 find /dir_path -regextype sed -regex ".*/regex"  # search of "sed" type, ".*/" is fundamental! 
+find -mindepth 1 -maxdepth 2 -not -regex ".*/.*<regexdir_path>"  # -not allows negating
 ```
 
 # SEARCH IN FILES
 ```bash
 grep --color --include=.py -rl -iE '<regex_pattern>'  # display the list of .py files located in the curent directories and its child directories containing <regex_pattern>
+grep --color --include=.py -rn -iE '<regex_pattern>'  # display all the places where the expression is located among files in the curent directories and its child directories containing <regex_pattern>
 ```
 use ``--color=always`` for grep use inside a pipeline, if it is with ``less`` and add
 ``-r``.
@@ -184,10 +190,15 @@ find -type f -regex 'pattern' | zip file_list.zip -@  # -@ makes zip read from S
 # Coding
 ## Count number of new lines in a given text
 ````bash
-find -type f -regex '.*/pattern' | wc -l  # wc count the number of words, bits or newlines, the -l argument allows to count newlines
+find -type f -regex '.*/pattern' | wc -l  # wc (word count) count the number of words, bits or newlines, the -l argument allows to count newlines
 ````
 ## Loop over an array
 ````bash
+for word in fsfsd fsfsff mmkoi
+    do
+        echo $word
+    done
+# in a more conventional wa y
 declare -a arr=(
     'fsfsd' 'fsfsff' 'mmkoi'  # create an array named arr
     )
@@ -195,4 +206,29 @@ for word in "${arr[@]}"       # loop over the value of arr
     do
         echo $word
     done
+````
+
+## Store file list 
+````bash
+readarray -t arr_files < <(find path/root/ -mindepth 1 type f -regex '.*/.*\.py')  # 't' allows to trail newline at the end of each values
+````
+
+## If Elif Else
+
+````bash
+file_to_remove=/opt/conda/.condarc
+if [ -f "$file_to_remove" ]; then
+    rm -v "$file_to_remove" 
+# elif [ -f "$file_to_remove" == "dont_know" ]; then
+else
+    echo "{$file_to_remove} has not been found"
+fi
+````
+
+## Variables
+
+### Environment variables
+
+````bash
+printenv | less  # display the entire list of environment variables in a constrained window
 ````
