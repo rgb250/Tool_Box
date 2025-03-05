@@ -1,5 +1,6 @@
 - [Multiprocessing](#multiprocessing)
   - [Introduction](#introduction)
+  - [Pool](#pool)
 - [Dask](#dask)
   - [Introduction](#introduction-1)
     - [Purpose](#purpose)
@@ -23,6 +24,43 @@ For example *Pool* object allows to:
 
 - parallelizing the execution of a function across different input data
 - distributing the input data across processes
+
+## Pool
+
+````python
+from multiprocessing import Pool
+from tqdm import tqdm
+
+
+# assuming that <cnt_processes> is the count of processes that we want to be involved in the runtime
+# and <list_items> contain the list of items on which we want to apply <fct_to_apply()>
+list_dict_arguments = [
+    {
+        'arg1': arg1,
+        'arg2': arg2,
+        'arg3': arg3,
+    }
+    for item in list_items
+]
+
+# Multiprocessing
+with Pool(processes=cnt_processes) as pool:
+    list_df_text_extraction = list(tqdm(
+        # imap() is preferred to map() as it returns iterator allowing tqdm() to count the iterations
+        pool.imap(
+            fct_to_apply                                     # function to apply
+            [dct_args for dct_args in list_dict_arguments],  # list containing argument dictionaries
+            chunksize=size_chunks                            # the number of element to run by batch
+        ),
+        total=len(list_dict_arguments)
+    ))
+
+# Joblib
+with parallel_config(backend='loky', n_jobs=cnt_processes):
+    list_filename_and_converter = list(tqdm(
+    delayed(fct_to_apply)(dict_args) for dict_args in list_dict_args
+))
+````
 
 # Dask
 
@@ -132,10 +170,10 @@ There are many applications:
   recommended to work with sorted data like this expensive operations (e.g. groupby's, joins,
   etc...) can be handled in an efficient way**.
 
-  ````python
-  ddf.npartitions  # get the number of partitions of the Dask DataFrame
-  ddf.divisions    # get the index of the partitions, useful if you want to use ddf.loc 
-  ````
+    ````python
+    ddf.npartitions  # get the number of partitions of the Dask DataFrame
+    ddf.divisions    # get the index of the partitions, useful if you want to use ddf.loc 
+    ````
 
   - Usually we lack ``divisions`` information, if we need to perform operations requiring a
   cleanly partitioned DataFrame we can fix this by calling ``set_index()``
@@ -146,11 +184,42 @@ There are many applications:
   column layout is already known meaning if the DataFrame was shuffled on the same column before.
   For example **executing a ``df.groupby(...).apply(...)`` after a merge operation will not
   shuffle the data again if the groupby happens on the merge columns**.
+
+    ````python
+    """
+    Let's create a data frame for which we apply function by group. For example by trying
+    to flag outliers in each group 
+    """
+    import dask.dataframe as dd
+    from sklearn.neighbors import LocalOutlierFactor
+
+    def get_local_outlier(
+      ddf_partition,
+      name_column_result,
+      list_names_features,
+      n_neighbors
+    ):
+    clf = LocalOutlierFactor(n_neighbors=n_neighbors)
+    ddf_partition[name_column_result] = clf.fit_predict(ddf_partition[list_names_features])
+    return ddf_partition
+
+    list_col_groupby = ['id1', 'id2']
+    ddf_grp_app = (
+      ddf      # let's assume that ddf contains at least id1, id2, f1, f2 and f3
+      .groupby(list_col_groupby)
+      .apply(
+        lambda ddf: get_local(ddf, 'result', ['f1', 'f2', 'f3'], 2),
+        meta=meta
+      )
+      .copy()  # very important to not alter ddf
+    )
+    ````
+
   - We can explore the optimized query:
 
-  ````python
-  ddf.explain()
-  ````
+    ````python
+    ddf.explain()
+    ````
 
 
 - **Groupby**

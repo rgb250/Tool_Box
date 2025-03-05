@@ -124,7 +124,7 @@ def timer(func):
     qh, rm = divmod(dur, 3600)
     qm, rs = divmod(rm, 60)
     logger.info(f'Elapsed time to run {fun.__name__}: {qh:.0f}h:{qm:.0f}m:{rs:.0f}s')
-    return obj
+    return result
   return wrapper
 
 @timer

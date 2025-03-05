@@ -68,3 +68,19 @@ locale.setlocale(locale.LC_ALL, 'fr_FR.UTF-8')                           # we wi
 
 date_standard = datetime.strptime('01 JANVIER 2023', format='%d %B %Y')  # will works perfectly
 ````
+
+## Holidays
+
+````python
+import pandas as pd
+import country_holidays  # library to get holidays for a given location
+
+range_years = range(2024, 2026)                            # year range for which extract holidays
+dict_holidays = country_holidays('FR', years=range_years)  # get holidays in France as dictionary
+df_holidays = pd.DataFrame(
+    data={
+        'Date_Holiday': pd.to_datetime(pd.Series(map(lambda item: item[0], dict_holidays.items()))),
+        'Name_Holiday': pd.Series(map(lambda item: item[1], dict_holidays.items())),
+    }
+)
+````

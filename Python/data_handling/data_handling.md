@@ -105,7 +105,7 @@ bb = pd.read_csv("data/baseball.csv", index_col="id")
 # Summarizing data
 A flexible way to do it is:
 ````python
-df.groupby(['dim1', 'dim2']).agg(
+df.groupby(['dim1', 'dim2'], keep_group=True).agg(  # if we want to keep the grouping dimensions
   new_name1=pd.NameAgg(column='value1', aggfunc="mean"),
   new_name2=pd.NameAgg(column='value2', aggfunc="count")
 )

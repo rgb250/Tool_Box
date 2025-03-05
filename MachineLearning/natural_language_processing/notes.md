@@ -25,6 +25,34 @@ information
 Set of questions asked by crowdworkers on a set of Wikipedia article and the answer to every
 question is a segment of text or span.
 
+# Elementary algorithms
+
+## TF-IDF (Term Frequency-Inverse Document Frequency)
+
+### Purpose
+
+The aim is to be able to quantify the "relevancy" of a given word.\
+The TF-IDF is the product of 2 statistics, ``term frequency`` and ``inverse document
+frequency`` that can be defined in various ways.
+
+### Theory
+
+- ``term frequency``: consider a term $t$ in a document $d$ and $f_{t,d}$ the count of $t$ in
+$d$, it is the relative frequency defined by:\
+$tf(t,d) = \frac{f_{t,d}}{\displaystyle\sum_{t'\in d}f_{t',d}}$.
+- ``inverse document frequency``: aims to assess the amount of information that a given term
+$t$ carries, for a given corpus $D$ of document $d$:\
+$idf(t,D) = \log\left(\dfrac{\lvert D\rvert}{\lvert\left\{d: d\in D \wedge t\in d\right\}\rvert}\right)$
+
+The Shannon entropy of a *randomely chosen* document in the corpus $D$ containing $t$ is:\
+$H(D|t) = -\displaystyle\sum_{d\in D}\mathbb{P}\left(d|t\right)\times\log\left(\mathbb{P}\left(d|t\right)\right)$
+
+### Link with information theory
+
+Let's assume that the unit probability of finding in a corpus $D$ a document $d$ containing the
+term $t$ is defined by:\
+$\mathbb{P}\left(d|t\right) = \dfrac{1}{\lvert\left\{d\in D \wedge t\in D\right\}\rvert}$
+
 # BERT (Bidirectional Encoder Representation from Transformers)
 
 ## Introduction
