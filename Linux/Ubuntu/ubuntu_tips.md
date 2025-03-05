@@ -4,14 +4,17 @@
   - [c. How to search a package in the list](#c-how-to-search-a-package-in-the-list)
   - [e. How to update and upgrade](#e-how-to-update-and-upgrade)
   - [f. Update issue:](#f-update-issue)
-- [2) Compressed files](#2-compressed-files)
-- [3) Networks](#3-networks)
+- [2) System](#2-system)
+  - [a. Update and upgrade](#a-update-and-upgrade)
+  - [b. Hide home icon](#b-hide-home-icon)
+- [3) Compressed files](#3-compressed-files)
+- [4) Networks](#4-networks)
   - [a. Speedtest from](#a-speedtest-from)
-- [4 File system](#4-file-system)
+- [5 File system](#5-file-system)
   - [a. /opt](#a-opt)
-- [5 Environment Variables](#5-environment-variables)
+- [6 Environment Variables](#6-environment-variables)
   - [a. $PATH](#a-path)
-- [6 Text editor](#6-text-editor)
+- [7 Text editor](#7-text-editor)
   - [a. Vim](#a-vim)
     - [Navigating](#navigating)
 
@@ -65,7 +68,22 @@ We can fix this issue by going on "Software & Updates", then in "Ubuntu Software
 ![002_software_and_updates](./images/002_software_and_updates.png)
 Check the effectiveness in ``/etc/apt/sources.list``
 
-# 2) Compressed files
+# 2) System 
+## a. Update and upgrade
+When LTS (Long Term Support) are available follow the steps bellow:
+````bash
+sudo apt-get update && sudo apt-get upgrade -y  # updates and upgrades packages
+sudo apt-get dist-upgrade                       # does same and handle dependencies withe new packages
+sudo do-release-upgrade                         # update os to latest release
+````
+
+## b. Hide home icon
+````bash
+gsettings set org.gnome.shell.extensions.ding show-home false
+````
+
+
+# 3) Compressed files
 - ``tar.gz`` files
     ```bash
     tar -xvzf <compressed_file_name>.tar.gz  
@@ -76,7 +94,7 @@ Check the effectiveness in ``/etc/apt/sources.list``
     ```
 
 
-# 3) Networks
+# 4) Networks
 ## a. Speedtest from 
 ```bash
 speedtest
@@ -89,18 +107,18 @@ speedtest
     - ``Download``: latency is measured while the download test is in progress to see how it is affected by the download activity on the network.
     - ``Upload``: latency is measured while the upload test is in progress to see how it is affected by the upload activity on the network.
 
-# 4 File system
+# 5 File system
 ## a. /opt
 Folder in which to install add-on applications
 
-# 5 Environment Variables
+# 6 Environment Variables
 ## a. $PATH
 ```bash
 export PATH="</path/to/add>:$PATH"  # to add the folder "/path/to/add" to the environment variable $PATH
 ```
 Doing this in terminal will just remain effective as long as the session is open, to add it permanently we have to add it in ``~/.bashrc`` file, then source it.  
 
-# 6 Text editor
+# 7 Text editor
 ## a. Vim
 ### Navigating
 - Go to a position, then type ``Ctrl + o`` to go back to the initial previous position, you can
