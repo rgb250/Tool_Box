@@ -4,6 +4,7 @@
   - [c. How to search a package in the list](#c-how-to-search-a-package-in-the-list)
   - [e. How to update and upgrade](#e-how-to-update-and-upgrade)
   - [f. Update issue:](#f-update-issue)
+  - [g. Fix issues like "Oh no"](#g-fix-issues-like-oh-no)
 - [2) System](#2-system)
   - [a. Update and upgrade](#a-update-and-upgrade)
   - [b. Hide home icon](#b-hide-home-icon)
@@ -68,6 +69,14 @@ We can fix this issue by going on "Software & Updates", then in "Ubuntu Software
 ![002_software_and_updates](./images/002_software_and_updates.png)
 Check the effectiveness in ``/etc/apt/sources.list``
 
+## g. Fix issues like "Oh no"
+
+![003_somethin_wrong_img](./images/003_somethin_wrong_img.png)
+This can be fix with, by firstly typing ``CTRL + F3``, then:
+````
+sudo apt-get update && sudo apt-get dist-upgrade
+sudo apt-get clean && sudo apt-get autoremove && sudo reboot
+````
 # 2) System 
 ## a. Update and upgrade
 When LTS (Long Term Support) are available follow the steps bellow:
