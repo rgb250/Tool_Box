@@ -7,6 +7,7 @@
     - [3) Compare version](#3-compare-version)
   - [d. Read the version of a given commit/branch](#d-read-the-version-of-a-given-commitbranch)
   - [e. Keep color](#e-keep-color)
+  - [f. Untrack file](#f-untrack-file)
 - [2) Know where config is stored](#2-know-where-config-is-stored)
 - [3) Perform changes](#3-perform-changes)
   - [a. Delete a change or a branch](#a-delete-a-change-or-a-branch)
@@ -67,6 +68,12 @@ git cat-file -p SHA1:./path_file
 ### e. Keep color
 ````bash
 git <command> --color=always | less -r  # first argument to encode color even in pipeline, second one to interpret the encoded color
+````
+
+### f. Untrack file
+
+````bash
+git rm --cached file_to_ignore
 ````
 ## 2) Know where config is stored
 

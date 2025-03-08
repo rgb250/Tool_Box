@@ -3,6 +3,8 @@
   - [Basic](#basic)
 - [Calculations](#calculations)
   - [Measures](#measures)
+    - [Functions](#functions)
+    - [Aggregation](#aggregation)
   - [Columns](#columns)
 - [Queries](#queries)
   - [Keywords](#keywords)
@@ -38,6 +40,22 @@ EVALUATE
 
 They are ``dynamic calculation formulas``  where the result changes depending on the context.
 
+### Functions
+
+- ``CALCULATE()``: allows to compute a field wh_ile filtering on a sub-query from the initial
+query.
+
+  ````sql
+  measure_count_refusals = CALCULATE(
+      COUNTROWS('Carte & Fin 2024'),                  -- computations consist in row counting
+      'Carte & Fin 2024'[decision_finale] = "REFUS"   -- define the sub-table on which computation will be done
+  )
+  ````
+
+### Aggregation
+
+- ``SUMX()``: means that sum will be applied to every row
+
 ## Columns
 
 They are columns that we add to an existing table and then create a DAX formula.
@@ -57,6 +75,24 @@ At least one EVALUATE statement is required however a query can contain any numb
 ````dax
 EVALUATE 
   <table> /* <table> corresponds to a table expression */
+````
+
+For example:
+
+````sql
+EVALUATE
+  GROUPBY(
+    FILTER(
+      '3x4x 2024',
+      '3x4x 2024'[decision_finale] = "REFUS"  -- defines the sub-query 
+    ),
+    '3x4x 2024'[enseigne],                    -- field with which we group by
+    "aggregated_field",                       -- name of the column that we are creating
+      COUNTX(
+      CURRENTGROUP(),                         -- indicates that we count the current group (not the current row)
+      '3x4x 2024'[decision_finale]            -- field to aggregate
+    )
+  )
 ````
 
 ### ORDER BY and START AT

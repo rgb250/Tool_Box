@@ -1,15 +1,44 @@
 # Argument Tips
+
 ## 1) Library *argparse*
 
-### a. Storing arguments
-```python
-parser = argparse.Arguments(description='List of arguments to run project P.')
-parser.add_argument(
-    '--arg1', dest='argument1', action='store', default='value1',
-    help='Argument1 description...')
-args = parser.parse_args()
-print(args.argument1)
-```
+### a. Storing arguments with the ability to edit them in command lines
+
+````python
+import argparse
+import configparser
+from configparser import ExtendedInterpolation
+
+# ----------------------------- Configuration -----------------------------
+conf_parser = argparse.ArgumentParser(
+    description='This parser will be used to read the config file',
+    # prevent to add '-h' or '--h' now, to avoid conflict in future
+    add_help=False,
+    argument_default=os.path.join(os.path.dirname(__file__), 'config.ini')
+)
+conf_parser.add_argument(
+    '-c', '--conf_file', help='Specify a config file', metavar='FILE'
+)
+# <args> will take the name space of the configuration file, while
+# <remaining_argv> will take the value of '-c' argument
+args, remaining_argv = conf_parser.parse_known_args()
+# dictionary of parameter state
+dict_param_defaults = dict()
+if args.conf_file:
+    config = configparser.ConfigParser(interpolation=ExtendedInterpolation())
+    config.read([args.conf_file])
+    dict_param_defaults.update(dict(
+        config.items('SECTION_1') + config.items('SECTION_2') + config.items('SECTION_3')
+    ))
+parser = argparse.ArgumentParser(
+    parents=[conf_parser]  # add parent arguments
+)
+parser.set_defaults(**dict_param_defaults)
+for k in dict_param_defaults.keys():
+    parser.add_argument(f'--{k}')
+args = parser.parse_args(remaining_argv)
+````
+
 ### b. Checking stored arguments
 We should not use the type convertor for boolean values!
 If we want to play with the condition we can use the ``sys`` library.
@@ -60,10 +89,10 @@ import logging
 from getpass import getuser
 
 dict_info_extra = {'user': getuser()}                                       # get username
-FORMAT = '%(asctime)s - %(user)s - %(name)s - %(levelname)s - %(message)s'  # format of the log
+FORMAT = '%(asctime)s - %(user)s - %(name)s - %(funcName)s - %(levelname)s - %(message)s'  # format of the log
 logging.basicConfig(
     format=FORMAT,
-    level=logging.INFO,
+    level=logging.DEBUG,
     encoding='utf-8',
     handlers=[
         logging.FileHandler(filename='debug.log', mode='w'),  # creates stream handler and file handler

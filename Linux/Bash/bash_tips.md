@@ -17,6 +17,7 @@
   - [How to produce them](#how-to-produce-them)
 - [SEARCH OVER FILES](#search-over-files)
 - [SEARCH IN FILES](#search-in-files)
+- [Read section of a file](#read-section-of-a-file)
 - [Replace string in files](#replace-string-in-files)
 - [Process Information](#process-information)
   - [Zip a list of files](#zip-a-list-of-files)
@@ -161,6 +162,12 @@ use ``--color=always`` for grep use inside a pipeline, if it is with ``less`` an
 ```bash
 grep --color=always --include=.py -rl -iE '<regex_pattern>' | less -r
 ```
+
+# Read section of a file
+
+````bash
+sed -n 15,75p path/file/to/check  # display the lines from 15 to 75 of the targeted file 
+````
 
 # Replace string in files
 ```bash

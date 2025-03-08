@@ -10,6 +10,16 @@
     - [Create Workflow](#create-workflow)
     - [Configure Board](#configure-board)
     - [Issue layout](#issue-layout)
+- [Agile](#agile)
+  - [Gloassary](#gloassary)
+  - [Projects](#projects)
+  - [Roles](#roles)
+  - [Backlog](#backlog)
+  - [Cérémonies](#cérémonies)
+    - [Sprint planning](#sprint-planning)
+    - [Daily](#daily)
+    - [sprint review](#sprint-review)
+    - [Sprint retrospective](#sprint-retrospective)
 
 # Altassian
 
@@ -83,3 +93,86 @@ from DevOps to QA
 ### Issue layout
 
 - Click on an issue then ``Configure``
+
+# Agile
+
+## Gloassary
+
+Client centric: get customer closer to project
+Maturation: compréhension du besoin
+Sprint: morceaux de développement (1 à 4 semaines) 
+Scrum master: person that garants the application of Agile rules, teach, organize meeting, 
+and act as a shield
+Agile master: scrum master on multiple projects
+Product Owner: person that garants that customer needs are correctly understood by the teams
+
+## Projects
+
+Sprints allows to assess the capacity of the team to progress on a task, as well as to f
+reachable goals
+
+In agility we prevent to mature projects that we are not sure to work on in the following 
+2 months, I prioritize depending on the plan
+
+It is not useful to put in production the results at the end of each sprint 
+![004_agile_project_specificities](./images/004_agile_project_specificities.png)
+
+We can do a constant check of sprints to be sure that they are in line with what we want
+![004_agile_project_cycle](./images/004_agile_project_cycle.png)
+
+## Roles
+
+![004_agile_project_roles](./images/004_agile_project_roles.png)
+
+Product Owner roles:
+
+- customer relationship
+- customer collection
+- needs prioritization
+- functional specifications
+- share customer needs to the team
+
+There are 2 types of PO, one being a customer (~15%) and another being from the production
+team (~85%).
+In the first case the strenght is in the business knowledge but from a developer side it
+gets difficult that's why it is encouraged to call a business analyst
+
+![004_agile_project_roles_sm_po](./images/004_agile_project_roles_sm_po.png)
+
+![004_agile_project_cycle_murissement](./images/004_agile_project_cycle_murissement.png)
+
+![004_agile_rituels](./images/004_agile_rituels.png)
+
+![004_agile_rrituels_details](./images/004_agile_rrituels_details.png)
+
+## Backlog
+
+Backlog pour le product owner et du scrum master,  
+Il faut le challenger
+But clair à chaque backlog (expliciter un objectifs fonctionnel défini)
+La longueur d'un sprint dépend de l'objectif défini pour un sprint donnée
+
+## Cérémonies
+
+### Sprint planning
+
+Avec tout le monde
+La première réunion du sprint, penser à préparer la backlog du sprint s + 1
+
+- Sprint Backlog: Echanger avec le product owner et l'équipe pour valider la backlog
+- Prévision du travail nécessaire pour chaque tâche  Poker planning: Sur chaque tâche échanger avec les membres l'équipe pour découper et calculer une complexité
+
+### Daily
+- Faire l'état des tâches ne pas 
+
+### sprint review
+Echange avec les parties prenantes et faire une présentation des travaux réalisé
+1H/2H
+
+### Sprint retrospective
+L'équipe explique ce qui s'est bien et mal passé y dégager un plan d'action (1H/2H)
+
+Penser à y insérer des pauses en fin de sprint (1 à 2 jours)
+
+Nettoyer le 
+
