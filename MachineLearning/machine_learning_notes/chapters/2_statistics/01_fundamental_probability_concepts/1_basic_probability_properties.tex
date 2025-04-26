@@ -40,13 +40,18 @@ $
     \left(B_{i}\right)_{1\leq i\leq n}\text{: partition of a sample }\mathcal{S}\\
     \forall i\in \inter{1}{n},~\Prob{B_{i}} \neq 0
 \end{cases} 
-\Rightarrow \probC{B_{i}}{A} = \dfrac{\prob{B_{i}}\times\probC{A}{B_{i}}}{\su{k=1}{n}\prob{B_{k}}\probC{A}{B_{k}}}
-$
+\Rightarrow \tR{\probC{B_{i}}{A} = \dfrac{\probC{A}{B_{i}}\times\prob{B_{i}}}{\su{k=1}{n}\probC{A}{B_{k}}\prob{B_{k}}}}
+$ \\
+It is used to compute the \tB{probability of a cause given its effect}.
 
 
 \subsection{Moments}
-They are certain quantitative measures related to the shape of the function's graph.
-\cite{wiki:moments_mathematics}
+They are certain quantitative measures related to the shape of the function's graph \cite{wiki:moments_mathematics}.\\
+Recall that in physics to compute moment you need to \uB{store for each point the product resulting 
+from the distance between mass center and that point with force applied on that point and finally 
+sum them each other}.
+($\mu=\su{x}{}d_{c}(x)\times F(x)$).
+
 \paragraph{$n^{th}$ moments of a random variable:}
 The $n^{th}$ moment about the origin of a random variable $X$ as denoted by
 $E\left( X^{n} \right)$, is defined to be:

@@ -15,11 +15,13 @@
     - [Purpose](#purpose)
     - [Public-key cryptography](#public-key-cryptography)
   - [How to produce them](#how-to-produce-them)
+  - [Editing key files](#editing-key-files)
 - [SEARCH OVER FILES](#search-over-files)
 - [SEARCH IN FILES](#search-in-files)
 - [Read section of a file](#read-section-of-a-file)
 - [Replace string in files](#replace-string-in-files)
 - [Process Information](#process-information)
+  - [Move a list of files](#move-a-list-of-files)
   - [Zip a list of files](#zip-a-list-of-files)
 - [Coding](#coding)
   - [Count number of new lines in a given text](#count-number-of-new-lines-in-a-given-text)
@@ -142,9 +144,17 @@ the common secret key across the public channel**.
     ````bash
     ssh-keygen -t <type_of_key> -C "commentary about the key's purpose"  # "ed25519" is very popular
     ````
-- Then edit config like this for exemple:\
+- Then edit config like this for exemple (assuming you renamed your key file as git_repo_rgb250_ToolBox_ed25519):\
     ![02_config_ssh](./bash_images/2_internet/02_config_ssh.png)
     Many more arguments can be added.
+
+## Editing key files
+
+Information are stored in `.ssh/known_hosts`, so when you replaced a key file value for a given host, type:
+````bash
+ssh-keygen -R 'github.com'  # for example when host is github.com, -R means remove
+````
+It will remove all the keys associated with the specified hostname from `.ssh/known_hosts`
 
 # SEARCH OVER FILES
 ```bash
@@ -154,8 +164,8 @@ find -mindepth 1 -maxdepth 2 -not -regex ".*/.*<regexdir_path>"  # -not allows n
 
 # SEARCH IN FILES
 ```bash
-grep --color --include=.py -rl -iE '<regex_pattern>'  # display the list of .py files located in the curent directories and its child directories containing <regex_pattern>
-grep --color --include=.py -rn -iE '<regex_pattern>'  # display all the places where the expression is located among files in the curent directories and its child directories containing <regex_pattern>
+grep --color --include=.py -lr -iE '<regex_pattern>'  # display the list of .py files located in the curent directories and its child directories containing <regex_pattern>
+grep --color --include=.py -nr -iE '<regex_pattern>'  # display all the places where the expression is located among files in the curent directories and its child directories containing <regex_pattern>
 ```
 use ``--color=always`` for grep use inside a pipeline, if it is with ``less`` and add
 ``-r``.
@@ -189,6 +199,11 @@ bg  # bring a process to the background
 nohup vlc &  # nohup ignore all SIGHUP (hangup) signals, sent when terminal is closed
 ```
 
+## Move a list of files
+````bash
+find -type f -regex 'pattern' -print0 | xargs -0 cp -tv  # -print0 marks the end of a string with a null character instead of newline, -0 consider items delimited by null characters
+
+````
 ## Zip a list of files
 ````bash
 find -type f -regex 'pattern' | zip file_list.zip -@  # -@ makes zip read from STDIN
@@ -236,6 +251,18 @@ fi
 
 ### Environment variables
 
-````bash
-printenv | less  # display the entire list of environment variables in a constrained window
-````
+- Visualize environment variable
+  ````bash
+  printenv | less  # display the entire list of environment variables in a constrained window
+  printenv PATH    # display specifically PATH environment variable
+  ````
+- Export locally
+  ````bash
+  export <env_var> # create <env_var> environment variable locally
+  ````
+- Export globally
+  - edit ``/etc/environment``
+  - then
+    ````bash
+    source /etc/environment  # make change effective
+    ````
