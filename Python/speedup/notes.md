@@ -1,8 +1,12 @@
-- [Multiprocessing](#multiprocessing)
-  - [Introduction](#introduction)
-  - [Pool](#pool)
+- [Concurrency](#concurrency)
+  - [Multiprocessing](#multiprocessing)
+    - [Introduction](#introduction)
+    - [Pool](#pool)
+  - [Multithreading](#multithreading)
+  - [Async IO](#async-io)
+    - [Introduction](#introduction-1)
 - [Dask](#dask)
-  - [Introduction](#introduction-1)
+  - [Introduction](#introduction-2)
     - [Purpose](#purpose)
     - [Package to install with](#package-to-install-with)
   - [Data Ingestion](#data-ingestion)
@@ -15,9 +19,11 @@
   - [Dask Delayed](#dask-delayed)
     - [Purpose](#purpose-1)
 
-# Multiprocessing
+# Concurrency
 
-## Introduction
+## Multiprocessing
+
+### Introduction
 
 ``multiprocessing`` package offers convenient ways to spawn processes in parallel.
 For example *Pool* object allows to:
@@ -25,11 +31,12 @@ For example *Pool* object allows to:
 - parallelizing the execution of a function across different input data
 - distributing the input data across processes
 
-## Pool
+### Pool
 
 ````python
 from multiprocessing import Pool
 from tqdm import tqdm
+from joblib import parallel_config
 
 
 # assuming that <cnt_processes> is the count of processes that we want to be involved in the runtime
@@ -61,6 +68,15 @@ with parallel_config(backend='loky', n_jobs=cnt_processes):
     delayed(fct_to_apply)(dict_args) for dict_args in list_dict_args
 ))
 ````
+
+## Multithreading
+
+## Async IO
+
+### Introduction
+
+Nor multirpocessing, nor multithreading even if more like the latter than the former.
+It uses one thread and one cpu
 
 # Dask
 

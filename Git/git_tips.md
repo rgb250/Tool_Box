@@ -11,7 +11,7 @@
 - [2) Know where config is stored](#2-know-where-config-is-stored)
 - [3) Perform changes](#3-perform-changes)
   - [a. Delete a change or a branch](#a-delete-a-change-or-a-branch)
-  - [b. Rename branch](#b-rename-branch)
+  - [b. Rename or create branch](#b-rename-or-create-branch)
   - [c. Stashing](#c-stashing)
   - [d. Merge](#d-merge)
   - [e. Unmerged conflicts](#e-unmerged-conflicts)
@@ -21,6 +21,7 @@
 - [5) Credentials](#5-credentials)
   - [Windows (Personal Access Token)](#windows-personal-access-token)
   - [SSH (Secure SHell protocol)](#ssh-secure-shell-protocol)
+- [6) Change configuration](#6-change-configuration)
 
 ## 1) Basics
 ### a. Import remote branch
@@ -32,7 +33,7 @@ git checkout –track name_of_the_remote_branch  # create a tracking branch
 ````bash
 git log --patch -2  # Display the differences resulting of committed changes. -2 restrict the displaying of logs to 2. 
 git log --stat  # Summarize the above command line in number of insertions/deletions by file
-git log  --pretty=format:'%h - %an %ad %s' --graph  # Get the some information here the references as graph
+git log  --pretty=format:'%d : %h : %an : %ad : %s' --graph  # Get the some information here the references as graph, %d for decorated display branch name
 ````
 ![Arguments of git log --pretty=format](./images/options_git_log_pretty_format.png)
 
@@ -90,8 +91,10 @@ git restore <path_file>  # remove added file before committing
 git branch -d name_branch_to_delete  # remove branch only if it is fully merged
 git push origin --delete <name_branch>  # delete branch on server
 ````
-### b. Rename branch  
+### b. Rename or create branch  
 ````bash
+git switch -c name 
+git branch --edit-description  # starts a inline editor to add comments about the current branch <name> 
 git branch -m new_name  # on the branch that we want to rename
 git branch -m old_name new_name  # from another branch that the one to rename
 git push origin :old_name new_name  # delete the old_name remote branch an push new_name
@@ -150,3 +153,10 @@ conflict issues.
 ### SSH (Secure SHell protocol)
 - On GitHub profile go to *settings* > *SSH and GPG keys* 
 - Then add the private key created on the PC that we want to connect to the repository
+
+## 6) Change configuration
+
+````bash
+git config list --show-origin  # display all the configuraiton (system/global/local)
+git config set --global init.defaultbranch=main main  # rename inital branch as 'main', this rule will be the default one of all repositories in the user profile
+````

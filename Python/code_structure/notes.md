@@ -6,7 +6,13 @@
 - [Object Oriented Programming](#object-oriented-programming)
   - [Naming convention](#naming-convention)
 - [Decorators](#decorators)
+  - [@abstractmethod](#abstractmethod)
+  - [@classmethod](#classmethod)
+  - [@contextmanager](#contextmanager)
+  - [@lru\_cache](#lru_cache)
   - [@property](#property)
+  - [@staticmethod](#staticmethod)
+  - [@singledispatch](#singledispatch)
 
 # Recursive function
 
@@ -104,7 +110,7 @@ from created_lib import created_module  as cm # we can then use cm.method_1
 _single_leading_underscore    # from M import * does not import objects whose names start with an _
 single_trailing_underscore_   # prevent conflict with Python's keywords
 __double_leading_underscore   # when naming a class attribute invokes name (inside class FooBar __boo becomes _FooBar__boo)
-__double_leading_and_trailing_underscore__  # 'magic' objects or attributes that live in user-controlled namespaces
+__double_leading_and_trailing_underscore__  # 'magic' objects or attributes that live in user-controlled namespaces like "__main__", "__init__"
 ````
 
 # Decorators
@@ -133,6 +139,96 @@ def read_excel_timer(*args, **kwargs):
 
 ````
 
+## @abstractmethod
+
+````python
+from abc import ABC  # Abstract Base Class
+
+class HeavenlyBody(ABC):
+  @abstractmethod
+  def compute_size(self, **kwargs) -> float:
+    ...
+
+
+````
+
+## @classmethod
+
+## @contextmanager
+## @lru_cache
+
 ## @property
+
+It relies on the built-in `property()` property() function, and allows to create properties within
+a class providing a way to control access to an attribute by defining the following methods:
+
+- *getter*
+- *setter*
+- *deleter*
+
+````python
+# ######################################### porpety() ########################################
+class Book(object):
+
+  def __init__(self, title: str) -> None:
+    self.title = title
+
+  def getter(self) -> str:
+    print('Getting title name.')
+    return self.title
+
+  def setter(self, title: str) -> None:
+    print('Setting title name.')
+    self.title = title
+
+  def deleter(self) -> None:
+    print('Deleting title name.')
+    del self.title
+
+  title = property(getter, setter, deleter)
+
+# ######################################### @porpety #########################################
+
+class Book(object):
+
+  def __init__(self, title: str) -> None:
+    self.title = title
+
+  @property
+  def title(self) -> str:
+    """ Method to get title of a given book."""
+    print('Getting title name.')
+    return self.title
+
+  @title.setter
+  def setter(self, title: str) -> None:
+    print('Setting title name.')
+    self.title = title
+
+  @title.deleter
+  def deleter(self) -> None:
+    print('Deleting title name.')
+    del self.title
+
+````
+
+````python
+# usage
+>>> book = Book('La critique de la raison pure')
+>>> print(x.value)
+Getting title name
+La critique de la raison pure 
+
+>>> book.title = 'Anna Karenine'
+Setting title name
+
+>>> help(book.title)
+Method to get title of a given book.
+
+````
+
+
+## @staticmethod
+## @singledispatch
 
 It allows to use method, as attributes, it is useful when we use methods without arguments
