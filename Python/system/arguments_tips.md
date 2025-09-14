@@ -8,13 +8,14 @@
 import argparse
 import configparser
 from configparser import ExtendedInterpolation
+from pathlib import PurePath
 
 # ----------------------------- Configuration -----------------------------
 conf_parser = argparse.ArgumentParser(
     description='This parser will be used to read the config file',
     # prevent to add '-h' or '--h' now, to avoid conflict in future
     add_help=False,
-    argument_default=os.path.join(os.path.dirname(__file__), 'config.ini')
+    argument_default=PurePath(__file__).parent.joinpath('config.ini')
 )
 conf_parser.add_argument(
     '-c', '--conf_file', help='Specify a config file', metavar='FILE'

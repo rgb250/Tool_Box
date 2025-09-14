@@ -3,7 +3,7 @@
 ## 1. Conversion
 ```python
 import pandas as pd
-import datetime as datetime 
+from datetime import datetime 
 
 # String Formatted Date --> Date
 date_standard = datetime.strptime('2023-10-11', format='%Y-%m-%d')

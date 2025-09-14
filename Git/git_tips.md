@@ -33,7 +33,7 @@ git checkout –track name_of_the_remote_branch  # create a tracking branch
 ````bash
 git log --patch -2  # Display the differences resulting of committed changes. -2 restrict the displaying of logs to 2. 
 git log --stat  # Summarize the above command line in number of insertions/deletions by file
-git log  --pretty=format:'%d : %h : %an : %ad : %s' --graph  # Get the some information here the references as graph, %d for decorated display branch name
+git log  --pretty=format:'%d : %h : %an : %ad : %s' --graph --decorate=full  # Get the some information here the references as graph, %d for decorated display branch name, --decorate=full allows to display tags
 ````
 ![Arguments of git log --pretty=format](./images/options_git_log_pretty_format.png)
 

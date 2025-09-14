@@ -9,6 +9,7 @@
 - [Macro](#macro)
 - [File](#file)
   - [Read file](#read-file)
+  - [Remove file](#remove-file)
   - [Import and Export data](#import-and-export-data)
   - [PROC SQL](#proc-sql)
     - [Concatenate](#concatenate)
@@ -64,7 +65,7 @@ Some general rules:
   |14/11/24           |10           |``mmddyy8.``   |
   |December 11, 2024  |20           |``worddate20.``|
   |14mar2024          |9            |``date9.``     |
-  |14-mar-2024        |11           |``date9.``     |
+  |14-mar-2024        |11           |``date11.``     |
 
 ## Strings
 
@@ -166,6 +167,15 @@ PROC SQL;
 QUIT;
 ````
 
+````sas
+PROC SQL;
+	CREATE TABLE SAMPLE_DZEN_VALR_GARN AS(
+		SELECT *
+		FROM DZEN_VALR_GARN(KEEP=MT_VALR_GARN_TYPE_MT_:)  # will take all 
+	);
+QUIT;
+````
+
 # Macro
 
 Macros allow to:
@@ -200,6 +210,26 @@ RUN;
 
 PROC PRINT DATA = TEMP;
 RUN;
+````
+
+## Remove file
+
+````sas
+%MACRO DELETE_FILE(PATH_FILE=);
+	DATA _NULL_;
+		STATUS_CALL = FILENAME("MY_FILE", "&PATH_FILE."); /* get call status of file reference assignment */ 
+		IF STATUS_CALL = 0 THEN /* if 0 then OK */
+			DO;
+				STATUS_CALL = FDELETE("MY_FILE"); /* get call status of file deletion */ 
+				IF STATUS_CALL = 0 THEN
+					PUT "NOTE: &PATH_FILE successfully deleted.";
+				ELSE
+					PUT "ERROR: &PATH_FILE has not been deleted." STATUS_CALL;
+			END;
+		ELSE
+			PUT "ERROR: unable to assign filename for path: &PATH_FILE." STATUS_CALL;
+	RUN;
+%MEND DELETE_FILE;
 ````
 
 ## Import and Export data
@@ -287,7 +317,8 @@ PROC SQL;
         var_str,
         var_num,
         INPUT(var_str, datetime.) AS var_str_to_date,
-        PUT(var_num, best32.) AS var_num_to_str
+        PUT(var_num, best32.) AS var_num_to_str,
+        YEAR(DATEPART(var_date)) AS year
     FROM table_any
 QUIT;
 `````

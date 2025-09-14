@@ -20,7 +20,7 @@
 - [SEARCH IN FILES](#search-in-files)
 - [Read section of a file](#read-section-of-a-file)
 - [Replace string in files](#replace-string-in-files)
-- [Coppy content](#coppy-content)
+- [Copy content](#copy-content)
 - [Process Information](#process-information)
   - [Move a list of files](#move-a-list-of-files)
   - [Zip a list of files](#zip-a-list-of-files)
@@ -181,12 +181,13 @@ sed -n 15,75p path/file/to/check  # display the lines from 15 to 75 of the targe
 ````
 
 # Replace string in files
+SED (Streamer EDitor)
 ```bash
 sed -i -e 's/to_replace/replacement/g' ./path_file  # -i --> --in-place
 # -e --> --expression, consider the expression just after as a script
 ```
 
-# Coppy content
+# Copy content
 ````bash
 xlcip -sel clip < ~/<path/of/some/file>  # using only "xclip" will not allow to paste content in a usual way whereas "xclip -sel clip" does!
 ````
