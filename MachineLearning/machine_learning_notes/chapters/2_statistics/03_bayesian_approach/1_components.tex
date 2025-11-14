@@ -1,16 +1,36 @@
 \subsection{Bayesian concept learning}
-Let be $\mathcal{D}$ the data, $h$ the hypothesis taken in account
+Let be $\mathcal{D}$ the data and in 
+\begin{itemize}
+    \item discrete approach $h$ the hypothesis taken in account (Binomial, ...)
+    \item in continuous approach: $m,\theta$ the model (Bernoulli, Gaussian, ...) ant its parameters associated with
+\end{itemize}
+
 \subsection{Likelihood}
-$p\left(\mathcal{D}|h\right)$ the probability to get the observed data considering the 
-hypothesis $h$.
+ the probability to get the observed data:  
+\begin{itemize}
+    \item discrete approach: $p\left(\mathcal{D}|h\right)$
+    \item continuous approach: $p\left(\mathcal{D}|\theta,m\right)$
+\end{itemize}
+
 \subsection{Prior}
-$p(h)$ the probability of our hypothesis, many prior can be used, and this 
+ the probability of our hypothesis, many prior can be used, and this 
 \textbf{subjective} aspect of Bayesian reasoning is a source of much controversy.
+\begin{itemize}
+    \item in discrete approach: $p(h)$
+    \item in continuous approach: $p(\theta|m)$
+\end{itemize}
+
 
 \subsection{Posterior}
 The posterior is simply the likelihood times the prior, normalized.
 \begin{center}
-\tR{$p\left(h|\mathcal{D}\right) = \dfrac{p\left(\mathcal{D}|h\right)\times p(h)}{
-    \su{h'\in\mathcal{H}}{}p\left(\mathcal{D}, h'\right)p(h')
-}$}
+\begin{itemize}
+    \item in discrete approach: \tR{$p\left(h|\mathcal{D}\right) = \dfrac{p\left(\mathcal{D}|h\right)
+            \times p(h)}{\su{h'\in\mathcal{H}}{}p\left(\mathcal{D}|h'\right)p(h')}$}
+    \item in continuous approach: \tR{$p\left(\theta|\mathcal{D}, m\right) = \dfrac{p\left(
+                \mathcal{D}|\theta, m\right)\times p(\theta|m)}{\Su{\theta'\in
+            \Theta}{}p\left(\mathcal{D}|\theta',m\right)p(\theta'|m)d\theta'}$}
+\end{itemize}
+
+
 \end{center}

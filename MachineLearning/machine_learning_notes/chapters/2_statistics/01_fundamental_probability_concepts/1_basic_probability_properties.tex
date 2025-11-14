@@ -22,7 +22,12 @@ $\Prob{A\cup B} = \Prob{A} + \Prob{B} - \Prob{A\cap B}$
 \paragraph{Independent events}
 $\Prob{A\cap B} = \Prob{A} \times \Prob{B}$
 \paragraph{Conditional Probability}
-$\probC{A}{B} = \dfrac{\prob{A\cap B}}{\prob{B}}$
+$\probC{A}{B} = \dfrac{\prob{A\cap B}}{\prob{B}}$, keep in mind that it comes from the fact that 
+considering case where A occurs knowing that B occurred means reducing probability space $\Omega$ to
+$B$. In conbinatorial we could think about $\lvert A|B\rvert = 
+\dfrac{\lvert A\cap B \rvert}{B} = \dfrac{\frac{\lvert A\cap B \rvert}{\Omega}}{\frac{\lvert B
+\rvert} {\Omega}} = \dfrac{\prob{A\cap B}}{\prob{B}}$
+
 \paragraph{Law of Total Probability}
 $
 \begin{cases}

@@ -1,12 +1,14 @@
 A more efficient approach than cross-validation, meaning fitting \emph{k} times each
 model, is \tR{to compute the posterior over models}.
 $$
-p(m|\mathcal{D}) = \dfrac{p(\mathcal{D}|m)p(m)}{\su{{m\in\mathcal{M}}}{}p(m|\mathcal{D})}
+p(m|\mathcal{D}) = \dfrac{p(\mathcal{D}|m)p(m)}{\su{{m\in\mathcal{M}}}{}p(m,\mathcal{D})}
 $$
 From this we can compute the \tB{MAP model $\hat{m} = \displaystyle \argmax_{m}
 p(m|\mathcal{D})$}\\
 Then we have the \tB{marginal likelihood}: $p(\mathcal{D}|\hat{m}) = \Su{}{}p(
-\mathcal{D}|\hat{m})p(\theta|\hat{m})d\theta$
+\mathcal{D}|\theta)p(\theta|\hat{m})d\theta$. This equation means that considering the 
+hyper-parameter $\hat{m}$, that governs value taken by parameter $\theta$ we do the weighted sum
+of likelihood over all possible values of $\theta$ with a weight of $p(\theta|\hat{m})$
 
 \subsection{Baysian Occam's razor}
 \tB{In integrating out the parameters rather than maximizing them we are automatically 
@@ -20,7 +22,7 @@ hence will not obtain as large a probability for any given data set as simpler m
 \subsection{Computing the marginal likelihood (evidence)}
 \paragraph{Use of conjugate prior}
 For a fixed model we often write:
-$$p(\bm{\theta}|\mathcal{D},m) \propto p(\bm{\theta}|m)p(\mathcal{D}|\bm{\theta},m)$$
+$$p(\bm{\theta}|\mathcal{D},m) \propto p(\mathcal{D}|\bm{\theta},m)\times p(\bm{\theta}|m)$$
 We ignore the normalization constant $\prob{\mathcal{D}|m}$ as it is constant with reference to
 $\bm{\theta}$. However \uB{when comparing models we need
 to know how to compute the marginal likelihood, $p(\mathcal{D}|m)$}. In general this can

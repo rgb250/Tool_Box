@@ -190,6 +190,8 @@ sed -i -e 's/to_replace/replacement/g' ./path_file  # -i --> --in-place
 # Copy content
 ````bash
 xlcip -sel clip < ~/<path/of/some/file>  # using only "xclip" will not allow to paste content in a usual way whereas "xclip -sel clip" does!
+which python | xlcip -sel clip 
+xlcip -sel clip -o                       # allow to paste
 ````
 
 
