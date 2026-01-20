@@ -15,6 +15,7 @@
     - [Concatenate](#concatenate)
     - [Converting](#converting)
   - [Macro to zip file](#macro-to-zip-file)
+  - [Exporter en zip une list de tables:](#exporter-en-zip-une-list-de-tables)
 
 # Basics
 
@@ -61,11 +62,20 @@ Some general rules:
 
   |Input Date         | Date Width  | Format        |
   |-------------------|-------------|---------------|
-  |14/11/2024         |10           |``mmddyy10.``  |
-  |14/11/24           |10           |``mmddyy8.``   |
+  |14/11/2024         |10           |``ddmmyy10.``  |
+  |14/11/24           |10           |``ddmmyy8.``   |
   |December 11, 2024  |20           |``worddate20.``|
   |14mar2024          |9            |``date9.``     |
-  |14-mar-2024        |11           |``date11.``     |
+  |14-mar-2024        |11           |``date11.``    |
+  |202411             |6            |``yymmn6.``    |
+
+  - Creating macro variable to use independently
+  ````sas 
+  date_string = "31DEC2024";
+  %let sas_date = %sysfunc(inputn(&arrete, date9.))
+  %let formatted_version = %sysfunc(putn(&sas_date, yymmn6.))
+  ````
+
 
 ## Strings
 
@@ -346,4 +356,23 @@ For the format check:
 			%PUT ERROR: The file &PATH_FILE. does not exist;
 		%END;
 %MEND FCT_ZIP;
+````
+
+## Exporter en zip une list de tables:
+
+````sas
+%MACRO ZIP_LIST_OF_FILES(NAME_SCHEMA=, LIST_TABLES_TO_EXPORT=, PATH_FOLDER_OUTPUT=, NAME_FILE_ZIP=, EXTENSION=CSV);
+	%DO i=1 %TO %SYSFUNC(COUNTW(&LIST_TABLES_TO_EXPORT, "|"));
+		%LET TABLE_TO_EXPORT = %SCAN(&LIST_TABLES_TO_EXPORT, &i, "|");
+		%LET FILE_OUTPUT = &PATH_FOLDER_OUTPUT./&TABLE_TO_EXPORT..%LOWCASE(&EXTENSION.);
+		PROC EXPORT
+			DATA=&NAME_SCHEMA..&TABLE_TO_EXPORT.
+			OUTFILE="&FILE_OUTPUT."
+			DBMS=&EXTENSION
+			REPLACE;
+		RUN;
+		%FCT_ZIP(PATH_FILE=&FILE_OUTPUT., NAME_FILE_ZIP=&NAME_FILE_ZIP..zip, PATH_FOLDER_ZIP=&PATH_FOLDER_OUTPUT.);
+		%DELETE_FILE(PATH_FILE=&FILE_OUTPUT.);
+	%END;
+%MEND ZIP_LIST_OF_FILES;
 ````
