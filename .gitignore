@@ -9,3 +9,4 @@
 *.run.xml
 *.drawio
 *.vscode
+*idea/

@@ -1,3 +1,5 @@
+- [Useful tricks](#useful-tricks)
+  - [Capturing group](#capturing-group)
 - [Assertions](#assertions)
   - [Look forward](#look-forward)
   - [Look backward](#look-backward)
@@ -8,6 +10,16 @@
 - [Substitution](#substitution)
   - [With patterns](#with-patterns)
 
+# Useful tricks
+## Capturing group
+
+````python
+text = "Sally: 25, David: 23"
+pattern_capturing = re.compile(r'(\w+):\s(\d+)')
+pattern_capturing.findall()           # returns ['Sally', '25', 'David', '23']
+pattern_non_capturing_name = re.compile(r'(?:\w+):\s(\d+)')
+pattern_non_capturing_name.findall()  # returns ['25', '23']
+````
 # Assertions
 
 ## Look forward

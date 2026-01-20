@@ -5,6 +5,16 @@
       - [Other memories](#other-memories)
     - [a. Random Access Memory](#a-random-access-memory)
 - [To know the memory usage on UNIX:](#to-know-the-memory-usage-on-unix)
+- [Arithmetic](#arithmetic)
+- [Preprocessing files](#preprocessing-files)
+  - [`awk`](#awk)
+- [Connectors](#connectors)
+  - [`;`](#)
+  - [`&&`](#-1)
+  - [`|`](#-2)
+  - [`||`](#-3)
+  - [`&&` and `||`](#-and-)
+  - [`&`](#-4)
 - [SELECT FILES](#select-files)
 - [SEARCH INSIDE FILES](#search-inside-files)
 - [REGEX](#regex)
@@ -79,6 +89,56 @@ df -h # disk filename command, with the human readable option (adapt the figures
 du -h -d 1 ./folder_path | sort -h # to see the size of each elements in a given repository with a depth of 1 and sorted by size 
 ````
 
+# Arithmetic
+
+To make arithmetic operation we need to use `$(())`
+ ````bash
+  n=6; n_1=$((n-1))
+  echo ${n_1}  # displays 5
+ ````
+
+ # Preprocessing files
+ ## `awk` 
+ Naming after the initials of its 3 contributors:
+ - **A**ho Alfred
+ - **W**einberger Peter  
+ - **K**ernigha Brian 
+
+ Let's assume that we have a file *numbers.txt* containing a list of numbers, one per line
+ ````bash
+ awk '{ sum += $1 } END { print "Total Sum:", sum }' numbers.txt 
+ # {sum += $1} main block, here we sum all the numbers, $1 refers to the first variable
+ # END { print "Total Sum:", sum } after the main block how to use the result
+ >> Total Sum: 157
+ grep -E "import" | awk -F '[: ]' '{print $4}' ## display the 4th words delimited either by ':' or ' '
+ ````
+
+ # Connectors
+
+ ## `;`
+````bash
+command1; command2; command3  # executes sequentially these commands regardless their success
+````
+ ## `&&`
+````bash
+command1 && command2  # command2 will run only if command1 was completed successfully
+````
+ ## `|`
+````bash
+comand1 | command2   # the output of command1 is used as input of command 2
+````
+ ## `||`
+````bash
+command1 || command2   # command2 will run only if command1 fails
+````
+ ## `&&` and `||`
+````bash
+command1 && command2 || command3  # if command1 is successful command2 is run otherwise command3
+````
+ ## `&`
+````bash
+command1 &  # run command1 in background allowing to use shell normally
+````
 
 # SELECT FILES
 ````bash
@@ -103,6 +163,7 @@ Expression like '\d' or '\w' does not exist in basic bash.
 |\<|Matches the empty string at the beginning  of a word|
 |\>|Matches the empty string at the end  of a word|
 |\or|Or Condition
+|\[ \]| Match one of the string [string1\|string2]
 |\( \)| Start End of group
 |\< \>| Start End of word
 
@@ -186,6 +247,13 @@ SED (Streamer EDitor)
 sed -i -e 's/to_replace/replacement/g' ./path_file  # -i --> --in-place
 # -e --> --expression, consider the expression just after as a script
 ```
+Get only basename
+````bash
+f=name_of_a_file.txt
+echo "${f%.*}"  # will capture only "name_of_a_file" part without extension
+sub=document
+echo "${f/file/"$sub"}"  # will return "name_of_a_document.txt" part without extension
+````
 
 # Copy content
 ````bash
@@ -209,7 +277,7 @@ nohup vlc &  # nohup ignore all SIGHUP (hangup) signals, sent when terminal is c
 ## Move a list of files
 ````bash
 find -type f -regex 'pattern' -print0 | xargs -0 cp -tv  # -print0 marks the end of a string with a null character instead of newline, -0 consider items delimited by null characters
-
+find -type f -regex 'pattern' -exec cp -v {} /destination/path/ \;  # we copy found elements with command find and represented by {} to /destination/path, "\;" means that content of exec is done one by one whereas "+" means batch by batch that can be faster.
 ````
 ## Zip a list of files
 ````bash
