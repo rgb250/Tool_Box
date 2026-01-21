@@ -16,7 +16,7 @@ we obtain the probability mass function $f(k|\alpha, \beta, r)$ by marginalisati
     f(k|\alpha,\beta,r) &= \Su{0}{1}f_{X|p}(k|r,q)\times f_{p}(q|\alpha, \beta)dq\\
                         &= \Su{0}{1}{k+r-1\choose k}(1-q)^{k}q^{r}\times \dfrac{q^{\alpha -1}(1-q)^{\beta -1}}{B(\alpha, \beta)}dq\\
                         &= \dfrac{1}{B(\alpha, \beta)}{k+r-1\choose k}\Su{0}{1}q^{\alpha + r-1}(1-q)^{\beta +k-1}dq\\
-                        &= \dfrac{1}{B(\alpha, \beta)}{k+r-1\choose k}\dfrac{\Gamma(\alpha + r)\Gamma(\beta + r)}{\Gamma(\alpha + \beta + k + r)}\\
+                        &= \dfrac{1}{B(\alpha, \beta)}{k+r-1\choose k}\dfrac{\Gamma(\alpha + r)\Gamma(\beta + k)}{\Gamma(\alpha + \beta + k + r)}\\
                         &= \dfrac{1}{B(\alpha, \beta)}{k+r-1\choose k}B(\alpha + r, \beta + k)
 \end{align*}
 More generally $f(x) = \dfrac{\Gamma(r+k)}{k!\Gamma(r)}\times\dfrac{B(\alpha + r, \beta + k)}{B(\alpha,\beta)}$

@@ -1,4 +1,4 @@
-\subsection{Mutlt-task}
+\subsection{Multi-task}
 \paragraph{Purpose}
 To fit many related classification or regression models at the same time, as it is often reasonable
 to assume the input-output mappings is similar across these different models.
@@ -106,8 +106,7 @@ is uniquely determined by the joint angles of the motors, $\bm{x}$.
 
 The overall posterior is then
 \begin{center}
-    \fr{$\prob{y_{i}|\bm{x}_{i},\bm{\theta}} = \su{k}{}\prob{z_{i}=k|\bm{x}_{i},z_{i}=k
-    ,\bm{\theta}}$}
+    \fr{$\prob{y_{i}|\bm{x}_{i},\bm{\theta}} = \su{k}{}\prob{z_{i}=k|\bm{x}_{i},\bm{\theta}}\prob{y_{i}|\bm{x}_{i},z_{i}=k,\bm{\theta}}$}
 \end{center}
  This model can be easily generalized to discrete data using the exponential family.
 The model is usually fit with \emph{Expectation-Maximization} technique.

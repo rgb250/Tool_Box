@@ -56,7 +56,7 @@ representation.
 
 We compute the matrix: 
 \begin{center}
-    \fr{$Attention\left(\bm{Q},\bm{K},\bm{V}\right)\sigma\left(\dfrac{\bm{Q}\bm{K}^{T}}{\sqrt{d_{k}}}\right)V$}
+    \fr{$Attention\left(\bm{Q},\bm{K},\bm{V}\right)=\text{softmax}\left(\dfrac{\bm{Q}\bm{K}^{T}}{\sqrt{d_{k}}}\right)\bm{V}$}
 \end{center}
 
 Step by step:
