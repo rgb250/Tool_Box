@@ -1,4 +1,4 @@
-\section{Inspection} 
+\section{Inspection}
 Detect unexpected behavior in the data.
 \begin{itemize}
     \item \textbf{Data profiling}: summary statistics about the data, see \href{https://github.com/ydataai/ydata-profiling}{\textit{ydata-profiling}} in Python.
@@ -8,7 +8,7 @@ Detect unexpected behavior in the data.
         see \href{https://pypi.org/project/pydeequ/}{\textit{pydeequ}}
 \end{itemize}
 
-\section{Cleaning} 
+\section{Cleaning}
 Fix or remove anomalies discovered in the above phase.
 \begin{itemize}
     \item \textbf{Irrelevant Data}: ask to the expert what can be the unnecessary columns,
@@ -18,30 +18,31 @@ Fix or remove anomalies discovered in the above phase.
         a given column.
     \item \textbf{Syntax errors}: white spaces, pad strings \dots
     \item \textbf{Standardize}: same unit across the dataset, same pattern for text.
-    \item \textbf{Scaling/Transformation}: in order to compare different scores for 
+    \item \textbf{Scaling/Transformation}: in order to compare different scores for
         example.
     \item \textbf{Normalization}: useful for some statistical methods.
-    \item \textbf{Missing values}: 
+    \item \textbf{Missing values}:
         \begin{itemize}
             \item Drop: only if the missing values in a column rarely and randomly occur.
-            \item Impute: many methods,  
+            \item Impute: many methods,
                 \begin{itemize}
                     \item \textit{mean} is relevant when data is not skewed
                     \item \textit{median} otherwise
                     \item \textit{hot-deck} imputes from a randomly selected similar record
-                    \item \textit{polynomial interpolation} approximate the data with a polynomial 
-                    \item \textit{linear regression} imputes from prediction 
+                    \item \textit{polynomial interpolation} approximate the data with a polynomial
+                    \item \textit{linear regression} imputes from prediction
                     \item \textit{k-nearest} imputes depending on a set of closet observations
                 \end{itemize}
             \item Flag: let the missing value as it is.
         \end{itemize}
     \item Outliers: Remove outliers only if they are harmful for the chosen model.
-    \item In-record \& cross-datasets errors: fix non-consistent situations like married 
+    \item In-record \& cross-datasets errors: fix non-consistent situations like married
         kids, quantity being different of the one when we compute using other columns.
 \end{itemize}
 
 \section{Verifying}
 Check correctness of the cleaning phase.
-\section{Reporting} 
-Report about changes made, using one of the software summarising the data quality for 
+
+\section{Reporting}
+Report about changes made, using one of the software summarising the data quality for
 example.
