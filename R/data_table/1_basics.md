@@ -34,7 +34,7 @@ data[, .N, by=team]  # get the number of rows per team
 data[, .(different.size=length(unique(size))), keyby=.(team)]  # unique count of different basketball player sizes by team
 ```
 
-### c Apply functions
+### c. Apply functions
 ```r
 data[, lapply(.SD, mean), .SDcols=c('x1', 'x2')] # get a vector whose components correspond to mean of x1 and x2 features
 ```

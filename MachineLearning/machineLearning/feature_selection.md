@@ -11,7 +11,7 @@ There are **3** main type of feature selection methods:
 
 ## 2) Filter 
 Among the best measure for feature selection method of filter type are:
-- *Mutual Information*: measures the mutual dependence between tow variables. It is more general than the correlation, because it is not focus on linear association.
+- *Mutual Information*: measures the mutual dependence between two variables. It is more general than the correlation, because it is not focus on linear association.
 - *Fisher score*: uses the $\chi^{2}$ distribution to measure the dependency between two variables and works with *categorical* variables.
 - *ANOVA* measure the dependencies between 2 *continuous variables* and requires a *binary target*.
 - *ROC-AUC/RMSE*: measure the performance of a model for either *classification* and *regression*.
@@ -32,11 +32,11 @@ Start by searching through different subset of features, then creating a model w
   1. Ranking features thanks to embedded method.
   2. Remove the least important feature and build a new machine learning algorithm.
   3. Compute performance metric such as ROC-AUC, MSE, ...
-  4. If the metric decrease buy more than an arbitrary set threshold we should keep it otherwise remove it. 
+  4. If the metric decrease by more than an arbitrary set threshold we should keep it otherwise remove it. 
 - *Recursive feature addition*: 
   1. Ranking features thanks to embedded method.
   2. Build a model with only the one most important features.
   3. Compute performance metric such as ROC-AUC, MSE, ...
   4. Add the second most relevant feature and train the model and build a new machine learning algorithm.
-  5. If the metric decrease buy more than an arbitrary set threshold we should keep it otherwise remove it. 
+  5. If the metric decrease by more than an arbitrary set threshold we should keep it otherwise remove it. 
 This last method is a good compromise, but the threshold has to be find.

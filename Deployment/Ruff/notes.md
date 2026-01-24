@@ -2,7 +2,7 @@
 
 It is a linter that intends to quickly identify code issues and propose clean solutions.
 
-# Basic
+# Basics
 
 ````bash
 ruff check

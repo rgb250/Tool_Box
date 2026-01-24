@@ -38,13 +38,14 @@ called DataFrames.
 It ingests data in a mini-batches, and perform RDD transformations on 
 those mini-batches
 
-## Spark MIlib
-It is a distributed machine-learning framework on top of Sparke Core that
+## Spark MLlib
+
+It is a distributed machine-learning framework on top of Spark Core that
 is much faster that the disk-based implementation.
 
 ## GraphX
 It is a distributed graph-processing framework on top of Apache Spark. 
-As it based on RDDs, being immutable, GraphX is unsuitable for grpahs that
+As it is based on RDDs, being immutable, GraphX is unsuitable for graphs that
 need to be updated.
 
 # Installation

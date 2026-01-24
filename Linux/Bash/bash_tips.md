@@ -47,9 +47,9 @@
 ### Primary Memory
 It refers to all memories directly accessible by the Central Process Unit via data bus.
 For technological and economical purposes there are different forms of primary memory.
-- Random Access Memory: used to store the data, it is the fastest and more expansive memory.
+- Random Access Memory: used to store the data, it is the fastest and more expensive memory.
 - Dynamic RAM: each memory cells contains one transistor and one capacitor, that can store 1 bit of data. Once a cell lose its charge, the data stored is lost in less than a thousandth of a second. Then it must be refresh thousand of times per second that consumes processor resources.
-- SRAM: used in specialized applications, it consists of flip-flops storing 1 bit in each cell. Unlike DRAM it does nee to be refreshed it keeps its bit until the power supply is turned on. It has a shorter read-write times.
+- SRAM: used in specialized applications, it consists of flip-flops storing 1 bit in each cell. Unlike DRAM it does not need to be refreshed; it keeps its bit until the power supply is turned on. It has shorter read-write times.
 - ROM (Read-Only-Memory): data for ROM storage is written during the production process, then only data that does not need to change such as computer's booting sequence or algorithmic tables for mathematical applications. Since ROM is slower that RAM it is less expensive.
 - PROM (Programmable ROM): ROM being able to be programmed by  special hardware unit name PROM programmer. 
 - EPROM (Erasable Programmable ROM): EPROM's may be erased and then programmed thanks to ultraviolet rays or electric impulse (easier and safer)
@@ -97,45 +97,54 @@ To make arithmetic operation we need to use `$(())`
   echo ${n_1}  # displays 5
  ````
 
- # Preprocessing files
- ## `awk` 
- Naming after the initials of its 3 contributors:
- - **A**ho Alfred
- - **W**einberger Peter  
- - **K**ernigha Brian 
+# Preprocessing files
 
- Let's assume that we have a file *numbers.txt* containing a list of numbers, one per line
- ````bash
- awk '{ sum += $1 } END { print "Total Sum:", sum }' numbers.txt 
- # {sum += $1} main block, here we sum all the numbers, $1 refers to the first variable
- # END { print "Total Sum:", sum } after the main block how to use the result
- >> Total Sum: 157
- grep -E "import" | awk -F '[: ]' '{print $4}' ## display the 4th words delimited either by ':' or ' '
- ````
+## `awk`
 
- # Connectors
+Named after the initials of its 3 contributors:
 
- ## `;`
+- **A**ho Alfred
+- **W**einberger Peter
+- **K**ernighan Brian
+
+Let's assume that we have a file *numbers.txt* containing a list of numbers, one per line:
+
+````bash
+awk '{ sum += $1 } END { print "Total Sum:", sum }' numbers.txt
+# {sum += $1} main block, here we sum all the numbers, $1 refers to the first variable
+# END { print "Total Sum:", sum } after the main block how to use the result
+>> Total Sum: 157
+grep -E "import" | awk -F '[: ]' '{print $4}' ## display the 4th words delimited either by ':' or ' '
+````
+
+# Connectors
+
+## `;`
 ````bash
 command1; command2; command3  # executes sequentially these commands regardless their success
 ````
- ## `&&`
+
+## `&&`
 ````bash
 command1 && command2  # command2 will run only if command1 was completed successfully
 ````
- ## `|`
+
+## `|`
 ````bash
-comand1 | command2   # the output of command1 is used as input of command 2
+command1 | command2   # the output of command1 is used as input of command2
 ````
- ## `||`
+
+## `||`
 ````bash
 command1 || command2   # command2 will run only if command1 fails
 ````
- ## `&&` and `||`
+
+## `&&` and `||`
 ````bash
 command1 && command2 || command3  # if command1 is successful command2 is run otherwise command3
 ````
- ## `&`
+
+## `&`
 ````bash
 command1 &  # run command1 in background allowing to use shell normally
 ````
@@ -257,9 +266,9 @@ echo "${f/file/"$sub"}"  # will return "name_of_a_document.txt" part without ext
 
 # Copy content
 ````bash
-xlcip -sel clip < ~/<path/of/some/file>  # using only "xclip" will not allow to paste content in a usual way whereas "xclip -sel clip" does!
-which python | xlcip -sel clip 
-xlcip -sel clip -o                       # allow to paste
+xclip -sel clip < ~/<path/of/some/file>  # using only "xclip" will not allow to paste content in a usual way whereas "xclip -sel clip" does!
+which python | xclip -sel clip -i        # as it's the default behavior no need to specify "-i"
+xclip -sel clip -o                       # allow to paste
 ````
 
 
@@ -297,7 +306,7 @@ for word in fsfsd fsfsff mmkoi
     do
         echo $word
     done
-# in a more conventional wa y
+# in a more conventional way
 declare -a arr=(
     'fsfsd' 'fsfsff' 'mmkoi'  # create an array named arr
     )
@@ -309,7 +318,7 @@ for word in "${arr[@]}"       # loop over the value of arr
 
 ## Store file list 
 ````bash
-readarray -t arr_files < <(find path/root/ -mindepth 1 type f -regex '.*/.*\.py')  # 't' allows to trail newline at the end of each values
+readarray -t arr_files < <(find path/root/ -mindepth 1 -type f -regex '.*/.*\.py')  # 't' allows to trail newline at the end of each value
 ````
 
 ## If Elif Else

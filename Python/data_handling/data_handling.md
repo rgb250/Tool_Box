@@ -17,7 +17,7 @@ import pandas as pd
 
 df = pd.DataFrame(np.random.random((4, 4)))
 df.columns = pd.MultiIndex.from_product([[1, 2], ['A', 'B']])
-""""
+"""
   +===============+==============+
   |       1       |       2      |
   +---------------+--------------+

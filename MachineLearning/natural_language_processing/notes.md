@@ -13,7 +13,7 @@
 
 ## GLUE (General Language Understanding Evaluation)
 
-It is a collection of ressources for training, evaluating, and anylyzing 
+It is a collection of resources for training, evaluating, and analyzing 
 
 ## MultiNLI (Multi-genre Natural Language Inference)
 
@@ -44,7 +44,7 @@ $tf(t,d) = \frac{f_{t,d}}{\displaystyle\sum_{t'\in d}f_{t',d}}$.
 $t$ carries, for a given corpus $D$ of document $d$:\
 $idf(t,D) = \log\left(\dfrac{\lvert D\rvert}{\lvert\left\{d: d\in D \wedge t\in d\right\}\rvert}\right)$
 
-The Shannon entropy of a *randomely chosen* document in the corpus $D$ containing $t$ is:\
+The Shannon entropy of a *randomly chosen* document in the corpus $D$ containing $t$ is:\
 $H(D|t) = -\displaystyle\sum_{d\in D}\mathbb{P}\left(d|t\right)\times\log\left(\mathbb{P}\left(d|t\right)\right)$
 
 ### Link with information theory
@@ -130,7 +130,7 @@ name: ``JAVA_HOME``\
   tagger_stanford.tag(word_tokenize("par delà l'univers"))
   ````
 
-### Chuncking
+### Chunking
 
 - regex
 - tree

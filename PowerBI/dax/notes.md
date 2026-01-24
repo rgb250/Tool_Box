@@ -16,7 +16,7 @@
 
 # In a few words
 
-``DAX`` is primarily a formula language, typically what we do in Exel when using formula, and it
+``DAX`` is primarily a formula language, typically what we do in Excel when using formulas, and it
 is also a query language meaning that it can be used to retrieve data in databases.
 
 

@@ -67,7 +67,7 @@ install them. A provider requirement consists of:
 ````terraform
 terraform {
   required_providers {
-    hashicorp-htpp = {            # local name of 
+    hashicorp-http = {            # local name
       source  = "hashicorp/http"  # source location
       version = "~> 1.0"          # version, '~>' convenient shorthand for allowing the rightmost component of a version to increment
     }

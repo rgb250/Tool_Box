@@ -78,8 +78,8 @@ git rm --cached file_to_ignore
 ````
 ## 2) Know where config is stored
 
-``git config --list --show-scop e`` To get the hierarchy at which a given Git configuration
-occured.
+``git config --list --show-scope`` To get the hierarchy at which a given Git configuration
+occurred.
 ![git config --list](./images/get_config_info.png)
 To get as well the file in which the different configurations have been set replace ``scope``
 with ``origin``.
@@ -157,6 +157,6 @@ conflict issues.
 ## 6) Change configuration
 
 ````bash
-git config list --show-origin  # display all the configuraiton (system/global/local)
+git config --list --show-origin  # display all the configuration (system/global/local)
 git config set --global init.defaultbranch=main main  # rename inital branch as 'main', this rule will be the default one of all repositories in the user profile
 ````

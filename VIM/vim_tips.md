@@ -23,10 +23,11 @@
 ### Sensitivity
 
 ```bash
-/\Cword_to_search  # to respect the case
+/\Cword_to_search  # to respect the case (case sensitive)
 ```
+
 ```bash
-/\Cword_to_search  # ignore the case
+/\cword_to_search  # ignore the case (case insensitive)
 ```
 ### Whole word
 ```bash
