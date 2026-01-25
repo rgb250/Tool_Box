@@ -4,15 +4,15 @@
 %	a4paper | letterpaper    --> paper size & format
 % 	draft                    --> draft mode
 % 	onecolumn | twocolumn    --> multiple columns
-%	felqn | leqno            --> formula-specific
+%	fleqn | leqno            --> formula-specific
 %	landscape                --> landscape mode
-%	onside | twoside         --> single or double sided documents
+%	oneside | twoside        --> single or double sided documents
 %	notitlepage | title page --> titlepage behavior
 %	openright | openany      --> chapter opening page
 % book can be replaced with:
 %	article --> short document that does not contain parts & chapters
 %	report  --> quite long document containing chapters
-%	book    --> real book as in litterature
+%	book    --> real book as in literature
 %	letter  --> cover letter, etc..
 %	slides  --> ONLY use with beamer
 
@@ -29,8 +29,7 @@
 %% For handling characters from Latin Modern family 
 \usepackage{lmodern}
 
-%% Handle hypertext links without altering KOMA library
-\usepackage{scrhack}
+%% Note: scrhack is not needed for beamer class
 
 %% Make table of content clickable
 % \usepackage[pdfpagelabels]{hyperref} % pdfpagelabels --> change the (invisible) numbering style of the title page
@@ -45,22 +44,22 @@
 %% Adapt spelling rules depending of the language
 \usepackage[english]{babel}
 
-%% Handle command without precising the number of arguments.
+%% Handle commands without specifying the number of arguments.
 \usepackage{xargs}
 
 %% Libraries of mathematical purposes.
 \usepackage{amsmath}  % --> correctly print mathematical characters
 \usepackage{amssymb}  % --> extended symbol collection
-\usepackage{amsthm}   % --> theorem like-structures
+% Note: amsthm is not needed with beamer (beamer has built-in theorem environments)
 \usepackage{bm}       % --> bold font in mathematical mode.
-\usepackage{bbm}      % --> bold fond for numbers
+\usepackage{bbm}      % --> bold font for numbers
 \usepackage{blkarray} % --> indexing (rows & columns) matrices
 \usepackage{dsfont}   % --> to access to the symbol of mathematics sets via \mathbb
 
 %% Alphabetical indexed list.
 \usepackage{enumitem}
 
-%% Libraries to display number depending on the chose typography.
+%% Libraries to display numbers depending on the chosen typography.
 \usepackage{siunitx} % --> Scientific notation
 %\sisetup{locale= FR,exponent-product=.} % --> French Adaptation for example 5,6.10²
 %\DeclareSIUnit\year{ann\'{e}ee}         % --> French Adaptation for year unit
@@ -72,7 +71,7 @@
 
 %% Formatting
 \usepackage{xcolor}         % --> use color
-\usepackage{color,soulutf8} % --> underlining
+\usepackage{soulutf8}       % --> underlining
 \definecolor{bleudefrance}{rgb}{.19, .55, .91}
 \definecolor{pakistangreen}{rgb}{.0, .4, .0}
 \definecolor{rossocorsa}{rgb}{0.83, 0.0, 0.0}
@@ -81,7 +80,7 @@
 \definecolor{deepred}{rgb}{0.6,0,0}
 \definecolor{deepgreen}{rgb}{0,0.5,0}
 
-%% Anotation
+%% Annotation
 \usepackage{todonotes}
 \newcommand{\Moi}[1]{\todo[color = teal!40]{#1}}
 \newcommand{\Cnsl}[1]{\todo[color = pakistangreen!40]{#1}}
@@ -113,7 +112,7 @@
 \newcommandx{\tT}[1]{\textcolor{teal}{#1}}
 \newcommandx{\tO}[1]{\textcolor{persimmon}{#1}}
 
-%% Mathematics writting | symbols
+%% Mathematics writing | symbols
 \newcommandx{\inter}[2]{\left[\![#1, #2]\!\right]}                % --> interval
 \newcommandx{\lm}[2]{{\displaystyle \lim_{#1 \rightarrow #2}}}    % --> limit
 \DeclareMathOperator*{\argmax}{arg\,max}                          % --> argmax
@@ -123,8 +122,8 @@
 \newcommandx{\prd}[2]{{\displaystyle \prod_{#1}^{#2}}}            % --> product (pi)
 \newcommandx{\prob}[1]{\mathbb{P}\left(#1\right)}                 % --> probability P(A)
 \newcommandx{\Prob}[1]{\mathbb{P}\left(\left\{#1 \right\}\right)} % --> probability P({A})
-\newcommandx{\ProbC}[2]{\mathbb{P}_{\left\{#1\right\}}\left(\left\{#2\right\}\right)} % --> conditionnal probability
-\newcommandx{\E}[1]{\mathbb{E}\left(#1\right)}               % --> expecting
+\newcommandx{\ProbC}[2]{\mathbb{P}_{\left\{#1\right\}}\left(\left\{#2\right\}\right)} % --> conditional probability
+\newcommandx{\E}[1]{\mathbb{E}\left(#1\right)}               % --> expectation
 \newcommandx{\V}[1]{\mathbb{V}\left(#1\right)}               % --> variance
 \newcommandx{\norm}[1]{\left\lVert#1\right\rVert}            % --> norm symbol
 \newcommandx{\sP}[2]{\langle\left. #1\right\vert #2 \rangle} % --> dot product
@@ -141,10 +140,7 @@
 
 
 \begin{document}
-\pagenumbering{Alph} % change the (invisible) numbering style of the title page
 \maketitle
-
-\pagenumbering{arabic} % change the (invisible) numbering style of the title page
 
 % \insertframenumber/\inserttotalframenumber
 
@@ -161,15 +157,15 @@
 \begin{frame}
     \frametitle{Introduction}
 
-    \begin{block}
+    \begin{block}{Block Title}
         This is important information
     \end{block}
-    
-    \begin{alertblock}
+
+    \begin{alertblock}{Alert Title}
         This is important information
     \end{alertblock}
-    
-    \begin{exampleblock}
+
+    \begin{exampleblock}{Example Title}
         This is important information
     \end{exampleblock}
     
