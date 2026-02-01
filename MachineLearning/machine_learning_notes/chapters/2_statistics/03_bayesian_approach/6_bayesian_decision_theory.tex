@@ -15,12 +15,59 @@ whereas in the frequentist vision we mean the expected value refers to $x$ and $
 to see in the future.\\
 In the Bayesian vision the optimal action having observed $\bm{x}$ is defined as 
 \tB{the action $a$ that minimizes the \textbf{posterior expected loss}}:
-$$ \tB{\rho(a|\bm{x})\triangleq\mathbb{E}_{p(y|x)}\left(L(y, a)\right) = \su{y}{}L(y,
-a) p(y|x)}$$
+$$ \tB{\rho(a|\bm{x})\triangleq\mathbb{E}_{p(y|x)}\left(L(y, a)\right) =
+\begin{cases}
+    \su{y}{}L(y, a) p(y|x) & \text{discrete} \\
+    \Su{}{}L(y, a) p(y|x) dy & \text{continuous}
+\end{cases}}$$
 Hence the \tR{Bayes estimator also called Bayes decision rule is given by:
 $$\delta(\bm{x}) = \argmin_{a\in\mathcal{A}}\rho(\bm{a}|\bm{x})$$}
-Note that here \uB{we adopted a predictive point of view}, as we took $y$ as reference otherwise it 
-would have been a inferential point of view in taking $\theta$.
+Note that here \uB{we adopted a predictive point of view}, as we took $y$ as reference.
+Alternatively, adopting an \uB{inferential point of view} (estimating parameters), the
+posterior expected loss becomes:
+$$ \rho(a|\mathcal{D})\triangleq\mathbb{E}_{p(\theta|\mathcal{D})}\left(L(\theta, a)\right) =
+\begin{cases}
+    \su{\theta}{}L(\theta, a) p(\theta|\mathcal{D}) & \text{discrete} \\
+    \Su{}{}L(\theta, a) p(\theta|\mathcal{D}) d\theta & \text{continuous}
+\end{cases}$$
+where we average over the posterior distribution of the parameter $\theta$ given data $\mathcal{D}$.
+
+\paragraph{Examples of posterior expected loss}
+\begin{itemize}
+    \item \textbf{0-1 loss} (predictive):
+        \begin{itemize}
+            \item Loss: $L(y, a) = \mathbbm{1}_{\{y \neq a\}}$
+            \item Posterior expected loss: $\rho(a|\bm{x}) = P(y \neq a|\bm{x}) = 1 - P(y = a|\bm{x})$
+            \item Optimal action: MAP $a^* = \displaystyle\argmax_y P(y|\bm{x})$
+        \end{itemize}
+        Note: here $\rho$ coincides with a probability because 0-1 loss is binary.
+        The expected value of an indicator function equals the probability of the event:
+        $\mathbb{E}[\mathbbm{1}_{\{y \neq a\}}|\bm{x}] = P(y \neq a|\bm{x})$.
+        This is a special property of 0-1 loss; for other losses (e.g., squared error),
+        $\rho$ is not a probability.
+    \item \textbf{Squared error} (inferential):
+        \begin{itemize}
+            \item Loss: $L(\theta, a) = (\theta - a)^2$
+            \item Posterior expected loss: $\rho(a|\mathcal{D}) = \mathbb{E}[(\theta - a)^2 | \mathcal{D}]$
+            \item Optimal action: posterior mean $a^* = \mathbb{E}[\theta|\mathcal{D}]$
+        \end{itemize}
+\end{itemize}
+
+\paragraph{Practical applications in Machine Learning}
+The Bayesian posterior expected loss is used when uncertainty quantification matters:
+\begin{itemize}
+    \item \textbf{Bayesian Neural Networks}: instead of a single prediction $\delta(\bm{x})$,
+        average predictions over the posterior distribution of weights:
+        $\mathbb{E}_{p(\bm{\theta}|\mathcal{D})}[\delta(\bm{x}; \bm{\theta})]$
+    \item \textbf{Uncertainty quantification}: $\rho(a|\bm{x})$ provides a measure of
+        confidence in predictions, useful for safety-critical applications
+    \item \textbf{Active learning}: select samples with high posterior uncertainty
+        (high $\rho$) to label next, improving data efficiency
+    \item \textbf{Model averaging}: combine predictions from multiple models weighted
+        by their posterior probabilities
+    \item \textbf{Gaussian Processes}: naturally provide posterior predictive distributions
+        with uncertainty estimates
+\end{itemize}
 
 \subsection{Bayes estimators for common loss functions}
 \begin{itemize}

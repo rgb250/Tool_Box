@@ -13,6 +13,21 @@ $\mathcal{D}^{(s)}$ to get a \tB{set of estimates $\{\delta(\mathcal{D}^{(s)})
 As we late $S \rightarrow \infty$, the distribution induced on $\hat{\theta}(\cdot
 )$ is the \tR{\textbf{sampling distribution of the estimator}.}
 
+\paragraph{Examples of estimators}
+\begin{itemize}
+    \item \textbf{Sample Mean} (estimator for population mean $\mu$):\\
+        $\hat{\mu} = \bar{x} = \frac{1}{N}\su{i=1}{N} x_i$\\
+        \tB{Sampling distribution: If $X \sim \mathcal{N}(\mu, \sigma^2)$, then
+        $\bar{X} \sim \mathcal{N}\left(\mu, \frac{\sigma^2}{N}\right)$.}\\
+        By CLT, approximately normal for large $N$ even for non-normal data.
+    \item \textbf{Sample Variance} (estimator for population variance $\sigma^2$):
+        \begin{itemize}
+            \item Biased: $\hat{\sigma}^2 = \frac{1}{N}\su{i=1}{N}(x_i - \bar{x})^2$
+            \item Unbiased: $s^2 = \frac{1}{N-1}\su{i=1}{N}(x_i - \bar{x})^2$
+        \end{itemize}
+        \tB{Sampling distribution: $\frac{(N-1)s^2}{\sigma^2} \sim \chi^2_{N-1}$}
+\end{itemize}
+
 \subsection{Bootstrap}
 It is a \tB{simple \emph{Monte Carlo} technique to approximate the sampling 
 distribution}.

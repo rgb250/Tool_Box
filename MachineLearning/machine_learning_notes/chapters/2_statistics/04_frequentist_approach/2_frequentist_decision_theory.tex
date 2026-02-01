@@ -1,31 +1,77 @@
-In Frequentist decision theory there is a loss function and a likelihood, but there
-is no prior and hence no posterior or posterior expected loss. Thus there is no 
+In Frequentist decision theory \tR{there is a loss function and a likelihood, but there
+is no prior} and hence no posterior or posterior expected loss. Thus there is no 
 automatic way of deriving an optimal estimator, unlike the Bayesian case.\\
 \uB{Instead, we are free to choose any estimator or decision procedure $\delta: 
 \mathcal{X} \rightarrow \mathcal{A}$ we want}.\\
 Having chosen an estimator, we define its \tR{expected loss or risk} as follows
 \tR{
-\begin{center}
- $R(\theta^{*}, \delta) \triangleq \mathbb{E}_{p(\tilde{\mathcal{D}}|\theta^{*})}
-\left(L(\theta^{*}, \delta(\tilde{\mathcal{D}}))\right) = \Su{}{}L\left(\theta^{*},
-\delta(\tilde{\mathcal{D}})\right)p(\tilde{\mathcal{D}}|\theta^{*})d\tilde{\mathcal{D}}$   
-\end{center}
+$$ R(\theta^{*}, \delta(\tilde{\mathcal{D}})) \triangleq \mathbb{E}_{p(\tilde{\mathcal{D}}|\theta^{*})}
+\left(L(\theta^{*}, \delta(\tilde{\mathcal{D}}))\right) =
+\begin{cases}
+    \su{\tilde{\mathcal{D}}}{}L\left(\theta^{*}, \delta(\tilde{\mathcal{D}})\right)p(\tilde{\mathcal{D}}|\theta^{*}) & \text{discrete} \\
+    \Su{}{}L\left(\theta^{*}, \delta(\tilde{\mathcal{D}})\right)p(\tilde{\mathcal{D}}|\theta^{*})d\tilde{\mathcal{D}} & \text{continuous}
+\end{cases}
+$$
 }
 where $\tilde{\mathcal{D}}$ is data sampled from 'nature's distribution' represented by
-parameter $\theta^{*}$.\\
-Whereas the \tR{Bayesian posterior expected loss}: 
+parameter $\theta^{*}$. Note that here \uB{we adopted an inferential point of view}
+(estimating parameters).
+Alternatively, adopting a \uB{predictive point of view} (predicting labels), the
+expected loss becomes:
+$$ R(y, \delta(\bm{x})) \triangleq \mathbb{E}_{p(\tilde{\bm{x}}, \tilde{y}|\theta^{*})}
+\left(L(\tilde{y}, \delta(\tilde{\bm{x}}))\right) =
+\begin{cases}
+    \su{\tilde{\bm{x}}, \tilde{y}}{}L\left(\tilde{y}, \delta(\tilde{\bm{x}})\right)p(\tilde{\bm{x}}, \tilde{y}|\theta^{*}) & \text{discrete} \\
+    \Su{}{}L\left(\tilde{y}, \delta(\tilde{\bm{x}})\right)p(\tilde{\bm{x}}, \tilde{y}|\theta^{*})d\tilde{\bm{x}}d\tilde{y} & \text{continuous}
+\end{cases}
+$$
+where we average over future data $(\tilde{\bm{x}}, \tilde{y})$ sampled from the true distribution.\\
+Whereas the \tR{Bayesian posterior expected loss}:
 \tR{
-\begin{center}
-    $p(a|\mathcal{D, \pi}) \triangleq \mathbb{E}_{p(\theta|\mathcal{D},\pi)}\left(
-        L(\theta, a)\right) = \Su{\Theta}{}L(\theta, \bm{a})p(\theta|\mathcal{D}, \pi)
-        d\theta
-    $
-\end{center}
+$$ \rho(a|\mathcal{D, \pi}) \triangleq \mathbb{E}_{p(\theta|\mathcal{D},\pi)}\left(
+    L(\theta, a)\right) =
+\begin{cases}
+    \su{\theta}{}L(\theta, a)p(\theta|\mathcal{D}, \pi) & \text{discrete} \\
+    \Su{\Theta}{}L(\theta, a)p(\theta|\mathcal{D}, \pi) d\theta & \text{continuous}
+\end{cases}
+$$
 }
-We see that the Bayesian approach averages over $\theta$, which is unknown, and conditions
-on $\mathcal{D}$ which is known. Unlike the frequentist approach averages over $\tilde{
-\mathcal{D}}$, thus ignoring the observed data, and conditions on $\theta^{*}$ which is 
-unknown.
+The tilde notation ($\tilde{\mathcal{D}}$) highlights a fundamental difference between
+the two paradigms:
+\begin{itemize}
+    \item \textbf{Frequentist} (pre-data perspective):
+        \begin{itemize}
+            \item \tB{Conditions on}: $\theta^{*}$ (the true but unknown parameter)
+            \item \tB{Averages over}: $\tilde{\mathcal{D}}$ (hypothetical future datasets
+                that \emph{could} be sampled)
+        \end{itemize}
+        The tilde indicates these are imagined/potential samples, not observed data.
+        \uB{``How would my estimator perform across many hypothetical repetitions of the
+        experiment?''}
+    \item \textbf{Bayesian} (post-data perspective):
+        \begin{itemize}
+            \item \tB{Conditions on}: $\mathcal{D}$ (the actual observed data)
+            \item \tB{Averages over}: $\theta$ (the uncertain parameter)
+        \end{itemize}
+        No tilde because we use the actual observed data.
+        \uB{``Given what I observed, what do I believe about the unknown quantity?''}
+\end{itemize}
+
+\paragraph{Examples of frequentist expected loss (risk)}
+\begin{itemize}
+    \item \textbf{Mean Squared Error (MSE)} (inferential):
+        \begin{itemize}
+            \item Loss: $L(\theta^*, \delta(\mathcal{D})) = (\theta^* - \delta(\mathcal{D}))^2$
+            \item Risk: $R(\theta^*, \delta) = \mathbb{E}[(\theta^* - \delta(\tilde{\mathcal{D}}))^2]
+                = \text{Var}(\delta) + \text{Bias}^2(\delta)$
+        \end{itemize}
+    \item \textbf{Misclassification rate} (predictive):
+        \begin{itemize}
+            \item Loss: $L(y, \delta(\bm{x})) = \mathbbm{1}_{\{y \neq \delta(\bm{x})\}}$
+            \item Risk: $R = \mathbb{E}[\mathbbm{1}_{\{\tilde{y} \neq \delta(\tilde{\bm{x}})\}}]
+                = P(\tilde{y} \neq \delta(\tilde{\bm{x}}))$
+        \end{itemize}
+\end{itemize}
 
 \subsection{Bayes risk}
 How to chose amongst the estimators? 
