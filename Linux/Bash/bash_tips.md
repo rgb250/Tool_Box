@@ -30,6 +30,7 @@
 - [SEARCH IN FILES](#search-in-files)
 - [Read section of a file](#read-section-of-a-file)
 - [Replace string in files](#replace-string-in-files)
+- [SUBSTITUTION](#substitution)
 - [Copy content](#copy-content)
 - [Process Information](#process-information)
   - [Move a list of files](#move-a-list-of-files)
@@ -253,6 +254,15 @@ f=name_of_a_file.txt
 echo "${f%.*}"  # will capture only "name_of_a_file" part without extension
 sub=document
 echo "${f/file/"$sub"}"  # will return "name_of_a_document.txt" part without extension
+````
+# SUBSTITUTION
+
+````bash
+str_to_replace="I like Nano."
+str_sub="Vim"
+echo "${str_to_replace//Nano/$str_sub}"  # // just means replace all
+echo "${src/sampling/api/\//.}"  # // just means replace all
+echo "src/sampling/api}" | sed "s/\//./g"  # more robust than builtin substitution
 ````
 
 # Copy content

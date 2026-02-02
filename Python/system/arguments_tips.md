@@ -87,20 +87,15 @@ pipdeptree -r -p numpy  # will display all the package requested a given version
 
 ```python
 import logging
-from getpass import getuser
 
-dict_info_extra = {'user': getuser()}                                       # get username
-FORMAT = '%(asctime)s - %(user)s - %(name)s - %(funcName)s - %(levelname)s - %(message)s'  # format of the log
 logging.basicConfig(
-    format=FORMAT,
     level=logging.DEBUG,
-    encoding='utf-8',
+    format="%(asctime)s - %(name)s - %(funcName)s - %(levelname)s - %(message)s",
     handlers=[
-        logging.FileHandler(filename='debug.log', mode='w'),  # creates stream handler and file handler
-        logging.StreamHandler()                               # creates logger
-    ]
-)                                                                
-logger = logging.getLogger(name=__name__)                        
-logger = logging.LoggerAdapter(logger, extra=dict_info_extra)    # feeds FORMAT information with dict_info_extra
-
+        logging.FileHandler("debug.log", mode="w", encoding="utf-8"),
+        logging.StreamHandler(),
+    ],
+)
+logging.getLogger().handlers[1].setLevel(logging.INFO)  # Set stream handler to INFO
+logger = logging.getLogger(__name__)
 ```
