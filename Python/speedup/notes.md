@@ -75,7 +75,7 @@ with parallel_config(backend='loky', n_jobs=cnt_processes):
 
 ### Introduction
 
-Nor multirpocessing, nor multithreading even if more like the latter than the former.
+Neither multiprocessing nor multithreading, even if more like the latter than the former.
 It uses one thread and one cpu
 
 # Dask
@@ -94,7 +94,7 @@ task graph. Finally the real computation will occur once users will ask for it.
 
 - ``graphviz``, complex installation on Windows
 - ``ipycytoscape`` 
-- ``nodjs``
+- ``nodejs``
 - ``dask-labextension``: [dask-labextension](https://github.com/dask/dask-labextension)
 
 ## Data Ingestion
@@ -134,7 +134,7 @@ x = da.random.random
 ### Dask Bags
 
 This object implements operations like ``map``, ``filter``, ``groupby`` and
-*aggregation* on collections of Python objects. It can be viewed as a **parrallel
+*aggregation* on collections of Python objects. It can be viewed as a **parallel
 version of ``itertools``**.
 
 Very useful to work with dictionaries.

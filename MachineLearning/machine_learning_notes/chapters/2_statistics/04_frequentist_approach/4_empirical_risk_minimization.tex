@@ -8,16 +8,28 @@ predict observable quantities, as opposed to estimating hidden variables or para
 \tB{Instead of looking at loss functions of the form $L(\bm{\theta^{*}}, 
 \delta(\mathcal{D}))$ let us look at loss functions of the form $L(y, \delta(\bm{x}))$}.\\
 Then the risk becomes:
-$R(p_{*}, \delta) \triangleq \mathbb{E}_{(\bm{x}, y)\hookrightarrow p_{*}}\left(L(y,
-\delta(\bm{x}))\right) = \su{\bm{x}}{}\su{\bm{y}}{}L(y, \delta(\bm{x}))p_{*}(\bm{x}, y)$
-Where $p_{*}$ represents "nature's distribution", indeed this distribution is unknown, 
-but a simple approach is to use the empirical distribution, derived from some training 
-data to approximate $p_{*}(x,y)\approx
-p_{emp}(x,y) \triangleq \dfrac{1}{N}\su{i=1}{N}\delta_{x_{i}}(\bm{x})\delta_{y_{i}}(y)$
-We define the empirical risk as follows:
+$R(\theta^{*}, \delta) \triangleq \mathbb{E}_{(\bm{x}, y)\hookrightarrow p(\cdot|\theta^{*})}\left(L(y,
+\delta(\bm{x}))\right) = \su{\bm{x}}{}\su{\bm{y}}{}L(y, \delta(\bm{x}))p(\bm{x}, y|\theta^{*})$
+This distribution is unknown, but a simple approach is to use the empirical distribution,
+derived from some training data to approximate $p(\bm{x},y|\theta^{*})\approx
+p_{emp}(\bm{x},y) \triangleq \dfrac{1}{N}\su{i=1}{N}\mathbbm{1}_{\{\bm{x}=x_{i}\}}\mathbbm{1}_{\{y=y_{i}\}}$
+that it is a fundamental approach to model the true distribution based on frequencies considering the
+training dataset. From law of large numbers we expect that $p_{emp}$ converges toward $p(\cdot|\theta^{*})$ .\\
+where $\mathbbm{1}_{\{\bm{x}=x_{i}\}}$ and $\mathbbm{1}_{\{y=y_{i}\}}$ are \textbf{indicator functions}
+that equal 1 when the condition is satisfied and 0 otherwise.
+This places equal probability mass ($\frac{1}{N}$) on each observed data point.
+Substituting $p_{emp}$ into the risk definition:
+\begin{align*}
+R_{emp}(\mathcal{D}, \delta) &= \su{\bm{x}}{}\su{y}{}L(y, \delta(\bm{x}))p_{emp}(\bm{x}, y)\\
+&= \su{\bm{x}}{}\su{y}{}L(y, \delta(\bm{x})) \cdot \dfrac{1}{N}\su{i=1}{N}\mathbbm{1}_{\{\bm{x}=x_{i}\}}\mathbbm{1}_{\{y=y_{i}\}}\\
+&= \dfrac{1}{N}\su{i=1}{N}\su{\bm{x}}{}\su{y}{}L(y, \delta(\bm{x}))\mathbbm{1}_{\{\bm{x}=x_{i}\}}\mathbbm{1}_{\{y=y_{i}\}}\\
+&= \dfrac{1}{N}\su{i=1}{N}L(y_{i}, \delta(\bm{x}_{i}))
+\end{align*}
+The last step follows because the indicator functions select only the terms where $\bm{x}=x_i$ and $y=y_i$.
+Hence the \tR{empirical risk}:
 \tR{
 \begin{center}
-    $R_{emp}(\mathcal{D}, \mathcal{D}) \triangleq R(p_{emp}, \delta) = \dfrac{1}{N}
+    $R_{emp}(\mathcal{D}, \delta) = \dfrac{1}{N}
     \su{i=1}{N}L(y_{i}, \delta(\bm{x}_{i}))$
 \end{center}
 }
@@ -27,6 +39,45 @@ We define the empirical risk as follows:
 \begin{center}
     $R'(\mathcal{D}, \delta) = R_{emp}(\mathcal{D}, \delta) + \lambda C(\delta)$
 \end{center}
-where $C(\delta)$ measures the complexity of the prediction function $\delta(\bm{x})$ and 
-$\lambda$ controls the strength of the complexity penalty. 
+where \uB{$C(\delta)$ measures the complexity of the prediction function $\delta(\bm{x})$} and
+$\lambda$ controls the strength of the complexity penalty.
 This approach is known as \textbf{regularized risk minimization}.
+
+\subsection{Practical applications in Machine Learning}
+\paragraph{Empirical Risk Minimization (ERM)}
+\tR{Training a model is minimizing empirical risk}:
+\begin{itemize}
+    \item Loss function in training (MSE, cross-entropy, etc.) corresponds to $L(y, \delta(\bm{x}))$
+    \item Training objective: $R_{emp} = \dfrac{1}{N}\su{i=1}{N}L(y_i, \delta(\bm{x}_i))$
+    \item Gradient descent minimizes $R_{emp}$ over model parameters
+\end{itemize}
+\begin{center}
+\begin{tabular}{|l|l|}
+    \hline
+    \textbf{ML Algorithm} & \textbf{Loss} $L(y, \delta(\bm{x}))$ \\
+    \hline
+    Linear regression & $(y - \delta(\bm{x}))^2$ \\
+    Logistic regression & $-y\log(\delta(\bm{x})) - (1-y)\log(1-\delta(\bm{x}))$ \\
+    SVM & $\max(0, 1 - y \cdot \delta(\bm{x}))$ \\
+    Neural networks & cross-entropy, MSE, etc. \\
+    \hline
+\end{tabular}
+\end{center}
+
+\paragraph{Regularized Risk in practice}
+$R'(\mathcal{D}, \delta) = R_{emp} + \lambda C(\delta)$ is used in:
+\begin{itemize}
+    \item \textbf{Ridge regression}: $C(\delta) = ||\bm{w}||_2^2$
+    \item \textbf{Lasso}: $C(\delta) = ||\bm{w}||_1$
+    \item \textbf{Neural network weight decay}: $C(\delta) = ||\bm{\theta}||_2^2$
+    \item \textbf{Dropout}: implicit regularization
+\end{itemize}
+
+\paragraph{True Risk vs Empirical Risk gap}
+This gap explains fundamental ML phenomena:
+\begin{itemize}
+    \item \textbf{Overfitting}: low $R_{emp}$ but high $R(\theta^*, \delta)$
+    \item \textbf{Generalization}: want $R(\theta^*, \delta) \approx R_{emp}$
+    \item \textbf{Validation/test sets}: estimate true risk since we cannot compute it directly
+    \item \textbf{Bias-variance tradeoff}: decomposition of true risk
+\end{itemize}

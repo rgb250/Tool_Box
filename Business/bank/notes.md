@@ -21,4 +21,4 @@ More common in several Commonwealth countries
 ### Others 
 - Mutual saving banks (Caisse d'épargne)
 - Saving and loan associations
-- Tustee savings banks
+- Trustee savings banks

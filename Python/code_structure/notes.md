@@ -1,6 +1,6 @@
 - [Recursive function](#recursive-function)
   - [Introduction](#introduction)
-  - [Exemple](#exemple)
+  - [Example](#exemple)
 - [Positional Arguments (args) and KeyWordsArguments (kwargs)](#positional-arguments-args-and-keywordsarguments-kwargs)
 - [Module](#module)
 - [Object Oriented Programming](#object-oriented-programming)
@@ -23,7 +23,7 @@ Amongst the appealing points of recursive functions we have:
 - simplicity over nested iterations
 - gain of effectivity compare with some standard approaches
 
-## Exemple
+## Example
 
 ````python
 """ This code allows to collect the file contained in a root folder and its child folders depending on file extension. """
@@ -167,7 +167,7 @@ a class providing a way to control access to an attribute by defining the follow
 - *deleter*
 
 ````python
-# ######################################### porpety() ########################################
+# ######################################### property() ########################################
 class Book(object):
 
   def __init__(self, title: str) -> None:
@@ -187,7 +187,7 @@ class Book(object):
 
   title = property(getter, setter, deleter)
 
-# ######################################### @porpety #########################################
+# ######################################### @property #########################################
 
 class Book(object):
 

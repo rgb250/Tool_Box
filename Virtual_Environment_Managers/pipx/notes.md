@@ -8,7 +8,7 @@ Index (**PyPI**) in a **big app store for Python applications**.
 
 # Settings
 
-Pay attention to provide a default Python isolated from the ones used in 
+Pay attention to provide a default Python independent from the ones used in
 virtual environments.
 
 ````bash

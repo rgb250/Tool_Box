@@ -1,7 +1,8 @@
-# Definition 
-Set the port, intern and extern
-Download an image, like linux
-``Dock file`` contains a set of instructions
+# Definition
+
+Set the port, internal and external.
+Download an image, like Linux.
+``Dockerfile`` contains a set of instructions.
 
 # What are containers ?
 
@@ -21,6 +22,4 @@ and dependencies together.
 
 # Kubernetes 
 
-## Deployments
-
-### 
+## Deployments 

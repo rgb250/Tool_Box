@@ -57,7 +57,7 @@ Below are the character codes to format the date and time:-
 | %U   |Returns the week number of the year (Sunday as the first day of the week) from 00 to 53     |
 | %W   |Returns the week number of the year (Monday as the first day of the week) from 00 to 53     |
 
-## Change local
+## Change Locale
 
 For example try to make Python understand the date "*01 JANVIER 2024*":
 

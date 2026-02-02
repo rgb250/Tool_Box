@@ -34,7 +34,7 @@ sudo snap remove package_snap   # remove
 - Apt
 ```bash
 sudo apt-get remove package_snap  # install 
-sudo apt-get  package_snap        # remove
+sudo apt-get remove package_snap  # remove
 ```
 ## b. How to check the list of packages
 - Apt-get
@@ -79,10 +79,10 @@ sudo apt-get clean && sudo apt-get autoremove && sudo reboot
 ````
 # 2) System 
 ## a. Update and upgrade
-When LTS (Long Term Support) are available follow the steps bellow:
+When LTS (Long Term Support) versions are available follow the steps below:
 ````bash
 sudo apt-get update && sudo apt-get upgrade -y  # updates and upgrades packages
-sudo apt-get dist-upgrade                       # does same and handle dependencies withe new packages
+sudo apt-get dist-upgrade                       # does same and handles dependencies with new packages
 sudo do-release-upgrade                         # update os to latest release
 ````
 

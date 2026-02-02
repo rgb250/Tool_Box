@@ -42,7 +42,8 @@ print('{:-9}, {:2.2%}'.format(x, y))  # 42572654, 29,24%
 |'c'   | Character, converts the integer to the corresponding unicode character               |
 |'s'   | String format, the default format                                                    |
 
-Exemple
+Example
+
 ```python
 "int: {0:d};  hex: {0:#x};  oct: {0:#o};  bin: {0:#b}".format(42) # 'int: 42;  hex: 0x2a;  oct: 0o52;  bin: 0b101010'
 print(f'Finished in {qh:.0f}h:{qm:.0f}m:{rs:.0f}s.')  # no decimal

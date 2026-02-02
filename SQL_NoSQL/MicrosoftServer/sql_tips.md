@@ -61,7 +61,7 @@ CASE(yn_col_name WHEN 'Y' THEN 1 ELSE 0 END)
 COUNT(*)
 ````
 
-# III) Specifities
+# III) Specificities
 ## 1) Deal with special name columns
 `[]` to use special column name like `date`, `month`
 

@@ -7,7 +7,7 @@ To check if the deviations from a theoretically expected distribution of observa
     \item \tB{Sample items are independent.}
     \item Items are dichotomous and nominal.
     \item The sample size is significantly less than the population size
-    \item The sample is a fiar representation of the population
+    \item The sample is a fair representation of the population
 \end{itemize}
 
 
@@ -39,20 +39,80 @@ frequencies.
 \paragraph{Assumptions}
 \begin{itemize}
     \item simple random sample
-    \item sample with a sufficiently large size is assumed, for small sample size see Cash test
+    \item sample with a sufficiently large size is assumed, for small sample size see Fisher's exact test
     \item \uB{expected cell count has to be adequate}, a rule of thumb is at least 5 for 2-by-2
         table and 5 or more in 80\% of cells in larger tables.
     \item Independence of the observations
 \end{itemize}
 
 \paragraph{Frequentist}
-\tB{$\chi^{2} = \su{i=1}{n}\dfrac{\left(\frac{O_{i}}{N} - p_{i} \right)^{2}}{p_{i}}$}: 
+\tB{$\chi^{2} = \su{i=1}{k}\dfrac{(O_{i} - E_{i})^{2}}{E_{i}}$}
+where $E_i = Np_i$ is the expected count and:
 $\begin{cases}
-    O_{i}\text{: \uB{number of observations} of type }i \\
+    O_{i}\text{: \uB{observed count} of type }i \\
+    E_{i}\text{: \uB{expected count} of type }i \\
     N\text{: total number of observations}\\
-    n\text{: number of cells in the table.}\\
-    p_{i}\text{: \uB{expected proportions of the fraction} of type }i\text{ in the population.}
+    k\text{: number of categories}\\
+    p_{i}\text{: \uB{expected proportion} of type }i\text{ under } H_0
 \end{cases}$
+
+\paragraph{From trials to counts}
+Consider $N$ independent trials, each resulting in one of $k$ categories.
+Define the \textbf{indicator variable}:
+$$X_{ij} = \mathbbm{1}_{\{\text{trial } j \text{ results in category } i\}} =
+\begin{cases} 1 & \text{if trial } j \to \text{category } i \\ 0 & \text{otherwise} \end{cases}$$
+
+\begin{center}
+\begin{tabular}{|c|*{6}{c}|c|}
+    \hline
+    & \textbf{Trial 1} & \textbf{Trial 2} & $\cdots$ & \textbf{Trial $j$} & $\cdots$ & \textbf{Trial $N$} & \textbf{Row sum} \\
+    \hline
+    \textbf{Category 1} & $X_{11}$ & $X_{12}$ & $\cdots$ & $X_{1j}$ & $\cdots$ & $X_{1N}$ & $O_1 = \su{j=1}{N}X_{1j}$ \\
+    \textbf{Category 2} & $X_{21}$ & $X_{22}$ & $\cdots$ & $X_{2j}$ & $\cdots$ & $X_{2N}$ & $O_2 = \su{j=1}{N}X_{2j}$ \\
+    $\vdots$ & $\vdots$ & $\vdots$ & $\ddots$ & $\vdots$ & $\ddots$ & $\vdots$ & $\vdots$ \\
+    \textbf{Category $i$} & $X_{i1}$ & $X_{i2}$ & $\cdots$ & $X_{ij}$ & $\cdots$ & $X_{iN}$ & $O_i = \su{j=1}{N}X_{ij}$ \\
+    $\vdots$ & $\vdots$ & $\vdots$ & $\ddots$ & $\vdots$ & $\ddots$ & $\vdots$ & $\vdots$ \\
+    \textbf{Category $k$} & $X_{k1}$ & $X_{k2}$ & $\cdots$ & $X_{kj}$ & $\cdots$ & $X_{kN}$ & $O_k = \su{j=1}{N}X_{kj}$ \\
+    \hline
+    \textbf{Col sum} & $1$ & $1$ & $\cdots$ & $1$ & $\cdots$ & $1$ & $N$ \\
+    \hline
+\end{tabular}
+\end{center}
+
+\textbf{Key relationships}:
+\begin{itemize}
+    \item Each column sums to 1: $\su{i=1}{k}X_{ij} = 1$ (each trial falls in exactly one category)
+    \item \textbf{Observed count}: $O_i = \su{j=1}{N}X_{ij}$ (sum of row $i$)
+    \item $X_{ij} \sim \text{Bernoulli}(p_i)$ with $\mathbb{E}[X_{ij}] = p_i$
+    \item \textbf{Expected count}: $E_i = \mathbb{E}[O_i] = \mathbb{E}\left[\su{j=1}{N}X_{ij}\right]
+        = \su{j=1}{N}\mathbb{E}[X_{ij}] = \su{j=1}{N}p_i = Np_i$
+\end{itemize}
+
+\paragraph{Derivation (goodness-of-fit)}
+The $\chi^2$ test statistic is derived from the normal approximation to the multinomial distribution.
+\begin{enumerate}
+    \item \textbf{Multinomial distribution}: Under $H_0$, observed counts $(O_1, \ldots, O_k)$ follow
+        a multinomial distribution with:
+        \begin{itemize}
+            \item $\mathbb{E}[O_i] = Np_i = E_i$
+            \item $\text{Var}(O_i) = Np_i(1-p_i) = E_i(1-p_i)$
+            \item $\text{Cov}(O_i, O_j) = -Np_ip_j$ for $i \neq j$ (negative correlation)
+        \end{itemize}
+    \item \textbf{Why $\sqrt{E_i}$ and not $\sqrt{E_i(1-p_i)}$?}\\
+        The true standard deviation is $\sigma_i = \sqrt{E_i(1-p_i)} \neq \sqrt{E_i}$.
+        The $\chi^2$ statistic is \emph{not} a simple sum of squared standardized normals,
+        but a specific \textbf{quadratic form} that accounts for the covariance structure.
+        It can be shown that:
+        $$\chi^2 = \su{i=1}{k}\dfrac{(O_i - E_i)^2}{E_i} \xrightarrow{d} \chi^2_{k-1}$$
+        The factors $(1-p_i)$ and covariances ``cancel out'' in this quadratic form construction.
+    \item \textbf{Chi-squared distribution}: Recall that if $Z_1, \ldots, Z_m \stackrel{iid}{\sim} \mathcal{N}(0,1)$, then
+        $\su{i=1}{m}Z_i^2 \sim \chi^2_m$
+    \item \textbf{Degrees of freedom}: $k-1$ (not $k$) due to the constraint $\su{i=1}{k}O_i = N$,
+        which introduces a linear dependency among the $k$ counts.
+\end{enumerate}
+This explains \uB{why expected counts must be sufficiently large} ($E_i \geq 5$): the test relies
+on the normal approximation to the multinomial, which requires large samples.
+
 \paragraph{Bayesian}
 Does not exist, see \emph{contingency table}\\
 \textit{\hyperref[statistical_method_table]{Return to the table.}}
@@ -156,7 +216,7 @@ frequencies. \uB{This test tends to replace $\chi^{2}$\emph{-test}}
 
 \paragraph{Weaknesses}
 \begin{itemize}
-    \item in test of independence, for a small sample size use rather Fisher's extract 
+    \item in test of independence, for a small sample size use rather Fisher's exact
         test.
 \end{itemize}
 
@@ -370,7 +430,7 @@ Finally thanks to the successive conditionalization the Bayes Factor are easy to
 \end{itemize}
 
 
-\subsection{Wilconox test}
+\subsection{Wilcoxon test}
 Non parametric test, \uB{used to test the location of a population based on a data sample or 
 to compare the locations of two populations using two matching samples}.\\
 It is a good alternative of the \emph{t-test} when the mean is not of interest for the 
@@ -397,20 +457,25 @@ In restricting the distributions of interest we can reach more interpretable nul
 alternative hypotheses. On mildly restrictive is that $F^(2)$ has a unique median $\mu$. 
 This median is called pseudo median of $F$
 Then we have $H_{0}:~\mu=0$
-\begin{itemize}
-    \item  
-\end{itemize}
-
-
 \paragraph{Assumptions}
 \begin{itemize}
-    \item Distribution $F$ is symmetric
+    \item Distribution $F$ is symmetric around its median
+    \item Observations are independent
+    \item Data is at least ordinal
 \end{itemize}
 
 \paragraph{Strengths}
-\paragraph{Weaknesses}
+\begin{itemize}
+    \item Non-parametric: no normality assumption required
+    \item More powerful than the sign test
+    \item Robust to outliers
+\end{itemize}
 
-TO COMPLETE
+\paragraph{Weaknesses}
+\begin{itemize}
+    \item Requires symmetry assumption
+    \item Less powerful than $t$-test when normality holds
+\end{itemize}
 
 \subsection{Mann-Whitney test}
 Test for a randomly selected values $x$ and $y$ from 2 populations, $\Prob{x\leq y} = 
@@ -421,7 +486,7 @@ and $\left(y_{i}\right)_{1\leq i\leq n_{2}}$ both samples independent of each ot
 Then
 \tB{$\begin{cases}
     U_{1} = n_{1}n_{2} + \frac{n_{1}(n_{1} + 1)}{2} - R_{1} \\
-    U_{2} = n_{1}n_{2} + \frac{n_{2}(n_{2} + 2)}{2} - R_{2} 
+    U_{2} = n_{1}n_{2} + \frac{n_{2}(n_{2} + 1)}{2} - R_{2} 
 \end{cases}$}
 $R_{1}, R_{2}$ being the sum of the ranks in groups 1 and 2. \\
 Note that $AUC_{1}=\dfrac{U_{1}}{n_{1}n_{2}}$ meaning \emph{U}-statistics is related to
@@ -430,16 +495,26 @@ the area under the receiver operating characteristic.
 
 \paragraph{Assumptions}
 \begin{itemize}
-    \item All observation from both groups are independent
+    \item All observations from both groups are independent
     \item Values are at least ordinal
-    \item $H_{0}$: the distribution of both population is identical
-    \item $H_{1}$: the 2 distribution of population are different
+    \item $H_{0}$: the distributions of both populations are identical
+    \item $H_{1}$: the distributions of the 2 populations are different
 \end{itemize}
 
 \paragraph{Strengths}
-\paragraph{Weaknesses}
+\begin{itemize}
+    \item Non-parametric: no normality assumption required
+    \item Can be used with ordinal data
+    \item Related to AUC (Area Under ROC Curve)
+\end{itemize}
 
-\subsection{Kruksal-Wallis test}
+\paragraph{Weaknesses}
+\begin{itemize}
+    \item Less powerful than $t$-test when normality holds
+    \item Only tests for stochastic dominance, not specific location shift
+\end{itemize}
+
+\subsection{Kruskal-Wallis test}
 Non-parametrical to \tB{test if samples originate from the same distribution}.
 \paragraph{Frequentist}
 Let $N$ be the number of observations across all groups, $g$ number of groups, $n_{i}$ the
@@ -463,15 +538,20 @@ $\begin{cases}
 \paragraph{Assumptions}
 \begin{itemize}
     \item Independence
-    \item All groups should have te same distributions
+    \item All groups should have the same shape of distributions
 \end{itemize}
 
 \paragraph{Strengths}
 \begin{itemize}
-    \item Non-parametrical test, no need of the normally distributed assumption.
+    \item Non-parametric: no normality assumption required
+    \item Extension of Mann-Whitney to $k > 2$ groups
 \end{itemize}
 
 \paragraph{Weaknesses}
+\begin{itemize}
+    \item Less powerful than ANOVA when normality holds
+    \item Only detects if groups differ, not which groups differ (requires post-hoc tests)
+\end{itemize}
 
 \subsection{Friedman test}
 Non-parametric statistical test, \tB{analog of the \emph{repeated-measures ANOVA}}.
@@ -491,10 +571,21 @@ It use to detect differences in treatments across multiple test attempts.
 
 \paragraph{Assumptions}
 \begin{itemize}
-    \item Independence
+    \item Blocks are mutually independent
+    \item Observations can be ranked within blocks
 \end{itemize}
+
 \paragraph{Strengths}
+\begin{itemize}
+    \item Non-parametric alternative to repeated-measures ANOVA
+    \item No normality or sphericity assumptions
+\end{itemize}
+
 \paragraph{Weaknesses}
+\begin{itemize}
+    \item Less powerful than repeated-measures ANOVA when assumptions hold
+    \item Requires post-hoc tests to identify which treatments differ
+\end{itemize}
 
 \subsection{Spearman test}
 It \tB{assesses how well the relationship between 2 variables can be described using a monotonic 
@@ -503,24 +594,54 @@ Let $X, Y$ be 2 random variables, and $R$ the function transforming the realizat
 
 \paragraph{Frequentist}
 \tB{$r_{s} = \rho_{R(X), R(Y)} = \dfrac{Cov\left(R(X), R(Y)\right)}{\sigma_{R(X)}\sigma_{R(Y)}}$}
-$\begin{cases}
-\rho:\text{ Pearson correlation coefficient applied to the rank variables} \\
-Cov\left(R(X), R(Y)\right)
-\end{cases}$
+where $\rho$ is the Pearson correlation coefficient applied to the rank variables.
+
 \paragraph{Assumptions}
+\begin{itemize}
+    \item Observations are independent
+    \item Variables are at least ordinal
+\end{itemize}
+
 \paragraph{Strengths}
+\begin{itemize}
+    \item Robust to outliers (uses ranks)
+    \item Detects monotonic relationships (not just linear)
+    \item No normality assumption required
+\end{itemize}
+
 \paragraph{Weaknesses}
+\begin{itemize}
+    \item Less powerful than Pearson's $r$ for linear relationships with normal data
+    \item Sensitive to ties in the data
+\end{itemize}
 
 \subsection{Pearson correlation coefficient}
 This coefficient is essentially a normalized measurement of the covariance such that the result
 has a value $-1$ and 1
 \paragraph{Frequentist}
 \tB{$\rho_{X, Y} = \dfrac{Cov\left(X, Y\right)}{\sigma_{X}\sigma_{Y}}$}
+
+Sample estimator: $r = \dfrac{\su{i=1}{n}(x_i - \bar{x})(y_i - \bar{y})}{\sqrt{\su{i=1}{n}(x_i - \bar{x})^2 \su{i=1}{n}(y_i - \bar{y})^2}}$
+
 \paragraph{Assumptions}
+\begin{itemize}
+    \item Both variables are continuous
+    \item Linear relationship between variables
+    \item Bivariate normality (for inference)
+    \item Homoscedasticity
+\end{itemize}
+
 \paragraph{Strengths}
+\begin{itemize}
+    \item Well-understood theoretical properties
+    \item Optimal for detecting linear relationships in normal data
+\end{itemize}
+
 \paragraph{Weaknesses}
 \begin{itemize}
-    \item Not robust
+    \item Not robust to outliers
+    \item Only detects linear relationships
+    \item Sensitive to non-normality
 \end{itemize}
 
 \subsection{Repeated-measures ANOVA}
@@ -694,8 +815,20 @@ The statistical model for which one-way ANOVA is appropriate is that the
     \item Outcome variances are all equal to  ($\sigma^{2}$)
     \item The errors are assumed to be independent.
 \end{itemize}
+
 \paragraph{Strengths}
+\begin{itemize}
+    \item Can compare more than 2 groups simultaneously
+    \item Controls family-wise Type I error rate
+    \item Well-developed post-hoc procedures available
+\end{itemize}
+
 \paragraph{Weaknesses}
+\begin{itemize}
+    \item Sensitive to violations of normality (especially with small samples)
+    \item Sensitive to unequal variances (use Welch's ANOVA instead)
+    \item Only detects that groups differ, not which ones (requires post-hoc tests)
+\end{itemize}
 
 \subsection{T-test}
 It is commonly used when the test statistic would follow a normal distribution
@@ -718,11 +851,25 @@ By the central limit theorem, if the observations are independent and the second
 moment exist, then $t$ will approximately follow the distribution $\mathcal{N}(0, 1)$
 
 \paragraph{Assumptions}
-Although the parent population does not need to be normally distributed, the distribution
-of the population sample means $\left(\overline{x}_{s}\right)_{1\leq s\leq S}$.\\
-\paragraph{Strengths}
-\paragraph{Weaknesses}
+\begin{itemize}
+    \item Independence of observations
+    \item Normality of the population (or large sample size by CLT)
+    \item For two-sample: equal variances (or use Welch's $t$-test)
+\end{itemize}
 
+\paragraph{Strengths}
+\begin{itemize}
+    \item Most powerful test for comparing means under normality
+    \item Well-understood and widely available
+    \item Robust to mild departures from normality with large samples
+\end{itemize}
+
+\paragraph{Weaknesses}
+\begin{itemize}
+    \item Sensitive to outliers
+    \item Requires normality assumption for small samples
+    \item Two-sample version sensitive to unequal variances
+\end{itemize}
 
 \paragraph{Slope of a regression line}
 Suppose one is fitting: $Y = \alpha + \beta x + \epsilon$, where $x$ is known and $\alpha$ and $\beta$ are unknown
@@ -766,6 +913,23 @@ $\begin{cases}
 
 \paragraph{Dependent t-test for paired samples}
 $t=\dfrac{\overline{X}_{D} - \mu_{0}}{\frac{s_{D}}{\sqrt{n}}}$
+
+where $X_D = X_1 - X_2$ is the difference between paired observations.
+
 \paragraph{Assumptions}
+\begin{itemize}
+    \item Pairs are independent
+    \item Differences are normally distributed
+\end{itemize}
+
 \paragraph{Strengths}
+\begin{itemize}
+    \item More powerful than independent $t$-test when data is paired
+    \item Controls for individual differences
+\end{itemize}
+
 \paragraph{Weaknesses}
+\begin{itemize}
+    \item Requires paired/matched data
+    \item Sensitive to outliers in the differences
+\end{itemize}
