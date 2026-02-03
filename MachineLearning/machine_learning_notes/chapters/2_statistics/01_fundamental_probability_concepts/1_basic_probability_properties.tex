@@ -94,7 +94,12 @@ $\sigma_{X}^{2}=\E{X^{2}}-\mu_{X}^{2}$
 \end{center}
 And:
 \begin{center}
-	$\V{aX+b}=a^{2}\V{X}$
+	$\V{\su{i=1}{n}a_{i}X_{i}} = \E{\left(\su{i=1}{n}a_{i}X_{i}\right)^{2}} - \left(\E{\su{i=1}{n}a_{i}X_{i}}\right)^{2}
+	= \E{\su{i=1}{n}\su{j=1}{n}a_{i}a_{j}X_{i}X_{j}} - \left(\su{i=1}{n}a_{i}\E{X_{i}}\right)^{2}$\\
+	$= \su{i=1}{n}\su{j=1}{n}a_{i}a_{j}\E{X_{i}X_{j}} - \su{i=1}{n}\su{j=1}{n}a_{i}a_{j}\E{X_{i}}\E{X_{j}}
+	= \su{i=1}{n}\su{j=1}{n}a_{i}a_{j}\left(\E{X_{i}X_{j}} - \E{X_{i}}\E{X_{j}}\right)$\\
+	$= \su{i=1}{n}\su{j=1}{n}a_{i}a_{j}\text{Cov}(X_{i},X_{j})
+	= \su{i=1}{n}a_{i}^{2}\V{X_{i}} + 2\su{i=1}{n}\su{j>i}{n}a_{i}a_{j}\text{Cov}(X_{i},X_{j})$
 \end{center}
 
 \paragraph{Skewness and Kurtosis}

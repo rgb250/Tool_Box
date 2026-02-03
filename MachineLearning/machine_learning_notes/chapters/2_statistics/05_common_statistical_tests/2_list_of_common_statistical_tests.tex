@@ -82,8 +82,8 @@ $$X_{ij} = \mathbbm{1}_{\{\text{trial } j \text{ results in category } i\}} =
 \textbf{Key relationships}:
 \begin{itemize}
     \item Each column sums to 1: $\su{i=1}{k}X_{ij} = 1$ (each trial falls in exactly one category)
-    \item \textbf{Observed count}: $O_i = \su{j=1}{N}X_{ij}$ (sum of row $i$)
-    \item $X_{ij} \sim \text{Bernoulli}(p_i)$ with $\mathbb{E}[X_{ij}] = p_i$
+    \item \textbf{Observed count}: \tR{$O_i = \su{j=1}{N}X_{ij}$ (sum of row $i$)}
+    \item \tB{$X_{ij} \sim \text{Bernoulli}(p_i)$ with $\mathbb{E}[X_{ij}] = p_i$}
     \item \textbf{Expected count}: $E_i = \mathbb{E}[O_i] = \mathbb{E}\left[\su{j=1}{N}X_{ij}\right]
         = \su{j=1}{N}\mathbb{E}[X_{ij}] = \su{j=1}{N}p_i = Np_i$
 \end{itemize}
@@ -102,9 +102,12 @@ The $\chi^2$ test statistic is derived from the normal approximation to the mult
         The true standard deviation is $\sigma_i = \sqrt{E_i(1-p_i)} \neq \sqrt{E_i}$.
         The $\chi^2$ statistic is \emph{not} a simple sum of squared standardized normals,
         but a specific \textbf{quadratic form} that accounts for the covariance structure.
-        It can be shown that:
-        $$\chi^2 = \su{i=1}{k}\dfrac{(O_i - E_i)^2}{E_i} \xrightarrow{d} \chi^2_{k-1}$$
-        The factors $(1-p_i)$ and covariances ``cancel out'' in this quadratic form construction.
+        Let $Z_i = \dfrac{O_i - E_i}{\sqrt{E_i}}$, then $\chi^2 = \su{i=1}{k}Z_i^2 = \mathbf{Z}^T\mathbf{Z}$ with:
+        $$\text{Var}(Z_i) = \dfrac{E_i(1-p_i)}{E_i} = 1-p_i \quad\text{and}\quad \text{Cov}(Z_i, Z_j) = \dfrac{-Np_ip_j}{N\sqrt{p_ip_j}} = -\sqrt{p_ip_j}$$
+        The covariance matrix is $\Sigma = I - \sqrt{\mathbf{p}}\sqrt{\mathbf{p}}^T$ where $\sqrt{\mathbf{p}} = (\sqrt{p_1}, \ldots, \sqrt{p_k})^T$.\\
+        $\Sigma$ is \textbf{idempotent} ($\Sigma^2 = \Sigma$) because $\sqrt{\mathbf{p}}^T\sqrt{\mathbf{p}} = \su{i=1}{k}p_i = 1$:
+        $$\Sigma^2 = I - 2\sqrt{\mathbf{p}}\sqrt{\mathbf{p}}^T + \sqrt{\mathbf{p}}\underbrace{(\sqrt{\mathbf{p}}^T\sqrt{\mathbf{p}})}_{=1}\sqrt{\mathbf{p}}^T = I - \sqrt{\mathbf{p}}\sqrt{\mathbf{p}}^T = \Sigma$$
+        For idempotent $\Sigma$: $\mathbf{Z}^T\mathbf{Z} \xrightarrow{d} \chi^2_{\text{rank}(\Sigma)}$ with $\text{rank}(\Sigma) = \text{tr}(\Sigma) = k - 1$.
     \item \textbf{Chi-squared distribution}: Recall that if $Z_1, \ldots, Z_m \stackrel{iid}{\sim} \mathcal{N}(0,1)$, then
         $\su{i=1}{m}Z_i^2 \sim \chi^2_m$
     \item \textbf{Degrees of freedom}: $k-1$ (not $k$) due to the constraint $\su{i=1}{k}O_i = N$,
