@@ -46,74 +46,103 @@ frequencies.
 \end{itemize}
 
 \paragraph{Frequentist}
-\tB{$\chi^{2} = \su{i=1}{k}\dfrac{(O_{i} - E_{i})^{2}}{E_{i}}$}
-where $E_i = Np_i$ is the expected count and:
+\tB{$\chi^{2} = \su{j=1}{k}\dfrac{(O_{j} - E_{j})^{2}}{E_{j}}$}
+where $E_j = Np_j$ is the expected count and:
 $\begin{cases}
-    O_{i}\text{: \uB{observed count} of type }i \\
-    E_{i}\text{: \uB{expected count} of type }i \\
+    O_{j}\text{: \uB{observed count} of category }j \\
+    E_{j}\text{: \uB{expected count} of category }j \\
     N\text{: total number of observations}\\
     k\text{: number of categories}\\
-    p_{i}\text{: \uB{expected proportion} of type }i\text{ under } H_0
+    p_{j}\text{: \uB{expected proportion} of category }j\text{ under } H_0
 \end{cases}$
 
 \paragraph{From trials to counts}
 Consider $N$ independent trials, each resulting in one of $k$ categories.
 Define the \textbf{indicator variable}:
-$$X_{ij} = \mathbbm{1}_{\{\text{trial } j \text{ results in category } i\}} =
-\begin{cases} 1 & \text{if trial } j \to \text{category } i \\ 0 & \text{otherwise} \end{cases}$$
+$$X_{ij} = \mathbbm{1}_{\{\text{trial } i \text{ results in category } j\}} =
+\begin{cases} 1 & \text{if trial } i \to \text{category } j \\ 0 & \text{otherwise} \end{cases}$$
 
 \begin{center}
 \begin{tabular}{|c|*{6}{c}|c|}
     \hline
-    & \textbf{Trial 1} & \textbf{Trial 2} & $\cdots$ & \textbf{Trial $j$} & $\cdots$ & \textbf{Trial $N$} & \textbf{Row sum} \\
+    & \textbf{Cat. 1} & \textbf{Cat. 2} & $\cdots$ & \textbf{Cat. $j$} & $\cdots$ & \textbf{Cat. $k$} & \textbf{Row sum} \\
     \hline
-    \textbf{Category 1} & $X_{11}$ & $X_{12}$ & $\cdots$ & $X_{1j}$ & $\cdots$ & $X_{1N}$ & $O_1 = \su{j=1}{N}X_{1j}$ \\
-    \textbf{Category 2} & $X_{21}$ & $X_{22}$ & $\cdots$ & $X_{2j}$ & $\cdots$ & $X_{2N}$ & $O_2 = \su{j=1}{N}X_{2j}$ \\
+    \textbf{Trial 1} & $X_{11}$ & $X_{12}$ & $\cdots$ & $X_{1j}$ & $\cdots$ & $X_{1k}$ & $1$ \\
+    \textbf{Trial 2} & $X_{21}$ & $X_{22}$ & $\cdots$ & $X_{2j}$ & $\cdots$ & $X_{2k}$ & $1$ \\
     $\vdots$ & $\vdots$ & $\vdots$ & $\ddots$ & $\vdots$ & $\ddots$ & $\vdots$ & $\vdots$ \\
-    \textbf{Category $i$} & $X_{i1}$ & $X_{i2}$ & $\cdots$ & $X_{ij}$ & $\cdots$ & $X_{iN}$ & $O_i = \su{j=1}{N}X_{ij}$ \\
+    \textbf{Trial $i$} & $X_{i1}$ & $X_{i2}$ & $\cdots$ & $X_{ij}$ & $\cdots$ & $X_{ik}$ & $1$ \\
     $\vdots$ & $\vdots$ & $\vdots$ & $\ddots$ & $\vdots$ & $\ddots$ & $\vdots$ & $\vdots$ \\
-    \textbf{Category $k$} & $X_{k1}$ & $X_{k2}$ & $\cdots$ & $X_{kj}$ & $\cdots$ & $X_{kN}$ & $O_k = \su{j=1}{N}X_{kj}$ \\
+    \textbf{Trial $N$} & $X_{N1}$ & $X_{N2}$ & $\cdots$ & $X_{Nj}$ & $\cdots$ & $X_{Nk}$ & $1$ \\
     \hline
-    \textbf{Col sum} & $1$ & $1$ & $\cdots$ & $1$ & $\cdots$ & $1$ & $N$ \\
+    \textbf{Col sum} & $O_1 = \su{i=1}{N}X_{i1}$ & $O_2 = \su{i=1}{N}X_{i2}$ & $\cdots$ & $O_j = \su{i=1}{N}X_{ij}$ & $\cdots$ & $O_k = \su{i=1}{N}X_{ik}$ & $N$ \\
     \hline
 \end{tabular}
 \end{center}
 
 \textbf{Key relationships}:
 \begin{itemize}
-    \item Each column sums to 1: $\su{i=1}{k}X_{ij} = 1$ (each trial falls in exactly one category)
-    \item \textbf{Observed count}: \tR{$O_i = \su{j=1}{N}X_{ij}$ (sum of row $i$)}
-    \item \tB{$X_{ij} \sim \text{Bernoulli}(p_i)$ with $\mathbb{E}[X_{ij}] = p_i$}
-    \item \textbf{Expected count}: $E_i = \mathbb{E}[O_i] = \mathbb{E}\left[\su{j=1}{N}X_{ij}\right]
-        = \su{j=1}{N}\mathbb{E}[X_{ij}] = \su{j=1}{N}p_i = Np_i$
+    \item Each row sums to 1: $\su{j=1}{k}X_{ij} = 1$ (each trial falls in exactly one category)
+    \item \textbf{Observed count}: \tR{$O_j = \su{i=1}{N}X_{ij}$ (sum of column $j$)}
+    \item \tB{$X_{ij} \sim \text{Bernoulli}(p_j)$ with $\mathbb{E}[X_{ij}] = p_j$}
+    \item \textbf{Expected count}: $E_j = \mathbb{E}[O_j] = \mathbb{E}\left[\su{i=1}{N}X_{ij}\right]
+        = \su{i=1}{N}\mathbb{E}[X_{ij}] = \su{i=1}{N}p_j = Np_j$
 \end{itemize}
 
 \paragraph{Derivation (goodness-of-fit)}
 The $\chi^2$ test statistic is derived from the normal approximation to the multinomial distribution.
 \begin{enumerate}
-    \item \textbf{Multinomial distribution}: Under $H_0$, observed counts $(O_1, \ldots, O_k)$ follow
-        a multinomial distribution with:
+    \item \textbf{Multinomial distribution}: Under $H_0$, observed counts \tB{$(O_1, \ldots, O_k)$ follow a multinomial distribution} with:
         \begin{itemize}
-            \item $\mathbb{E}[O_i] = Np_i = E_i$
-            \item $\text{Var}(O_i) = Np_i(1-p_i) = E_i(1-p_i)$
-            \item $\text{Cov}(O_i, O_j) = -Np_ip_j$ for $i \neq j$ (negative correlation)
+            \item $\mathbb{E}[O_j] = Np_j = E_j$
+            \item $\text{Var}(O_j) = Np_j(1-p_j) = E_j(1-p_j)$
         \end{itemize}
-    \item \textbf{Why $\sqrt{E_i}$ and not $\sqrt{E_i(1-p_i)}$?}\\
-        The true standard deviation is $\sigma_i = \sqrt{E_i(1-p_i)} \neq \sqrt{E_i}$.
-        The $\chi^2$ statistic is \emph{not} a simple sum of squared standardized normals,
-        but a specific \textbf{quadratic form} that accounts for the covariance structure.
-        Let $Z_i = \dfrac{O_i - E_i}{\sqrt{E_i}}$, then $\chi^2 = \su{i=1}{k}Z_i^2 = \mathbf{Z}^T\mathbf{Z}$ with:
-        $$\text{Var}(Z_i) = \dfrac{E_i(1-p_i)}{E_i} = 1-p_i \quad\text{and}\quad \text{Cov}(Z_i, Z_j) = \dfrac{-Np_ip_j}{N\sqrt{p_ip_j}} = -\sqrt{p_ip_j}$$
-        The covariance matrix is $\Sigma = I - \sqrt{\mathbf{p}}\sqrt{\mathbf{p}}^T$ where $\sqrt{\mathbf{p}} = (\sqrt{p_1}, \ldots, \sqrt{p_k})^T$.\\
-        $\Sigma$ is \textbf{idempotent} ($\Sigma^2 = \Sigma$) because $\sqrt{\mathbf{p}}^T\sqrt{\mathbf{p}} = \su{i=1}{k}p_i = 1$:
-        $$\Sigma^2 = I - 2\sqrt{\mathbf{p}}\sqrt{\mathbf{p}}^T + \sqrt{\mathbf{p}}\underbrace{(\sqrt{\mathbf{p}}^T\sqrt{\mathbf{p}})}_{=1}\sqrt{\mathbf{p}}^T = I - \sqrt{\mathbf{p}}\sqrt{\mathbf{p}}^T = \Sigma$$
-        For idempotent $\Sigma$: $\mathbf{Z}^T\mathbf{Z} \xrightarrow{d} \chi^2_{\text{rank}(\Sigma)}$ with $\text{rank}(\Sigma) = \text{tr}(\Sigma) = k - 1$.
+        \textbf{Covariance derivation}: Using $\text{Cov}(O_j, O_{j'}) = \mathbb{E}[O_j O_{j'}] - \mathbb{E}[O_j]\mathbb{E}[O_{j'}]$:
+        \begin{itemize}
+            \item $\mathbb{E}[O_j]\mathbb{E}[O_{j'}] = N^2p_jp_{j'}$
+            \item $\mathbb{E}[O_j O_{j'}] = \su{i=1}{N}\su{l=1}{N}\mathbb{E}[X_{ij}X_{lj'}]
+                = \underbrace{N \times 0}_{\text{same trial}} + \underbrace{(N^2-N) \times p_jp_{j'}}_{\text{different trials}}$\\
+                Same trial ($i=l$): $X_{ij}X_{ij'}=0$ (mutually exclusive).\\
+                Different trials ($i\neq l$): $\mathbb{E}[X_{ij}X_{lj'}] = p_jp_{j'}$ (independent).
+            \item $\text{Cov}(O_j, O_{j'}) = (N^2-N)p_jp_{j'} - N^2p_jp_{j'} = -Np_jp_{j'}$
+        \end{itemize}
+    \item \textbf{Why $\sqrt{E_j}$ and not $\sqrt{E_j(1-p_j)}$?}\\
+        \textit{The puzzle}: The true standard deviation of $O_j$ is $\sigma_j = \sqrt{E_j(1-p_j)}$,
+        yet the $\chi^2$ statistic uses $\sqrt{E_j}$ in the denominator. Why does this work?
+
+        \textit{Step 1 -- Define $Z_j$}: Let \tB{$Z_j = \dfrac{O_j - E_j}{\sqrt{E_j}}$}, so
+        $\chi^2 = \su{j=1}{k}Z_j^2 = \bm{Z}^T\bm{Z}$ where $\bm{Z} = (Z_1, \ldots, Z_k)^T \in \mathbb{R}^k$ is a column vector.
+
+        \textit{Step 2 -- The $Z_j$ are not standard normals}: Since we divided by $\sqrt{E_j}$
+        instead of $\sqrt{E_j(1-p_j)}$:
+        $$\text{Var}(Z_j) = \dfrac{\text{Var}(O_j)}{E_j} = \dfrac{E_j(1-p_j)}{E_j} = 1-p_j \neq 1$$
+        Also, the $Z_j$ are correlated (using $\text{Cov}(aX, bY) = ab\text{Cov}(X,Y)$):
+        $$\text{Cov}(Z_j, Z_{j'}) = \dfrac{\text{Cov}(O_j, O_{j'})}{\sqrt{E_j}\sqrt{E_{j'}}}
+        = \dfrac{-Np_jp_{j'}}{\sqrt{Np_j}\sqrt{Np_{j'}}} = -\sqrt{p_jp_{j'}}$$
+
+        \textit{Step 3 -- Covariance matrix}: Let $\sqrt{\bm{p}} = (\sqrt{p_1}, \ldots, \sqrt{p_k})^T \in \mathbb{R}^k$ (column vector).
+        The covariance matrix $\bm{\Sigma} \in \mathbb{R}^{k \times k}$ of $\bm{Z}$ is:
+        $$\bm{\Sigma} = \bm{I}_k - \sqrt{\bm{p}}\sqrt{\bm{p}}^T$$
+        where $\sqrt{\bm{p}}\sqrt{\bm{p}}^T$ is the outer product (a $k \times k$ matrix).\\
+        Entries: $\bm{\Sigma}_{jj} = 1-p_j$ (diagonal), $\bm{\Sigma}_{jj'} = -\sqrt{p_jp_{j'}}$ (off-diagonal).
+
+        \textit{Step 4 -- $\bm{\Sigma}$ is idempotent}: Since $\sqrt{\bm{p}}^T\sqrt{\bm{p}} = \su{j=1}{k}p_j = 1$ (a scalar):
+        $$\bm{\Sigma}^2 = (\bm{I}_k - \sqrt{\bm{p}}\sqrt{\bm{p}}^T)^2
+        = \bm{I}_k - 2\sqrt{\bm{p}}\sqrt{\bm{p}}^T + \sqrt{\bm{p}}\underbrace{(\sqrt{\bm{p}}^T\sqrt{\bm{p}})}_{=1}\sqrt{\bm{p}}^T
+        = \bm{I}_k - \sqrt{\bm{p}}\sqrt{\bm{p}}^T = \bm{\Sigma}$$
+
+        \textit{Step 5 -- Cochran's theorem}: \tB{For $\bm{Z} \sim \mathcal{N}(\bm{0}, \bm{\Sigma})$ with $\bm{\Sigma}$
+        idempotent: $\bm{Z}^T\bm{Z} \sim \chi^2_{\text{rank}(\bm{\Sigma})}$}.\\
+        This is a special case of Cochran's theorem on quadratic forms of normal variables.\\
+        Here $\text{rank}(\bm{\Sigma}) = \text{tr}(\bm{\Sigma}) = \su{j=1}{k}(1-p_j) = k - 1$.
+
+        \textit{Conclusion}: The ``wrong'' normalization by $\sqrt{E_j}$ combined with the specific
+        covariance structure yields an idempotent $\bm{\Sigma}$, which guarantees $\chi^2 \sim \chi^2_{k-1}$.
     \item \textbf{Chi-squared distribution}: Recall that if $Z_1, \ldots, Z_m \stackrel{iid}{\sim} \mathcal{N}(0,1)$, then
-        $\su{i=1}{m}Z_i^2 \sim \chi^2_m$
-    \item \textbf{Degrees of freedom}: $k-1$ (not $k$) due to the constraint $\su{i=1}{k}O_i = N$,
+        $\su{l=1}{m}Z_l^2 \sim \chi^2_m$
+    \item \textbf{Degrees of freedom}: $k-1$ (not $k$) due to the constraint $\su{j=1}{k}O_j = N$,
         which introduces a linear dependency among the $k$ counts.
 \end{enumerate}
-This explains \uB{why expected counts must be sufficiently large} ($E_i \geq 5$): the test relies
+This explains \uB{why expected counts must be sufficiently large} ($E_j \geq 5$): the test relies
 on the normal approximation to the multinomial, which requires large samples.
 
 \paragraph{Bayesian}
