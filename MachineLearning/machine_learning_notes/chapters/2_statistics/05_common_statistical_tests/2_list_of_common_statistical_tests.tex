@@ -46,7 +46,7 @@ frequencies.
 \end{itemize}
 
 \paragraph{Frequentist}
-\tB{$\chi^{2} = \su{j=1}{k}\dfrac{(O_{j} - E_{j})^{2}}{E_{j}}$}
+\tR{$\chi^{2} = \su{j=1}{k}\dfrac{(O_{j} - E_{j})^{2}}{E_{j}}$}
 where $E_j = Np_j$ is the expected count and:
 $\begin{cases}
     O_{j}\text{: \uB{observed count} of category }j \\
@@ -59,8 +59,11 @@ $\begin{cases}
 \paragraph{From trials to counts}
 Consider $N$ independent trials, each resulting in one of $k$ categories.
 Define the \textbf{indicator variable}:
-$$X_{ij} = \mathbbm{1}_{\{\text{trial } i \text{ results in category } j\}} =
-\begin{cases} 1 & \text{if trial } i \to \text{category } j \\ 0 & \text{otherwise} \end{cases}$$
+\begin{center}
+\frB{$X_{ij} = \mathbbm{1}_{\{\text{trial } i \text{ results in category } j\}} =
+\begin{cases} 1 & \text{if trial } i \to \text{category } j \\ 0 & \text{otherwise} \end{cases}$}
+\end{center}
+
 
 \begin{center}
 \begin{tabular}{|c|*{6}{c}|c|}
@@ -91,7 +94,7 @@ $$X_{ij} = \mathbbm{1}_{\{\text{trial } i \text{ results in category } j\}} =
 \paragraph{Derivation (goodness-of-fit)}
 The $\chi^2$ test statistic is derived from the normal approximation to the multinomial distribution.
 \begin{enumerate}
-    \item \textbf{Multinomial distribution}: Under $H_0$, observed counts \tB{$(O_1, \ldots, O_k)$ follow a multinomial distribution} with:
+    \item \textbf{Multinomial distribution}: Under $H_0$, observed counts \tB{$\left(O_i\right)_{1\leq i\leq k}$ follow a multinomial distribution} with:
         \begin{itemize}
             \item $\mathbb{E}[O_j] = Np_j = E_j$
             \item $\text{Var}(O_j) = Np_j(1-p_j) = E_j(1-p_j)$
@@ -109,41 +112,41 @@ The $\chi^2$ test statistic is derived from the normal approximation to the mult
         \textit{The puzzle}: The true standard deviation of $O_j$ is $\sigma_j = \sqrt{E_j(1-p_j)}$,
         yet the $\chi^2$ statistic uses $\sqrt{E_j}$ in the denominator. Why does this work?
 
-        \textit{Step 1 -- Define $Z_j$}: Let \tB{$Z_j = \dfrac{O_j - E_j}{\sqrt{E_j}}$}, so
-        $\chi^2 = \su{j=1}{k}Z_j^2 = \bm{Z}^T\bm{Z}$ where $\bm{Z} = (Z_1, \ldots, Z_k)^T \in \mathbb{R}^k$ is a column vector.
+        \textit{Step 1 -- \uB{Define $Z_j$}}: Let \tB{$Z_j = \dfrac{O_j - E_j}{\sqrt{E_j}}$}, so
+        $\chi^2 = \su{j=1}{k}Z_j^2 = \bm{Z}^T\bm{Z}$ where $\bm{Z} = \left(Z_i\right)_{1\leq i\leq k}^T \in \mathbb{R}^k$ is a column vector.
 
-        \textit{Step 2 -- The $Z_j$ are not standard normals}: Since we divided by $\sqrt{E_j}$
+        \textit{Step 2 -- \uB{The $Z_j$ are not standard normals}}: Since we divided by $\sqrt{E_j}$
         instead of $\sqrt{E_j(1-p_j)}$:
         $$\text{Var}(Z_j) = \dfrac{\text{Var}(O_j)}{E_j} = \dfrac{E_j(1-p_j)}{E_j} = 1-p_j \neq 1$$
         Also, the $Z_j$ are correlated (using $\text{Cov}(aX, bY) = ab\text{Cov}(X,Y)$):
         $$\text{Cov}(Z_j, Z_{j'}) = \dfrac{\text{Cov}(O_j, O_{j'})}{\sqrt{E_j}\sqrt{E_{j'}}}
         = \dfrac{-Np_jp_{j'}}{\sqrt{Np_j}\sqrt{Np_{j'}}} = -\sqrt{p_jp_{j'}}$$
 
-        \textit{Step 3 -- Covariance matrix}: Let $\sqrt{\bm{p}} = (\sqrt{p_1}, \ldots, \sqrt{p_k})^T \in \mathbb{R}^k$ (column vector).
+        \textit{Step 3 -- \uB{Covariance matrix}}: Let $\sqrt{\bm{p}} = \left(\sqrt{p_i}\right)_{1\leq i\leq k}^T \in \mathbb{R}^k$ (column vector).
         The covariance matrix $\bm{\Sigma} \in \mathbb{R}^{k \times k}$ of $\bm{Z}$ is:
         $$\bm{\Sigma} = \bm{I}_k - \sqrt{\bm{p}}\sqrt{\bm{p}}^T$$
         where $\sqrt{\bm{p}}\sqrt{\bm{p}}^T$ is the outer product (a $k \times k$ matrix).\\
         Entries: $\bm{\Sigma}_{jj} = 1-p_j$ (diagonal), $\bm{\Sigma}_{jj'} = -\sqrt{p_jp_{j'}}$ (off-diagonal).
 
-        \textit{Step 4 -- $\bm{\Sigma}$ is idempotent}: Since $\sqrt{\bm{p}}^T\sqrt{\bm{p}} = \su{j=1}{k}p_j = 1$ (a scalar):
+        \textit{Step 4 -- \uB{$\bm{\Sigma}$ is idempotent}}: Since $\sqrt{\bm{p}}^T\sqrt{\bm{p}} = \su{j=1}{k}p_j = 1$ (a scalar):
         $$\bm{\Sigma}^2 = (\bm{I}_k - \sqrt{\bm{p}}\sqrt{\bm{p}}^T)^2
         = \bm{I}_k - 2\sqrt{\bm{p}}\sqrt{\bm{p}}^T + \sqrt{\bm{p}}\underbrace{(\sqrt{\bm{p}}^T\sqrt{\bm{p}})}_{=1}\sqrt{\bm{p}}^T
         = \bm{I}_k - \sqrt{\bm{p}}\sqrt{\bm{p}}^T = \bm{\Sigma}$$
 
-        \textit{Step 5 -- Cochran's theorem}: \tB{For $\bm{Z} \sim \mathcal{N}(\bm{0}, \bm{\Sigma})$ with $\bm{\Sigma}$
+        \textit{Step 5 -- \uB{Cochran's theorem}}: \tB{For $\bm{Z} \sim \mathcal{N}(\bm{0}, \bm{\Sigma})$ with $\bm{\Sigma}$
         idempotent: $\bm{Z}^T\bm{Z} \sim \chi^2_{\text{rank}(\bm{\Sigma})}$}.\\
         This is a special case of Cochran's theorem on quadratic forms of normal variables.\\
         Here $\text{rank}(\bm{\Sigma}) = \text{tr}(\bm{\Sigma}) = \su{j=1}{k}(1-p_j) = k - 1$.
 
         \textit{Conclusion}: The ``wrong'' normalization by $\sqrt{E_j}$ combined with the specific
         covariance structure yields an idempotent $\bm{\Sigma}$, which guarantees $\chi^2 \sim \chi^2_{k-1}$.
-    \item \textbf{Chi-squared distribution}: Recall that if $Z_1, \ldots, Z_m \stackrel{iid}{\sim} \mathcal{N}(0,1)$, then
+    \item \textbf{Chi-squared distribution}: Recall that if $\left(Z_i\right)_{1\leq i\leq m} \stackrel{iid}{\sim} \mathcal{N}(0,1)$, then
         $\su{l=1}{m}Z_l^2 \sim \chi^2_m$
     \item \textbf{Degrees of freedom}: $k-1$ (not $k$) due to the constraint $\su{j=1}{k}O_j = N$,
         which introduces a linear dependency among the $k$ counts.
 \end{enumerate}
-This explains \uB{why expected counts must be sufficiently large} ($E_j \geq 5$): the test relies
-on the normal approximation to the multinomial, which requires large samples.
+This explains \uB{why expected counts must be sufficiently large} ($E_j \geq 5$): \tB{the test
+relies on the normal approximation to the multinomial, which requires large samples}.
 
 \paragraph{Bayesian}
 Does not exist, see \emph{contingency table}\\
@@ -151,42 +154,95 @@ Does not exist, see \emph{contingency table}\\
 
 
 \subsection{Exact test of goodness-of-fit}
-Unlike the conventional statistical tests, \tB{there is no \emph{test statistic}, we directly
-compute the \emph{p-value} under the null hypothesis}.
-The most common use are for dichotomous nominal variables or multinomial variables.
+Also known as the \tB{multinomial exact test}, this is the exact version of the $\chi^2$ goodness-of-fit test.
+\uB{Unlike asymptotic tests, we compute the exact p-value using the multinomial distribution under $H_0$}
+rather than relying on large-sample approximations.
 
 \paragraph{Assumptions}
 \begin{itemize}
     \item \tB{Observations are independent.}
-    \item Small sample size $\lessapprox 1000$
+    \item Each observation falls into exactly one of $k$ mutually exclusive categories
+    \item Small to moderate sample size (computationally feasible, typically $N \lessapprox 1000$)
+    \item For large samples, the $\chi^2$ test is preferred as the exact test becomes computationally expensive
 \end{itemize}
 
 \paragraph{Frequentist}
-Let us define the list of, respectively, expected counts for each modality 
-$i,~(E_{i})_{1\leq i\leq m}$, and observed counts $(O_{i})_{1\leq i\leq m}$.
-Then
+Let $N$ be the total number of observations, $\left(p_i\right)_{1\leq i\leq k}$ the theoretical probabilities
+under $H_0$ with $\su{j=1}{k}p_j = 1$, and $\left(O_i\right)_{1\leq i\leq k}$ the observed counts with $\su{j=1}{k}O_j = N$.
+
 $\begin{cases}
-    \bm{H_{0}: \forall i\in \inter{1}{m},~O_{i} = E_{i}}\\
-    H_{1}: \exists i\in \inter{1}{m},~O_{i} \neq E_{i}\text{: two-tailed test} \\
+    H_{0}: \text{The data follow the specified distribution with probabilities } \left(p_i\right)_{1\leq i\leq k}\\
+    H_{1}: \text{The data do not follow the specified distribution}
 \end{cases}$
+
+\textbf{Methodology}:
+\begin{enumerate}
+    \item \tB{Under $H_0$}, the observed counts follow a \tB{multinomial distribution}:
+        $$\mathbb{P}(\bm{O} = \left(O_i\right)_{1\leq i\leq k} | H_0) = \dfrac{N!}{\prd{j=1}{k}O_j!} \prd{j=1}{k}p_j^{O_j}$$
+
+    \item \uB{Compute the probability of the observed} data: $P_{obs} = \mathbb{P}(\bm{O}_{obs} | H_0)$
+
+    \item Define "as extreme or more extreme" using a test statistic. Common choices:
+        \begin{itemize}
+            \item \textbf{Probability criterion}: Tables with $\mathbb{P}(\bm{O}' | H_0) \leq P_{obs}$
+            \item \textbf{Chi-squared criterion}: Tables with $\chi^2(\bm{O}') \geq \chi^2(\bm{O}_{obs})$ where
+                $\chi^2(\bm{O}) = \su{j=1}{k}\dfrac{(O_j - Np_j)^2}{Np_j}$
+        \end{itemize}
+
+    \item The \tB{exact p-value} is:
+        $$\tB{p\text{-value} = \sum_{\bm{O}' \in \mathcal{E}} \mathbb{P}(\bm{O}' | H_0)}$$
+        where \tB{$\mathcal{E} = \{\bm{O}': \bm{O}' \text{ is as or more extreme than } \bm{O}_{obs}\}$}
+        and the sum is over all possible tables with $\su{j=1}{k}O'_j = N$
+\end{enumerate}
+
+\textbf{Example with binomial case} ($k=2$): Suppose $N=10$ tosses, $H_0: p=0.5$ (fair coin), observe $O_1=8$ heads.
+\begin{itemize}
+    \item Probability of observing exactly 8 heads: $\mathbb{P}(O_1=8 | H_0) = \binom{10}{8}(0.5)^{10} = 0.0439$
+    \item Tables "as extreme or more extreme": $\{8, 9, 10, 0, 1, 2\}$ heads (two-sided test)
+    \item Exact p-value: $p = \mathbb{P}(O_1 \in \{0,1,2,8,9,10\} | H_0) = \sum_{x \in \{0,1,2,8,9,10\}} \binom{10}{x}(0.5)^{10}$
+        $= 2 \times [0.0010 + 0.0098 + 0.0439] = 0.109$
+    \item This is \emph{exactly} the probability of observing an outcome as extreme or more extreme than what we got,
+        computed by summing over discrete outcomes rather than integrating over a continuous distribution.
+\end{itemize}
+
+\textbf{Special case - Binomial exact test}: When $k=2$, this reduces to the binomial test
+with $O_1 \sim \text{Binomial}(N, p_1)$.
+
+\paragraph{Strengths}
+\begin{itemize}
+    \item Provides exact p-values without relying on asymptotic approximations
+    \item Appropriate for small samples where $\chi^2$ test may be unreliable
+    \item No requirement for minimum expected counts (unlike $\chi^2$ test requiring $E_j \geq 5$)
+\end{itemize}
+
+\paragraph{Weaknesses}
+\begin{itemize}
+    \item Computationally intensive for large $N$ or many categories $k$
+    \item Choice of "extreme" criterion (probability vs. $\chi^2$) can affect results
+    \item Conservative (actual Type I error rate may be below nominal $\alpha$) due to discreteness
+\end{itemize}
 
 
 
 
 \subsection{Fisher's exact test}
-To check the significance of the contingency between 2 kinds of classification of a given
-object, \uB{initially Fisher used this test to distinguish drink in which the tea has been
-put before the milk or vice-versa}. For large sample use \emph{G-test}
+This is the exact test of independence for $2\times 2$ contingency tables. \uB{Unlike asymptotic tests
+(like the $\chi^2$ test), we compute the exact p-value using the hypergeometric distribution under $H_0$}
+rather than relying on large-sample approximations. \tB{Initially Fisher used this test to distinguish
+drinks in which tea had been put before milk or vice-versa}. For large samples, use the \emph{G-test} or
+$\chi^2$ test instead, as the exact test becomes computationally expensive.
 
 \paragraph{Assumptions}
 \begin{itemize}
-    \item In practice, small sample size $\lessapprox 1000$
+    \item \tB{Observations are independent}
+    \item Each observation falls into exactly one cell of the $2\times 2$ table
+    \item Small to moderate sample size (computationally feasible, typically $n \lessapprox 1000$)
+    \item For large samples, asymptotic tests ($\chi^2$, G-test) are preferred
 \end{itemize}
 
 \paragraph{Frequentist}
-For example let's divide a population into male and female and for each persons indicating
-if this person is currently studying or not. We want to test if the proportion of studying
-students is higher among the women than among the men.
+Consider a $2\times 2$ contingency table classifying $n$ observations by two binary variables.
+For example, we might divide a population by gender (Men/Women) and study status (Studying/Non-Studying):
 \begin{center}
     \begin{tabular}{|*{4}{c|}}
     \hline
@@ -196,17 +252,77 @@ students is higher among the women than among the men.
     \hline
     \textbf{Non-Studying} & $c$ & $d$ & $c+d$ \\
     \hline
-    \textbf{Column Total} & $a+c$ & $b+d$ & $a + b + c + d = n$ \\
+    \textbf{Column Total} & $a+c$ & $b+d$ & $n = a + b + c + d$ \\
     \hline
     \end{tabular}
 \end{center}
-\tB{The conditional on the margins of the table is distributed as $\text{\emph{Hypergeometric}}(a+c,
-    a+b, c+d)$ meaning $a + c$ draws from a population with $a + b$ success and $c+d$ failures.}
-The probability of obtaining such set of values is given by
+
+$\begin{cases}
+    H_{0}: \text{The two variables are independent (no association between gender and study status)}\\
+    H_{1}: \text{The two variables are dependent (there is an association)}
+\end{cases}$
+
+\textbf{Methodology}:
+\begin{enumerate}
+    \item \tB{Under $H_0$ (independence), conditional on the row and column totals (margins)}, the count $a$
+        in the upper-left cell follows a \tB{hypergeometric distribution}:
+        $$\mathbb{P}(a | H_0, \text{margins fixed}) = \dfrac{\binom{a+b}{a}\binom{c+d}{c}}{\binom{n}{a+c}}
+        = \dfrac{\binom{a+b}{b}\binom{c+d}{d}}{\binom{n}{b+d}}$$
+        This represents drawing $a+c$ items (column 1 total) from a population of $n$ items containing
+        $a+b$ "successes" (row 1 total) and $c+d$ "failures" (row 2 total).
+
+    \item \uB{Compute the probability of the observed table}: $P_{obs} = \mathbb{P}(a_{obs} | H_0)$
+
+    \item Define "as extreme or more extreme". For Fisher's exact test, the \textbf{probability criterion}
+        is standard: tables with $\mathbb{P}(a' | H_0) \leq P_{obs}$ are considered as extreme or more extreme.
+
+    \item The \tB{exact p-value} is:
+        $$\tB{p\text{-value} = \sum_{a' \in \mathcal{E}} \mathbb{P}(a' | H_0)}$$
+        where \tB{$\mathcal{E} = \{a': \mathbb{P}(a' | H_0) \leq P_{obs}\}$} and the sum is over all
+        possible values of $a'$ consistent with the fixed margins (i.e., $\max(0, (a+b)-(b+d)) \leq a' \leq \min(a+b, a+c)$).
+\end{enumerate}
+
+\textbf{What is $a'$?}
+\uB{$a'$ is not an undefined symbol, but represents a specific possible value} for the upper-left cell count:
+\begin{itemize}
+    \item \textbf{$a'$ is a possible count}: An integer value that the upper-left cell could take
+    \item \textbf{Sample space}: Given fixed margins, $a'$ can only take values in the range
+        $[\max(0, (a+b)-(b+d)), \min(a+b, a+c)]$. Once $a'$ is specified, all other cells are determined:
+        $b' = (a+b) - a'$, $c' = (a+c) - a'$, $d' = (b+d) - b'$.
+    \item \textbf{The set $\mathcal{E}$}: Contains all possible values $a'$ that produce tables as extreme
+        or more extreme (less probable) than the observed table.
+    \item \textbf{Example}: With margins $a+b=10$, $c+d=10$, $a+c=8$, $b+d=12$, possible values are
+        $a' \in \{0, 1, 2, \ldots, 8\}$ (since $\min(10,8)=8$). Each $a'$ defines a complete table.
+\end{itemize}
+
+\textbf{Connection to usual p-value definition}:
+The p-value represents $\mathbb{P}(\text{observe table as extreme or more extreme} | H_0)$. Since the
+sample space (all possible tables with fixed margins) is discrete and finite, we sum the probabilities
+of individual outcomes rather than integrating. Each outcome is a specific configuration of the table,
+uniquely determined by the value of one cell (e.g., $a$) given the fixed margins.
+
+\textbf{Example}: Suppose we observe the following table testing whether gender affects study status:
 \begin{center}
-    \tB{$p = \dfrac{{{a+b}\choose{a}}\times{{c+d}\choose{c}}}{{{n}\choose{a+c}}}
-    = \dfrac{{{a+b}\choose{b}}\times{{c+d}\choose{d}}}{{{n}\choose{b+d}}}$}
+    \begin{tabular}{|*{4}{c|}}
+    \hline
+    & \textbf{Men} & \textbf{Women} & \textbf{Row Total}\\
+    \hline
+    \textbf{Studying} & 1 & 9 & 10 \\
+    \hline
+    \textbf{Non-Studying} & 11 & 3 & 14 \\
+    \hline
+    \textbf{Column Total} & 12 & 12 & 24 \\
+    \hline
+    \end{tabular}
 \end{center}
+\begin{itemize}
+    \item Probability of observed table: $\mathbb{P}(a=1) = \frac{\binom{10}{1}\binom{14}{11}}{\binom{24}{12}} = \frac{10 \times 364}{2{,}704{,}156} \approx 0.00135$
+    \item Possible values for $a$: $\max(0, 10-12) = 0$ to $\min(10, 12) = 10$, so $a \in \{0,1,\ldots,10\}$
+    \item Tables as extreme or more extreme (one-sided test, $a \leq 1$): $a' \in \{0, 1\}$
+    \item Exact p-value (one-sided): $p = \mathbb{P}(a=0) + \mathbb{P}(a=1) = \frac{\binom{10}{0}\binom{14}{12}}{\binom{24}{12}} + 0.00135 \approx 0.00003 + 0.00135 = 0.00138$
+    \item This represents the exact probability of observing such an extreme association (or more extreme)
+        if gender and study status were truly independent.
+\end{itemize}
 
 \paragraph{Bayesian}
 Does not exist, see \emph{contingency table} \\
@@ -216,752 +332,2282 @@ Does not exist, see \emph{contingency table} \\
 
 \subsection{G-test}
 
-It's a likelihood-ratio or a maximum likelihood statistical significance test. 
-\tB{Either used to test \emph{goodness-of-fit} and \emph{independence} between 2 variables.}
-It checks either if there is a significant difference between the expected and observed 
-frequencies. \uB{This test tends to replace $\chi^{2}$\emph{-test}}
-\begin{itemize}
-    \item \emph{goodness-of-fit}: expected frequencies are computed with a theoretical 
-        relationship between observed frequencies
-    \item \emph{independence}: expected frequencies are computed with observed frequencies
-        from the other sample
-    \item \emph{repeated tests}: \uB{first variable is analysed with a goodness-of-fit and the
-        second one represents the repetition of the experiments multiple times}. Thus it
-        allows to assess the goodness-of-fit on a large sample instead of multiple lower
-        samples. Expected frequencies is a theoretical relationship between the observed
-        frequencies segmented in groups by the modalities of the second variable.
-\end{itemize}
-
+Also known as the \tB{likelihood-ratio test for goodness-of-fit}, this is a statistical significance
+test based on maximum likelihood principles. \tB{It can be used to test both \emph{goodness-of-fit}
+and \emph{independence} between 2 variables}, checking if there is a significant difference between
+expected and observed frequencies. \uB{This test tends to replace the $\chi^{2}$ test as it provides
+better approximation to the theoretical $\chi^{2}$ distribution}, especially when observed counts are
+more than twice the expected counts.
 
 \paragraph{Assumptions}
 \begin{itemize}
-    \item Expected count must not be small in any modality.
+    \item \tB{Observations are independent}
+    \item Each observation falls into exactly one of $k$ mutually exclusive categories
+    \item \uB{Expected count must be sufficiently large} in each category (same guideline as $\chi^2$ test: $E_i \geq 5$)
+    \item For small samples where expected counts are low, use exact tests (Fisher's exact test for $2\times2$ tables,
+        exact test of goodness-of-fit for larger tables)
+    \item Large sample size (for asymptotic distribution to hold)
 \end{itemize}
+
+\paragraph{Frequentist}
+The G-test comes in three variants depending on the experimental design:
+\begin{itemize}
+    \item \emph{Goodness-of-fit}: Expected frequencies \uB{$E_i$ are computed from a theoretical
+        distribution} (e.g., testing if data follows a uniform distribution)
+    \item \emph{Independence}: Expected frequencies \uB{$E_i$ are computed from marginal totals
+        in a contingency table} (e.g., testing if two categorical variables are independent)
+    \item \emph{Repeated tests} (heterogeneity): The \uB{first variable is analyzed for 
+            goodness-of-fit, and the second variable represents repetitions of the experiment}. 
+            This allows assessment of goodness-of-fit across multiple subgroups simultaneously.
+\end{itemize}
+
+We focus on the \textbf{goodness-of-fit} case. Let $N$ be the total number of observations,
+$\left(p_i\right)_{1\leq i\leq k}$ the theoretical probabilities under $H_0$ with $\su{i=1}{k}p_i = 1$,
+$\left(O_i\right)_{1\leq i\leq k}$ the observed counts with $\su{i=1}{k}O_i = N$, and
+$\left(E_i\right)_{1\leq i\leq k}$ the expected counts with $E_i = Np_i$.
+
+$\begin{cases}
+    H_{0}: \text{The data follow the specified distribution with probabilities } \left(p_i\right)_{1\leq i\leq k}\\
+    H_{1}: \text{The data do not follow the specified distribution}
+\end{cases}$
+
+\textbf{Methodology}:
+\begin{enumerate}
+    \item \tB{Compute expected counts}: Under $H_0$, for each category $i$: $E_i = Np_i$
+
+    \item \tB{Calculate the G-statistic} (also called $G^2$ or likelihood-ratio $\chi^2$):
+        \begin{center}
+            \tR{$G = 2\su{i=1}{k}O_{i}\ln\left(\dfrac{O_{i}}{E_{i}}\right)$}
+        \end{center}
+
+    \item \uB{Under $H_0$, $G$ asymptotically follows a $\chi^2$ distribution} with $k-1$ degrees of freedom
+
+    \item \textbf{Compute p-value}: $p = \mathbb{P}(\chi^2_{k-1} \geq G_{obs})$
+
+    \item \textbf{Decision}: Reject $H_0$ if $p < \alpha$ (or equivalently, if $G > \chi^2_{k-1, 1-\alpha}$)
+\end{enumerate}
+
+\textbf{Interpreting the components}:
+\begin{itemize}
+    \item \textbf{The ratio $O_i/E_i$}: Measures the \uB{fold-change or relative deviation} for category $i$.
+        Values near 1 indicate good fit; values far from 1 (either $\gg 1$ or $\ll 1$) indicate poor fit.
+        Example: $O_i/E_i = 2$ means we observed twice what we expected.
+    \item \textbf{The term $O_i\ln(O_i/E_i)$}: Represents category $i$'s \uB{contribution to the log-likelihood ratio}.
+        It quantifies how much the data in category $i$ favor the observed distribution over the null hypothesis,
+        \tB{weighted by the sample size} $O_i$ (so categories with more observations contribute more).
+        This is closely related to the Kullback-Leibler divergence, measuring information lost when approximating
+        the observed distribution with the null hypothesis.
+\end{itemize}
+
+\textbf{Derivation from likelihood ratio}:
+The G-statistic derives from the likelihood-ratio test principle. We compare two models:
+\begin{itemize}
+    \item \textbf{Null model}: Data follow the specified distribution with probabilities $\left(p_i\right)_{1\leq i\leq k}$
+    \item \textbf{Saturated model}: Each category has its own parameter estimated from the data: $\hat{p}_i = O_i/N$
+\end{itemize}
+
+The likelihood under the saturated model (maximum likelihood):
+$$L(\hat{\bm{p}}|\bm{O}) = \prd{i=1}{k}\left(\dfrac{O_{i}}{N}\right)^{O_{i}}$$
+
+The likelihood under the null hypothesis:
+$$L(\bm{p}_0|\bm{O}) = \prd{i=1}{k}p_i^{O_{i}} = \prd{i=1}{k}\left(\dfrac{E_{i}}{N}\right)^{O_{i}}$$
+
+The log-likelihood ratio is:
+\begin{align*}
+\ln\left(\dfrac{L(\hat{\bm{p}}|\bm{O})}{L(\bm{p}_0|\bm{O})}\right)
+&= \ln\left(\dfrac{\prd{i=1}{k}\left(\frac{O_{i}}{N}\right)^{O_{i}}}{\prd{i=1}{k}\left(\frac{E_{i}}{N}\right)^{O_{i}}}\right)\\
+&= \ln\left(\prd{i=1}{k}\left(\dfrac{O_{i}}{E_{i}}\right)^{O_{i}}\right)\\
+&= \su{i=1}{k}O_{i}\ln\left(\dfrac{O_{i}}{E_{i}}\right)
+\end{align*}
+
+By Wilks' theorem, \tB{$-2\ln(\text{likelihood ratio})$ asymptotically follows a $\chi^2$ distribution}, giving us:
+$$\tB{G = -2\ln\left(\dfrac{L(\bm{p}_0|\bm{O})}{L(\hat{\bm{p}}|\bm{O})}\right) = 2\su{i=1}{k}O_{i}\ln\left(\dfrac{O_{i}}{E_{i}}\right) \stackrel{H_0}{\sim} \chi^2_{k-1}}$$
+
+\textbf{Where does Wilks' theorem come from?}
+Wilks' theorem (Wilks, 1938) is a fundamental result from asymptotic statistical theory. It derives from:
+\begin{enumerate}
+    \item \textbf{Asymptotic normality of MLEs}: Under regularity conditions,
+        $\sqrt{n}(\hat{\theta} - \theta_0) \xrightarrow{d} \mathcal{N}(0, I(\theta_0)^{-1})$
+        where $I(\theta)$ is the Fisher information matrix
+    \item \textbf{Taylor expansion of log-likelihood} around the MLE $\hat{\theta}$:
+        $\ell(\theta_0) \approx \ell(\hat{\theta}) + \frac{1}{2}(\theta_0 - \hat{\theta})^T \ell''(\hat{\theta})(\theta_0 - \hat{\theta})$
+        (first-order term vanishes since $\ell'(\hat{\theta}) = 0$ at the MLE)
+    \item \textbf{Fisher information}: The Hessian relates to Fisher information as
+        $-\ell''(\theta) \approx nI(\theta)$ where $I(\theta) = -\mathbb{E}[\ell''(\theta)]$
+    \item \textbf{Quadratic form of normals}: The likelihood ratio becomes
+        $-2[\ell(\hat{\theta}_0) - \ell(\hat{\theta})] \approx n(\hat{\theta} - \theta_0)^T I(\theta_0)(\hat{\theta} - \theta_0) = Z^T Z$
+        where $Z = \sqrt{n}I(\theta_0)^{1/2}(\hat{\theta} - \theta_0) \sim \mathcal{N}(0, I_r)$, thus $Z^T Z \sim \chi^2_r$
+\end{enumerate}
+\uB{The factor of 2 emerges naturally}: the $\frac{1}{2}$ from the Taylor expansion multiplied by $-2$
+gives the canonical chi-squared form. Without this factor, the statistic would not have the standard
+$\chi^2$ distribution needed to compute p-values using standard tables.
+
+\textbf{Relationship to $\chi^2$ test}:
+Both tests are asymptotically equivalent and yield similar p-values for large samples. However,
+they differ in their derivation and finite-sample behavior:
+
+\begin{center}
+\begin{tabular}{|l|c|c|}
+    \hline
+    \textbf{Aspect} & \textbf{Pearson's $\chi^2$} & \textbf{G-test (Likelihood Ratio)} \\
+    \hline
+    \textbf{Formula} & $\chi^2 = \su{i=1}{k}\dfrac{(O_i - E_i)^2}{E_i}$ & $G = 2\su{i=1}{k}O_i\ln\left(\dfrac{O_i}{E_i}\right)$ \\
+    \hline
+    \textbf{Deviation measure} & Additive: $(O_i - E_i)$ & Multiplicative: $O_i/E_i$ \\
+    \hline
+    \textbf{Metric} & Squared difference & Log-ratio \\
+    \hline
+    \textbf{Foundation} & Heuristic/empirical (1900) & Likelihood principle (1930s) \\
+    \hline
+    \textbf{Interpretation} & Euclidean distance & Information/KL divergence \\
+    \hline
+    \textbf{Development} & Karl Pearson (1900) & Neyman, Pearson, Wilks \\
+    \hline
+\end{tabular}
+\end{center}
+
+\tB{For most practical purposes, $G \approx \chi^2$ as $n \to \infty$, but G-test is preferred when $O_i > 2E_i$.}
+
+\textbf{Example - Testing die fairness}: Suppose we roll a die 60 times and want to test if it's fair
+($H_0: p_1 = \cdots = p_6 = 1/6$). Observed counts: $(8, 9, 7, 12, 13, 11)$.
+\begin{itemize}
+    \item Expected counts under $H_0$: $E_i = 60 \times (1/6) = 10$ for all $i$
+    \item G-statistic:
+    \begin{align*}
+    G &= 2[8\ln(8/10) + 9\ln(9/10) + 7\ln(7/10) + 12\ln(12/10) + 13\ln(13/10) + 11\ln(11/10)]\\
+    &= 2[8(-0.223) + 9(-0.105) + 7(-0.357) + 12(0.182) + 13(0.262) + 11(0.095)]\\
+    &= 2[-1.784 - 0.945 - 2.499 + 2.184 + 3.406 + 1.045]\\
+    &= 2[1.407] = 2.814
+    \end{align*}
+    \item Degrees of freedom: $k - 1 = 6 - 1 = 5$
+    \item Critical value: $\chi^2_{5, 0.95} = 11.07$ (for $\alpha = 0.05$)
+    \item Decision: Since $G = 2.814 < 11.07$, we fail to reject $H_0$. The die appears fair.
+    \item P-value: $\mathbb{P}(\chi^2_5 \geq 2.814) \approx 0.729$ (strong evidence for fairness)
+\end{itemize}
+
+For comparison, the $\chi^2$ test on the same data gives $\chi^2 = 2.8$, nearly identical to $G = 2.814$.
 
 \paragraph{Strengths}
 \begin{itemize}
-    \item Approximation to the theoretical $chi^{2}$ distribution is better attained with
-        \emph{G-test} than $\chi^{2}$ \emph{test}.
-    \item Cases where $O_{i} > 2\times E_{i}$, \emph{G-test} is always better than
-        $\chi^{2}$ \emph{test}.
+    \item \tB{Better approximation to the theoretical $\chi^{2}$ distribution} than Pearson's $\chi^{2}$ test
+        for many data configurations
+    \item \uB{More accurate when $O_{i} > 2E_{i}$} (G-test is always superior in these cases)
+    \item Theoretically grounded in likelihood ratio test framework
+    \item Asymptotically equivalent to $\chi^2$ test, giving similar results in most cases
+    \item Can be decomposed additively for hierarchical models (useful for repeated tests design)
 \end{itemize}
 
 \paragraph{Weaknesses}
 \begin{itemize}
-    \item in test of independence, for a small sample size use rather Fisher's exact
-        test.
+    \item \tB{For small sample sizes, use exact tests instead} (Fisher's exact test for $2\times 2$ independence,
+        exact test of goodness-of-fit for larger tables)
+    \item Requires sufficiently large expected counts (same as $\chi^2$ test: $E_i \geq 5$ guideline)
+    \item Computationally slightly more complex than $\chi^2$ test (requires logarithm calculations)
+    \item Less familiar to many practitioners compared to $\chi^2$ test
 \end{itemize}
 
+\paragraph{Bayesian}
+Does not exist, see \emph{contingency table} \\
 
-\paragraph{Frequentist}
-We compare the observed counts in each modality with their expected counts.
-Let us define the list of, respectively, expected counts for each modality 
-$i,~(E_{i})_{1\leq i\leq m}$, and observed counts $(O_{i})_{1\leq i\leq m}$.
-Then
-$\begin{cases}
-    \bm{H_{0}: \forall i\in \inter{1}{m},~O_{i} = E_{i}}\\
-    H_{1}: \exists i\in \inter{1}{m},~O_{i} \neq E_{i}\text{: two-tailed test} \\
-\end{cases}$
-
-\begin{center}
-    \tB{$G = 2\su{i=1}{m}O_{i}\times\ln\left(\dfrac{O_{i}}{E_{i}}\right)$}
-\end{center}
-
-$$
-\ln\left(\dfrac{L(\tilde{\theta}|x)}{L(\hat{\theta}|x)}\right)
-= \ln\left(\dfrac{\prd{i=1}{m}\tilde{\theta}^{x_{i}}}{\prd{i=1}{m}\hat{\theta}^{x_{i}}}\right)
-= \ln\left(\dfrac{\prd{i=1}{m}\left(\frac{x_{i}}{n}\right)^{x_{i}}}{\prd{i=1}{m}\left(\frac{e_{i}}{n}\right)^{x_{i}}}\right)
-= \ln\left(\prd{i=1}{m}\left(\dfrac{x_{i}}{e_{i}}\right)^{x_{i}}\right)
-= \su{i=1}{m}x_{i}\ln\left(\dfrac{x_{i}}{e_{i}}\right)
-$$
-
-Then we multiply by $-2$ to get \emph{G-test} that is asymptotically equivalent to the 
-\emph{Pearson's} $\chi^{2}$ formula.
+\textit{\hyperref[statistical_method_table]{Return to the table.}}
 
 
 \subsection{Cochran's Q test}
-\uB{It checks if $k$ treatments have identical effect, the response can take only 2 possible 
-outcomes} and a second variable segments the treatments.
+
+\tB{Cochran's Q test is a non-parametric statistical test for comparing $k \geq 2$ related samples
+with binary (dichotomous) outcomes.} It tests whether the proportion of "successes" differs across
+$k$ treatments or conditions when each subject (or block) is measured under all conditions. This test
+is \uB{analogous to repeated measures ANOVA but specifically designed for binary data}. It extends
+McNemar's test (which handles $k=2$) to multiple treatments, and is related to the Friedman test
+(which handles ordinal data).
+
+\paragraph{Assumptions}
+\begin{itemize}
+    \item \tB{The same subjects/blocks are measured under all $k$ treatments} (repeated measures design)
+    \item \uB{Outcomes are dichotomous} (binary): success/failure, yes/no, present/absent, coded as 1/0
+    \item \textbf{Blocks are randomly selected} from the population or are representative
+    \item \textbf{Observations within each block are independent} across treatments (no carryover effects)
+    \item \textbf{Large sample size}: The test statistic follows a $\chi^2$ distribution asymptotically;
+        typically require at least $b \geq 10$ blocks and $k \geq 3$ treatments
+    \item Each block should have \textbf{at least some variation} (blocks where all treatments give the
+        same response contribute nothing to the test)
+\end{itemize}
+
+\paragraph{Frequentist}
+Cochran's Q test is commonly used when:
+\begin{itemize}
+    \item Testing if multiple diagnostic tests have equal sensitivity (each patient tested with all methods)
+    \item Comparing effectiveness of $k$ treatments in a crossover design with binary outcomes
+    \item Analyzing survey data where $b$ respondents each answer $k$ yes/no questions
+    \item Evaluating if several judges agree in their binary classifications
+\end{itemize}
+
+\textbf{Data structure}: The data are arranged in a $b \times k$ table where $b$ is the number of
+blocks (subjects) and $k$ is the number of treatments:
 
 \begin{center}
     \begin{tabularx}{.65\textwidth}{|*{5}{c|}}
     \hline
      & \textbf{Treatment 1} & \textbf{Treatment 2} & $\cdots$  & \textbf{Treatment k}\\
     \hline
-    \emph{Block 1} & $x_{11}$ & $x_{12}$ & $\cdots$  & $x_{1k}$\\
+    \emph{Block 1} & $X_{11}$ & $X_{12}$ & $\cdots$  & $X_{1k}$\\
     \hline
-    \emph{Block 2} & $x_{21}$ & $x_{22}$ & $\cdots$  & $x_{2k}$\\
+    \emph{Block 2} & $X_{21}$ & $X_{22}$ & $\cdots$  & $X_{2k}$\\
     \hline
-    \emph{Block 3} & $x_{31}$ & $x_{32}$ & $\cdots$  & $x_{3k}$\\
+    \emph{Block 3} & $X_{31}$ & $X_{32}$ & $\cdots$  & $X_{3k}$\\
     \hline
     $\vdots$ & $\vdots$ & $\vdots$ & $\ddots$ & $\vdots$ \\
     \hline
-    \emph{Block b} & $x_{b1}$ & $x_{b2}$ & $\cdots$  & $x_{bk}$\\
+    \emph{Block b} & $X_{b1}$ & $X_{b2}$ & $\cdots$  & $X_{bk}$\\
     \hline
     \end{tabularx}
 \end{center}
-And $\forall (i,j)\in\inter{1}{b}\times\inter{1}{k}, x_{ij}\in\left\{0, 1\right\}$
 
-\paragraph{Assumptions}
-\begin{itemize}
-    \item The blocks are randomly selected from the population of all possible blocks.
-    \item Outcome of the treatments are dichotomous, and should be coded in a standard way
-\end{itemize}
+where $\forall (i,j)\in\inter{1}{b}\times\inter{1}{k}, X_{ij}\in\left\{0, 1\right\}$
+(0 = failure, 1 = success).
 
-\paragraph{Frequentist}
-For example if $b$ respondents in a survey had each been asked $k$ \emph{Yes/No} questions
-the \emph{Q-test} could be use to test the null hypothesis that all questions were equally
-likely to elicit the answer "Yes".\\
-We have
 $\begin{cases}
-    H_{0}\text{: the treatments are equally effective} \\
-    H_{a}\text{: the treatments are \emph{not} equally effective} 
+    H_{0}: \text{The proportion of successes is equal across all } k \text{ treatments}\\
+    H_{1}: \text{The proportion of successes differs for at least one treatment}
 \end{cases}$
 
+\textbf{Methodology}:
+\begin{enumerate}
+    \item \tB{Arrange data} in a $b \times k$ table with binary entries (0 or 1)
+
+    \item \tB{Calculate row and column totals}:
+        \begin{itemize}
+            \item Row totals: $X_{i\cdot} = \su{j=1}{k}X_{ij}$ (number of successes for block $i$ across all treatments)
+            \item Column totals: $X_{\cdot j} = \su{i=1}{b}X_{ij}$ (number of successes for treatment $j$ across all blocks)
+            \item Grand total: $N = \su{i=1}{b}\su{j=1}{k}X_{ij}$
+        \end{itemize}
+
+    \item \tB{Compute Cochran's Q statistic}:
+        \begin{center}
+            \tR{$Q = \dfrac{k(k-1)\su{j=1}{k}\left(X_{\cdot j} - \frac{N}{k}\right)^{2}}
+            {\su{i=1}{b}X_{i\cdot}\left(k-X_{i\cdot}\right)}$}
+        \end{center}
+
+        where:
+        \begin{itemize}
+            \item \textbf{Numerator}: Measures variation in treatment totals (between-treatment variability)
+            \item \textbf{Denominator}: Measures within-block variability
+            \item The ratio compares treatment differences to within-subject variation
+        \end{itemize}
+
+    \item \uB{Under $H_0$, $Q$ asymptotically follows a $\chi^2$ distribution} with $k-1$ degrees of freedom
+
+    \item \textbf{Compute p-value}: $p = \mathbb{P}(\chi^2_{k-1} \geq Q_{obs})$
+
+    \item \textbf{Decision}: Reject $H_0$ if $p < \alpha$ (or equivalently, if $Q > \chi^2_{k-1, 1-\alpha}$)
+\end{enumerate}
+
+\textbf{What the test statistic measures}:
+\begin{itemize}
+    \item \textbf{Numerator} $k(k-1)\sum_{j=1}^{k}(X_{\cdot j} - N/k)^2$: Quantifies how much the treatment
+        totals deviate from what we'd expect if all treatments were equally effective (expected total = $N/k$)
+    \item \textbf{Denominator} $\sum_{i=1}^{b}X_{i\cdot}(k - X_{i\cdot})$: Represents the variability within blocks.
+        For a block with row total $X_{i\cdot}$, the maximum variability occurs when $X_{i\cdot} = k/2$
+    \item Large $Q$ indicates treatment totals differ more than expected by chance given the within-block variation
+\end{itemize}
+
+\textbf{Example - Testing pain relief methods}: Suppose 6 patients each try 3 different pain relief
+methods (A, B, C), and we record whether pain was relieved (1) or not (0):
+
 \begin{center}
-    \fr{$
-    T = k(k-1)\dfrac{\su{j=1}{k}\left(x_{\cdot j} - \frac{N}{k}\right)^{2}}{
-    \su{i=1}{b}x_{i\cdot}\left(k-x_{i\cdot}\right)}
-    \begin{cases}
-        k\text{: number of treatments} \\
-        x_{\cdot j}\text{: column total for the }j\text{th treatment} \\
-        b\text{: number of blocks} \\
-        X_{i\cdot}\text{: row total for the }i\text{th block} \\
-        N\text{: grand total}
-         
-\end{cases}$}
+\begin{tabular}{|c|c|c|c||c|}
+    \hline
+    \textbf{Patient} & \textbf{Method A} & \textbf{Method B} & \textbf{Method C} & \textbf{Row total} ($X_{i\cdot}$)\\
+    \hline
+    1 & 1 & 0 & 1 & 2\\
+    \hline
+    2 & 1 & 1 & 1 & 3\\
+    \hline
+    3 & 0 & 0 & 1 & 1\\
+    \hline
+    4 & 1 & 0 & 1 & 2\\
+    \hline
+    5 & 1 & 1 & 0 & 2\\
+    \hline
+    6 & 0 & 0 & 1 & 1\\
+    \hline
+    \hline
+    \textbf{Col total} ($X_{\cdot j}$) & 4 & 2 & 5 & $N = 11$\\
+    \hline
+\end{tabular}
 \end{center}
 
-For significance level $\alpha$, the asymptotic critical region is 
-$T > \chi^{2}_{1-\alpha, k-1}$ which is the ($a-\alpha$) quantile of the $\chi^{2}$ 
-distribution with $K-1$ degrees of freedom.
+\begin{itemize}
+    \item $b = 6$ patients, $k = 3$ methods
+    \item Column totals: $X_{\cdot 1} = 4$, $X_{\cdot 2} = 2$, $X_{\cdot 3} = 5$
+    \item Row totals: $X_{1\cdot} = 2$, $X_{2\cdot} = 3$, $X_{3\cdot} = 1$, $X_{4\cdot} = 2$, $X_{5\cdot} = 2$, $X_{6\cdot} = 1$
+    \item Grand total: $N = 11$
+    \item Expected count per treatment under $H_0$: $N/k = 11/3 \approx 3.67$
+
+    \item \textbf{Numerator}:
+    \begin{align*}
+    k(k-1)\su{j=1}{k}\left(X_{\cdot j} - \frac{N}{k}\right)^2 &= 3(2)[(4-3.67)^2 + (2-3.67)^2 + (5-3.67)^2]\\
+    &= 6[0.11 + 2.79 + 1.77]\\
+    &= 6[4.67] = 28.02
+    \end{align*}
+
+    \item \textbf{Denominator}:
+    \begin{align*}
+    \su{i=1}{b}X_{i\cdot}(k-X_{i\cdot}) &= 2(3-2) + 3(3-3) + 1(3-1) + 2(3-2) + 2(3-2) + 1(3-1)\\
+    &= 2(1) + 3(0) + 1(2) + 2(1) + 2(1) + 1(2)\\
+    &= 2 + 0 + 2 + 2 + 2 + 2 = 10
+    \end{align*}
+
+    \item \textbf{Q statistic}: $Q = \frac{28.02}{10} = 2.802$
+
+    \item Degrees of freedom: $k - 1 = 3 - 1 = 2$
+    \item Critical value: $\chi^2_{2, 0.95} = 5.99$ (for $\alpha = 0.05$)
+    \item Decision: Since $Q = 2.802 < 5.99$, we fail to reject $H_0$. The three methods appear equally effective.
+    \item P-value: $\mathbb{P}(\chi^2_2 \geq 2.802) \approx 0.246$ (no significant difference)
+\end{itemize}
+
+\textbf{Relationship to other tests}:
+\begin{itemize}
+    \item \textbf{McNemar's test}: When $k=2$, Cochran's Q test reduces to McNemar's test for paired binary data
+    \item \textbf{Friedman test}: Similar purpose but for ordinal/continuous data (ranks), not just binary
+    \item \textbf{Repeated measures ANOVA}: For continuous outcomes with normal distribution assumption
+\end{itemize}
+
+\paragraph{Strengths}
+\begin{itemize}
+    \item \tB{Non-parametric}: No assumption about distribution of outcomes (only that they're binary)
+    \item Accounts for \uB{repeated measures} structure (same subjects under multiple conditions)
+    \item \textbf{Natural extension of McNemar's test} to $k > 2$ treatments
+    \item More powerful than treating data as independent samples (uses within-subject correlation)
+    \item Easy to compute and interpret for binary outcomes
+\end{itemize}
+
+\paragraph{Weaknesses}
+\begin{itemize}
+    \item \tB{Requires binary outcomes} - cannot handle ordinal or continuous data directly
+    \item \textbf{Asymptotic test}: Requires sufficient sample size ($b \geq 10$ typically) for chi-squared
+        approximation to be valid
+    \item \textbf{Does not identify which treatments differ} - only detects that at least one differs;
+        post-hoc pairwise comparisons (McNemar tests with correction) needed to identify specific differences
+    \item Blocks with no variation (all 0s or all 1s) contribute nothing to the denominator, which can
+        reduce power
+    \item Less efficient than parametric alternatives if stronger assumptions hold
+\end{itemize}
 
 \paragraph{Bayesian}
 Does not exist, see \emph{contingency table} \\
 
+\textit{\hyperref[statistical_method_table]{Return to the table.}}
+
 
 
 \subsection{Sign test}
-It is a statistical method to test for consistent differences between pairs of 
-observations, such as the weight of subjects before and after treatment.
-For comparisons of paired observations $(x, y)$ the \emph{sign-test} is \tB{most useful if 
-comparison can only be expressed as $x>y,~x=y,\text{ or } x<y$}.
-If instead the differences can be expressed \uB{in numeric quantities it is worthy to use 
-\emph{t-test} or \emph{Wilcoxon signed-rank test}} will usually have greater power than
-the sign test to detect consistent differences.
 
-\paragraph{Frequentist}
-Let $p=\Prob{X>Y}$, then \\
-$\begin{cases}
-    H_{0}:~p=0.5\text{ meaning that given }(x_{i}, y_{i})
-    \text{ each element is equally likely to be larger than the other}\\
-    H_{a}:~p\neq 0.5
-\end{cases}$\\
-Pairs are omitted for which there is no differences so that there is a potential reduced
-sample of $m$ pairs.\\
-The statistics $W$ is defined as follow:
-\begin{center}
-    $W = \mathbf{1}_{\left\{x_{i} > y_{i}\right\}} \hookrightarrow \mathcal{B}(m, 0.5)$
-\end{center}
+Also known as the \tB{binomial sign test}, this is a non-parametric statistical method to test
+for consistent differences between pairs of observations, such as the weight of subjects before
+and after treatment. For comparisons of paired observations $(x, y)$, the sign test is \tB{most
+useful if comparisons can only be expressed qualitatively as $x>y$, $x=y$, or $x<y$}. \uB{If
+instead the differences can be quantified numerically, consider using the \emph{paired t-test}
+or \emph{Wilcoxon signed-rank test}}, which will usually have greater power than the sign test
+to detect consistent differences.
 
 \paragraph{Assumptions}
 Let $\forall i\in\inter{1}{n},~Z_{i} = X_{i} - Y_{i}$
 
 \begin{itemize}
-    \item $Z_{i}$ are assumed independent.
-    \item Each $Z_{i}$ comes from the same continuous population.
-    \item The values $X_{i}$ and $Y_{i}$ are ordered.
+    \item \tB{The pairs $(X_i, Y_i)$ are independent} across observations
+    \item Each $Z_{i}$ comes from a continuous distribution (to avoid ties)
+    \item The values $X_{i}$ and $Y_{i}$ represent paired or matched observations
+    \item The distribution of differences need not be symmetric (unlike Wilcoxon signed-rank test)
+\end{itemize}
+
+\paragraph{Frequentist}
+The sign test \tR{examines whether the median of the pairwise differences is zero, equivalently
+whether $\Prob{X>Y} = 0.5$}.
+
+Let $p=\Prob{X>Y}$, then:
+
+$\begin{cases}
+    H_{0}: p=0.5 \text{ (each element in a pair is equally likely to be larger)}\\
+    H_{1}: p \neq 0.5 \text{ (two-sided test)}\\
+    H_{1}: p > 0.5 \text{ (one-sided: } X \text{ tends to be larger than } Y\text{)}\\
+    H_{1}: p < 0.5 \text{ (one-sided: } Y \text{ tends to be larger than } X\text{)}
+\end{cases}$
+
+\textbf{Methodology}:
+\begin{enumerate}
+    \item \tB{Compute differences}: For each pair $(x_i, y_i)$, determine the sign of $x_i - y_i$
+
+    \item \tB{Count signs}: Let $n$ be the number of pairs. \uB{Omit pairs where $x_i = y_i$ (ties)},
+        leaving $m \leq n$ pairs with non-zero differences:
+        \begin{itemize}
+            \item $n_+ = $ number of pairs where $x_i > y_i$ (positive differences)
+            \item $n_- = $ number of pairs where $x_i < y_i$ (negative differences)
+            \item $m = n_+ + n_-$ (total non-zero differences)
+        \end{itemize}
+
+    \item \tB{Define test statistic}: The test statistic is the number of positive differences:
+        \begin{center}
+            \tR{$W = \su{i=1}{m}\mathbf{1}_{\{x_{i} > y_{i}\}} = n_+$}
+        \end{center}
+        \uB{Under $H_0$}, each difference is equally likely to be positive or negative, so:
+        \begin{center}
+            \tB{$W \sim \mathcal{B}(m, 0.5)$}
+        \end{center}
+
+    \item \textbf{Compute p-value}: Using the binomial distribution with $p=0.5$:
+        \begin{itemize}
+            \item \textbf{Two-sided}: $p\text{-value} = 2\min\left(\mathbb{P}(W \leq n_+), \mathbb{P}(W \geq n_+)\right)$
+            \item \textbf{One-sided} ($H_1: p > 0.5$): $p\text{-value} = \mathbb{P}(W \geq n_+)$
+            \item \textbf{One-sided} ($H_1: p < 0.5$): $p\text{-value} = \mathbb{P}(W \leq n_+)$
+        \end{itemize}
+
+    \item \textbf{Decision}: Reject $H_0$ if $p\text{-value} < \alpha$
+\end{enumerate}
+
+\textbf{Large sample approximation}: \uB{For large $m$ (typically $m \geq 20$), use the normal
+approximation to the binomial}:
+$$Z = \dfrac{W - \frac{m}{2}}{\frac{\sqrt{m}}{2}} \approx \mathcal{N}(0, 1)$$
+with continuity correction: $Z = \dfrac{|W - \frac{m}{2}| - 0.5}{\frac{\sqrt{m}}{2}}$
+
+\textbf{Example - Weight loss study}: Suppose 12 patients are weighed before and after a diet
+program. We observe the following signs of differences (After $-$ Before):
+
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|c|}
+    \hline
+    \textbf{Patient} & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 & 11 & 12 \\
+    \hline
+    \textbf{Sign} & $-$ & $-$ & $+$ & $-$ & $-$ & $0$ & $-$ & $-$ & $-$ & $-$ & $-$ & $-$ \\
+    \hline
+\end{tabular}
+\end{center}
+
+\begin{itemize}
+    \item $n_+ = 1$ (one patient gained weight)
+    \item $n_- = 10$ (ten patients lost weight)
+    \item Ties: 1 patient had no change (excluded)
+    \item $m = 11$ non-zero differences
+    \item Test statistic: $W = n_+ = 1$
+    \item Under $H_0$: $W \sim \mathcal{B}(11, 0.5)$
+    \item P-value (two-sided): $p = 2\mathbb{P}(W \leq 1) = 2\left[\binom{11}{0}(0.5)^{11} + \binom{11}{1}(0.5)^{11}\right]$
+        $= 2\left[\frac{1 + 11}{2048}\right] = 2 \times 0.00586 = 0.0117$
+    \item Decision: At $\alpha = 0.05$, we reject $H_0$. The diet program appears effective
+        at reducing weight.
 \end{itemize}
 
 \paragraph{Strengths}
 \begin{itemize}
-    \item A fewer assumptions need to be made than for parametrical test
+    \item \tB{Minimal assumptions}: No normality or symmetry required
+    \item \uB{Robust to outliers}: Only uses sign information, not magnitude
+    \item \textbf{Appropriate for ordinal data}: Works when only direction of difference is known
+    \item \textbf{Simple to compute and interpret}
+    \item Valid for small sample sizes (exact p-values from binomial distribution)
 \end{itemize}
 
 \paragraph{Weaknesses}
 \begin{itemize}
-    \item The power of test is lower than for a parametrical test
+    \item \tB{Low statistical power}: Less powerful than parametric tests when their assumptions hold
+    \item \uB{Discards magnitude information}: Ignores how much larger one value is than another
+    \item \textbf{Less powerful than Wilcoxon signed-rank test}: When differences can be ranked by magnitude
+    \item \textbf{Ties must be excluded}: Reduces effective sample size
+    \item \textbf{Conservative for small samples}: Discrete nature of binomial leads to conservative p-values
 \end{itemize}
 
 
 
-\subsection{Contingency coefficients: Cramér's V}
-To \tB{quantify associations between 2 paired samples in a contingency table, it is based
-on $\chi^{2}$} and varies from 0 (no association) to 1 (complete association).
+\subsection{Contingency coefficient: Cramér's V}
+A \tB{measure of association between two categorical variables in a contingency table, based
+on $\chi^{2}$}. It varies from 0 (no association) to 1 (perfect association), making it
+\uB{analogous to $R^{2}$ for categorical data}. \uB{Unlike the raw $\chi^2$ statistic, Cramér's V
+is normalized} and comparable across tables of different sizes.
+
 \paragraph{Frequentist}
-Let a sample of size $n$ of the simultaneously distributed variable $A$ and $B$.
-$\forall (i,j)\in\inter{1}{r}\times\inter{1}{c},~n_{ij} = \text{\emph{Card}}\left(
-\left\{A_{i},B_{j}\right\}\right)$.
-Then $\chi^{2} = \su{(i,j)\in\inter{1}{r}\times\inter{1}{c}}{}\dfrac{\left(n_{ij} - \frac{
-n_{i\cdot}\times n_{\cdot j}}{n}\right)^{2}}{\frac{n_{i\cdot}\times n_{\cdot j}}{n}}$\\
-Finally the Cramér's V with bias correction is: 
+Consider $n$ observations, each classified by two categorical variables $A$ and $B$ with
+$r$ and $c$ categories respectively. Let:
+
+$\begin{cases}
+    n_{ij}\text{: count of observations where } A = i \text{ and } B = j \\
+    n_{i\cdot} = \su{j=1}{c}n_{ij}\text{: row marginal total (sum of row } i\text{)} \\
+    n_{\cdot j} = \su{i=1}{r}n_{ij}\text{: column marginal total (sum of column } j\text{)} \\
+    n = \su{i=1}{r}\su{j=1}{c}n_{ij}\text{: total sample size} \\
+    r\text{: number of rows (categories of } A\text{)} \\
+    c\text{: number of columns (categories of } B\text{)}
+\end{cases}$
+
+\textbf{Step 1: Compute the $\chi^2$ test statistic for independence}:
 \begin{center}
-    \fr{$V = \sqrt{\dfrac{\max\left(0, \frac{\chi^{2}}{n} - \frac{(r-1)(c-1)}{n}\right)}{\min\left(
+    \tR{$\chi^{2} = \su{i=1}{r}\su{j=1}{c}\dfrac{\left(n_{ij} - \frac{n_{i\cdot} n_{\cdot j}}{n}\right)^{2}}{\frac{n_{i\cdot} n_{\cdot j}}{n}}$}
+\end{center}
+where $\frac{n_{i\cdot} n_{\cdot j}}{n}$ is the expected count under independence (in frequentist 
+approach if $A\perp B$, then $\prob{A\cap B} = \frac{n_{A}\times n_{B}}{n}$).
+
+\textbf{Step 2: Compute Cramér's V}. The \tB{standard formula} is:
+\begin{center}
+    \frB{$V = \sqrt{\dfrac{\chi^{2}/n}{\min(r-1, c-1)}}$}
+\end{center}
+
+The division by $n$ normalizes for sample size, and $\min(r-1, c-1)$ \uB{adjusts for table 
+dimensions, ensuring $V \in [0, 1]$}.
+
+\textbf{Bias-corrected Cramér's V} (Bergsma, 2013): For small samples, the standard formula
+has upward bias. The bias-corrected version is:
+\begin{center}
+    \fr{$V_{\text{corrected}} = \sqrt{\dfrac{\max\left(0, \frac{\chi^{2}}{n} - \frac{(r-1)(c-1)}{n-1}\right)}{\min\left(
     r-\frac{(r-1)^{2}}{n-1}-1, c-\frac{(c-1)^{2}}{n-1}-1\right)}}$}
 \end{center}
 
+This correction is \uB{recommended when $n < 100$ or when $\chi^2/n$ is small}.
+
+\textbf{Interpretation guidelines}:
+\begin{itemize}
+    \item \textbf{$V \approx 0$}: No association (variables are independent)
+    \item \textbf{$V \approx 0.1$}: Weak association
+    \item \textbf{$V \approx 0.3$}: Moderate association
+    \item \textbf{$V \approx 0.5$ or higher}: Strong association
+    \item \textbf{$V = 1$}: Perfect association (knowing one variable determines the other)
+\end{itemize}
+
+Note: These thresholds are approximate and context-dependent.
+
+\textbf{Example - Education and Employment Status}: Survey of 200 people classified by education
+level (3 categories) and employment status (2 categories):
+
+\begin{center}
+\begin{tabular}{|l|c|c|c|}
+    \hline
+    & \textbf{Employed} & \textbf{Unemployed} & \textbf{Row Total} \\
+    \hline
+    \textbf{High School} & 40 & 30 & 70 \\
+    \textbf{Bachelor's} & 50 & 20 & 70 \\
+    \textbf{Graduate} & 55 & 5 & 60 \\
+    \hline
+    \textbf{Column Total} & 145 & 55 & 200 \\
+    \hline
+\end{tabular}
+\end{center}
+
+\begin{itemize}
+    \item Expected count for (High School, Employed): $\frac{70 \times 145}{200} = 50.75$
+    \item Expected count for (High School, Unemployed): $\frac{70 \times 55}{200} = 19.25$
+    \item Continuing for all cells, compute: $\chi^2 = \frac{(40-50.75)^2}{50.75} + \frac{(30-19.25)^2}{19.25} + \cdots \approx 18.44$
+    \item $\min(r-1, c-1) = \min(3-1, 2-1) = 1$
+    \item Cramér's V: $V = \sqrt{\frac{18.44/200}{1}} = \sqrt{0.0922} \approx 0.304$
+    \item \textbf{Interpretation}: Moderate association between education level and employment status
+\end{itemize}
+
 \paragraph{Assumptions}
 \begin{itemize}
-    \item The both variables have to be nominal.
+    \item \tB{Observations are independent} (each individual counted once)
+    \item Both variables are categorical (nominal or ordinal)
+    \item Note: For ordinal variables, consider using measures that leverage ordering
+        (Kendall's tau, Spearman's $\rho$)
+    \item Sufficient sample size for $\chi^2$ validity (expected counts $\geq 5$ in most cells)
 \end{itemize}
 
 \paragraph{Strengths}
 \begin{itemize}
-    \item Good analog of the $R^{2}$ for categorical variables.
+    \item \tB{Normalized and interpretable}: Values always in $[0, 1]$, comparable across studies
+    \item \uB{Good analog of $R^{2}$} for categorical variables
+    \item \textbf{Scale-invariant}: Not affected by sample size (unlike raw $\chi^2$)
+    \item \textbf{Works for any table size}: $r \times c$ tables with $r, c \geq 2$
+    \item Simple to compute from $\chi^2$ test results
 \end{itemize}
 
 \paragraph{Weaknesses}
 \begin{itemize}
-    \item Can tend to overestimate the strength of association.
+    \item \tB{Does not indicate direction of association} (unlike correlation coefficients)
+    \item \uB{Upward bias in small samples} (use bias-corrected version when $n < 100$)
+    \item \textbf{Depends on marginal distributions}: Can be affected by unbalanced margins
+    \item \textbf{Ignores ordering in ordinal variables}: Treats all categories as nominal
+    \item \textbf{Inherits $\chi^2$ limitations}: Requires adequate expected cell counts,
+        sensitive to sparse tables
+    \item Difficult to reach $V = 1$ in rectangular tables where $r \neq c$
 \end{itemize}
+
+\paragraph{Alternatives}
+\begin{itemize}
+    \item \textbf{$2 \times 2$ tables}: Use Phi coefficient ($\phi = \sqrt{\chi^2/n}$, equivalent to Cramér's V)
+    \item \textbf{Ordinal variables}: Use Kendall's tau-b or Spearman's $\rho$ to leverage ordering
+    \item \textbf{Asymmetric relationships}: Use Goodman-Kruskal's lambda or tau
+    \item \textbf{Small samples}: Use Fisher's exact test instead of $\chi^2$, then compute V if needed
+\end{itemize}
+
+\paragraph{Bayesian}
+\uB{Cramér's V is a descriptive measure, not a hypothesis test}, so there is no direct Bayesian
+equivalent. For Bayesian inference about association in contingency tables, see
+\emph{Contingency table from a Bayesian perspective}. \\
+
+\textit{\hyperref[statistical_method_table]{Return to the table.}}
 
 
 
 \subsection{Contingency table from a Bayesian perspective}
-To test the independence hypothesis between 2 variables.
+\tB{Bayesian test of independence between two categorical variables} in a contingency table.
+Instead of computing p-values, this approach uses \uB{Bayes factors to quantify the evidence
+for independence ($H_0$) versus association ($H_1$)}. The methodology depends critically on
+the \emph{sampling scheme} used to collect the data.
+
 \paragraph{Bayesian}
-Let's consider 4 sampling plans, \uB{depending on which sampling plan is chosen the Bayes
-factor formula will change}.
-\begin{itemize}
-    \item \emph{Poisson} sampling scheme: Each cell count is considered as random and so
-        is the grand total, the cells are Poisson distributed. This design often occurs
-        in purely observational work.
-    \item \emph{Joint multinomial} sampling scheme: same as above except that now, the 
-        grand total is fixed. 
-    \item \emph{Independent multinomial} sampling scheme: either all row margins or all 
-        column margins are fixed, this scheme is frequently used in psychological studies.
-    \item \emph{Hypergeometric} sampling scheme: here both row margins and column margins are fixed. Practical use of this scheme is rare!  
-\end{itemize}
-Bayes factors are often difficult to compute, as they are obtained by integrating out over
-the entire parameter space, a process that is non-trivial when the integrals are 
-high-dimensional and intractable. \\
-Then \uB{we will use the 4 Bayes Factor developed by \emph{Gunnel and Dickey in 1974}, because
-they only require computation of common functions such as gamma functions, for which 
-numerical approximation are already available}.\\
-Here the logic: the Bayes Factor $BF^{i+1}_{01}$ computed at the observation $i+1$, 
-contains the information up to the step $i$ with the extra information of the step $i+1$. 
-We can then see $BF^{i+1}_{01}$ as the Bayes factor of the observation $i+1$ conditioned
-on the observation $i$.\\
-Finally thanks to the successive conditionalization the Bayes Factor are easy to compute.
+\textbf{Hypotheses}:
+$\begin{cases}
+    H_{0}\text{: Independence - cell probabilities factorize as } \theta_{ij} = \theta_{i\cdot}\theta_{\cdot j} \\
+    H_{1}\text{: Association - cell probabilities are unrestricted}
+\end{cases}$
 
-\paragraph{Assumptions}
-\begin{itemize}
-    \item We need to be consider data providing from one of the following sampling scheme: \emph{Poisson}, \emph{Joint multinomial}, \emph{Independent multinomial} or 
-        \emph{Hypergeometric}
-\end{itemize}
+\textbf{The four sampling schemes}:
 
-\paragraph{Strengths}
-\begin{itemize}
-    \item Bayesian approach, then no issue to assess the significance
-    \item Implemented in R
-\end{itemize}
+The \uB{sampling scheme determines which aspects of the table are fixed by design versus random}.
+This fundamentally affects the likelihood and thus the Bayes factor computation.
 
-\paragraph{Weaknesses}
-\begin{itemize}
-    \item Restricted to the above sampling scheme today. 
-\end{itemize}
-
-
-\subsection{Wilcoxon test}
-Non parametric test, \uB{used to test the location of a population based on a data sample or 
-to compare the locations of two populations using two matching samples}.\\
-It is a good alternative of the \emph{t-test} when the mean is not of interest for the 
-studied population.
-\paragraph{Frequentist}
-Let $Y$ and $X$ be 2 random variables, and $\left(x_{i}, y_{i}\right)_{1\leq i\leq n}$
-a paired sample. 
 \begin{enumerate}
-    \item $\forall i\in\inter{1}{n},~\left|x_{i}\right|$
-    \item Sort the $\left(\left|x_{i}\right|\right)_{1\leq i\leq n}$ and assign a rank
-        $\left(R_{i}\right)_{1\leq i\leq n}$
-    \item The test statistic \tB{$T=\su{i=1}{n}sgn\left(X_{i}\right)R_{i}$}
-    \item Produce a \emph{p-v} by computing T to its distribution under the null
-        hypothesis.
-\end{enumerate}
-We will provide the logic for a one-sample test, the two-sample follows the same logic but
-with 2 variables.
+    \item \textbf{Poisson sampling}:
+        \begin{itemize}
+            \item \emph{What's fixed}: Nothing - study observes events over fixed time/space
+            \item \emph{What's random}: All cell counts AND the grand total $n$
+            \item \emph{Model}: Each cell $n_{ij} \sim \text{Poisson}(\lambda_{ij})$ independently
+            \item \emph{Example}: Count traffic accidents by time-of-day and weather condition
+                over one month - total number of accidents is random
+        \end{itemize}
 
-Assume the data consists of independent and identically distributed (IID) samples from a
-distribution $F$ then consider 2 variables $(X_{1}, X_{2})\hookrightarrow IID(F)$
-Define $p_{2} = \Prob{\dfrac{X_{1} + X_{2}}{2}>0} = 1-F^{(2)}(0)$
-Then Wilcoxon signed-rank \emph{sum} $\rightarrow H_{0}:~p_{2} = \dfrac{1}{2}$
-In restricting the distributions of interest we can reach more interpretable null and 
-alternative hypotheses. On mildly restrictive is that $F^(2)$ has a unique median $\mu$. 
-This median is called pseudo median of $F$
-Then we have $H_{0}:~\mu=0$
+    \item \textbf{Joint multinomial sampling}:
+        \begin{itemize}
+            \item \emph{What's fixed}: Grand total $n$ (sample size decided in advance)
+            \item \emph{What's random}: All cell counts (margins are random)
+            \item \emph{Model}: $(n_{11}, \ldots, n_{rc}) \sim \text{Multinomial}(n; \theta_{11}, \ldots, \theta_{rc})$
+            \item \emph{Example}: Survey exactly 200 people, classify by education and employment
+                - sample size fixed, but margins random
+        \end{itemize}
+
+    \item \textbf{Independent multinomial sampling}:
+        \begin{itemize}
+            \item \emph{What's fixed}: One set of margins (e.g., row totals $n_{i\cdot}$)
+            \item \emph{What's random}: Cell counts within each row/column
+            \item \emph{Model}: Each row independently: $(n_{i1}, \ldots, n_{ic}) \sim \text{Multinomial}(n_{i\cdot}; \theta_{i1}, \ldots, \theta_{ic})$
+            \item \emph{Example}: Sample exactly 50 men and 50 women, measure political preference
+                - gender margins fixed by design
+        \end{itemize}
+
+    \item \textbf{Hypergeometric sampling}:
+        \begin{itemize}
+            \item \emph{What's fixed}: Both row AND column margins
+            \item \emph{What's random}: Only the arrangement of fixed totals into cells
+            \item \emph{Model}: Hypergeometric distribution (as in Fisher's exact test)
+            \item \emph{Example}: Fisher's tea tasting - 8 cups, 4 milk-first, 4 tea-first,
+                subject identifies 4 as milk-first - all margins predetermined
+        \end{itemize}
+\end{enumerate}
+
+\textbf{Bayes Factor formulas (Gunel and Dickey, 1974)}:
+
+For a \tB{$2 \times 2$ table} with cells:
+\begin{center}
+\begin{tabular}{|c|c|c|c|}
+    \hline
+    & \textbf{Col 1} & \textbf{Col 2} & \textbf{Row total} \\
+    \hline
+    \textbf{Row 1} & $n_{11}$ & $n_{12}$ & $n_{1\cdot}$ \\
+    \textbf{Row 2} & $n_{21}$ & $n_{22}$ & $n_{2\cdot}$ \\
+    \hline
+    \textbf{Col total} & $n_{\cdot 1}$ & $n_{\cdot 2}$ & $n$ \\
+    \hline
+\end{tabular}
+\end{center}
+
+Using \uB{uniform (Jeffreys) priors with hyperparameter $\alpha = 1/2$}, the Bayes factors are:
+
+\begin{enumerate}
+    \item \textbf{Poisson sampling}:
+        \begin{center}
+            \frB{$BF_{01} = \dfrac{(n_{1\cdot} + n_{2\cdot} + 1)(n_{\cdot 1} + n_{\cdot 2} + 1)}{2(n + 1)}$}
+        \end{center}
+
+    \item \textbf{Joint multinomial sampling}:
+        \begin{center}
+            \frB{$BF_{01} = \dfrac{n!}{(n_{1\cdot})!(n_{2\cdot})!} \cdot \dfrac{(n_{\cdot 1})!(n_{\cdot 2})!}{n!} \cdot \dfrac{B(n_{1\cdot} + \frac{1}{2}, n_{2\cdot} + \frac{1}{2}) \cdot B(n_{\cdot 1} + \frac{1}{2}, n_{\cdot 2} + \frac{1}{2})}{B(n_{11} + \frac{1}{2}, n_{12} + \frac{1}{2}, n_{21} + \frac{1}{2}, n_{22} + \frac{1}{2})}$}
+        \end{center}
+        where $B(\cdot)$ is the multivariate beta function: $B(a_1, \ldots, a_k) = \dfrac{\prod_{i=1}^{k}\Gamma(a_i)}{\Gamma(\sum_{i=1}^{k}a_i)}$
+
+    \item \textbf{Independent multinomial sampling} (row margins fixed):
+        \begin{center}
+            \frB{$BF_{01} = \dfrac{\prod_{i=1}^{2}\Gamma(n_{i\cdot} + 1)}{\Gamma(n + 2)} \cdot \dfrac{\Gamma(n + 2)\prod_{j=1}^{2}\Gamma(n_{\cdot j} + \frac{1}{2})}{\Gamma(n + 1)\prod_{i,j}\Gamma(n_{ij} + \frac{1}{2})}$}
+        \end{center}
+
+    \item \textbf{Hypergeometric sampling}:
+        \begin{center}
+            \frB{$BF_{01} = \dfrac{\binom{n_{1\cdot}}{n_{11}}\binom{n_{2\cdot}}{n_{21}}}{\binom{n}{n_{\cdot 1}}} \cdot \dfrac{B(n_{11} + \frac{1}{2}, n_{12} + \frac{1}{2}) \cdot B(n_{21} + \frac{1}{2}, n_{22} + \frac{1}{2})}{B(n_{\cdot 1} + \frac{1}{2}, n_{\cdot 2} + \frac{1}{2})}$}
+        \end{center}
+\end{enumerate}
+
+\textbf{Interpretation of Bayes factors} (Jeffreys, 1961; Kass and Raftery, 1995):
+\begin{center}
+\begin{tabular}{|l|l|}
+    \hline
+    \textbf{Bayes Factor $BF_{01}$} & \textbf{Evidence for $H_0$ (independence)} \\
+    \hline
+    $< 1/100$ & Decisive evidence against $H_0$ (strong association) \\
+    $1/100$ to $1/10$ & Strong evidence against $H_0$ \\
+    $1/10$ to $1/3$ & Moderate evidence against $H_0$ \\
+    $1/3$ to $3$ & Weak/inconclusive evidence \\
+    $3$ to $10$ & Moderate evidence for $H_0$ (independence) \\
+    $10$ to $100$ & Strong evidence for $H_0$ \\
+    $> 100$ & Decisive evidence for $H_0$ \\
+    \hline
+\end{tabular}
+\end{center}
+
+Note: $BF_{10} = 1/BF_{01}$ gives evidence for association.
+
+\textbf{Example - Gender and Political Preference}:
+
+Suppose we survey people about political preference, using \emph{independent multinomial
+sampling} with fixed gender margins: 60 men and 40 women.
+
+\begin{center}
+\begin{tabular}{|l|c|c|c|}
+    \hline
+    & \textbf{Left} & \textbf{Right} & \textbf{Row Total} \\
+    \hline
+    \textbf{Men} & 35 & 25 & 60 \\
+    \textbf{Women} & 15 & 25 & 40 \\
+    \hline
+    \textbf{Column Total} & 50 & 50 & 100 \\
+    \hline
+\end{tabular}
+\end{center}
+
+Using the independent multinomial formula with $\alpha = 1/2$:
+\begin{itemize}
+    \item $\Gamma(61)/\Gamma(102) = 1/101!$ (simplifies in ratio)
+    \item $\Gamma(102) \cdot [\Gamma(50.5)]^2 / [\Gamma(101) \cdot \Gamma(35.5) \cdot \Gamma(25.5) \cdot \Gamma(15.5) \cdot \Gamma(25.5)]$
+    \item After computation: $BF_{01} \approx 0.23$
+    \item \textbf{Interpretation}: $BF_{01} = 0.23 < 1/3$ indicates \uB{moderate evidence against independence},
+        suggesting political preference differs between men and women
+    \item Equivalently: $BF_{10} = 1/0.23 \approx 4.3$, moderate evidence for association
+\end{itemize}
+
+\textbf{Comparison with frequentist approach}:
+\begin{itemize}
+    \item \textbf{Frequentist} ($\chi^2$ test): Computes p-value, tests null hypothesis at fixed $\alpha$
+    \item \textbf{Bayesian}: Quantifies \emph{relative evidence} for $H_0$ vs $H_1$, no arbitrary threshold
+    \item Advantage: Can support $H_0$ (independence), not just reject it
+    \item Bayesian approach naturally handles small samples (no asymptotic approximations needed)
+\end{itemize}
+
+\textbf{Computational implementation}:
+\begin{itemize}
+    \item \textbf{R package}: \texttt{BayesFactor} - function \texttt{contingencyTableBF()}
+    \item \textbf{Python}: \texttt{scipy.special.gamma} for computing gamma functions manually
+    \item For large factorials, use log-gamma: $\log(BF_{01}) = \sum \log \Gamma(\cdot) - \sum \log \Gamma(\cdot)$
+        to avoid numerical overflow
+\end{itemize}
+
+\textbf{Extension to $r \times c$ tables}:
+
+For larger tables, the formulas generalize but become more complex. The general principle:
+$$BF_{01} = \dfrac{P(\text{data} | H_0, \text{prior})}{P(\text{data} | H_1, \text{prior})}$$
+where marginal likelihoods are computed by integrating over Dirichlet priors. Modern software
+handles this automatically.
+
 \paragraph{Assumptions}
 \begin{itemize}
-    \item Distribution $F$ is symmetric around its median
-    \item Observations are independent
-    \item Data is at least ordinal
+    \item \tB{Observations are independent} (each individual counted once)
+    \item \uB{Correct sampling scheme must be identified} - different schemes give different Bayes factors
+    \item \textbf{Prior specification}: Results depend on choice of prior hyperparameters (default: $\alpha = 1/2$)
+    \item Both variables are categorical
 \end{itemize}
 
 \paragraph{Strengths}
 \begin{itemize}
-    \item Non-parametric: no normality assumption required
-    \item More powerful than the sign test
-    \item Robust to outliers
+    \item \tB{Quantifies evidence for both hypotheses}: Can support independence, not just reject it
+    \item \uB{No asymptotic approximations}: Exact for any sample size (unlike $\chi^2$ test)
+    \item \textbf{Coherent evidence accumulation}: Can update Bayes factor as data arrives
+    \item \textbf{No arbitrary significance threshold}: Provides continuous measure of evidence
+    \item Handles multiple sampling schemes in a principled way
+    \item More interpretable than p-values for non-experts
 \end{itemize}
 
 \paragraph{Weaknesses}
 \begin{itemize}
-    \item Requires symmetry assumption
-    \item Less powerful than $t$-test when normality holds
+    \item \tB{Requires identifying correct sampling scheme} - misspecification affects results
+    \item \uB{Sensitive to prior specification} (though uniform priors are often reasonable)
+    \item \textbf{Computational complexity}: Formulas involve gamma/beta functions, require software
+    \item \textbf{Less familiar to most researchers} compared to frequentist tests
+    \item Different software may use different default priors, affecting comparability
+    \item For very large tables, computation can be intensive
 \end{itemize}
+
+\paragraph{When to use}
+\begin{itemize}
+    \item When you want to quantify evidence \emph{for} independence (not just test against it)
+    \item Small sample sizes where $\chi^2$ approximations are unreliable
+    \item When combining evidence across studies
+    \item When prior information about cell probabilities is available
+\end{itemize}
+
+\textit{\hyperref[statistical_method_table]{Return to the table.}}
+
+
+\subsection{Wilcoxon signed-rank test}
+
+Also known as the \tB{Wilcoxon test for paired samples or one-sample Wilcoxon test}, this
+is a \uB{non-parametric test for the location (median) of a distribution}. It is used in
+two contexts: (1) testing if a population median equals a specified value (one-sample), or
+(2) testing if the median of paired differences equals zero (paired samples). \tB{It is a
+good alternative to the $t$-test when the normality assumption does not hold}, as it uses
+ranks instead of raw values.
+
+\textbf{Note}: The \emph{Wilcoxon rank-sum test} (for two independent samples) is equivalent
+to the \emph{Mann-Whitney U test}, covered separately.
+
+\paragraph{Frequentist}
+
+\subparagraph{One-sample test}:
+
+Let $x_1, \ldots, x_n$ be a sample from a continuous distribution with median $\theta$.
+
+$\begin{cases}
+    H_{0}: \theta = \theta_0 \text{ (median equals hypothesized value)} \\
+    H_{1}: \theta \neq \theta_0 \text{ (two-sided)} \\
+    H_{1}: \theta > \theta_0 \text{ (one-sided upper)} \\
+    H_{1}: \theta < \theta_0 \text{ (one-sided lower)}
+\end{cases}$
+
+\subparagraph{Paired-sample test}:
+
+Let $(x_1, y_1), \ldots, (x_n, y_n)$ be $n$ paired observations. Let $d_i = x_i - y_i$
+be the differences.
+
+$\begin{cases}
+    H_{0}: \theta_d = 0 \text{ (median of differences is zero)} \\
+    H_{1}: \theta_d \neq 0 \text{ (two-sided)} \\
+    H_{1}: \theta_d > 0 \text{ (one-sided: } x \text{ tends to be larger)} \\
+    H_{1}: \theta_d < 0 \text{ (one-sided: } y \text{ tends to be larger)}
+\end{cases}$
+
+\subparagraph{Test procedure}:
+
+\begin{enumerate}
+    \item \textbf{Compute differences}:
+        \begin{itemize}
+            \item One-sample: $d_i = x_i - \theta_0$
+            \item Paired: $d_i = x_i - y_i$
+        \end{itemize}
+
+    \item \textbf{Remove zeros}: Exclude any $d_i = 0$. Let $m$ = number of non-zero differences.
+        (Zeros provide no information about direction)
+
+    \item \textbf{Rank absolute values}: Compute $|d_i|$ for all non-zero differences, then
+        rank them from 1 (smallest) to $m$ (largest). Let \tR{$R_i$ be the rank of $|d_i|$}.
+        \begin{itemize}
+            \item \textbf{Handling ties}: If $|d_i| = |d_j|$ (\emph{tied} means equal values),
+                assign both the average rank.
+
+                \textbf{Example}: Suppose you have these absolute differences to rank:
+
+                \begin{center}
+                \begin{tabular}{|c|c|c|}
+                    \hline
+                    \textbf{Value $|d_i|$} & \textbf{Natural position} & \textbf{Rank assigned} \\
+                    \hline
+                    2 & 1st & 1 \\
+                    \hline
+                    5 & 2nd & 3 (average of 2, 3, 4) \\
+                    5 & 3rd & 3 (average of 2, 3, 4) \\
+                    5 & 4th & 3 (average of 2, 3, 4) \\
+                    \hline
+                    8 & 5th & 5 \\
+                    \hline
+                \end{tabular}
+                \end{center}
+
+                The three values of 5 are \emph{tied} (equal), so they share positions 2, 3, 4.
+                We assign them all the average rank: $(2+3+4)/3 = 3$. This ensures fairness
+                and preserves the sum of ranks: $1 + 3 + 3 + 3 + 5 = 15 = \frac{5 \times 6}{2}$
+        \end{itemize}
+
+    \item \textbf{Compute signed-rank statistic}:
+        \begin{itemize}
+            \item Let $\text{sgn}(d_i) = \begin{cases} +1 & \text{if } d_i > 0 \\ -1 & \text{if } d_i < 0 \end{cases}$
+            \item Compute: \tB{$W = \su{i=1}{m}\text{sgn}(d_i) \cdot R_i$}
+            \item Alternatively, use: $W^+ = \su{d_i > 0}{}R_i$ (sum of positive ranks only)
+            \item Note: $W = W^+ - W^-$ where $W^- = \su{d_i < 0}{}R_i$, and $W^+ + W^- = \frac{m(m+1)}{2}$
+        \end{itemize}
+
+    \item \textbf{Compute p-value}:
+        \begin{itemize}
+            \item \textbf{Small samples} ($m \leq 20$): Use exact distribution from tables
+                (critical values of $W^+$ under $H_0$)
+            \item \textbf{Large samples} ($m > 20$): Use normal approximation
+        \end{itemize}
+\end{enumerate}
+
+\textbf{Large-sample normal approximation}:
+
+Under $H_0$, for large $m$:
+\begin{center}
+    \tR{$Z = \dfrac{W - 0}{\sqrt{\frac{m(m+1)(2m+1)}{6}}} \approx \mathcal{N}(0, 1)$}
+\end{center}
+
+Or equivalently, using $W^+$:
+\begin{center}
+    \tR{$Z = \dfrac{W^+ - \frac{m(m+1)}{4}}{\sqrt{\frac{m(m+1)(2m+1)}{24}}} \approx \mathcal{N}(0, 1)$}
+\end{center}
+
+\textbf{Continuity correction}: For better accuracy, use:
+$$Z = \dfrac{|W^+ - \frac{m(m+1)}{4}| - 0.5}{\sqrt{\frac{m(m+1)(2m+1)}{24}}}$$
+
+Then compute:
+\begin{itemize}
+    \item \textbf{Two-sided}: $p = 2\Phi(-|Z|)$ where $\Phi$ is the standard normal CDF
+    \item \textbf{One-sided upper}: $p = \Phi(-Z)$
+    \item \textbf{One-sided lower}: $p = \Phi(Z)$
+\end{itemize}
+
+\textbf{Why this test works}:
+
+Under $H_0$ (median = $\theta_0$), \uB{positive and negative differences are equally likely
+and symmetric}. Thus:
+\begin{itemize}
+    \item Each rank is equally likely to be positive or negative
+    \item Expected value: $\mathbb{E}[W] = 0$ and $\mathbb{E}[W^+] = \frac{m(m+1)}{4}$
+    \item Large deviation from expected value indicates asymmetry, evidence against $H_0$
+\end{itemize}
+
+The test is \tB{more powerful than the sign test} because it uses \emph{magnitude information}
+(ranks of $|d_i|$), not just signs.
+
+\textbf{Example - Blood pressure reduction study}:
+
+10 patients measured before and after treatment. Test if treatment reduces blood pressure
+(one-sided: median difference $> 0$, meaning Before $>$ After).
+
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|c|}
+    \hline
+    \textbf{Patient} & \textbf{Before} & \textbf{After} & \textbf{$d_i$} & \textbf{$|d_i|$} & \textbf{Rank $R_i$} \\
+    \hline
+    1 & 145 & 140 & 5 & 5 & 2.5 \\
+    2 & 160 & 155 & 5 & 5 & 2.5 \\
+    3 & 138 & 140 & -2 & 2 & 1 \\
+    4 & 150 & 142 & 8 & 8 & 7 \\
+    5 & 155 & 148 & 7 & 7 & 5.5 \\
+    6 & 142 & 142 & 0 & - & - \\
+    7 & 148 & 138 & 10 & 10 & 8 \\
+    8 & 152 & 140 & 12 & 12 & 9 \\
+    9 & 156 & 150 & 6 & 6 & 4 \\
+    10 & 162 & 155 & 7 & 7 & 5.5 \\
+    \hline
+\end{tabular}
+\end{center}
+
+\textbf{Step-by-step}:
+\begin{enumerate}
+    \item Differences: $d_i = \text{Before} - \text{After}$
+    \item Exclude patient 6 ($d_6 = 0$), leaving $m = 9$
+    \item Rank absolute values (note ties for $|d|=5$ and $|d|=7$):
+        \begin{itemize}
+            \item $|d|=2$ (patient 3): rank 1
+            \item $|d|=5$ (patients 1,2): average rank $(2+3)/2 = 2.5$ each
+            \item $|d|=6$ (patient 9): rank 4
+            \item $|d|=7$ (patients 5,10): average rank $(5+6)/2 = 5.5$ each
+            \item $|d|=8$ (patient 4): rank 7
+            \item $|d|=10$ (patient 7): rank 8
+            \item $|d|=12$ (patient 8): rank 9
+        \end{itemize}
+    \item Compute $W^+$ (sum of positive ranks):
+        $$W^+ = 2.5 + 2.5 + 7 + 5.5 + 8 + 9 + 4 + 5.5 = 44$$
+        Only patient 3 has negative difference, contributing $W^- = 1$
+    \item Check: $W^+ + W^- = 44 + 1 = 45 = \frac{9 \times 10}{2}$
+    \item Normal approximation ($m=9$ is borderline, but we'll use it):
+        $$Z = \dfrac{44 - \frac{9 \times 10}{4}}{\sqrt{\frac{9 \times 10 \times 19}{24}}} = \dfrac{44 - 22.5}{\sqrt{71.25}} = \dfrac{21.5}{8.44} \approx 2.55$$
+    \item One-sided p-value (upper): $p = \Phi(-2.55) \approx 0.0054$
+    \item \textbf{Conclusion}: At $\alpha = 0.05$, reject $H_0$. Strong evidence that treatment
+        reduces blood pressure.
+\end{enumerate}
+
+\paragraph{Assumptions}
+\begin{itemize}
+    \item \tB{Observations are independent} (or pairs are independent in paired design)
+    \item \uB{Distribution is symmetric around its median} (for test to be about the median)
+        \begin{itemize}
+            \item Without symmetry, the test is about the \emph{pseudo-median}
+                (median of pairwise averages), a less interpretable quantity
+        \end{itemize}
+    \item \textbf{Data is at least ordinal}: Can rank differences
+    \item \textbf{Continuous distribution}: Ties should be rare (though methods exist for handling ties)
+\end{itemize}
+
+\paragraph{Strengths}
+\begin{itemize}
+    \item \tB{Non-parametric}: No normality assumption required
+    \item \uB{More powerful than the sign test}: Uses magnitude information (ranks), not just direction
+    \item \textbf{Robust to outliers}: Ranks are insensitive to extreme values
+    \item \textbf{Exact test available}: For small samples, no asymptotic approximations needed
+    \item Can be used with ordinal data where means are not meaningful
+    \item Efficiency relative to $t$-test is about 95\% when normality holds
+\end{itemize}
+
+\paragraph{Weaknesses}
+\begin{itemize}
+    \item \tB{Requires symmetry assumption}: For test to be about the median
+    \item \uB{Less powerful than $t$-test when normality holds}: 95\% efficient at best
+    \item \textbf{Sensitive to ties}: Tied values complicate the test (though corrections exist)
+    \item \textbf{More complex than sign test}: Requires ranking, not just counting signs
+    \item Cannot easily extend to multivariate settings
+\end{itemize}
+
+\paragraph{Comparison with alternatives}
+\begin{itemize}
+    \item \textbf{vs. Sign test}: Wilcoxon is more powerful (uses ranks), but sign test requires
+        no symmetry assumption
+    \item \textbf{vs. Paired $t$-test}: $t$-test is more powerful under normality; Wilcoxon is
+        more robust and works for non-normal data
+    \item \textbf{vs. Mann-Whitney U test}: Mann-Whitney is for \emph{independent} samples;
+        Wilcoxon signed-rank is for \emph{paired} samples or one-sample tests
+\end{itemize}
+
+\textbf{Bayesian alternative}: For Bayesian paired comparisons, use hierarchical models with
+priors on the difference distribution, though no direct non-parametric equivalent exists.
+
+\textit{\hyperref[statistical_method_table]{Return to the table.}}
 
 \subsection{Mann-Whitney test}
-Test for a randomly selected values $x$ and $y$ from 2 populations, $\Prob{x\leq y} = 
-\Prob{x > y}$
-\paragraph{Frequentist}
-Let $(n_{1}, n_{2})\mathcal{N}_{*}^{2}$ and $\left(x_{i}\right)_{1\leq i\leq n_{1}}$
-and $\left(y_{i}\right)_{1\leq i\leq n_{2}}$ both samples independent of each other.\\
-Then
-\tB{$\begin{cases}
-    U_{1} = n_{1}n_{2} + \frac{n_{1}(n_{1} + 1)}{2} - R_{1} \\
-    U_{2} = n_{1}n_{2} + \frac{n_{2}(n_{2} + 1)}{2} - R_{2} 
-\end{cases}$}
-$R_{1}, R_{2}$ being the sum of the ranks in groups 1 and 2. \\
-Note that $AUC_{1}=\dfrac{U_{1}}{n_{1}n_{2}}$ meaning \emph{U}-statistics is related to
-the area under the receiver operating characteristic.
 
+Also known as the \tB{Mann-Whitney U test} or \tB{Wilcoxon rank-sum test}, this is a
+\uB{non-parametric test for comparing two independent groups}. It tests whether one
+population tends to produce larger values than the other. \tB{It is the non-parametric
+alternative to the two-sample $t$-test} when the normality assumption does not hold.
+
+Equivalently, it tests the hypothesis that, for randomly selected $x$ from group 1 and
+$y$ from group 2:
+$$H_0: \Prob{x > y} = \Prob{x < y} = \tfrac{1}{2}$$
+
+\textbf{Note}: The \emph{Wilcoxon rank-sum test} is mathematically equivalent to the
+Mann-Whitney U test (they yield the same p-value). The \emph{Wilcoxon signed-rank test}
+is a different test, for paired samples.
+
+\paragraph{Frequentist}
+
+Let $n_1, n_2 \in \mathbb{N}^*$, and let $\left(x_i\right)_{1 \leq i \leq n_1}$ and
+$\left(y_j\right)_{1 \leq j \leq n_2}$ be two independent samples.
+
+$\begin{cases}
+    H_0: \text{both populations have the same distribution} \\
+    H_1: \text{one population tends to produce larger values (two-sided)} \\
+    H_1: \Prob{x > y} > \tfrac{1}{2} \text{ (one-sided: group 1 tends larger)} \\
+    H_1: \Prob{x > y} < \tfrac{1}{2} \text{ (one-sided: group 2 tends larger)}
+\end{cases}$
+
+\subparagraph{Test procedure}:
+
+\begin{enumerate}
+    \item \textbf{Combine and rank}: Pool all $N = n_1 + n_2$ observations and rank them
+        from 1 (smallest) to $N$ (largest), keeping track of group membership.
+        \begin{itemize}
+            \item \textbf{Handling ties}: Assign the average of the tied ranks.
+        \end{itemize}
+
+    \item \textbf{Compute rank sums}: Let $R_1$ and $R_2$ be the sums of ranks for groups
+        1 and 2 respectively. Note: $R_1 + R_2 = \dfrac{N(N+1)}{2}$.
+
+    \item \textbf{Compute U statistics}:
+        \begin{center}
+            \tB{$\begin{cases}
+                U_1 = n_1 n_2 + \dfrac{n_1(n_1+1)}{2} - R_1 \\[6pt]
+                U_2 = n_1 n_2 + \dfrac{n_2(n_2+1)}{2} - R_2
+            \end{cases}$}
+        \end{center}
+
+        Note: $U_1 + U_2 = n_1 n_2$. The test statistic is $U = \min(U_1, U_2)$.
+
+        \textbf{Intuition}: $U_1$ counts the number of times an observation from group 1
+        \emph{precedes} an observation from group 2 in the combined ranking (i.e., the
+        number of pairs $(x_i, y_j)$ such that $x_i < y_j$):
+        $$U_1 = \su{i=1}{n_1}\su{j=1}{n_2}\mathbf{1}[x_i < y_j]$$
+        Under $H_0$, each ordering is equally likely, so $\E[U_1] = n_1 n_2 / 2$.
+
+    \item \textbf{Compute p-value}:
+        \begin{itemize}
+            \item \textbf{Small samples} ($n_1, n_2 \leq 8$): Use exact distribution tables.
+            \item \textbf{Large samples}: Use normal approximation (see below).
+        \end{itemize}
+\end{enumerate}
+
+\textbf{Large-sample normal approximation} (recommended when $\min(n_1, n_2) \geq 8$):
+
+Under $H_0$:
+\begin{center}
+    \tR{$Z = \dfrac{U_1 - \dfrac{n_1 n_2}{2}}{\sqrt{\dfrac{n_1 n_2 (N+1)}{12}}} \approx \mathcal{N}(0,1)$}
+\end{center}
+
+\textbf{Tie correction}: When ties are present, replace the variance with:
+$$\mathbb{V}(U_1) = \dfrac{n_1 n_2}{12}\left[(N+1) - \dfrac{\su{k}{}(t_k^3 - t_k)}{N(N-1)}\right]$$
+where $t_k$ is the number of observations sharing the $k$-th tied rank.
+
+Then compute:
+\begin{itemize}
+    \item \textbf{Two-sided}: $p = 2\Phi(-|Z|)$
+    \item \textbf{One-sided} (group 1 larger): $p = \Phi(-Z)$
+    \item \textbf{One-sided} (group 2 larger): $p = \Phi(Z)$
+\end{itemize}
+
+\textbf{Relationship to AUC}: The $U$ statistic has a direct probabilistic interpretation:
+$$\widehat{\Prob{x > y}} = \dfrac{U_1}{n_1 n_2}$$
+This is exactly the empirical \tB{AUC (Area Under the ROC Curve)}, making the Mann-Whitney
+test directly connected to classifier evaluation in machine learning.
+
+\textbf{Example — Comparing two training algorithms}:
+
+Two algorithms are trained on 6 and 5 independent runs. Test scores:
+\begin{itemize}
+    \item Algorithm A ($n_1 = 6$): 82, 75, 90, 68, 85, 78
+    \item Algorithm B ($n_2 = 5$): 72, 80, 65, 88, 70
+\end{itemize}
+
+\begin{center}
+\begin{tabular}{|c|c|c|}
+    \hline
+    \textbf{Score} & \textbf{Group} & \textbf{Rank} \\
+    \hline
+    65 & B & 1 \\
+    68 & A & 2 \\
+    70 & B & 3 \\
+    72 & B & 4 \\
+    75 & A & 5 \\
+    78 & A & 6 \\
+    80 & B & 7 \\
+    82 & A & 8 \\
+    85 & A & 9 \\
+    88 & B & 10 \\
+    90 & A & 11 \\
+    \hline
+\end{tabular}
+\end{center}
+
+\textbf{Step-by-step}:
+\begin{enumerate}
+    \item $N = 11$, $R_1 = 2+5+6+8+9+11 = 41$, $R_2 = 1+3+4+7+10 = 25$
+    \item Check: $R_1 + R_2 = 66 = \frac{11 \times 12}{2}$ \checkmark
+    \item $U_1 = 6 \times 5 + \frac{6 \times 7}{2} - 41 = 30 + 21 - 41 = 10$
+    \item $U_2 = 6 \times 5 + \frac{5 \times 6}{2} - 25 = 30 + 15 - 25 = 20$
+    \item Check: $U_1 + U_2 = 30 = n_1 n_2$ \checkmark
+    \item $Z = \dfrac{10 - 15}{\sqrt{\frac{6 \times 5 \times 12}{12}}} = \dfrac{-5}{\sqrt{30}} \approx -0.91$
+    \item Two-sided $p = 2\Phi(-0.91) \approx 0.36$
+    \item \textbf{Conclusion}: No significant difference at $\alpha = 0.05$.
+\end{enumerate}
 
 \paragraph{Assumptions}
 \begin{itemize}
-    \item All observations from both groups are independent
-    \item Values are at least ordinal
-    \item $H_{0}$: the distributions of both populations are identical
-    \item $H_{1}$: the distributions of the 2 populations are different
+    \item \tB{All observations from both groups are independent} of each other
+    \item \uB{Values are at least ordinal}: observations can be ranked
+    \item \textbf{Similar shape}: For interpreting as a location shift (median test), both
+        distributions should have the same shape (but possibly different locations). Without
+        this, the test is about stochastic dominance rather than medians.
 \end{itemize}
 
 \paragraph{Strengths}
 \begin{itemize}
-    \item Non-parametric: no normality assumption required
-    \item Can be used with ordinal data
-    \item Related to AUC (Area Under ROC Curve)
+    \item \tB{Non-parametric}: No normality assumption required
+    \item \uB{Related to AUC}: $U_1 / (n_1 n_2)$ estimates $\Prob{x > y}$, directly useful
+        in classification evaluation
+    \item \textbf{Robust to outliers}: Uses ranks, not raw values
+    \item \textbf{Works with ordinal data}: Does not require a continuous scale
+    \item \textbf{Exact test available}: Valid for small samples without asymptotic approximations
+    \item High efficiency relative to the $t$-test ($\approx 95\%$) even when normality holds
 \end{itemize}
 
 \paragraph{Weaknesses}
 \begin{itemize}
-    \item Less powerful than $t$-test when normality holds
-    \item Only tests for stochastic dominance, not specific location shift
+    \item \tB{Less powerful than the two-sample $t$-test} when normality holds
+    \item \uB{Sensitive to ties}: Many ties reduce test validity (though tie corrections exist)
+    \item \textbf{Shape assumption}: Without equal-shape distributions, it tests stochastic
+        dominance rather than a location shift, which is harder to interpret
+    \item Cannot directly estimate a location parameter (unlike the $t$-test which estimates
+        the mean difference); requires the Hodges-Lehmann estimator for a point estimate
 \end{itemize}
+
+\paragraph{Comparison with alternatives}
+\begin{itemize}
+    \item \textbf{vs. Two-sample $t$-test}: $t$-test is more powerful under normality;
+        Mann-Whitney is robust and valid for non-normal or ordinal data
+    \item \textbf{vs. Wilcoxon signed-rank test}: Mann-Whitney is for \emph{independent}
+        samples; Wilcoxon signed-rank is for \emph{paired} samples or one-sample tests
+    \item \textbf{vs. Kruskal-Wallis test}: Kruskal-Wallis generalises Mann-Whitney to
+        $k > 2$ independent groups
+    \item \textbf{vs. Permutation test}: Permutation test is more flexible (any test
+        statistic), but computationally heavier; Mann-Whitney has a closed-form distribution
+\end{itemize}
+
+\textbf{Bayesian alternative}: Model observations with a non-parametric prior (e.g.,
+Dirichlet process) or use a robust location model with heavy-tailed distributions (e.g.,
+Student-$t$ likelihood). The posterior of $\Prob{x > y}$ provides a Bayesian analogue
+of the AUC interpretation.
+
+\textit{\hyperref[statistical_method_table]{Return to the table.}}
 
 \subsection{Kruskal-Wallis test}
-Non-parametrical to \tB{test if samples originate from the same distribution}.
-\paragraph{Frequentist}
-Let $N$ be the number of observations across all groups, $g$ number of groups, $n_{i}$ the
-number of observation in the group $i$, $r_{ij}$ the rank of observation $j$ from group
-$i$.\\
-And 
-$\begin{cases}
-    \overline{r}_{i\cdot} = \dfrac{\su{j=1}{n_{i}}r_{ij}}{n_{i}} \\
-    \overline{r} = \dfrac{N + 1}{2}
-\end{cases}$
-\begin{itemize}
-    \item Rank all data from all groups together
-    \item $\left(N-1\right)\dfrac{\su{i=1}{g}n_{i}\left(\overline{r}_{i\cdot} - 
-                \overline{r}\right)^{2}}{\su{i=1}{g}\su{j=1}{n_{j}}n_{i}\left(r_{ij} - 
-        \overline{r}\right)^{2}}$
-        To actually check the stochastic differences.
-    \item A correction can be brought for large number of ties.
 
+The Kruskal-Wallis test is a \uB{non-parametric generalisation of one-way ANOVA} to
+$g \geq 2$ independent groups. It tests whether the groups originate from the same
+distribution. \tB{It is the non-parametric alternative to one-way ANOVA} when the
+normality assumption does not hold, and reduces to the Mann-Whitney U test when $g = 2$.
+
+\paragraph{Frequentist}
+
+Let $N$ be the total number of observations, $g$ the number of groups, $n_i$ the number
+of observations in group $i$, and $r_{ij}$ the rank of observation $j$ from group $i$ in
+the combined ranking of all $N$ observations. Define:
+$\begin{cases}
+    \overline{r}_{i\cdot} = \dfrac{\su{j=1}{n_{i}}r_{ij}}{n_{i}} \quad \text{(mean rank of group } i\text{)}\\
+    \overline{r} = \dfrac{N + 1}{2} \quad \text{(grand mean rank)}
+\end{cases}$
+
+$\begin{cases}
+    H_0: \text{all } g \text{ populations have the same distribution} \\
+    H_1: \text{at least one population tends to produce larger values}
+\end{cases}$
+
+\subparagraph{Test procedure}:
+
+\begin{enumerate}
+    \item \textbf{Combine and rank}: Pool all $N$ observations and rank them 1 to $N$,
+        assigning average ranks to ties. Record $r_{ij}$ for each observation.
+
+    \item \textbf{Compute the H statistic}:
+        \begin{center}
+        \tB{$H = (N-1)\,\dfrac{\su{i=1}{g}n_{i}\left(\overline{r}_{i\cdot} -
+            \overline{r}\right)^{2}}{\su{i=1}{g}\su{j=1}{n_{i}}\left(r_{ij} -
+            \overline{r}\right)^{2}}$}
+        \end{center}
+
+        This simplifies (when there are no ties) to the equivalent form:
+        \begin{center}
+        \tR{$H = \dfrac{12}{N(N+1)}\su{i=1}{g}\dfrac{R_{i}^{2}}{n_{i}} - 3(N+1)$}
+        \end{center}
+        where $R_i = \su{j=1}{n_i}r_{ij}$ is the rank sum of group $i$.
+
+        \textbf{Intuition}: $H$ measures the weighted variance of group mean ranks around
+        the grand mean rank. Under $H_0$, all groups have similar mean ranks; large $H$
+        indicates that at least one group's ranks are systematically higher or lower.
+
+    \item \textbf{Tie correction}: When ties are present, divide $H$ by:
+        $$C = 1 - \dfrac{\su{k}{}(t_k^3 - t_k)}{N^3 - N}$$
+        giving $H_c = H / C$, where $t_k$ is the size of the $k$-th tied group.
+
+    \item \textbf{Compute p-value}: Under $H_0$, for large samples,
+        $H \sim \chi^2(g-1)$, so $p = \Prob{\chi^2(g-1) > H}$.
+        For small samples ($n_i < 5$), use exact tables.
+\end{enumerate}
+
+\textbf{Post-hoc tests}: A significant $H$ only tells you that \emph{some} groups differ.
+To identify \emph{which} pairs differ, use:
+\begin{itemize}
+    \item \textbf{Dunn's test}: pairwise comparisons using the rank sums, with
+        Bonferroni or Benjamini-Hochberg correction for multiple testing
+    \item \textbf{Pairwise Mann-Whitney} with adjusted $\alpha$
 \end{itemize}
+
+\textbf{Example — Comparing three diet plans}:
+
+Weight loss (kg) after 8 weeks for three groups ($n_1 = n_2 = n_3 = 4$):
+\begin{itemize}
+    \item Diet A: 3, 5, 7, 4 \quad Diet B: 6, 9, 8, 7 \quad Diet C: 2, 4, 3, 1
+\end{itemize}
+
+Combined ranking (N = 12):
+
+\begin{center}
+\begin{tabular}{|c|c|c|}
+    \hline
+    \textbf{Value} & \textbf{Group} & \textbf{Rank} \\
+    \hline
+    1 & C & 1 \\ 2 & C & 2 \\ 3 & A & 3.5 \\ 3 & C & 3.5 \\
+    4 & A & 5.5 \\ 4 & C & 5.5 \\ 5 & A & 7 \\ 6 & B & 8 \\
+    7 & A & 9.5 \\ 7 & B & 9.5 \\ 8 & B & 11 \\ 9 & B & 12 \\
+    \hline
+\end{tabular}
+\end{center}
+
+$R_1 = 3.5+5.5+7+9.5 = 25.5$, \quad $R_2 = 8+9.5+11+12 = 40.5$, \quad $R_3 = 1+2+3.5+5.5 = 12$
+
+$$H = \frac{12}{12 \times 13}\left(\frac{25.5^2}{4} + \frac{40.5^2}{4} + \frac{12^2}{4}\right) - 3 \times 13 \approx 7.65$$
+
+$p = \Prob{\chi^2(2) > 7.65} \approx 0.022$. Reject $H_0$ at $\alpha = 0.05$: at least one
+diet plan differs significantly.
 
 \paragraph{Assumptions}
 \begin{itemize}
-    \item Independence
-    \item All groups should have the same shape of distributions
+    \item \tB{All observations are independent} across and within groups
+    \item \uB{Values are at least ordinal}: observations can be ranked
+    \item \textbf{Similar shape}: For interpreting as a location shift, all groups should
+        have the same distributional shape (but possibly different locations). Otherwise
+        the test measures stochastic dominance only.
 \end{itemize}
 
 \paragraph{Strengths}
 \begin{itemize}
-    \item Non-parametric: no normality assumption required
-    \item Extension of Mann-Whitney to $k > 2$ groups
+    \item \tB{Non-parametric}: no normality assumption required
+    \item \uB{Generalises Mann-Whitney} to $k > 2$ independent groups
+    \item Robust to outliers; works with ordinal data
+    \item Exact test available for small samples
 \end{itemize}
 
 \paragraph{Weaknesses}
 \begin{itemize}
-    \item Less powerful than ANOVA when normality holds
-    \item Only detects if groups differ, not which groups differ (requires post-hoc tests)
+    \item \tB{Less powerful than one-way ANOVA} when normality holds
+    \item \uB{Only detects whether groups differ}, not which ones; requires post-hoc tests
+    \item Sensitive to ties (though the correction $H_c$ mitigates this)
+    \item Cannot model interactions or covariates (unlike ANOVA extensions)
 \end{itemize}
+
+\paragraph{Comparison with alternatives}
+\begin{itemize}
+    \item \textbf{vs. One-way ANOVA}: ANOVA is more powerful under normality;
+        Kruskal-Wallis is robust for non-normal or ordinal data
+    \item \textbf{vs. Mann-Whitney}: Mann-Whitney is the special case $g = 2$;
+        Kruskal-Wallis is the multi-group extension
+    \item \textbf{vs. Friedman test}: Friedman is for \emph{repeated measures} (matched
+        groups); Kruskal-Wallis is for \emph{independent} groups
+    \item \textbf{vs. Permutation ANOVA}: More flexible but computationally heavier;
+        Kruskal-Wallis has a closed-form $\chi^2$ approximation
+\end{itemize}
+
+\textbf{Bayesian alternative}: Use a hierarchical model with group-level location
+parameters and heavy-tailed likelihoods (e.g.\ Student-$t$), or a non-parametric prior
+(Dirichlet process mixture). Posterior contrasts between groups replace post-hoc tests.
+
+\textit{\hyperref[statistical_method_table]{Return to the table.}}
 
 \subsection{Friedman test}
-Non-parametric statistical test, \tB{analog of the \emph{repeated-measures ANOVA}}.
-It use to detect differences in treatments across multiple test attempts.
+
+The Friedman test is a \uB{non-parametric analogue of repeated-measures (one-way) ANOVA}.
+Data is arranged in $n$ \emph{blocks} (e.g.\ subjects) and $k$ \emph{treatments}
+(conditions), with one observation per cell. \tB{It is the non-parametric alternative to
+repeated-measures ANOVA} when normality or sphericity cannot be assumed, and generalises
+the Wilcoxon signed-rank test to $k > 2$ treatments.
+
 \paragraph{Frequentist}
+
+Let $n$ be the number of blocks, $k$ the number of treatments, $x_{ij}$ the observation
+in block $i$ and treatment $j$, and $r_{ij}$ its rank \emph{within block $i$} (ranked
+1 to $k$). Define:
+$\begin{cases}
+    R_j = \su{i=1}{n} r_{ij} \quad \text{(rank sum of treatment } j\text{)} \\
+    \overline{r}_{\cdot j} = R_j / n \quad \text{(mean rank of treatment } j\text{)}
+\end{cases}$
+
+$\begin{cases}
+    H_0: \text{all } k \text{ treatments have the same effect (identical distributions)} \\
+    H_1: \text{at least one treatment tends to produce different values}
+\end{cases}$
+
+\subparagraph{Test procedure}:
+
+\begin{enumerate}
+    \item \textbf{Rank within blocks}: For each block $i$, rank the $k$ observations from
+        1 (smallest) to $k$ (largest), assigning average ranks to ties.
+
+    \item \textbf{Compute the Q statistic}:
+        \begin{center}
+        \tB{$Q = \dfrac{12n}{k(k+1)}\su{j=1}{k}\left(\overline{r}_{\cdot j} -
+            \dfrac{k+1}{2}\right)^{2}$}
+        \end{center}
+
+        Equivalently, using rank sums:
+        \begin{center}
+        \tR{$Q = \dfrac{12}{nk(k+1)}\su{j=1}{k}R_{j}^{2} - 3n(k+1)$}
+        \end{center}
+
+        \textbf{Intuition}: $Q$ measures how much the mean rank of each treatment deviates
+        from the grand mean rank $\frac{k+1}{2}$. Under $H_0$, all treatments are equally
+        likely to receive any rank within a block, so mean ranks should be close to
+        $\frac{k+1}{2}$; large $Q$ indicates systematic rank differences between treatments.
+
+    \item \textbf{Tie correction}: When ties occur within a block, divide $Q$ by:
+        $$C = 1 - \dfrac{\su{i=1}{n}\su{s}{}(t_{is}^3 - t_{is})}{nk(k^2-1)}$$
+        giving $Q_c = Q / C$, where $t_{is}$ is the size of the $s$-th tied group in
+        block $i$.
+
+    \item \textbf{Compute p-value}: For large $n$ or $k$ ($n > 15$ or $k > 4$),
+        $Q \sim \chi^2(k-1)$, so $p = \Prob{\chi^2(k-1) > Q}$. For small samples,
+        use exact Friedman tables.
+\end{enumerate}
+
+\textbf{Post-hoc tests}: A significant $Q$ only tells you that \emph{some} treatments
+differ. To identify \emph{which} pairs differ, use:
 \begin{itemize}
-    \item Consider a matrix of $n$ rows (the blocks) and $k$ columns (the treatments)
-    and a single observation at the intersetion of each block and treatment. Then 
-    calculate the ranks.
-    \item $\overline{r}_{\cdot j} = \dfrac{1}{n}\su{i=1}{n}r_{ij}$
-    \item The test statistic is given by \tB{$Q = \dfrac{12n}{k(k+1)}\su{j=1}{k}\left(\overline{r}_{
-        \cdot j} - \dfrac{k+1}{2}\right)^{2}$}
-    Note that the value of $Q$ does need to be adjusted for tied values in data.
-    \item Finally when n or k is large ($n>15 or k>4$) the probability distribution of $Q$ can be approximated by
-    a $\chi^{2}$ distribution.
+    \item \textbf{Nemenyi test}: pairwise comparisons based on rank sum differences,
+        controlling the family-wise error rate
+    \item \textbf{Pairwise Wilcoxon signed-rank tests} with Bonferroni or
+        Benjamini-Hochberg correction
 \end{itemize}
+
+\textbf{Example — Comparing three analgesic treatments on 5 patients}:
+
+Pain relief scores (higher = better) for $n=5$ patients under $k=3$ treatments:
+
+\begin{center}
+\begin{tabular}{|c|ccc|ccc|}
+    \hline
+    \textbf{Block} & \textbf{A} & \textbf{B} & \textbf{C} &
+    \textbf{Rank A} & \textbf{Rank B} & \textbf{Rank C} \\
+    \hline
+    1 & 2 & 8 & 5 & 1 & 3 & 2 \\
+    2 & 4 & 9 & 3 & 2 & 3 & 1 \\
+    3 & 1 & 7 & 6 & 1 & 3 & 2 \\
+    4 & 6 & 8 & 4 & 2 & 3 & 1 \\
+    5 & 3 & 9 & 5 & 1 & 3 & 2 \\
+    \hline
+    $R_j$ & & & & 7 & 15 & 8 \\
+    \hline
+\end{tabular}
+\end{center}
+
+$$Q = \frac{12}{5 \times 3 \times 4}\left(7^2 + 15^2 + 8^2\right) - 3 \times 5 \times 4
+    = 0.2 \times 338 - 60 = 67.6 - 60 = 7.6$$
+
+$p = \Prob{\chi^2(2) > 7.6} \approx 0.022$. Reject $H_0$ at $\alpha = 0.05$: at least
+one treatment differs significantly. Post-hoc tests would reveal that B differs from A
+and C.
 
 \paragraph{Assumptions}
 \begin{itemize}
-    \item Blocks are mutually independent
-    \item Observations can be ranked within blocks
+    \item \tB{Blocks are mutually independent}: observations across subjects are independent
+    \item \uB{Observations can be ranked within each block}: data is at least ordinal
+    \item One observation per block-treatment cell (no replication within cells)
 \end{itemize}
 
 \paragraph{Strengths}
 \begin{itemize}
-    \item Non-parametric alternative to repeated-measures ANOVA
-    \item No normality or sphericity assumptions
+    \item \tB{Non-parametric}: no normality or sphericity assumptions required
+    \item \uB{Controls for block effects}: ranking within blocks removes between-subject
+        variability, increasing sensitivity
+    \item Works with ordinal data; robust to outliers
+    \item Exact test available for small $n$ and $k$
 \end{itemize}
 
 \paragraph{Weaknesses}
 \begin{itemize}
-    \item Less powerful than repeated-measures ANOVA when assumptions hold
-    \item Requires post-hoc tests to identify which treatments differ
+    \item \tB{Less powerful than repeated-measures ANOVA} when normality and sphericity hold
+    \item \uB{Only detects whether treatments differ}, not which ones; requires post-hoc tests
+    \item Restricted to one observation per cell; cannot handle within-block replication
+    \item Sensitive to ties within blocks (though the correction $Q_c$ mitigates this)
 \end{itemize}
+
+\paragraph{Comparison with alternatives}
+\begin{itemize}
+    \item \textbf{vs. Repeated-measures ANOVA}: ANOVA is more powerful under normality
+        and sphericity; Friedman is robust when these fail
+    \item \textbf{vs. Kruskal-Wallis}: Kruskal-Wallis is for \emph{independent} groups;
+        Friedman is for \emph{matched/repeated} measures — it controls for block effects
+    \item \textbf{vs. Wilcoxon signed-rank}: Wilcoxon is the special case $k = 2$;
+        Friedman is the multi-treatment extension
+    \item \textbf{vs. Cochran's Q}: Cochran's Q is the special case for binary (0/1) data
+\end{itemize}
+
+\textbf{Bayesian alternative}: Use a hierarchical model with block-level random effects
+and treatment-level fixed effects, with heavy-tailed or non-parametric likelihoods.
+Posterior contrasts between treatment parameters replace post-hoc tests.
+
+\textit{\hyperref[statistical_method_table]{Return to the table.}}
 
 \subsection{Spearman test}
-It \tB{assesses how well the relationship between 2 variables can be described using a monotonic 
-function}.
-Let $X, Y$ be 2 random variables, and $R$ the function transforming the realization of a random variable.
+
+The Spearman rank correlation coefficient $r_s$ \uB{measures the strength and direction
+of the monotonic association between two variables}. It is \tB{Pearson's correlation
+applied to the ranks of the data}, making it robust to outliers and applicable to ordinal
+variables. It does not assume linearity — only that the relationship is monotone.
 
 \paragraph{Frequentist}
-\tB{$r_{s} = \rho_{R(X), R(Y)} = \dfrac{Cov\left(R(X), R(Y)\right)}{\sigma_{R(X)}\sigma_{R(Y)}}$}
-where $\rho$ is the Pearson correlation coefficient applied to the rank variables.
+
+Let $(x_1, y_1), \ldots, (x_n, y_n)$ be $n$ paired observations. Let $R(x_i)$ and
+$R(y_i)$ denote the ranks of $x_i$ and $y_i$ in their respective samples.
+
+$\begin{cases}
+    H_0: \rho_s = 0 \quad \text{(no monotonic association)} \\
+    H_1: \rho_s \neq 0 \quad \text{(two-sided)} \\
+    H_1: \rho_s > 0 \quad \text{(one-sided: positive monotonic association)} \\
+    H_1: \rho_s < 0 \quad \text{(one-sided: negative monotonic association)}
+\end{cases}$
+
+\subparagraph{Test procedure}:
+
+\begin{enumerate}
+    \item \textbf{Rank each variable separately}: Assign ranks 1 to $n$ to the $x_i$
+        values, and independently to the $y_i$ values. Use average ranks for ties.
+
+    \item \textbf{Compute the correlation}: The Spearman coefficient is Pearson's $r$
+        applied to the ranks:
+        \begin{center}
+        \tB{$r_s = \rho_{R(X),\,R(Y)} = \dfrac{Cov(R(X),\, R(Y))}{\sigma_{R(X)}\,\sigma_{R(Y)}}$}
+        \end{center}
+
+        \textbf{Simplified formula} (exact when there are no ties):
+        \begin{center}
+        \tR{$r_s = 1 - \dfrac{6\su{i=1}{n}d_i^2}{n(n^2 - 1)}$}
+        \end{center}
+        where $d_i = R(x_i) - R(y_i)$ is the rank difference for pair $i$.
+
+        \textbf{Intuition}: If the rankings of $X$ and $Y$ agree perfectly, all $d_i = 0$
+        and $r_s = 1$. If they are perfectly reversed, $r_s = -1$. Random agreement gives
+        $r_s \approx 0$.
+
+    \item \textbf{Assess significance}: For $n \geq 10$, use the $t$-approximation:
+        \begin{center}
+        \tB{$t = r_s\sqrt{\dfrac{n-2}{1 - r_s^2}} \sim t(n-2)$ under $H_0$}
+        \end{center}
+        For small samples ($n < 10$), use exact Spearman tables.
+\end{enumerate}
+
+\textbf{Interpretation of $r_s$}:
+\begin{itemize}
+    \item $r_s = +1$: perfect positive monotonic relationship (ranks agree exactly)
+    \item $r_s = -1$: perfect negative monotonic relationship (ranks are reversed)
+    \item $r_s = 0$: no monotonic association
+    \item $|r_s| > 0.7$: strong, $0.4$--$0.7$: moderate, $< 0.4$: weak (rules of thumb)
+\end{itemize}
+
+\textbf{Example — Study hours and exam scores}:
+
+7 students, ranked by study hours ($X$) and exam score ($Y$):
+
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|c|c|}
+    \hline
+    \textbf{Student} & \textbf{Hours} & \textbf{Score} &
+    \textbf{Rank $X$} & \textbf{Rank $Y$} & $d_i$ & $d_i^2$ \\
+    \hline
+    1 & 2  & 55 & 1 & 1 &  0 & 0 \\
+    2 & 4  & 65 & 2 & 3 & -1 & 1 \\
+    3 & 6  & 60 & 3 & 2 &  1 & 1 \\
+    4 & 8  & 70 & 4 & 4 &  0 & 0 \\
+    5 & 10 & 80 & 5 & 6 & -1 & 1 \\
+    6 & 12 & 75 & 6 & 5 &  1 & 1 \\
+    7 & 14 & 90 & 7 & 7 &  0 & 0 \\
+    \hline
+    & & & & & $\su{}{}d_i^2$ & 4 \\
+    \hline
+\end{tabular}
+\end{center}
+
+$$r_s = 1 - \frac{6 \times 4}{7 \times 48} = 1 - \frac{24}{336} \approx 0.929$$
+
+$$t = 0.929 \times \sqrt{\frac{5}{1 - 0.929^2}} = 0.929 \times \sqrt{\frac{5}{0.137}} \approx 5.61$$
+
+$p = 2\,\Prob{t(5) > 5.61} \approx 0.002$. \textbf{Conclusion}: Strong evidence of a
+positive monotonic association between study hours and exam score.
 
 \paragraph{Assumptions}
 \begin{itemize}
-    \item Observations are independent
-    \item Variables are at least ordinal
+    \item \tB{Observations are independent}: each pair $(x_i, y_i)$ is drawn independently
+    \item \uB{Variables are at least ordinal}: observations can be meaningfully ranked
+    \item The relationship between $X$ and $Y$ is \textbf{monotonic} (not necessarily
+        linear) — if the true relationship is non-monotone, $r_s$ may be misleading
 \end{itemize}
 
 \paragraph{Strengths}
 \begin{itemize}
-    \item Robust to outliers (uses ranks)
-    \item Detects monotonic relationships (not just linear)
-    \item No normality assumption required
+    \item \tB{Non-parametric}: no normality assumption required
+    \item \uB{Detects any monotonic association}, not just linear relationships
+    \item \textbf{Robust to outliers}: ranks dampen the influence of extreme values
+    \item Works with ordinal data where numerical differences are not meaningful
+    \item Efficiency $\approx 91\%$ relative to Pearson's $r$ under bivariate normality
 \end{itemize}
 
 \paragraph{Weaknesses}
 \begin{itemize}
-    \item Less powerful than Pearson's $r$ for linear relationships with normal data
-    \item Sensitive to ties in the data
+    \item \tB{Less powerful than Pearson's $r$} for detecting linear relationships in
+        normal data
+    \item \uB{Insensitive to non-monotonic relationships}: a U-shaped association may
+        yield $r_s \approx 0$ even when $X$ and $Y$ are strongly dependent
+    \item \textbf{Sensitive to ties}: many ties require the general Pearson formula on
+        ranks and can reduce accuracy of the simplified $d_i^2$ formula
+    \item Only captures pairwise monotonic association; does not extend naturally to
+        partial or multiple correlation settings
 \end{itemize}
+
+\paragraph{Comparison with alternatives}
+\begin{itemize}
+    \item \textbf{vs. Pearson's $r$}: Pearson is more powerful for linear relationships
+        under normality; Spearman is robust and works for ordinal or non-normal data
+    \item \textbf{vs. Kendall's $\tau$}: Kendall's $\tau$ counts concordant/discordant
+        pairs and has better statistical properties for small samples and many ties;
+        Spearman is more common and easier to compute
+    \item \textbf{vs. Distance correlation}: Distance correlation detects any dependence
+        (including non-monotonic); Spearman only detects monotonic associations
+\end{itemize}
+
+\textbf{Bayesian alternative}: Place a prior on $\rho_s$ (e.g.\ a uniform or
+Beta-transformed prior) and update with the observed rank data. The posterior distribution
+of $\rho_s$ replaces the p-value with a full uncertainty quantification over the
+association strength.
+
+\textit{\hyperref[statistical_method_table]{Return to the table.}}
 
 \subsection{Pearson correlation coefficient}
-This coefficient is essentially a normalized measurement of the covariance such that the result
-has a value $-1$ and 1
-\paragraph{Frequentist}
-\tB{$\rho_{X, Y} = \dfrac{Cov\left(X, Y\right)}{\sigma_{X}\sigma_{Y}}$}
 
-Sample estimator: $r = \dfrac{\su{i=1}{n}(x_i - \bar{x})(y_i - \bar{y})}{\sqrt{\su{i=1}{n}(x_i - \bar{x})^2 \su{i=1}{n}(y_i - \bar{y})^2}}$
+The Pearson correlation coefficient $r$ \uB{measures the strength and direction of the
+linear association between two continuous variables}. It is a \tB{normalised covariance},
+bounded in $[-1, 1]$, and is the most widely used measure of association when both
+variables are continuous and the relationship is expected to be linear.
+
+\paragraph{Frequentist}
+
+Let $(x_1, y_1), \ldots, (x_n, y_n)$ be $n$ paired observations. The population
+parameter and its sample estimator are:
+
+\begin{center}
+\tB{$\rho_{X,Y} = \dfrac{Cov(X,Y)}{\sigma_X\,\sigma_Y}$}
+\qquad
+\tR{$r = \dfrac{\su{i=1}{n}(x_i - \bar{x})(y_i - \bar{y})}%
+{\sqrt{\su{i=1}{n}(x_i-\bar{x})^2\;\su{i=1}{n}(y_i-\bar{y})^2}}$}
+\end{center}
+
+$\begin{cases}
+    H_0: \rho = 0 \quad \text{(no linear association)} \\
+    H_1: \rho \neq 0 \quad \text{(two-sided)} \\
+    H_1: \rho > 0 \quad \text{(one-sided: positive linear association)} \\
+    H_1: \rho < 0 \quad \text{(one-sided: negative linear association)}
+\end{cases}$
+
+\subparagraph{Test procedure}:
+
+\begin{enumerate}
+    \item \textbf{Compute $r$} from the sample using the formula above.
+
+        \textbf{Intuition}: $r$ measures how tightly the data cluster around a straight
+        line. It is the cosine of the angle between the mean-centred vectors
+        $(x_i - \bar{x})$ and $(y_i - \bar{y})$: perfect alignment gives $|r| = 1$,
+        orthogonality gives $r = 0$.
+
+    \item \textbf{Assess significance}: Under $H_0$ and bivariate normality,
+        \begin{center}
+        \tB{$t = r\sqrt{\dfrac{n-2}{1-r^2}} \sim t(n-2)$}
+        \end{center}
+
+    \item \textbf{Confidence interval}: Use Fisher's $z$-transformation, which
+        stabilises the variance:
+        $$z = \operatorname{arctanh}(r) = \tfrac{1}{2}\ln\!\left(\tfrac{1+r}{1-r}\right)
+          \quad \sim\ \mathcal{N}\!\left(\operatorname{arctanh}(\rho),\;\tfrac{1}{n-3}\right)$$
+        A $(1-\alpha)$ CI for $\rho$: back-transform
+        $\operatorname{arctanh}(r) \pm z_{\alpha/2}/\sqrt{n-3}$ with $\tanh(\cdot)$.
+\end{enumerate}
+
+\textbf{Interpretation of $r$}:
+\begin{itemize}
+    \item $r = +1$: perfect positive linear relationship
+    \item $r = -1$: perfect negative linear relationship
+    \item $r = 0$: no linear relationship (non-linear dependence may still exist)
+    \item $r^2$: \emph{coefficient of determination} — proportion of variance in $Y$
+        explained by a linear function of $X$
+    \item $|r| > 0.7$: strong, $0.4$--$0.7$: moderate, $< 0.4$: weak (rules of thumb)
+\end{itemize}
+
+\textbf{Example — Advertising spend and sales}:
+
+$n = 6$ observations of weekly advertising spend ($x$, \$000s) and units sold ($y$):
+
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|c|c|c|}
+    \hline
+    $i$ & $x$ & $y$ & $x - \bar{x}$ & $y - \bar{y}$ & $(x-\bar{x})(y-\bar{y})$ & $(x-\bar{x})^2$ & $(y-\bar{y})^2$ \\
+    \hline
+    1 & 2  & 3  & $-5$ & $-5$ & 25 & 25 & 25 \\
+    2 & 4  & 7  & $-3$ & $-1$ &  3 &  9 &  1 \\
+    3 & 6  & 5  & $-1$ & $-3$ &  3 &  1 &  9 \\
+    4 & 8  & 9  &  $1$ &  $1$ &  1 &  1 &  1 \\
+    5 & 10 & 11 &  $3$ &  $3$ &  9 &  9 &  9 \\
+    6 & 12 & 13 &  $5$ &  $5$ & 25 & 25 & 25 \\
+    \hline
+    & $\bar{x}=7$ & $\bar{y}=8$ & & $\Sigma$ & 66 & 70 & 70 \\
+    \hline
+\end{tabular}
+\end{center}
+
+$$r = \frac{66}{\sqrt{70 \times 70}} = \frac{66}{70} \approx 0.943
+\qquad r^2 \approx 0.889$$
+
+$$t = 0.943 \times \sqrt{\frac{4}{1 - 0.943^2}} = 0.943 \times \sqrt{\frac{4}{0.111}} \approx 5.66$$
+
+$p = 2\,\Prob{t(4) > 5.66} \approx 0.005$. \textbf{Conclusion}: Strong evidence of a
+positive linear association; advertising spend explains $\approx 89\%$ of the variance
+in sales.
 
 \paragraph{Assumptions}
 \begin{itemize}
-    \item Both variables are continuous
-    \item Linear relationship between variables
-    \item Bivariate normality (for inference)
-    \item Homoscedasticity
+    \item \tB{Both variables are continuous} and measured on an interval or ratio scale
+    \item \uB{Linear relationship}: $r$ only captures linear association; a non-linear
+        relationship can give $r \approx 0$ even with strong dependence
+    \item \textbf{Bivariate normality}: required for the $t$-test and CI to be exact;
+        robust in large samples by the CLT
+    \item \textbf{Homoscedasticity}: the variance of $Y$ should be constant across
+        values of $X$
+    \item \textbf{Independence}: each pair $(x_i, y_i)$ is drawn independently
 \end{itemize}
 
 \paragraph{Strengths}
 \begin{itemize}
-    \item Well-understood theoretical properties
-    \item Optimal for detecting linear relationships in normal data
+    \item \tB{Optimal for linear relationships} under bivariate normality
+    \item \uB{$r^2$ has a direct variance-explained interpretation}
+    \item Well-understood theoretical properties; closed-form inference via $t$ and
+        Fisher's $z$
+    \item Foundation for linear regression ($r$ equals the standardised regression slope)
 \end{itemize}
 
 \paragraph{Weaknesses}
 \begin{itemize}
-    \item Not robust to outliers
-    \item Only detects linear relationships
-    \item Sensitive to non-normality
+    \item \tB{Not robust to outliers}: a single extreme point can drastically shift $r$
+    \item \uB{Only detects linear relationships}: $r = 0$ does not imply independence
+    \item \textbf{Sensitive to non-normality} for small samples
+    \item \textbf{Spurious correlations}: two variables can be correlated through a common
+        confounder; $r$ does not imply causation
 \end{itemize}
+
+\paragraph{Comparison with alternatives}
+\begin{itemize}
+    \item \textbf{vs. Spearman's $r_s$}: Spearman is robust to outliers and detects
+        monotonic (not just linear) associations; Pearson is more powerful under
+        normality and linearity
+    \item \textbf{vs. Kendall's $\tau$}: Kendall's $\tau$ is better for small samples
+        and heavy ties; Pearson assumes continuous, normally distributed data
+    \item \textbf{vs. Distance correlation}: Distance correlation detects any form of
+        dependence (including non-linear); Pearson only detects linear association
+    \item \textbf{vs. Partial correlation}: Partial correlation removes the effect of
+        confounding variables; Pearson measures marginal (unadjusted) association
+\end{itemize}
+
+\textbf{Bayesian alternative}: Place a prior on $\rho$ (e.g.\ a uniform prior or the
+Jeffreys prior $p(\rho) \propto (1-\rho^2)^{-3/2}$) and derive the posterior from the
+bivariate normal likelihood. The posterior of $\rho$ gives a full uncertainty
+quantification over the association strength, replacing the p-value.
+
+\textit{\hyperref[statistical_method_table]{Return to the table.}}
 
 \subsection{Repeated-measures ANOVA}
-Used in repeated measure design, meaning \uB{when we measure multiple time the same variable
-taken on the same or matched subject either under different conditions or at different periods}.
+
+Repeated-measures ANOVA is a \uB{parametric test for comparing $k \geq 2$ conditions
+when the same subjects are measured under each condition} (within-subject design). By
+explicitly modelling individual differences, it \tB{removes between-subject variability
+from the error term}, yielding a more sensitive test than independent-groups ANOVA.
+
 \paragraph{Frequentist}
-Here $F = \dfrac{\frac{SS_{treatment}}{df_{treatment}}}{\frac{SS_{error}}{df_{error}}}$
-In a \tB{\emph{between-subjects}} design there is a element of variance due to individual 
-difference that is combined with the treatment and error term, meaning: \tB{$SS_{total} = SS_{
-treatment} + SS_{error}$}
-In a \tB{\emph{repeated-measure}} design it is possible to partition subject variability from the
-treatment and error term, meaning \tB{$SS_{total} = SS_{treatment(excluding~indivdual~differences) +
-SS_{subjects} + SS_{error}}$}
+
+Let $n$ be the number of subjects, $k$ the number of conditions, $x_{ij}$ the observation
+for subject $i$ under condition $j$, and $N = nk$ the total number of observations.
+Define:
+$\begin{cases}
+    \bar{x} = \dfrac{1}{N}\su{i,j}{}x_{ij} \quad \text{(grand mean)} \\
+    \bar{x}_{i\cdot} = \dfrac{1}{k}\su{j=1}{k}x_{ij} \quad \text{(subject } i \text{ mean)} \\
+    \bar{x}_{\cdot j} = \dfrac{1}{n}\su{i=1}{n}x_{ij} \quad \text{(condition } j \text{ mean)}
+\end{cases}$
+
+$\begin{cases}
+    H_0: \mu_1 = \mu_2 = \cdots = \mu_k \quad \text{(all condition means are equal)} \\
+    H_1: \text{at least one condition mean differs}
+\end{cases}$
+
+\subparagraph{SS partitioning}:
+
+The key advantage over between-subjects ANOVA is the additional partition of $SS_{subjects}$:
+
+\begin{center}
+\begin{tabular}{ll}
+    \textbf{Between-subjects}: & $SS_{total} = SS_{treatment} + SS_{error}$ \\[4pt]
+    \textbf{Repeated-measures}: & $SS_{total} = SS_{treatment} + SS_{subjects} + SS_{error}$
+\end{tabular}
+\end{center}
+
+\textbf{Intuition}: Since the same subjects appear in every condition, the variability due
+to individuals ($SS_{subjects}$) can be subtracted from what would otherwise inflate the
+error. This shrinks $MS_{error}$ and increases the $F$-statistic.
+
+\subparagraph{Formulas}:
+
+\begin{align*}
+    SS_{treatment} &= n\su{j=1}{k}\left(\bar{x}_{\cdot j} - \bar{x}\right)^2
+    & df_{treatment} &= k - 1 \\
+    SS_{subjects}  &= k\su{i=1}{n}\left(\bar{x}_{i\cdot} - \bar{x}\right)^2
+    & df_{subjects} &= n - 1 \\
+    SS_{error}     &= SS_{total} - SS_{treatment} - SS_{subjects}
+    & df_{error} &= (k-1)(n-1) \\
+    SS_{total}     &= \su{i=1}{n}\su{j=1}{k}\left(x_{ij} - \bar{x}\right)^2
+    & df_{total} &= nk - 1
+\end{align*}
+
+The test statistic is:
+\begin{center}
+\tB{$F = \dfrac{MS_{treatment}}{MS_{error}} = \dfrac{SS_{treatment}/(k-1)}{SS_{error}/\left[(k-1)(n-1)\right]} \sim F(k-1,\,(k-1)(n-1))$ under $H_0$}
+\end{center}
+
+\subparagraph{Sphericity and corrections}:
+
+Sphericity requires that the variances of all pairwise difference scores are equal.
+Mauchly's test checks this assumption. When violated:
+\begin{itemize}
+    \item \textbf{Greenhouse-Geisser correction}: multiply both $df$ by $\hat{\varepsilon}_{GG} \in [1/(k-1),\,1]$
+    \item \textbf{Huynh-Feldt correction}: less conservative than GG; preferred when $\hat{\varepsilon} > 0.75$
+\end{itemize}
+
+\textbf{Post-hoc tests}: Pairwise $t$-tests on the condition means with Bonferroni or
+Holm correction for multiple comparisons.
+
+\textbf{Example — Effect of three teaching methods on 4 students}:
+
+Test scores ($n=4$ students, $k=3$ methods):
+
+\begin{center}
+\begin{tabular}{|c|ccc|c|}
+    \hline
+    \textbf{Subject} & \textbf{A} & \textbf{B} & \textbf{C} & $\bar{x}_{i\cdot}$ \\
+    \hline
+    1 & 3 & 7 & 5 & 5 \\
+    2 & 5 & 9 & 7 & 7 \\
+    3 & 4 & 6 & 5 & 5 \\
+    4 & 6 & 8 & 7 & 7 \\
+    \hline
+    $\bar{x}_{\cdot j}$ & 4.5 & 7.5 & 6 & $\bar{x} = 6$ \\
+    \hline
+\end{tabular}
+\end{center}
+
+\begin{align*}
+    SS_{treatment} &= 4\left[(4.5-6)^2 + (7.5-6)^2 + (6-6)^2\right] = 4 \times 4.5 = 18 \\
+    SS_{subjects}  &= 3\left[(5-6)^2 + (7-6)^2 + (5-6)^2 + (7-6)^2\right] = 3 \times 4 = 12 \\
+    SS_{total}     &= \textstyle\sum(x_{ij}-6)^2 = 9+1+1+1+9+1+4+0+1+0+4+1 = 32 \\
+    SS_{error}     &= 32 - 18 - 12 = 2
+\end{align*}
+
+$$F = \frac{18/2}{2/6} = \frac{9}{0.333} = 27.0 \sim F(2, 6)$$
+
+$p = \Prob{F(2,6) > 27} \approx 0.001$. \textbf{Conclusion}: Strong evidence that
+teaching method affects test scores. Post-hoc tests would identify method B as
+significantly better than A and C.
 
 \paragraph{Assumptions}
 \begin{itemize}
-    \item \emph{Normality}: for each level of the within-subject factor, the dependent variable must have a normal distribution.
-    \item \emph{Sphericity}: difference scores computed between 2 levels of a within subject factor must have the same variance
-    for the comparison of any 2 levels.
-    \item \emph{Randomness}: cases should be derived from a random sample.
+    \item \tB{Normality}: the dependent variable is normally distributed within each
+        condition (robust in large samples)
+    \item \uB{Sphericity}: variances of all pairwise difference scores are equal; test
+        with Mauchly's test and apply GG or HF correction if violated
+    \item \textbf{Independence}: subjects are sampled independently from each other
+    \item \textbf{No carry-over effects}: in practice, condition order should be
+        counterbalanced to avoid learning or fatigue effects
 \end{itemize}
+
 \paragraph{Strengths}
 \begin{itemize}
-    \item ability to partition out variability due to individual differences.
+    \item \tB{Higher statistical power} than between-subjects ANOVA: removes
+        between-subject variability from the error term
+    \item \uB{Fewer subjects needed} to achieve the same power as independent-groups ANOVA
+    \item Each subject serves as their own control, eliminating confounding from
+        individual differences
 \end{itemize}
+
 \paragraph{Weaknesses}
 \begin{itemize}
-    \item Vulnerable to missing values, imputation, unequivalent time points
-    between subjects and violation of Sphericity.
+    \item \tB{Sphericity assumption}: violation inflates Type I error; requires
+        correction or switch to mixed-effects models
+    \item \uB{Sensitive to missing data}: a single missing cell removes the entire
+        subject from the analysis
+    \item \textbf{Carry-over effects}: repeated exposure to conditions can introduce
+        order or practice effects
+    \item Not appropriate when conditions cannot be applied to the same subject (use
+        between-subjects or mixed design instead)
 \end{itemize}
+
+\paragraph{Comparison with alternatives}
+\begin{itemize}
+    \item \textbf{vs. One-way ANOVA}: one-way ANOVA assumes independent groups; RM-ANOVA
+        exploits the within-subject structure for greater power
+    \item \textbf{vs. Friedman test}: Friedman is the non-parametric equivalent; use it
+        when normality or sphericity cannot be assumed
+    \item \textbf{vs. Linear mixed-effects model (LMM)}: LMM handles missing data,
+        unbalanced designs, and more complex correlation structures; RM-ANOVA is a
+        special case of LMM with compound-symmetry covariance
+    \item \textbf{vs. MANOVA}: MANOVA makes no sphericity assumption by modelling the
+        full covariance matrix; preferred when sphericity is badly violated
+\end{itemize}
+
+\textbf{Bayesian alternative}: Use a hierarchical (mixed-effects) model with
+subject-level random intercepts and condition-level fixed effects. Posterior contrasts
+between conditions replace post-hoc $t$-tests, and the full posterior naturally
+quantifies uncertainty without requiring sphericity.
+
+\textit{\hyperref[statistical_method_table]{Return to the table.}}
 
 \subsection{1-way ANOVA}
-Analysis of Variance describes \uB{the partition of the response variable sum of squares in a 
-linear model into ``explained'' and ``unexplained'' components.}\\
-\begin{itemize}
-	\item Single categorical (or less common numerical) explanatory variable corresponds to One-Way ANOVA
-	\item 2 factors to Two-Way ANOVA
-	\item 3 factors to Three-Way ANOVA
-\end{itemize}
-The term ``analysis of variance'' is a bit of misnomer, \tB{we use variance-like quantities to
-study the equality or non-equality of population means}, so we are analyzing means, not variances.
+
+One-way ANOVA \uB{tests equality of means across $k \geq 2$ independent groups} using a
+single categorical explanatory variable. Despite its name, the term ``analysis of
+variance'' is a misnomer: \tB{we use variance-like quantities to study the equality of
+population means}, not variances. It is the parametric generalisation of the two-sample
+$t$-test to $k > 2$ groups (and reduces to it when $k = 2$, with $F = t^2$).
+
+The general linear model is:
+$$y_{ij} = \mu + \alpha_j + \epsilon_{ij}, \quad \epsilon_{ij} \overset{iid}{\sim}
+\mathcal{N}(0, \sigma^2)$$
+where $\mu$ is the grand mean, \uB{$\alpha_j = \mu_j - \mu$} is the treatment effect of
+group $j$, and $\su{j=1}{k}n_j\alpha_j = 0$ (sum-to-zero constraint).
+
 \paragraph{Frequentist}
-\tR{examines equality of population means for a quantitative outcome and a 
-single categorical explanatory variable with any number of levels}.\\
-The term \tB{``one-way'' indicates that there is a single explanatory variable (``treatment'') 
-with 2 or more levels and only one level of treatment is applied at any time for a given subject}.\\
-And $H_{0}:\forall (i,j) \in \inter{1}{k}^{2} \mu_{i} = \mu_{j}$
 
+Let $k$ be the number of groups, $n_j$ the number of observations in group $j$,
+$N = \su{j=1}{k}n_j$ the total, $Y_{ij}$ the $i$-th observation in group $j$,
+$\overline{Y}_{\bullet j}$ the group mean, and $\overline{Y}$ the grand mean.
 
-In ANOVA \uB{we work with variances and also ``variance-like quantities'' which are not really the
-variance of anything}, but are still calculated as $\frac{SS}{df}$ all of these quantities are
-called ``mean squares''.\\
+$\begin{cases}
+    H_0: \mu_1 = \mu_2 = \cdots = \mu_k \quad \text{(all group means are equal, i.e.\ } \alpha_j = 0\ \forall j\text{)} \\
+    H_1: \text{at least one } \mu_j \text{ differs}
+\end{cases}$
 
-The deviation for subject $j$ of group $i$ in the figure above is mathematically equal to $Y_{ij}-
-\overline{Y}_{i}$ where $Y_{ij}$ is the observed value for subject $j$ of group $i$ and $\overline{Y}_{i}$ is the sample mean for group $i$.
+\subparagraph{SS partitioning}:
+
+In ANOVA, all variance-like quantities are computed as $SS/df$ and called \emph{mean
+squares}. The total variability decomposes as:
+$$\tB{SS_{total} = SS_{between} + SS_{within}}$$
+
+\textbf{Within-group SS} measures variability of observations around their group mean
+(see Figure~\ref{fig:3_anovaInterGrp}). The within-group deviation for observation $i$
+in group $j$ is $Y_{ij} - \overline{Y}_{\bullet j}$.
+
 \begin{figure}[H]
 	\begin{center}
 		\includegraphics[width=\textwidth]{chapters/2_statistics/05_common_statistical_tests/2_images/1_anova_inter_grp.PNG}
 	\end{center}
-	\caption{Deviations for within-group of squares}
+	\caption{Deviations for within-group sum of squares}
 	\label{fig:3_anovaInterGrp}
 \end{figure}
-\begin{center}
-\fr{
-$ MS_{within} = \dfrac{SS_{within}}{df_{within}}
-\begin{cases}
-	SS_{within} = \su{{j=1}}{k}SS_{j}=\su{{j=1}}{k}\su{{i=1}}{n_{j}}\left(Y_{ij}-\overline{Y}_{\bullet j}
-	\right)\\
-	df_{within} = df_{j} = \su{{j=1}}{k}(n_{j}-1) = N-k
-\end{cases}
-$
-}\end{center}
 
-\tB{$MS_{within}$ is a good estimate of $\sigma^{2}$ from our model regardless of the truth of 
-$H_{0}$.} This is due to the way $SS_{within}$ is defined.
+\begin{center}
+\fr{$MS_{within} = \dfrac{SS_{within}}{df_{within}}
+\begin{cases}
+	SS_{within} = \su{j=1}{k}\su{i=1}{n_{j}}\left(Y_{ij}-\overline{Y}_{\bullet j}\right)^2 \\
+	df_{within} = N - k
+\end{cases}$}
+\end{center}
+
+\tB{$MS_{within}$ is always a valid estimate of $\sigma^2$, regardless of whether $H_0$
+is true.}
+
+\textbf{Between-group SS} measures variability of group means around the grand mean
+(see Figure~\ref{fig:4_anovaBtw}). The between-group deviation for group $j$ is
+$\overline{Y}_{\bullet j} - \overline{Y}$.
 
 \begin{figure}[H]
 	\begin{center}
 		\includegraphics[width=\textwidth]{chapters/2_statistics/05_common_statistical_tests/2_images/2_anova_btw.PNG}
 	\end{center}
-	\caption{Deviations for betwwen-group sum of squares}
+	\caption{Deviations for between-group sum of squares}
 	\label{fig:4_anovaBtw}
 \end{figure}
-$SS_{between}$ is the sum of the $N$ squared between-group deviations, where the deviation is
-the same for all subjects in the same group. The formula is : 
+
 \begin{center}
-\fr{
-$
-MS_{Between} = \dfrac{SS_{Between}}{df_{between}}
+\fr{$MS_{between} = \dfrac{SS_{between}}{df_{between}}
 \begin{cases}
-SS_{between} = \su{{j=1}}{k}n_{j}\left(\overline{Y}_{\bullet j}-\overline{Y}\right)^{2}\\
-df_{between} = k-1
-\end{cases}
-$
-}\end{center}
-Because of the way $SS_{between}$ is defined, \tB{$MS_{between}$ is a good estimate of $\sigma^{2}
-$ only if $H_{0}$ is true}. Otherwise it tends to be larger. \\
-The $F-statistic$ defined by $F=\dfrac{MS_{between}}{MS_{within}}$ \uR{tends to be larger if the
-alternative hypothesis is true than if the null hypothesis is true}.\\
-
-We can quantify ``large'' for the \emph{F-statistic}, by comparing it to its null sampling 
-distribution which is the specific \emph{F-distribution}  which has degrees of freedom matching
-the numerator and denominator of the \emph{F-statistic}.\\
-Concerning inferences to build the confidence interval we need the \tB{\emph{standard error} (the
-standard deviation of the means) that is $\sqrt{\dfrac{MS_{within}}{n_{i}}}$}\\
-Let's detail the case where $p=2$ meaning comparison of  2 samples:
-with means $\mu_{1}$ and $\mu_{2}$, and the same variance $\sigma^{2}$ and
-finally $n=n_{1}+n_{2}$ observations.
-Model: 
-\begin{center}
-	$\forall (j,i)\in\inter{1}{2}\times\inter{1}{n_{j}}y_{ij} = \mu_{j} + \epsilon_{ij} = \mu + \alpha_{j} + \epsilon_{ij}$
+	SS_{between} = \su{j=1}{k}n_{j}\left(\overline{Y}_{\bullet j}-\overline{Y}\right)^{2} \\
+	df_{between} = k - 1
+\end{cases}$}
 \end{center}
-\uB{$\alpha_{j}=\mu_{j}-\mu$} is called (treatment-) effect
 
-Decomposition:
-\begin{align*}
-	SS_{total} =& \su{{j=1}}{n_{1}}\left(y_{1j}-\overline{y}\right)^{2} +
-	\su{{j=1}}{n_{2}}\left(y_{2j}-\overline{y}\right)^{2}\\
-	=& \su{{j=1}}{n_{1}}\left(y_{1j}-\overline{y_{1}}+\overline{y_{1}}-\overline{y}\right)^{2}
-	+ \su{{j=1}}{n_{2}}\left(y_{2j}-\overline{y_{2}}+\overline{y_{2}}-\overline{y}\right)^{2}\\
-	=& \underbrace{(n_{1}-1)s_{1}^{2} + (n_{2}-1)s_{2}^{2}}_{SS_{within}} +
-    \underbrace{n_{1}(\overline{y}_{1}-\overline{y})^{2} + 
-	n_{2}(\overline{y}_{2}-\overline{y})^{2}}_{SS_{between}}
-\end{align*}
-\tB{$SS_{between}$ corresponds to squared enumerator $(\overline{y}_{1} - \overline{y}_{2})^{2}$ of
-the statistic}: 
-\begin{align*}
-	SS_{between} =& n_{1}(\overline{y}_{1}-\overline{y})^{2} + 
-	n_{2}(\overline{y}_{2}-\overline{y})^{2}\\
-	=& n_{1}\left(\overline{y}_{1}-\dfrac{n_{1}\overline{y}_{1}+n_{2}\overline{y}_{2}}{n_{1}+
-	n_{2}}\right)^{2} + n_{2}\left(\overline{y}_{2}-\dfrac{n_{1}\overline{y}_{1}+n_{2}
-	\overline{y}_{2}}{n_{1}+ n_{2}}\right)^{2}\\
-	=& \dfrac{n_{1}n_{2}}{n_{1}+n_{2}}\left(\overline{y}_{1}-\overline{y}_{2}\right)^{2}
-\end{align*}
-\tB{$SS_{within}$ corresponds to denominator of \emph{t-statistic}}:
-$s=\sqrt{\dfrac{(n_{1}-1)s_{1}^{2}+(n_{2}-1)s_{2}^{2}}{n_{1}+n_{2}-2}}$\\
-Pooled variance that is an estimate of the fixed common variance $\sigma^{2}$ underlying various
-populations that have different means.
-$\hat{\sigma}=\dfrac{(n_{1}-1)s_{1}^{2}+(n_{2}-1)s_{2}^{2}}{(n_{1}-1)+(n_{2}-1)}$\\
-Null hypothesis $H_{0}:\mu_{1}=\mu_{2}$ or $\alpha_{1}=\alpha_{2}=0$ \\
-\emph{F-test}
-$\left(\overline{Y}_{1}-\overline{Y}_{2}\right)\hookrightarrow \mathcal{N}\left(\mu_{1}-\mu_{2},
-\left(\frac{1}{n_{1}}+\frac{1}{n_{2}}\right)\sigma^{2}\right)\\
-\E{\left[\overline{Y}_{1}-\overline{Y}_{2}\right]^{2}}=\left(\frac{1}{n_{1}}+\frac{1}{n_{2}}
-\right)\sigma^{2}+(\mu_{1}-\mu_{2})^{2}\\
-\E{MS_{between}}=\E{\frac{n_{1}n_{2}}{n_{1}+n_{2}}\left[\overline{Y}_{1}-\overline{Y}_{2}
-\right]^{2}} = \sigma^{2}+\frac{n_{1}n_{2}}{n_{1}+n_{2}}(\mu_{1}-\mu_{2})^{2}\\
-\E{MS_{whithin}}=\sigma^{2}\\
-F = \dfrac{MS_{between}}{MS_{within}}$\\
-Here $F=t^{2}$\\
-\begin{align*}
-	\text{Degrees of freedom} =& n - 1\\
-	=& \underbrace{(n-m)}_{df_{within}} + \underbrace{(m-1)}_{df_{between}}
-\end{align*}
+\tB{$MS_{between}$ estimates $\sigma^2$ only under $H_0$}; otherwise it is inflated by
+the treatment effects. This motivates the $F$-statistic:
+
+\begin{center}
+\tB{$F = \dfrac{MS_{between}}{MS_{within}} \sim F(k-1,\, N-k)$ under $H_0$}
+\end{center}
+
+\textbf{Intuition}: Under $H_0$, both $MS_{between}$ and $MS_{within}$ estimate the same
+$\sigma^2$, so $F \approx 1$. Under $H_1$, group means differ, inflating $MS_{between}$
+while $MS_{within}$ remains unchanged, so $F \gg 1$.
+
+More precisely:
 \begin{itemize}
-	\item $SS_{within}$ and $SS_{between}$ are independent
-    \item \tB{under $H_{0}~\E{MS_{between}} = \E{MS_{within}} = \sigma^{2}$}
-	\item \tB{under $H_{a}~\E{MS_{between}}>\sigma^{2}$ and $\E{MS_{within}} =
-        \sigma^{2}$}
+    \item \tB{Under $H_0$}: $\E{MS_{between}} = \E{MS_{within}} = \sigma^2$
+    \item \tB{Under $H_1$}: $\E{MS_{between}} = \sigma^2 + \dfrac{\su{j=1}{k}n_j\alpha_j^2}{k-1} > \sigma^2$,
+        \quad $\E{MS_{within}} = \sigma^2$
 \end{itemize}
-Hence $$ F= \dfrac{MS_{between}}{MS_{within}}\hookrightarrow F_{m-1,n-m}$$
-In the case of 2 groups (``\emph{t-test}'') we received:
-$$ \overline{y}_{1}-\overline{y}_{2} \pm t_{n-2,1-\frac{\alpha}{2}}s\sqrt{\frac{1}{n_{1}}+
-\frac{1}{n_{2}}}$$
 
+The standard error for pairwise contrasts between group means is
+$\sqrt{MS_{within}\!\left(\tfrac{1}{n_i}+\tfrac{1}{n_j}\right)}$.
+
+\subparagraph{ANOVA table}:
+
+\begin{center}
+\begin{tabular}{|l|c|c|c|c|}
+    \hline
+    \textbf{Source} & \textbf{SS} & \textbf{df} & \textbf{MS} & \textbf{F} \\
+    \hline
+    Between groups & $SS_{between}$ & $k-1$ & $SS_{between}/(k-1)$ & $MS_{between}/MS_{within}$ \\
+    Within groups  & $SS_{within}$  & $N-k$ & $SS_{within}/(N-k)$  & --- \\
+    Total          & $SS_{total}$   & $N-1$ & ---                  & --- \\
+    \hline
+\end{tabular}
+\end{center}
+
+\subparagraph{Special case $k=2$: equivalence with the $t$-test}:
+
+With two groups ($n = n_1 + n_2$, common variance $\sigma^2$):
+\begin{align*}
+    SS_{between} &= \dfrac{n_1 n_2}{n_1+n_2}\left(\overline{y}_1 - \overline{y}_2\right)^2 \\
+    SS_{within}  &= (n_1-1)s_1^2 + (n_2-1)s_2^2
+\end{align*}
+
+where $s_p = \sqrt{\dfrac{(n_1-1)s_1^2+(n_2-1)s_2^2}{n-2}}$ is the pooled standard
+deviation. One can show that $F = t^2$, confirming that one-way ANOVA with $k=2$ is
+identical to the two-sample $t$-test.
+
+\textbf{Post-hoc tests}: A significant $F$ only tells you that \emph{some} group means
+differ. To identify \emph{which} pairs differ, use (with appropriate correction for
+multiple comparisons):
+\begin{itemize}
+    \item \textbf{Tukey's HSD}: controls family-wise error rate for all pairwise comparisons
+    \item \textbf{Bonferroni}: conservative; good for a small number of planned comparisons
+    \item \textbf{Scheffé}: most conservative; valid for any linear contrast, not just pairwise
+\end{itemize}
+
+\textbf{Example — Effect of three fertilizers on plant yield}:
+
+$k=3$ fertilizer groups, $n_j=4$ plants each ($N=12$):
+
+\begin{center}
+\begin{tabular}{|c|cccc|c|}
+    \hline
+    \textbf{Group} & \multicolumn{4}{c|}{\textbf{Observations}} & $\overline{Y}_{\bullet j}$ \\
+    \hline
+    A & 5 & 7 & 6 & 8  & 6.5  \\
+    B & 9 & 11 & 10 & 12 & 10.5 \\
+    C & 3 & 5  & 4  & 6  & 4.5  \\
+    \hline
+    \multicolumn{5}{|r|}{Grand mean $\overline{Y}$} & 7.17 \\
+    \hline
+\end{tabular}
+\end{center}
+
+\begin{align*}
+    SS_{between} &= 4\left[(6.5-7.17)^2+(10.5-7.17)^2+(4.5-7.17)^2\right]
+                  = 4 \times 18.67 = 74.67 \\
+    SS_{within}  &= 5 + 5 + 5 = 15
+    \quad \text{(each group: }(5-6.5)^2+\cdots = 5\text{)}
+\end{align*}
+
+\begin{center}
+\begin{tabular}{|l|c|c|c|c|}
+    \hline
+    \textbf{Source} & \textbf{SS} & \textbf{df} & \textbf{MS} & \textbf{F} \\
+    \hline
+    Between & 74.67 & 2 & 37.33 & 22.4 \\
+    Within  & 15.00 & 9 & 1.67  & ---  \\
+    Total   & 89.67 & 11 & ---  & ---  \\
+    \hline
+\end{tabular}
+\end{center}
+
+$p = \Prob{F(2,9) > 22.4} \approx 0.0003$. \textbf{Conclusion}: Strong evidence that
+fertilizer type affects yield. Post-hoc tests (e.g.\ Tukey's HSD) would reveal that B
+differs significantly from both A and C.
 
 \paragraph{Assumptions}
-The statistical model for which one-way ANOVA is appropriate is that the
 \begin{itemize}
-    \item (Quantitative) Outcomes for each group are normally distributed
-    \item Outcome variances are all equal to  ($\sigma^{2}$)
-    \item The errors are assumed to be independent.
+    \item \tB{Normality}: observations within each group are normally distributed (robust
+        in large samples by CLT)
+    \item \uB{Homoscedasticity}: all groups share a common variance $\sigma^2$; check
+        with Levene's or Bartlett's test; use Welch's ANOVA if violated
+    \item \textbf{Independence}: observations are independent within and across groups
 \end{itemize}
 
 \paragraph{Strengths}
 \begin{itemize}
-    \item Can compare more than 2 groups simultaneously
-    \item Controls family-wise Type I error rate
-    \item Well-developed post-hoc procedures available
+    \item \tB{Simultaneously compares $k > 2$ groups} while controlling the family-wise
+        Type I error rate (unlike running multiple $t$-tests)
+    \item \uB{Optimal under normality and homoscedasticity}
+    \item Well-developed post-hoc procedures (Tukey, Bonferroni, Scheffé)
+    \item Generalises naturally to factorial (two-way, three-way) and mixed designs
 \end{itemize}
 
 \paragraph{Weaknesses}
 \begin{itemize}
-    \item Sensitive to violations of normality (especially with small samples)
-    \item Sensitive to unequal variances (use Welch's ANOVA instead)
-    \item Only detects that groups differ, not which ones (requires post-hoc tests)
+    \item \tB{Sensitive to non-normality} with small samples
+    \item \uB{Sensitive to unequal variances}: use Welch's ANOVA instead
+    \item Only detects that \emph{some} groups differ, not which ones; requires post-hoc
+        tests
+    \item Assumes independent groups; use RM-ANOVA for repeated measures
 \end{itemize}
+
+\paragraph{Comparison with alternatives}
+\begin{itemize}
+    \item \textbf{vs. Kruskal-Wallis}: Kruskal-Wallis is the non-parametric equivalent;
+        use it when normality or homoscedasticity cannot be assumed
+    \item \textbf{vs. Welch's ANOVA}: Welch's ANOVA relaxes the equal-variance assumption;
+        preferred when group variances differ
+    \item \textbf{vs. Repeated-measures ANOVA}: RM-ANOVA is for within-subject (matched)
+        designs; one-way ANOVA assumes independent groups
+    \item \textbf{vs. Linear regression}: one-way ANOVA with $k$ groups is equivalent to
+        linear regression with $k-1$ dummy variables; they give identical $F$-tests
+\end{itemize}
+
+\textbf{Bayesian alternative}: Use a hierarchical model with group-level means drawn from
+a common prior (e.g.\ $\mu_j \sim \mathcal{N}(\mu, \tau^2)$). The posterior of each
+$\mu_j$ shrinks estimates toward the grand mean, and posterior contrasts between groups
+replace post-hoc tests.
+
+\textit{\hyperref[statistical_method_table]{Return to the table.}}
 
 \subsection{T-test}
-It is commonly used when the test statistic would follow a normal distribution
-if the value of a scaling term in the test statistic were known.\\
-When the scaling term is estimated from the data, under certain conditions, the
-test statistic follows a \emph{Student's t-test}.\\
-Most test statistics have the form $t=\dfrac{Z}{s}$, $Z$ may be sensitive to 
-the alternative hypothesis, whereas $s$ isa scaling parameter allowing to determine
-the distribution \emph{t}.
-\paragraph{One-sample}
-$$
-t = \dfrac{\overline{x} - \mu_{0}}{\frac{s}{\sqrt{n}}},
-\begin{cases}
-    \overline{x}\text{: sample mean}\\
-    s\text{: sample standard deviation}\\
-    n\text{: sample size}
-\end{cases}
-$$
-By the central limit theorem, if the observations are independent and the second
-moment exist, then $t$ will approximately follow the distribution $\mathcal{N}(0, 1)$
 
-\paragraph{Assumptions}
-\begin{itemize}
-    \item Independence of observations
-    \item Normality of the population (or large sample size by CLT)
-    \item For two-sample: equal variances (or use Welch's $t$-test)
-\end{itemize}
+The $t$-test \uB{tests hypotheses about means using a test statistic that follows
+Student's $t$-distribution} when the population variance is unknown and estimated from
+the data. The general form is $t = Z/s$, where $Z$ is sensitive to the alternative
+hypothesis and $s$ is the estimated scaling parameter. There are three main variants
+depending on the experimental design.
 
-\paragraph{Strengths}
-\begin{itemize}
-    \item Most powerful test for comparing means under normality
-    \item Well-understood and widely available
-    \item Robust to mild departures from normality with large samples
-\end{itemize}
+\paragraph{Frequentist}
 
-\paragraph{Weaknesses}
-\begin{itemize}
-    \item Sensitive to outliers
-    \item Requires normality assumption for small samples
-    \item Two-sample version sensitive to unequal variances
-\end{itemize}
+\subparagraph{One-sample $t$-test}:
 
-\paragraph{Slope of a regression line}
-Suppose one is fitting: $Y = \alpha + \beta x + \epsilon$, where $x$ is known and $\alpha$ and $\beta$ are unknown
-and finally $\epsilon \hookrightarrow \mathcal{N(0, 1)}$.
-Symbols with hat will refer to estimators.
+Tests whether the population mean equals a specified value $\mu_0$.
+
+$\begin{cases}
+    H_0: \mu = \mu_0 \\
+    H_1: \mu \neq \mu_0 \text{ (two-sided)}, \quad
+    H_1: \mu > \mu_0 \text{ or } H_1: \mu < \mu_0 \text{ (one-sided)}
+\end{cases}$
+
 \begin{center}
-    \tB{$t_{score} = \dfrac{\hat{\beta} - \beta_{0}}{SE_{\hat{\beta}}} \hookrightarrow 
-    \mathcal{T}_{n-2}$}
+\tB{$t = \dfrac{\overline{x} - \mu_0}{s/\sqrt{n}} \sim t(n-1)$ under $H_0$}
 \end{center}
-The standard error of the slope coefficient:
+
+where $\overline{x}$ is the sample mean, $s$ the sample standard deviation, and $n$ the
+sample size. A $(1-\alpha)$ confidence interval for $\mu$ is:
+$$\overline{x} \pm t_{n-1,\,1-\alpha/2}\,\dfrac{s}{\sqrt{n}}$$
+
+\subparagraph{Two-sample $t$-test (independent groups)}:
+
+Tests whether two independent population means are equal.
+
 $\begin{cases}
-    SE_{\hat{\beta}} &= \dfrac{\sqrt{\frac{1}{n-2}\su{i=1}{n}\left(y_{i}-
-    \hat{y}_{i}\right)^{2}}}{
-    \sqrt{\su{i=1}{n}\left(x_{i} - \overline{x}\right)^{2}}}\\
-                SSR &= \su{i=1}{n}\hat{\epsilon}^{2}_{i} = \left(y_{i} - \hat{y}_{i}
-                \right)
+    H_0: \mu_1 = \mu_2 \\
+    H_1: \mu_1 \neq \mu_2 \text{ (two-sided)}, \quad \text{or directional (one-sided)}
 \end{cases}$
 
-\paragraph{Independent 2-sample t-test}
-\subparagraph{Equal sample sizes and variance}
+\textbf{Student's $t$-test} (equal variances, $\sigma_1^2 = \sigma_2^2$):
+\begin{center}
+\tB{$t = \dfrac{\overline{X}_1 - \overline{X}_2}{s_p\sqrt{\dfrac{1}{n_1}+\dfrac{1}{n_2}}}
+\sim t(n_1+n_2-2)$ under $H_0$}
+\end{center}
+where the pooled standard deviation is
+$s_p = \sqrt{\dfrac{(n_1-1)s_1^2+(n_2-1)s_2^2}{n_1+n_2-2}}$.
+
+\textbf{Welch's $t$-test} (unequal variances; preferred in practice):
+\begin{center}
+\tR{$t = \dfrac{\overline{X}_1 - \overline{X}_2}{\sqrt{\dfrac{s_1^2}{n_1}+\dfrac{s_2^2}{n_2}}}
+\sim t(\nu)$ under $H_0$}
+\end{center}
+with Satterthwaite degrees of freedom:
+$$\nu = \dfrac{\left(\dfrac{s_1^2}{n_1}+\dfrac{s_2^2}{n_2}\right)^{\!2}}%
+{\dfrac{(s_1^2/n_1)^2}{n_1-1}+\dfrac{(s_2^2/n_2)^2}{n_2-1}}$$
+
+\textbf{Intuition}: $t$ measures the observed difference in means relative to the
+uncertainty (standard error). Large $|t|$ means the groups are far apart relative to
+within-group variability — evidence against $H_0$. Under $H_0$ with $k=2$, one-way
+ANOVA and the two-sample $t$-test are equivalent: $F = t^2$.
+
+\subparagraph{Paired $t$-test}:
+
+Tests whether the mean of within-pair differences equals zero. Let
+$d_i = x_{i1} - x_{i2}$ be the difference for pair $i$.
+
 $\begin{cases}
-    t = \dfrac{\overline{X}_{1}-\overline{X}_{2}}{s_{p}\sqrt{\frac{2}{n}}} \\
-    s_{p} = \sqrt{\dfrac{s_{X_{1}}^{2} + s_{X_{2}}^{2}}{2}}
+    H_0: \mu_d = 0 \\
+    H_1: \mu_d \neq 0 \text{ (two-sided)}, \quad \text{or directional (one-sided)}
 \end{cases}$
 
-\subparagraph{Unequal sample sizes and similar variances ($\frac{1}{2}<\frac{s_{X_{1}}}
-{s_{X_{2}}}<2$)}:
-$\begin{cases}
-    t = \dfrac{\overline{X}_{1}-\overline{X}_{2}}{s_{p}\sqrt{\frac{1}{n_{1}} + 
-    \frac{1}{n_{2}}}} \\
-    s_{p} = \sqrt{\dfrac{(n_{1}-1)s_{X_{1}}^{2} + (n_{2}-1)s_{X_{2}}^{2}}{n_{1} + n_{2}
-    -2}}
-\end{cases}$
+\begin{center}
+\tB{$t = \dfrac{\overline{d} - \mu_0}{s_d/\sqrt{n}} \sim t(n-1)$ under $H_0$}
+\end{center}
 
-\subparagraph{Unequal sample sizes and unequal variances ($s_{X_{1}} > 2s_{X_{2}}$ 
-or $s_{X_{2}} > 2s_{X_{1}}$)}:
-$\begin{cases}
-    t = \dfrac{\overline{X}_{1}-\overline{X}_{2}}{s_{\Delta}} \\
-    s_{\Delta} = \sqrt{\dfrac{s_{X_{1}}^{2}}{n_{1}}+\dfrac{s_{X_{2}}^{2}}{n_{2}}}
-\end{cases}$
+where $\overline{d}$ and $s_d$ are the mean and standard deviation of the differences.
+This is mathematically identical to a one-sample $t$-test on the differences.
 
-\paragraph{Dependent t-test for paired samples}
-$t=\dfrac{\overline{X}_{D} - \mu_{0}}{\frac{s_{D}}{\sqrt{n}}}$
+\subparagraph{$t$-test for a regression slope}:
 
-where $X_D = X_1 - X_2$ is the difference between paired observations.
+In a simple linear model $Y = \alpha + \beta x + \epsilon$ with
+$\epsilon \sim \mathcal{N}(0, \sigma^2)$, testing $H_0: \beta = \beta_0$:
+\begin{center}
+\tB{$t = \dfrac{\hat{\beta} - \beta_0}{SE_{\hat{\beta}}} \sim t(n-2)$ under $H_0$}
+\qquad
+$SE_{\hat{\beta}} = \dfrac{\sqrt{\frac{1}{n-2}\su{i=1}{n}(y_i-\hat{y}_i)^2}}%
+{\sqrt{\su{i=1}{n}(x_i-\overline{x})^2}}$
+\end{center}
+
+\textbf{Example — One-sample}: A machine is calibrated to fill bottles to 500ml.
+A sample of $n=10$ bottles gives $\overline{x}=504$ml, $s=6$ml. Test $H_0: \mu=500$.
+$$t = \frac{504-500}{6/\sqrt{10}} = \frac{4}{1.897} \approx 2.11, \quad df=9$$
+$p = 2\,\Prob{t(9)>2.11} \approx 0.064$. Fail to reject $H_0$ at $\alpha=0.05$.
+
+\textbf{Example — Two-sample (Student's)}: Comparing exam scores under two teaching
+methods ($n_1=n_2=6$, similar variances):
+
+\begin{center}
+\begin{tabular}{|c|cccccc|c|c|}
+    \hline
+    \textbf{Group} & \multicolumn{6}{c|}{\textbf{Scores}} & $\overline{x}$ & $s$ \\
+    \hline
+    A (new)         & 80 & 75 & 82 & 78 & 74 & 79 & 78 & 3.0 \\
+    B (traditional) & 70 & 68 & 72 & 74 & 66 & 70 & 70 & 2.8 \\
+    \hline
+\end{tabular}
+\end{center}
+
+$$s_p = \sqrt{\frac{5\times9+5\times7.84}{10}} = \sqrt{8.42} \approx 2.90$$
+$$t = \frac{78-70}{2.90\sqrt{2/6}} = \frac{8}{1.674} \approx 4.78, \quad df=10$$
+$p = 2\,\Prob{t(10)>4.78} \approx 0.001$. Strong evidence that method A yields higher
+scores.
 
 \paragraph{Assumptions}
 \begin{itemize}
-    \item Pairs are independent
-    \item Differences are normally distributed
+    \item \tB{Independence}: observations (or pairs) are drawn independently
+    \item \uB{Normality}: the population (or differences, for paired) is normally
+        distributed; robust in large samples by CLT
+    \item \textbf{Equal variances} (Student's two-sample only): use Welch's $t$-test
+        when variances differ; check with Levene's test
 \end{itemize}
 
 \paragraph{Strengths}
 \begin{itemize}
-    \item More powerful than independent $t$-test when data is paired
-    \item Controls for individual differences
+    \item \tB{Uniformly most powerful} test for means under normality (by Neyman-Pearson)
+    \item \uB{Exact for any $n$} under normality; robust for large $n$ by CLT
+    \item Paired design increases power by removing between-subject variability
+    \item Closed-form confidence intervals for the mean difference
 \end{itemize}
 
 \paragraph{Weaknesses}
 \begin{itemize}
-    \item Requires paired/matched data
-    \item Sensitive to outliers in the differences
+    \item \tB{Sensitive to outliers}: a single extreme value can distort $\overline{x}$
+        and $s$
+    \item \uB{Only tests means}: does not detect differences in variance or shape
+    \item Student's two-sample version is sensitive to unequal variances; prefer Welch's
+        in practice
+    \item Requires normality for small samples; use Wilcoxon tests as non-parametric
+        alternatives
 \end{itemize}
+
+\paragraph{Comparison with alternatives}
+\begin{itemize}
+    \item \textbf{vs. Wilcoxon signed-rank / Mann-Whitney}: non-parametric alternatives;
+        more robust to outliers and non-normality, at the cost of some power under normality
+    \item \textbf{vs. One-way ANOVA}: ANOVA generalises the two-sample $t$-test to
+        $k>2$ groups; with $k=2$, $F = t^2$ and they are equivalent
+    \item \textbf{vs. $z$-test}: $z$-test requires known $\sigma^2$; $t$-test estimates
+        it from data and is appropriate for unknown variance (always in practice)
+    \item \textbf{vs. Welch's $t$-test}: Welch's is strictly more general; Student's
+        gains a small amount of power only when equal variances truly hold
+\end{itemize}
+
+\textbf{Bayesian alternative}: Place a prior on $\mu$ (e.g.\ $\mathcal{N}(\mu_0,
+\tau^2)$) and $\sigma^2$ (e.g.\ inverse-Gamma). The posterior of $\mu$ — or of the
+difference $\mu_1 - \mu_2$ — replaces the p-value with a full uncertainty
+quantification. The Bayes factor comparing $H_0$ to $H_1$ can also be computed
+(e.g.\ via the JZS prior).
+
+\textit{\hyperref[statistical_method_table]{Return to the table.}}

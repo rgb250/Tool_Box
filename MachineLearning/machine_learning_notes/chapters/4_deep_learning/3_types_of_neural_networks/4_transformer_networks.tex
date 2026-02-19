@@ -92,7 +92,7 @@ attention $h$ (usually $h=8$) times in parallel with different projection matric
 Originally $d_{v}=d_{k}=\frac{d_{model}}{h} = 64$
 
 \begin{center}
-    \fr{$MultiHead\left(\bm{Q},\bm{K},\bm{V}\right) = Concat(head_{1}, \ldots, head_{h})P^{O}$}
+    \fr{$MultiHead\left(\bm{Q},\bm{K},\bm{V}\right) = Concat\left(\left(head_i\right)_{1\leq i\leq h}\right)P^{O}$}
 \end{center}
 
 Note that $head_{i} = Attention\left(\bm{Q}\bm{P}_{i}^{Q},\bm{K}\bm{P}_{i}^{K},\bm{V}\bm{P}_{i}^{V}\right)$ and

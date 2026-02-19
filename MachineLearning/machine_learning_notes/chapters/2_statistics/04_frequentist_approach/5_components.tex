@@ -17,8 +17,8 @@ Decision rule: reject $H_0$ if $T \in \mathcal{C}_\alpha$.
 \subsection{\emph{p-value}}
 The \tB{probability of observing a test statistic as extreme or more extreme than the
 observed value, assuming $H_0$ is true}:
-$$p\text{-value} \triangleq P(T \geq t_{obs} \mid H_0)$$
-For two-sided tests: $p\text{-value} = P(|T| \geq |t_{obs}| \mid H_0)$.\\
+$$p\text{-value} \triangleq \mathbb{P}(T \geq t_{obs} \mid H_0)$$
+For two-sided tests: $p\text{-value} = \mathbb{P}(|T| \geq |t_{obs}| \mid H_0)$.\\
 Decision rule:
 $$\begin{cases}
     \text{Reject } H_0 & \text{if } p\text{-value} < \alpha \\
@@ -29,7 +29,7 @@ where $\alpha$ is the \textbf{significance level} (typically $\alpha = 0.05$).
 \subsection{Confidence intervals}
 A $(1-\alpha)$ \textbf{confidence interval} for parameter $\theta$ is an interval
 $[\hat{\theta}_L, \hat{\theta}_U]$ such that:
-$$P(\hat{\theta}_L \leq \theta \leq \hat{\theta}_U) = 1 - \alpha$$
+$$\mathbb{P}(\hat{\theta}_L \leq \theta \leq \hat{\theta}_U) = 1 - \alpha$$
 For a sample mean with known variance: $\text{CI}_{1-\alpha} = \bar{x} \pm z_{\alpha/2} \dfrac{\sigma}{\sqrt{n}}$\\
 For unknown variance (using $t$-distribution): $\text{CI}_{1-\alpha} = \bar{x} \pm t_{\alpha/2, n-1} \dfrac{s}{\sqrt{n}}$\\[0.5em]
 \textbf{Frequentist interpretation}: \tB{if we repeat the experiment many times, $(1-\alpha)\%$
@@ -46,7 +46,7 @@ then we reject $H_0: \theta = \theta_0$ at significance level $\alpha$.
 
 \subsection{Multiple comparisons}
 Running $k$ tests increases the \textbf{family-wise error rate} (FWER):
-$$P(\text{at least one false positive}) = 1 - (1-\alpha)^k \approx k\alpha \text{ for small } \alpha$$
+$$\mathbb{P}(\text{at least one false positive}) = 1 - (1-\alpha)^k \approx k\alpha \text{ for small } \alpha$$
 \textbf{Bonferroni correction}: controls FWER by adjusting either:
 \begin{itemize}
 	\item the threshold: $\alpha_{adj} = \dfrac{\alpha}{k}$, or
