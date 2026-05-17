@@ -37,12 +37,12 @@ where we average over the posterior distribution of the parameter $\theta$ given
     \item \textbf{0-1 loss} (predictive):
         \begin{itemize}
             \item Loss: $L(y, a) = \mathbbm{1}_{\{y \neq a\}}$
-            \item Posterior expected loss: $\rho(a|\bm{x}) = P(y \neq a|\bm{x}) = 1 - P(y = a|\bm{x})$
-            \item Optimal action: MAP $a^* = \displaystyle\argmax_y P(y|\bm{x})$
+            \item Posterior expected loss: $\rho(a|\bm{x}) = \mathbb{P}(y \neq a|\bm{x}) = 1 - \mathbb{P}(y = a|\bm{x})$
+            \item Optimal action: MAP $a^* = \displaystyle\argmax_y \mathbb{P}(y|\bm{x})$
         \end{itemize}
         Note: here $\rho$ coincides with a probability because 0-1 loss is binary.
         The expected value of an indicator function equals the probability of the event:
-        $\mathbb{E}[\mathbbm{1}_{\{y \neq a\}}|\bm{x}] = P(y \neq a|\bm{x})$.
+        $\mathbb{E}[\mathbbm{1}_{\{y \neq a\}}|\bm{x}] = \mathbb{P}(y \neq a|\bm{x})$.
         This is a special property of 0-1 loss; for other losses (e.g., squared error),
         $\rho$ is not a probability.
     \item \textbf{Squared error} (inferential):

@@ -15,9 +15,9 @@ of a given magnitude with specified confidence.
     \end{tabular}
 \end{center}
 \begin{itemize}
-    \item \textbf{Type I error} ($\alpha$): $P(\text{reject } H_0 \mid H_0 \text{ true})$ — false positive
-    \item \textbf{Type II error} ($\beta$): $P(\text{fail to reject } H_0 \mid H_1 \text{ true})$ — false negative
-    \item \textbf{Power} ($1-\beta$): $P(\text{reject } H_0 \mid H_1 \text{ true})$ — true positive rate
+    \item \textbf{Type I error} ($\alpha$): $\mathbb{P}(\text{reject } H_0 \mid H_0 \text{ true})$ — false positive
+    \item \textbf{Type II error} ($\beta$): $\mathbb{P}(\text{fail to reject } H_0 \mid H_1 \text{ true})$ — false negative
+    \item \textbf{Power} ($1-\beta$): $\mathbb{P}(\text{reject } H_0 \mid H_1 \text{ true})$ — true positive rate
 \end{itemize}
 
 \begin{figure}[H]
@@ -54,9 +54,9 @@ $$Z = \dfrac{\bar{X} - \mu_0}{\sigma/\sqrt{n}}$$
 \end{itemize}
 \textbf{Step 2: Rejection region under $H_0$}\\
 Reject $H_0$ if $Z > z_{1-\alpha}$ (critical value from standard normal).\\[0.5em]
-\textbf{Step 3: Power = P(reject $H_0$ $|$ $H_1$ true)}
+\textbf{Step 3: $Power = \mathbb{P}(\text{reject }H_0 | H_1\text{ true})$}
 \begin{align*}
-\text{Power} &= P(Z > z_{1-\alpha} \mid H_1) \\
+\text{Power} &= \mathbb{P}(Z > z_{1-\alpha} \mid H_1) \\
 &= P\left(\dfrac{\bar{X} - \mu_0}{\sigma/\sqrt{n}} > z_{1-\alpha} \mid \mu = \mu_1\right)
 \end{align*}
 Standardizing under $H_1$ (subtract $\delta$ to get standard normal):
@@ -65,9 +65,9 @@ Standardizing under $H_1$ (subtract $\delta$ to get standard normal):
 &= P\left(Z' > z_{1-\alpha} - \delta\right) \quad \text{where } Z' \sim \mathcal{N}(0,1)
 \end{align*}
 \textbf{Step 4: Express using CDF}\\
-Let $\Phi(z) = P(Z' \leq z)$ be the standard normal CDF:
+Let $\Phi(z) = \mathbb{P}(Z' \leq z)$ be the standard normal CDF:
 \begin{align*}
-\text{Power} &= 1 - P(Z' \leq z_{1-\alpha} - \delta) \\
+\text{Power} &= 1 - \mathbb{P}(Z' \leq z_{1-\alpha} - \delta) \\
 &= 1 - \Phi(z_{1-\alpha} - \delta) \\
 &= \Phi(\delta - z_{1-\alpha}) \quad \text{(using symmetry: } 1-\Phi(x) = \Phi(-x)\text{)}
 \end{align*}

@@ -28,6 +28,27 @@ $B$. In combinatorics we could think about $\prob{A|B} =
 \dfrac{\lvert A\cap B \rvert}{\lvert B \rvert} = \dfrac{\frac{\lvert A\cap B \rvert}{\lvert\Omega\rvert}}{\frac{\lvert B
 \rvert} {\lvert\Omega\rvert}} = \dfrac{\prob{A\cap B}}{\prob{B}}$
 
+\paragraph{Note on conditioning on hypotheses}
+\uB{The notation $\prob{A|B}$ assumes both $A$ and $B$ are events (or outcomes of random variables)}
+with well-defined probabilities in the sample space. However, \\tB{in hypothesis testing, the interpretation
+of conditioning differs between paradigms}:
+\begin{itemize}
+    \item \textbf{Frequentist framework}: A hypothesis $H_0$ is \uB{not a random variable and has no probability}
+        — it is either true or false. The notation \\tB{$\prob{\text{data}|H_0}$ means ``probability of the data
+        computed in the probability space where $H_0$ holds''}, i.e., assuming $H_0$ is true.
+        \uB{This is NOT decomposable as $\frac{\prob{\text{data} \cap H_0}}{\prob{H_0}}$} because
+        $\prob{H_0}$ is undefined. The conditioning is on an \emph{assumption}, not an event.
+    \item \textbf{Bayesian framework}: Hypotheses \uB{can be assigned probabilities via prior distributions}.
+        Here, $\prob{H_0|\text{data}}$ is meaningful and can be computed using Bayes' theorem:
+        $$\prob{H_0|\text{data}} = \dfrac{\prob{\text{data}|H_0} \times \prob{H_0}}{\prob{\text{data}}}$$
+        In this case, $H_0$ is treated as a random variable (or event) and $\prob{H_0}$ represents
+        our prior belief about the hypothesis.
+\end{itemize}
+\uB{In summary}: $\prob{A|B}$ with the decomposition $\prob{A|B} = \frac{\prob{A \cap B}}{\prob{B}}$
+applies when both $A$ and $B$ are events with defined probabilities. When conditioning on a
+\emph{hypothesis} in frequentist statistics, the conditioning symbol $|$ represents an assumption
+rather than an event, and Bayes' decomposition does not apply.
+
 \paragraph{Law of Total Probability}
 $
 \begin{cases}
@@ -94,8 +115,19 @@ $\sigma_{X}^{2}=\E{X^{2}}-\mu_{X}^{2}$
 \end{center}
 And:
 \begin{center}
-	$\V{aX+b}=a^{2}\V{X}$
+	$\V{\su{i=1}{n}a_{i}X_{i}} = \E{\left(\su{i=1}{n}a_{i}X_{i}\right)^{2}} - \left(\E{\su{i=1}{n}a_{i}X_{i}}\right)^{2}
+	= \E{\su{i=1}{n}\su{j=1}{n}a_{i}a_{j}X_{i}X_{j}} - \left(\su{i=1}{n}a_{i}\E{X_{i}}\right)^{2}$\\
+	$= \su{i=1}{n}\su{j=1}{n}a_{i}a_{j}\E{X_{i}X_{j}} - \su{i=1}{n}\su{j=1}{n}a_{i}a_{j}\E{X_{i}}\E{X_{j}}
+	= \su{i=1}{n}\su{j=1}{n}a_{i}a_{j}\left(\E{X_{i}X_{j}} - \E{X_{i}}\E{X_{j}}\right)$\\
+	$= \su{i=1}{n}\su{j=1}{n}a_{i}a_{j}\text{Cov}(X_{i},X_{j})
+	= \su{i=1}{n}a_{i}^{2}\V{X_{i}} + 2\su{i=1}{n}\su{j>i}{n}a_{i}a_{j}\text{Cov}(X_{i},X_{j})$
 \end{center}
+
+Remember that 
+\begin{center}
+    $Cov(X, Y) = \E{\left[X_i - \mu_X\right]} \times \E{\left[Y_i - \mu_Y\right]} = \E{XY} -\mu_X\mu_Y$
+\end{center}
+
 
 \paragraph{Skewness and Kurtosis}
 \begin{itemize}
