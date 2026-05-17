@@ -48,3 +48,11 @@ Example
 "int: {0:d};  hex: {0:#x};  oct: {0:#o};  bin: {0:#b}".format(42) # 'int: 42;  hex: 0x2a;  oct: 0o52;  bin: 0b101010'
 print(f'Finished in {qh:.0f}h:{qm:.0f}m:{rs:.0f}s.')  # no decimal
 ```
+
+## Pandas
+
+````python
+import pandas as pd
+
+pd.set_option('display.float_format', lambda x: f'{x:,.2f}'.replace(',', ' ').replace('.', ','))  # display floats with French format and only 2 decimals. 
+````

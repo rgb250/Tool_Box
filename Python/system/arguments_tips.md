@@ -87,6 +87,14 @@ pipdeptree -r -p numpy  # will display all the package requested a given version
 
 ```python
 import logging
+import colorlog
+LOG_COLORS = {
+    "DEBUG": "cyan",
+    "INFO": "green",
+    "WARNING": "yellow",
+    "ERROR": "red",
+    "CRITICAL": "red,bg_white",
+}
 
 logging.basicConfig(
     level=logging.DEBUG,
@@ -96,6 +104,17 @@ logging.basicConfig(
         logging.StreamHandler(),
     ],
 )
-logging.getLogger().handlers[1].setLevel(logging.INFO)  # Set stream handler to INFO
+
+# Replace the StreamHandler's formatter with ColoredFormatter
+logging.getLogger().handlers[1].setFormatter(
+    colorlog.ColoredFormatter(
+        "%(asctime)s - %(name)s - %(funcName)s - %(log_color)s%(levelname)s%(reset)s - %(message)s",
+        log_colors=LOG_COLORS,
+    )
+)
+
+# Set the console handler to a higher level to reduce verbosity
+logging.getLogger().handlers[1].setLevel(logging.INFO)
 logger = logging.getLogger(__name__)
+
 ```
