@@ -1,15 +1,15 @@
 We can formalize any given \tB{statistical decision problem as a game against nature} (as 
 opposed to a game against other strategic players, which is the topic of game theory).
 In this game, nature picks a state or parameter $\theta$ or \tB{label, $y\in \mathcal{Y}$, unknown
-to us}, and then \tB{generates an observation, $\bm{x}\in\mathcal{X}$} which we get to see. We
-then have to make a decision, that is, \tB{we have to choose an action $a$} from some 
+to us at prediction time}, and then \tB{generates an observation, $\bm{x}\in\mathcal{X}$} which we 
+get to see. We then have to make a decision, that is, \tB{we have to choose an action $a$} from some 
 \textbf{action space} $\mathcal{A}$. Finally we incur some \textbf{loss}, \tB{$L(y, a)$, which
 measures how compatible our action $a$ is with nature's hidden state $y$}.\\
 Our goal is \tB{to derive a decision procedure or policy, $\delta: \mathcal{X}\rightarrow
 \mathcal{A}$ which specifies the optimal action for each possible input} which specifies the optimal
 action for each possible input, meaning the \tR{action that minimizes the expected 
 loss}:
-$$ \tR{\delta(\bm{x}) = \argmin_{{a\in \mathcal{A}}} \E{{L(y, a)}}} $$
+$$ \tR{\delta(\bm{x}) = \argmin_{{a\in \mathcal{A}}} \mathbb{E}_{p(y|\bm{x})}\left(L(y, a)\right)} $$
 In the Bayesian vision, we mean the expected value of $y$ given the data we have seen so far, 
 whereas in the frequentist vision we mean the expected value refers to $x$ and $y$ that we expect
 to see in the future.\\
@@ -36,6 +36,7 @@ where we average over the posterior distribution of the parameter $\theta$ given
 \begin{itemize}
     \item \textbf{0-1 loss} (predictive):
         \begin{itemize}
+            \item Support: $\mathcal{A} = \left\{0, 1\right\}$
             \item Loss: $L(y, a) = \mathbbm{1}_{\{y \neq a\}}$
             \item Posterior expected loss: $\rho(a|\bm{x}) = \mathbb{P}(y \neq a|\bm{x}) = 1 - \mathbb{P}(y = a|\bm{x})$
             \item Optimal action: MAP $a^* = \displaystyle\argmax_y \mathbb{P}(y|\bm{x})$
@@ -47,6 +48,7 @@ where we average over the posterior distribution of the parameter $\theta$ given
         $\rho$ is not a probability.
     \item \textbf{Squared error} (inferential):
         \begin{itemize}
+            \item Support: $\mathcal{A} = \mathbb{R}$
             \item Loss: $L(\theta, a) = (\theta - a)^2$
             \item Posterior expected loss: $\rho(a|\mathcal{D}) = \mathbb{E}[(\theta - a)^2 | \mathcal{D}]$
             \item Optimal action: posterior mean $a^* = \mathbb{E}[\theta|\mathcal{D}]$
@@ -158,11 +160,11 @@ we can generate the \emph{confusion matrix} is the below table\\
     \hline
     \textbf{Headers} & $\bm{y=1}$ & $\bm{y=0}$\\
     \hline
-    $\bm{\hat{y}=1}$ & $\dfrac{TP}{N}$ (sensitivity/recall) 
-                   & $\dfrac{FP}{N}$ (error type I/ false alarm) \\
+    $\bm{\hat{y}=1}$ & $\dfrac{TP}{N_{+}}$ (sensitivity/recall) 
+                   & $\dfrac{FP}{N_{-}}$ (error type I/ false alarm) \\
     \hline
-    $\bm{\hat{y}=0}$ & $\dfrac{FN}{N}$ (error type II/ missed detection) 
-                   & $\dfrac{TN}{N}$ (specificity) \\
+    $\bm{\hat{y}=0}$ & $\dfrac{FN}{N_{+}}$ (error type II/ missed detection) 
+                   & $\dfrac{TN}{N_{-}}$ (specificity) \\
     \hline
 \end{tabular}
 
@@ -184,7 +186,26 @@ Note that
         $FPR=1$
     \item a system working randomly will be close to the diagonal line $TPR=FPR$
 \end{itemize}
-AUC (Area Under the Curve) summarize the ROC curve
+\textbf{AUC} (Area Under the Curve) summarizes the ROC curve as a single scalar. It admits
+a probabilistic interpretation:
+$$\tB{AUC = \mathbb{P}(f(\bm{x}) > f(\bm{x}') \mid y=1,\ y'=0)}$$
+where $\bm{x}$ and $\bm{x}'$ are two independently drawn observations with labels $y=1$
+and $y'=0$ respectively. AUC measures the probability that the model ranks a random
+positive higher than a random negative. A random classifier achieves $AUC=0.5$ (the diagonal line)
+and a perfect classifier achieves $AUC=1$.\\
+\textbf{Connection to the loss matrix.} Each point on the ROC curve corresponds to a
+threshold $\tau$. The Bayesian decision framework yields the \tB{optimal threshold $\tau^*$
+directly from the loss matrix}. Using the false positive/false negative loss matrix, the
+posterior expected losses for each action are:
+\begin{align*}
+    \rho(1|\bm{x}) &= L_{FP}\cdot(1 - f(\bm{x}))\\
+    \rho(0|\bm{x}) &= L_{FN}\cdot f(\bm{x})
+\end{align*}
+Predicting $\hat{y}=1$ when $\rho(1|\bm{x}) < \rho(0|\bm{x})$ gives the optimal threshold:
+$$\tR{\tau^* = \frac{L_{FP}}{L_{FP} + L_{FN}}}$$
+This selects the operating point on the ROC curve that minimizes expected loss under the
+given cost structure. A higher cost for false negatives ($L_{FN} \gg L_{FP}$) pushes
+$\tau^*$ lower, increasing recall at the expense of precision.
 
 
 \begin{figure}[H]
@@ -195,19 +216,36 @@ AUC (Area Under the Curve) summarize the ROC curve
     \label{fig:2_roc_curves_distrib}
 \end{figure}
 In binary classification the \uB{class prediction for each instance is often made based
-on a continuous random variable $X$} , which is the score computed for the instance 
-(the estimated probability in logistic regression).\\
-X follows a probability density $f_{1}(x)$ if the instance belongs to the class 
-"positive" and $f_{0}(x)$ otherwise.\\
-Therefore 
+on a continuous random variable $S = f(\bm{x})$}, the score computed for the observation
+$\bm{x}$ (e.g.\ the estimated probability in logistic regression). Note that $S$ is a
+scalar distinct from the observation vector $\bm{x}$.\\
+$S$ follows a probability density $f_{1}(s) = p(S=s \mid y=1)$ if the instance belongs
+to the class "positive" and $f_{0}(s) = p(S=s \mid y=0)$ otherwise.\\
+Therefore
 $\begin{cases}
-    TPR(\tau) = \Su{\tau}{\infty}f_{1}(x)dx \\
-    FPR(\tau) = \Su{\tau}{\infty}f_{0}(x)dx
+    TPR(\tau) = \Su{\tau}{\infty}f_{1}(s)\,ds \\
+    FPR(\tau) = \Su{\tau}{\infty}f_{0}(s)\,ds
 \end{cases}$
 and ROC curve plots parametrically $TPR(\tau)$ versus $FPR(\tau)$ with $\tau$ a varying
 parameter.\\
 Note that this $\tau$ is fundamentally the same that the one above which was squash in
 the interval $[0, 1]$
+
+\paragraph{AUC derivation.}
+By definition, AUC is the area under the ROC curve, i.e.\ the integral of $TPR$ over
+$FPR$:
+$$AUC \triangleq \int_0^1 TPR\ d(FPR)$$
+Changing variable from $FPR$ to $\tau$ and noting that $-\dfrac{d(FPR)}{d\tau} = f_0(\tau)$:
+\begin{align*}
+    AUC &= \int_{-\infty}^{+\infty} TPR(\tau) \cdot f_0(\tau)\ d\tau \\
+        &= \int_{-\infty}^{+\infty} \left[\Su{\tau}{\infty} f_1(s)\,ds\right] f_0(\tau)\ d\tau \\
+        &= \iint_{s > \tau} f_1(s)\, f_0(\tau)\, ds\, d\tau \\
+        &= \mathbb{P}(S_1 > S_0)
+\end{align*}
+where $S_1 \sim f_1$ and $S_0 \sim f_0$ are independently drawn scores, which is exactly
+$\tB{\mathbb{P}(f(\bm{x}) > f(\bm{x}') \mid y=1,\ y'=0)}$.
+Note that $f_1$ and $f_0$ are the PDFs of the score for each class; the ROC curve
+itself is not a PDF.
 
 
 \begin{figure}[H]
@@ -221,8 +259,8 @@ In the above table we have the following formula :
 \begin{itemize}
     \item $D9:~SUM(\$B\$7:B9) \rightarrow$ Cumulative Lives
     \item $E9:~SUM(\$C\$7:C9) \rightarrow$ Cumulative Dies
-    \item $F9:~1 - D9/\$D\$17 \rightarrow$ False Positive Rate ($1-\frac{TN}{N_{+}}$)
-    \item $G9:~1 - E9/\$E\$17 \rightarrow$ True Positive Rate ($1-\frac{FN}{N_{-}}$)
+    \item $F9:~1 - D9/\$D\$17 \rightarrow$ False Positive Rate ($1-\frac{TN}{N_{-}}$)
+    \item $G9:~1 - E9/\$E\$17 \rightarrow$ True Positive Rate ($1-\frac{FN}{N_{+}}$)
     \item $H9:~(F10-F9)*G9 \rightarrow$ Area Under the Curve
 \end{itemize}
 

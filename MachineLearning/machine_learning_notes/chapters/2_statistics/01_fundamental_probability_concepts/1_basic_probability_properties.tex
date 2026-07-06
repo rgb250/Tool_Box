@@ -30,14 +30,14 @@ $B$. In combinatorics we could think about $\prob{A|B} =
 
 \paragraph{Note on conditioning on hypotheses}
 \uB{The notation $\prob{A|B}$ assumes both $A$ and $B$ are events (or outcomes of random variables)}
-with well-defined probabilities in the sample space. However, \\tB{in hypothesis testing, the interpretation
+with well-defined probabilities in the sample space. However, \tB{in hypothesis testing, the interpretation
 of conditioning differs between paradigms}:
 \begin{itemize}
     \item \textbf{Frequentist framework}: A hypothesis $H_0$ is \uB{not a random variable and has no probability}
-        — it is either true or false. The notation \\tB{$\prob{\text{data}|H_0}$ means ``probability of the data
+        — it is either true or false. The notation \tB{$\prob{\text{data}|H_0}$ means ``probability of the data
         computed in the probability space where $H_0$ holds''}, i.e., assuming $H_0$ is true.
         \uB{This is NOT decomposable as $\frac{\prob{\text{data} \cap H_0}}{\prob{H_0}}$} because
-        $\prob{H_0}$ is undefined. The conditioning is on an \emph{assumption}, not an event.
+        $\prob{H_0}$ is undefined. \textbf{The conditioning is on an \emph{assumption}, not an event}.
     \item \textbf{Bayesian framework}: Hypotheses \uB{can be assigned probabilities via prior distributions}.
         Here, $\prob{H_0|\text{data}}$ is meaningful and can be computed using Bayes' theorem:
         $$\prob{H_0|\text{data}} = \dfrac{\prob{\text{data}|H_0} \times \prob{H_0}}{\prob{\text{data}}}$$
@@ -46,8 +46,8 @@ of conditioning differs between paradigms}:
 \end{itemize}
 \uB{In summary}: $\prob{A|B}$ with the decomposition $\prob{A|B} = \frac{\prob{A \cap B}}{\prob{B}}$
 applies when both $A$ and $B$ are events with defined probabilities. When conditioning on a
-\emph{hypothesis} in frequentist statistics, the conditioning symbol $|$ represents an assumption
-rather than an event, and Bayes' decomposition does not apply.
+\emph{hypothesis} \textbf{in frequentist statistics, the conditioning symbol $|$ represents an 
+assumption rather than an event}, and Bayes' decomposition does not apply.
 
 \paragraph{Law of Total Probability}
 $
