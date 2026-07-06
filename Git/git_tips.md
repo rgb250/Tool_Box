@@ -8,6 +8,7 @@
   - [d. Read the version of a given commit/branch](#d-read-the-version-of-a-given-commitbranch)
   - [e. Keep color](#e-keep-color)
   - [f. Untrack file](#f-untrack-file)
+  - [g. Inspect remote branches](#g-inspect-remote-branches)
 - [2) Know where config is stored](#2-know-where-config-is-stored)
 - [3) Perform changes](#3-perform-changes)
   - [a. Delete a change or a branch](#a-delete-a-change-or-a-branch)
@@ -18,6 +19,7 @@
 - [4) Review history](#4-review-history)
   - [a. Change commits](#a-change-commits)
   - [b. Squash commits](#b-squash-commits)
+  - [c. Use branch from a repository A to create on in a repository B](#c-use-branch-from-a-repository-a-to-create-on-in-a-repository-b)
 - [5) Credentials](#5-credentials)
   - [Windows (Personal Access Token)](#windows-personal-access-token)
   - [SSH (Secure SHell protocol)](#ssh-secure-shell-protocol)
@@ -75,6 +77,12 @@ git <command> --color=always | less -r  # first argument to encode color even in
 
 ````bash
 git rm --cached file_to_ignore
+````
+
+### g. Inspect remote branches
+
+````bash
+git remote show origin  # displays the status of the remote branches, useful for cleaning, then encourage to use `git remote prune origin`
 ````
 ## 2) Know where config is stored
 
@@ -134,6 +142,17 @@ For example we can **drop** a given commit.
 ### b. Squash commits
 Imagine you want to squash different commit from your $current$ commit to your $n$ previous commit, the above command works, but you are likely to have to fix some
 conflict issues.
+
+### c. Use branch from a repository A to create on in a repository B
+
+````bash
+cd project_a
+git format-patch main..HEAD --output-directory $TMP/patches  # put patches in $TMP
+cd project_b
+git switch -c new_branch  # pay attention from which branch you create this new one
+git am --3way $TMP/patches/*.patch  # see the differences as conflicts otherwise it could be though to understand the differences, it is a 3 way merge (1. base version, 2.theirs, what we have in patches and 3. yours what we have in current files)
+````
+Note that you have to git rm <file> 
 
 
 ## 5) Credentials

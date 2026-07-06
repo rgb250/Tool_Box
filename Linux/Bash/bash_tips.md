@@ -30,6 +30,7 @@
 - [SEARCH IN FILES](#search-in-files)
 - [Read section of a file](#read-section-of-a-file)
 - [Replace string in files](#replace-string-in-files)
+- [SUBSTITUTION](#substitution)
 - [Copy content](#copy-content)
 - [Process Information](#process-information)
   - [Move a list of files](#move-a-list-of-files)
@@ -155,8 +156,11 @@ ls -lh !(file_name_1|file_name_2) ./fold  # select all files in the directory <f
 ````
 # SEARCH INSIDE FILES
 
+````bash
 grep --exclude=\*.{pyc,log} -rl './' -e ".*10\.214\.82\.92.*" # find in the current directory and its subdirectorires all the files containing the string "10.214.82.92" inside a 
 grep --exclude-dir=folder_e --include=*.tex -lri monte ./* # find all files except in folder_e containing at least one occurence of "monte" inside it 
+find -type f -regex ".*\.md$" print0 | xargs -0 grep -i "glossary"  # in all markdown files in current folder and its potential sub-folders search the ones containing "glossary". "print0" separate filenames by null character "\0" instead of newline--> "-0" --> tells xargs that received input is delimited by null character
+````
 
 # REGEX
 In *sed* system we have to escape characters like '{' or '}'
@@ -242,6 +246,8 @@ use ``--color=always`` for grep use inside a pipeline, if it is with ``less`` an
 ``-r``.
 ```bash
 grep --color=always --include=.py -rl -iE '<regex_pattern>' | less -r
+sw="(?<=_)(dp)|(dp)(?=\.)|(\bdp\b)"
+ grep --color=always --include=*.py -nr -iP "$sw"  # P for PCRE (Perl Compatible Regular Expression) that is one of the most powerful RE dialects.
 ```
 
 # Read section of a file
@@ -262,6 +268,15 @@ f=name_of_a_file.txt
 echo "${f%.*}"  # will capture only "name_of_a_file" part without extension
 sub=document
 echo "${f/file/"$sub"}"  # will return "name_of_a_document.txt" part without extension
+````
+# SUBSTITUTION
+
+````bash
+str_to_replace="I like Nano."
+str_sub="Vim"
+echo "${str_to_replace//Nano/$str_sub}"  # // just means replace all
+echo "${src/sampling/api/\//.}"  # // just means replace all
+echo "src/sampling/api}" | sed "s/\//./g"  # more robust than builtin substitution
 ````
 
 # Copy content

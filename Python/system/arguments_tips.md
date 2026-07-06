@@ -87,20 +87,34 @@ pipdeptree -r -p numpy  # will display all the package requested a given version
 
 ```python
 import logging
-from getpass import getuser
+import colorlog
+LOG_COLORS = {
+    "DEBUG": "cyan",
+    "INFO": "green",
+    "WARNING": "yellow",
+    "ERROR": "red",
+    "CRITICAL": "red,bg_white",
+}
 
-dict_info_extra = {'user': getuser()}                                       # get username
-FORMAT = '%(asctime)s - %(user)s - %(name)s - %(funcName)s - %(levelname)s - %(message)s'  # format of the log
 logging.basicConfig(
-    format=FORMAT,
     level=logging.DEBUG,
-    encoding='utf-8',
+    format="%(asctime)s - %(name)s - %(funcName)s - %(levelname)s - %(message)s",
     handlers=[
-        logging.FileHandler(filename='debug.log', mode='w'),  # creates stream handler and file handler
-        logging.StreamHandler()                               # creates logger
-    ]
-)                                                                
-logger = logging.getLogger(name=__name__)                        
-logger = logging.LoggerAdapter(logger, extra=dict_info_extra)    # feeds FORMAT information with dict_info_extra
+        logging.FileHandler("debug.log", mode="w", encoding="utf-8"),
+        logging.StreamHandler(),
+    ],
+)
+
+# Replace the StreamHandler's formatter with ColoredFormatter
+logging.getLogger().handlers[1].setFormatter(
+    colorlog.ColoredFormatter(
+        "%(asctime)s - %(name)s - %(funcName)s - %(log_color)s%(levelname)s%(reset)s - %(message)s",
+        log_colors=LOG_COLORS,
+    )
+)
+
+# Set the console handler to a higher level to reduce verbosity
+logging.getLogger().handlers[1].setLevel(logging.INFO)
+logger = logging.getLogger(__name__)
 
 ```
