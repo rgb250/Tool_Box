@@ -26,6 +26,11 @@
     - [Public-key cryptography](#public-key-cryptography)
   - [How to produce them](#how-to-produce-them)
   - [Editing key files](#editing-key-files)
+- [I/O](#io)
+  - [Unix Kernel](#unix-kernel)
+  - [File Descriptor](#file-descriptor)
+  - [dev/null](#devnull)
+  - [Manage Standar Ouput and Standard Error:](#manage-standar-ouput-and-standard-error)
 - [SEARCH OVER FILES](#search-over-files)
 - [SEARCH IN FILES](#search-in-files)
 - [Read section of a file](#read-section-of-a-file)
@@ -86,8 +91,8 @@ Both allow to release some space of the data treated by the CPU.
 # To know the memory usage on UNIX:
 
 ````bash
-df -h # disk filename command, with the human readable option (adapt the figures of each filesystem)
-du -h -d 1 ./folder_path | sort -h # to see the size of each elements in a given repository with a depth of 1 and sorted by size 
+df -h # `disk filename` command, with the human readable option (adapt the figures of each filesystem)
+du -h -d 1 ./folder_path | sort -h # `disk usage` command to see the size of each element in a given repository with a depth of 1 and sorted by size 
 ````
 
 # Arithmetic
@@ -159,7 +164,7 @@ ls -lh !(file_name_1|file_name_2) ./fold  # select all files in the directory <f
 ````bash
 grep --exclude=\*.{pyc,log} -rl './' -e ".*10\.214\.82\.92.*" # find in the current directory and its subdirectorires all the files containing the string "10.214.82.92" inside a 
 grep --exclude-dir=folder_e --include=*.tex -lri monte ./* # find all files except in folder_e containing at least one occurence of "monte" inside it 
-find -type f -regex ".*\.md$" print0 | xargs -0 grep -i "glossary"  # in all markdown files in current folder and its potential sub-folders search the ones containing "glossary". "print0" separate filenames by null character "\0" instead of newline--> "-0" --> tells xargs that received input is delimited by null character
+find -type f -regex ".*\.md$" -print0 | xargs -0 grep -i "glossary"  # in all markdown files in current folder and its potential sub-folders search the ones containing "glossary". "print0" separate filenames by null character "\0" instead of newline--> "-0" --> tells xargs that received input is delimited by null character
 ````
 
 # REGEX
@@ -231,6 +236,36 @@ ssh-keygen -R 'github.com'  # for example when host is github.com, -R means remo
 ````
 It will remove all the keys associated with the specified hostname from `.ssh/known_hosts`
 
+# I/O
+
+## Unix Kernel
+
+It's the core software of Unix OS, allowing to use all the available applications on the PC. 
+
+## File Descriptor
+
+All process are connected to 3 flows: 
+1. Input (`0`) on which process will be applied
+2. Standard Output [stdout] (`1`) the resulting output of process application on the input
+3. Standard Error [sterr] (`2`) if implemented the message associated to the input and output
+
+## dev/null
+
+It's application that makes its output disappear.
+
+## Manage Standar Ouput and Standard Error:
+
+Take the example of `ls`
+````bash
+ls path/folder/existing &1 > dev/null  # Prevent displaying content of `path/folder/inexistant`
+ls path/folder/inexistent 2>&1 > dev/null  
+echo $(ls path/folder/inexistent 2>&1) # Put standard error message (2) as output (1) and send to the black hole `dev/null` and then display only stderr
+
+echo $(ls path/folder/inexistent 2>&1 > dev/null) # Put standard error message (2) as output (1) and send to the black hole `dev/null` and then display only stderr
+````
+
+
+
 # SEARCH OVER FILES
 ```bash
 find /dir_path -regextype sed -regex ".*/regex"  # search of "sed" type, ".*/" is fundamental! 
@@ -276,7 +311,8 @@ str_to_replace="I like Nano."
 str_sub="Vim"
 echo "${str_to_replace//Nano/$str_sub}"  # // just means replace all
 echo "${src/sampling/api/\//.}"  # // just means replace all
-echo "src/sampling/api}" | sed "s/\//./g"  # more robust than builtin substitution
+echo "src/sampling/api" | sed "s/\//./g"  # more robust than builtin substitution
+grep -rl -ie "given_pattern" | xargs sed "s/given_pattern/new_pattern/g"  # xargs here take the `grep` output as input argument for `sed`
 ````
 
 # Copy content
@@ -342,7 +378,8 @@ readarray -t arr_files < <(find path/root/ -mindepth 1 -type f -regex '.*/.*\.py
 file_to_remove=/opt/conda/.condarc
 if [ -f "$file_to_remove" ]; then
     rm -v "$file_to_remove" 
-# elif [ -f "$file_to_remove" == "dont_know" ]; then
+elif [ -f "$file_to_remove" == "dont_know" ]; then 
+    echo "to skip"
 else
     echo "{$file_to_remove} has not been found"
 fi
@@ -364,6 +401,6 @@ fi
 - Export globally
   - edit ``/etc/environment``
   - then
-    ````bash
-    source /etc/environment  # make change effective
-    ````
+  ````bash
+  source /etc/environment  # make change effective
+  ````

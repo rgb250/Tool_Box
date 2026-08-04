@@ -1,14 +1,15 @@
 - [1) Basics](#1-basics)
-  - [a. Import remote branch](#a-import-remote-branch)
-  - [b. Browse history](#b-browse-history)
-  - [c. Compare files](#c-compare-files)
+  - [a. The different states of the code](#a-the-different-states-of-the-code)
+  - [b. Import remote branch](#b-import-remote-branch)
+  - [c. Browse history](#c-browse-history)
+  - [d. Compare files](#d-compare-files)
     - [1) Compare files from local and remote](#1-compare-files-from-local-and-remote)
     - [2) Compare file unstaged file against the last committed files](#2-compare-file-unstaged-file-against-the-last-committed-files)
     - [3) Compare version](#3-compare-version)
-  - [d. Read the version of a given commit/branch](#d-read-the-version-of-a-given-commitbranch)
-  - [e. Keep color](#e-keep-color)
-  - [f. Untrack file](#f-untrack-file)
-  - [g. Inspect remote branches](#g-inspect-remote-branches)
+  - [e. Read the version of a given commit/branch](#e-read-the-version-of-a-given-commitbranch)
+  - [f. Keep color](#f-keep-color)
+  - [g. Untrack file](#g-untrack-file)
+  - [h. Inspect remote branches](#h-inspect-remote-branches)
 - [2) Know where config is stored](#2-know-where-config-is-stored)
 - [3) Perform changes](#3-perform-changes)
   - [a. Delete a change or a branch](#a-delete-a-change-or-a-branch)
@@ -16,6 +17,7 @@
   - [c. Stashing](#c-stashing)
   - [d. Merge](#d-merge)
   - [e. Unmerged conflicts](#e-unmerged-conflicts)
+  - [f. Commit only relevant changes across multiple ones](#f-commit-only-relevant-changes-across-multiple-ones)
 - [4) Review history](#4-review-history)
   - [a. Change commits](#a-change-commits)
   - [b. Squash commits](#b-squash-commits)
@@ -25,13 +27,63 @@
   - [SSH (Secure SHell protocol)](#ssh-secure-shell-protocol)
 - [6) Change configuration](#6-change-configuration)
 
+
 ## 1) Basics
-### a. Import remote branch
+
+### a. The different states of the code
+```
+                    LOCAL ENVIRONMENT                         │  REMOTE
+                                                              │
+  ┌───────────────┐      ┌───────────────┐    ┌─────────────┐ │ ┌─────────────┐
+  │   Workspace   │      │    Staging    │    │    Local    │ │ │   Remote    │
+  │  (Working     │      │     Area      │    │ Repository  │ │ │ Repository  │
+  │  Directory)   │      │    (Index)    │    │             │ │ │             │
+  └───────┬───────┘      └───────┬───────┘    └──────┬──────┘ │ └──────┬──────┘
+          │                      │                   │        │        │
+          │  git add/mv/rm       │                   │        │        │
+          │─────────────────────►│                   │        │        │
+          │                      │                   │        │        │
+          │                      │   git commit      │        │        │
+          │                      │──────────────────►│        │        │
+          │                      │                   │        │        │
+          │       git commit -a (bypass staging)     │        │        │
+          │─────────────────────────────────────────►│        │        │
+          │                      │                   │        │        │
+          │  git restore <file>  │                   │        │        │
+          │◄─────────────────────│                   │        │        │
+          │                      │                   │        │        │
+          │       git restore --staged <file>        │        │        │
+          │◄─────────────────────────────────────────│        │        │
+          │                      │                   │        │        │
+          │                      │                   │  git push       │
+          │                      │                   │────────────────►│
+          │                      │                   │        │        │
+          │                      │                   │  git fetch      │
+          │                      │                   │◄────────────────│
+          │                      │                   │        │        │
+          │           git clone / git pull           │        │        │
+          │◄─────────────────────────────────────────────────────────  │
+          │                      │                   │        │        │
+          │◄────────────────────►│                   │        │        │
+          │      git diff        │                   │        │        │
+          │                      │                   │        │        │
+          │◄────────────────────────────────────────►│        │        │
+          │              git diff HEAD               │        │        │
+  ┌───────┴───────┐      ┌───────┴───────┐   ┌──────┴──────┐  │ ┌──────┴──────┐
+  │   Workspace   │      │    Staging    │   │    Local    │  │ │   Remote    │
+  └───────────────┘      └───────────────┘   └─────────────┘  │ └─────────────┘
+                                                              │
+                                              LOCAL/REMOTE boundary
+```
+Note that `HEAD` lives exclusively in *Local Repository* and by default points on the last 
+commit, it's possible to *detached* it and point on an old commit.
+
+### b. Import remote branch
 ````bash
 git checkout –track name_of_the_remote_branch  # create a tracking branch 
 ````
 
-### b. Browse history
+### c. Browse history
 ````bash
 git log --patch -2  # Display the differences resulting of committed changes. -2 restrict the displaying of logs to 2. 
 git log --stat  # Summarize the above command line in number of insertions/deletions by file
@@ -46,7 +98,7 @@ git log -- path  # display filtered log inside path
 ![git log --pretty=format](./images/git_log_part1.png)
 ![git log --pretty=format](./images/git_log_part2.png)
 
-### c. Compare files
+### d. Compare files
 #### 1) Compare files from local and remote
 ````bash
 git fetch remote_branch
@@ -63,23 +115,23 @@ git difftool HEAD:path_file_1 path_file_2  # compare 2 different files
 git ls-files -m                            # list the unstaged modified files
 git diff --name-only SHA1 SHA2
 ````
-### d. Read the version of a given commit/branch
+### e. Read the version of a given commit/branch
 ````bash
 git rev-parse name_branch  # get the hash code of the branch/commit
 git cat-file -p SHA1:./path_file
 ````
-### e. Keep color
+### f. Keep color
 ````bash
 git <command> --color=always | less -r  # first argument to encode color even in pipeline, second one to interpret the encoded color
 ````
 
-### f. Untrack file
+### g. Untrack file
 
 ````bash
 git rm --cached file_to_ignore
 ````
 
-### g. Inspect remote branches
+### h. Inspect remote branches
 
 ````bash
 git remote show origin  # displays the status of the remote branches, useful for cleaning, then encourage to use `git remote prune origin`
@@ -121,7 +173,7 @@ git stash drop stash@{1} # remove the second more recent stash
 ### d. Merge
 ````bash
 git switch branch_merge_into  # move to the branch in which we want to perform changes
-git merge branch_merge_from   # perform the merge in providing the name of the branch from where we want to get data.
+git merge branch_merge_from   # perform the merge in providing the name of the branch from where we want to get data, to get only external changes use -Xtheirs if only base changes -Xours
 git restore --source stash@{0} --patch -- path/file/for_merge  # allows to merge file <path/file/for_merge> from stash@{0} into HEAD
 ````
 
@@ -129,6 +181,18 @@ git restore --source stash@{0} --patch -- path/file/for_merge  # allows to merge
 ![](./images/abort_merge.png)
 ````bash
 git restore --staged  # restore the index
+````
+
+### f. Commit only relevant changes across multiple ones
+
+````bash
+git add -p  # open interactive editor to add desired patch of changed code (hunk) in `Staging` state
+# y → stage this hunk
+# n → skip this hunk
+# s → split into smaller hunks
+# q → quit
+git commit -m "Message focus on relevant part of code that have been added in Staging state"
+# Then feel free to handle the changes that did not have been added then committed in the way you want
 ````
 
 ## 4) Review history
@@ -178,4 +242,5 @@ Note that you have to git rm <file>
 ````bash
 git config --list --show-origin  # display all the configuration (system/global/local)
 git config set --global init.defaultbranch=main main  # rename inital branch as 'main', this rule will be the default one of all repositories in the user profile
+git config --global core.quotePath false  # prevent Git to use octal escape
 ````

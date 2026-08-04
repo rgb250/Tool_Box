@@ -37,6 +37,7 @@ Below are the character codes to format the date and time:-
 | %Y   |Returns the year in four-digit format (Year with century). like, 2021.                      |
 | %G   |Returns the iso-week year in four-digit format (Year with century). like, 2021.             |
 | %y   |Returns year in two-digit format (year without century). like, 19, 20, 21                   |
+| %q   |Returns quarter in one-digit format (1, 2, 3 or 4)                   |
 | %A   |Returns the full name of the weekday. Like, Monday, Tuesday                                 |
 | %a   |Returns the short name of the weekday (First three character.). Like, Mon, Tue              |
 | %B   |Returns the full name of the month. Like, June, March                                       |
