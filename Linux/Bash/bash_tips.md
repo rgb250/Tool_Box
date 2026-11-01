@@ -347,6 +347,7 @@ nohup vlc &  # nohup ignore all SIGHUP (hangup) signals, sent when terminal is c
 ````bash
 find -type f -regex 'pattern' -print0 | xargs -0 cp -tv  # -print0 marks the end of a string with a null character instead of newline, -0 consider items delimited by null characters
 find -type f -regex 'pattern' -exec cp -v {} /destination/path/ \;  # we copy found elements with command find and represented by {} to /destination/path, "\;" means that content of exec is done one by one whereas "+" means batch by batch that can be faster.
+find -type f -regex 'pattern' -exec cp -v -t /destination/path/ {} +  # when using "+" files are efficiently retrieve by batch, then it's become necessary that the find output represented by "{}" be at the end
 ````
 ## Zip a list of files
 ````bash
