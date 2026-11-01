@@ -1,10 +1,11 @@
 - [Recursive function](#recursive-function)
   - [Introduction](#introduction)
-  - [Example](#exemple)
+  - [Example](#example)
 - [Positional Arguments (args) and KeyWordsArguments (kwargs)](#positional-arguments-args-and-keywordsarguments-kwargs)
 - [Module](#module)
 - [Object Oriented Programming](#object-oriented-programming)
   - [Naming convention](#naming-convention)
+  - [Inheritance](#inheritance)
 - [Decorators](#decorators)
   - [@abstractmethod](#abstractmethod)
   - [@classmethod](#classmethod)
@@ -112,6 +113,35 @@ single_trailing_underscore_   # prevent conflict with Python's keywords
 __double_leading_underscore   # when naming a class attribute invokes name (inside class FooBar __boo becomes _FooBar__boo)
 __double_leading_and_trailing_underscore__  # 'magic' objects or attributes that live in user-controlled namespaces like "__main__", "__init__"
 ````
+
+## Inheritance
+
+````python
+class RealNumber:
+    def __init__(self, x: float) -> None:
+        self.real = x
+
+    def add(self, y: float) -> float:
+        return self.real + y
+
+
+class ImaginaryNumber(RealNumber):
+    def __init__(self, x: float, y: float) -> None:
+        super().__init__(x)   # reuses RealNumber's logic to set self.real
+        self.imag = y
+
+    def add(self, x: float, y: float) -> tuple[float, float]:
+        return (self.real + x, self.imag + y)
+
+````
+
+Note that `super().__init__()` does not establish inheritance — that's already done by
+class Child(Parent):. What it does is run the parent's `__init__` logic on the current
+instance, so you don't have to duplicate that setup code yourself.\
+`super()` is a call that returns a proxy object bound to the MRO (*Method Resolution Order*:
+the order followed by Python to search across class's ancestors to retrieve arguments 
+and methods)
+
 
 # Decorators
 

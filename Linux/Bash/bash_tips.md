@@ -103,6 +103,13 @@ To make arithmetic operation we need to use `$(())`
   echo ${n_1}  # displays 5
  ````
 
+# Download
+
+## `curl`
+````bash
+curl -fsSL http_adress  # -f fail silently on server errors, -s supress progress, -S show error in silent mode, -L follow HTTP redirects
+````
+
 # Preprocessing files
 
 ## `awk`
@@ -326,7 +333,7 @@ xclip -sel clip -o                       # allow to paste
 # Process Information
 ```bash
 ps aux  # ps aux --> a: process of all users, u: process's users/owner x: process not attached to a terminal 
-ps aux | sed -n "1p; /<regex_word>/p"  # to search for a given regular expression while keeping the header.
+ps aux | sed -n "1p; /<regex_word>/p"  # to search for a given regular expression while keeping the header, here "-n" means print only what has been explicitely taged as "printed", and the last"p" is a tag making all lines matching the regex be printed. "1p" means print the first line.
 cat /proc/<PID>/cmdline  # provide the command line that called the process <PID>
 # Run process in the background --> use ampersand symbol (&)
 vlc > /dev/null 2>&1 &  # >/dev/null 2>&1 means stdout --> /dev/null and stderr --> stdout
