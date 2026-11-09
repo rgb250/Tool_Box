@@ -1,0 +1,57 @@
+\section{Autoregressive Factorization}
+\paragraph{Purpose}
+A language model is a probability distribution over sequences of tokens
+$\bm{x}=(x_{1},\dots,x_{n})$. By the chain rule of probability, \uB{with no approximation}:
+\begin{center}
+    \frB{$\mathbb{P}\left(x_{1},\dots,x_{n}\right) = \prd{t=1}{n}
+    \mathbb{P}\left(x_{t}\,|\,x_{1},\dots,x_{t-1}\right)$}
+\end{center}
+so it is enough to model the distribution of the \tB{next token given the previous ones}.
+The network outputs a vector of logits $\bm{z}_{t}\in\mathbb{R}^{V}$ and
+$\mathbb{P}_{\bm{\theta}}\left(x_{t}=k\,|\,x_{<t}\right)=\mathrm{softmax}(\bm{z}_{t})_{k}$.
+
+\paragraph{Relationship with Markov models}
+An $n$-gram model assumes that the next token depends only on the $n-1$ previous ones, that is
+a Markov chain of order $n-1$, and estimates the probabilities by counting. The table has
+$V^{n}$ entries: this is the \tB{curse of dimensionality}, most contexts are never seen.
+A neural language model conditions on the whole context and shares its parameters across
+positions, and similar contexts get similar representations, which is how it generalizes.
+
+\section{Training Objective}
+\paragraph{Theory}
+For a corpus of $N$ token positions, the maximum likelihood estimate minimizes the
+\tB{cross-entropy} (the average negative log-likelihood of the next token):
+\begin{center}
+    \frB{$\mathcal{L}(\bm{\theta}) = -\dfrac{1}{N}\su{t=1}{N}\log
+    \mathbb{P}_{\bm{\theta}}\left(x_{t}\,|\,x_{<t}\right)$}
+\end{center}
+This is the multi-class classification loss of the feed-forward networks (softmax and
+cross-entropy) applied at every position, with a vocabulary of $V$ classes.
+\begin{itemize}
+    \item it is \textbf{self-supervised}: the labels are the text itself, shifted by one
+        position, so no annotation is needed;
+    \item with the causal mask, the inputs $x_{1},\dots,x_{n-1}$ give the $n-1$ predictions
+        of $x_{2},\dots,x_{n}$ in \uB{one parallel pass} (\emph{teacher forcing}: the true
+        prefix is fed, not the model's own predictions);
+    \item for the data distribution $p$: $H(p,q_{\bm{\theta}}) = H(p) + KL\left(p\,\|\,
+        q_{\bm{\theta}}\right)$, so minimizing the cross-entropy minimizes the KL
+        divergence to the data, and its minimum is the entropy of the text, which is not zero.
+\end{itemize}
+
+\section{Perplexity}
+\paragraph{Theory}
+The standard evaluation metric is the exponential of the cross-entropy (in nats):
+\begin{center}
+    \fr{$PPL = \exp\left(\mathcal{L}\right) = \left(\prd{t=1}{N}
+    \mathbb{P}_{\bm{\theta}}\left(x_{t}\,|\,x_{<t}\right)\right)^{-1/N}$}
+\end{center}
+Interpretation: the model is as uncertain as if it chose uniformly among $PPL$ tokens at
+each step. A uniform model over the vocabulary has $PPL=V$ and a perfect one has $PPL=1$.
+
+\paragraph{Weaknesses}
+\begin{itemize}
+    \item it depends on the tokenizer: two models with different vocabularies cannot be
+        compared directly (use \emph{bits per byte} instead);
+    \item it depends on the domain of the evaluation text;
+    \item a low perplexity does not mean the answers are helpful or true.
+\end{itemize}

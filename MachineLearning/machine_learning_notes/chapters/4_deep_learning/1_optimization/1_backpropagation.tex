@@ -60,15 +60,17 @@ Consider a $l-1$ hidden layer model, assume that we use an unique activation fun
 \begin{enumerate}
     \item $\bm{g} \leftarrow \nabla_{\hat{\bm{y}}}J = \nabla_{\hat{\bm{y}}}L(
         \hat{\bm{y}}, \bm{y})$ \textit{initial gradient vector}
-    \item for $k\in\inter{l-1}{1}$
+    \item for $k\in\inter{l}{1}$ (from the output layer $l$ down to the first layer)
         \begin{itemize}
-            \item $\bm{g} \leftarrow \nabla_{\bm{a}_{k}}\bm{J} = \bm{g}\odot f'(\bm{a}_{k})$
+            \item $\bm{g} \leftarrow \nabla_{\bm{a}_{k}}J = \bm{g}\odot f'(\bm{a}_{k})$
                 \textit{compute derivative with respect to $\bm{a}_{k}$, Hadamard product is used to imitate the rule: $\left(h\circ f\right)(x)' = h'\left(f(x)\right)f'(x)$}
-            \item $\nabla_{\bm{b}_{k}}J = \bm{g} + 
+            \item $\nabla_{\bm{b}_{k}}J = \bm{g} +
                 \lambda\nabla_{\bm{b}_{k}}\Omega(\bm{\theta})$
             \item $\nabla_{\bm{W}_{k}}J = \bm{g}\bm{h}^{T}_{k-1}
-                + \lambda\nabla_{\bm{W}_{k}}\Omega(\bm{\theta})$ \# TO COMPLETE
+                + \lambda\nabla_{\bm{W}_{k}}\Omega(\bm{\theta})$ \textit{outer product
+                of the error signal $\bm{g}$ and the layer input $\bm{h}_{k-1}$}
             \item $\bm{g} \leftarrow \nabla_{\bm{h}_{k-1}}J = \bm{W}_{k}^{T}\bm{g}$
+                \textit{propagate the gradient to the previous layer}
         \end{itemize}
         
 \end{enumerate}

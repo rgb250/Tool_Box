@@ -1,1 +1,19 @@
-\subsection{Data Augmentation}
+\section{Data Augmentation}
+\paragraph{Purpose}
+The best way to make a model generalize better is to train it on more data. When data is
+limited, \tB{create fake data by transforming the existing training examples}.
+
+\paragraph{Theory}
+Apply to each training input $\bm{x}$ a transformation $T$ that \uB{does not change its
+label} $y$, and add the pair $\left(T(\bm{x}), y\right)$ to the training set.
+\begin{itemize}
+    \item \textbf{Images}: translations, flips, crops, small rotations, color jitter.
+    \item \textbf{Text}: synonym replacement, back-translation (translate to another
+        language and back).
+    \item \textbf{Any input}: injecting random noise (see noise robustness).
+\end{itemize}
+
+\paragraph{Weaknesses}
+The transformation must be \tB{label-preserving for the task}: rotating a ``6'' by
+$180^{\circ}$ gives a ``9'', and flipping ``b'' gives ``d''. Augmentation is applied
+to the training set only, never to the validation or test sets.

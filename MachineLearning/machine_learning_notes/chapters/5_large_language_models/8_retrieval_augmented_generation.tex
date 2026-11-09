@@ -1,0 +1,110 @@
+\section{Principle}
+\paragraph{Purpose}
+The knowledge of an LLM is frozen in its weights at the end of training: it is
+\tB{outdated}, it does not contain private documents, and the model can state false facts
+with confidence (\emph{hallucination}). \textbf{Retrieval-Augmented Generation} (RAG, Lewis et
+al., 2020) \uB{retrieves the relevant passages at query time and puts them in the prompt}, so
+that the model answers from them. The knowledge is changed by updating the index, with no
+retraining, and the sources can be cited.
+
+\paragraph{Pipeline}
+\begin{enumerate}
+    \item \textbf{indexing} (offline): cut the documents into \emph{chunks}, compute an
+        embedding vector for each chunk, store them in a vector index;
+    \item \textbf{retrieval} (online): embed the query, find the $k$ nearest chunks;
+    \item \textbf{generation}: build a prompt with the instruction, the retrieved chunks and
+        the question, and let the model answer.
+\end{enumerate}
+
+\section{Embeddings for Retrieval}
+\paragraph{Similarity}
+A text embedding model (a Transformer encoder, with pooling of the token vectors into one
+vector) maps a query $\bm{q}$ and a chunk $\bm{d}$ to $\mathbb{R}^{m}$, and their relevance
+is the \textbf{cosine similarity}
+\begin{center}
+    $\cos(\bm{q},\bm{d})=\dfrac{\bm{q}^{T}\bm{d}}{\norm{\bm{q}}\,\norm{\bm{d}}}$
+\end{center}
+which equals the dot product when the vectors are normalized.
+
+\paragraph{Contrastive training}
+The model is trained so that a query is close to its relevant chunk $d^{+}$ and far from the
+others. With a batch of pairs, the other chunks of the batch are used as negatives
+(\emph{InfoNCE}) and $\tau$ is a temperature:
+\begin{center}
+    \frB{$\mathcal{L}=-\log\dfrac{\exp\left(\cos(\bm{q},\bm{d}^{+})/\tau\right)}{\su{j}{}
+    \exp\left(\cos(\bm{q},\bm{d}_{j})/\tau\right)}$}
+\end{center}
+It is the softmax cross-entropy where the classes are the chunks of the batch.
+
+\section{Vector Search}
+Exact search compares the query with the $N$ vectors, in $O(Nm)$: too slow for millions of
+chunks. \textbf{Approximate nearest-neighbor} (ANN) indexes trade a little recall for a large
+speed-up:
+\begin{itemize}
+    \item \textbf{IVF}: partition the vectors with $k$-means, and search only the few
+        clusters closest to the query;
+    \item \textbf{HNSW}: a multi-layer proximity graph, the search walks greedily from
+        coarse to fine layers;
+    \item \textbf{product quantization}: compress the vectors to save memory.
+\end{itemize}
+
+\section{Chunking}
+The size of the chunks is a trade-off:
+\begin{itemize}
+    \item \tB{too small}: a chunk loses the context needed to be understood, for example the
+        subject of a sentence;
+    \item \tB{too large}: the embedding averages several topics and is less precise, and the
+        chunks use up the context window.
+\end{itemize}
+Typical sizes are a few hundred tokens, with an \emph{overlap} between consecutive chunks, or
+a cut at the structure of the document (sections, paragraphs).
+
+\section{Hybrid Search and Reranking}
+\paragraph{BM25 (lexical)} Dense embeddings capture meaning but can miss exact terms (names,
+identifiers, codes). BM25 scores the words shared by the query and the document $d$:
+\begin{center}
+    $\mathrm{BM25}(q,d)=\su{t\in q}{}IDF(t)\cdot\dfrac{f(t,d)\,(k_{1}+1)}{f(t,d)+k_{1}
+    \left(1-b+b\frac{|d|}{avgdl}\right)}$
+\end{center}
+$f(t,d)$ is the frequency of the term $t$ in $d$, $IDF$ gives more weight to rare terms,
+and the denominator saturates the frequency and normalizes by the length ($k_{1}\approx1.2$ to
+$2$, $b=0.75$).
+
+\paragraph{Hybrid} Run both searches and merge the rankings, for example with
+\emph{reciprocal rank fusion}: $score(d)=\su{i}{}\dfrac{1}{c+rank_{i}(d)}$ ($c\approx60$),
+which needs no calibration between the different scores.
+
+\paragraph{Reranking} A \textbf{cross-encoder} reads the query and a chunk \uB{together} in
+a Transformer and outputs a relevance score. It is more accurate than comparing two
+independent embeddings but too slow for the whole collection, so it is applied to the top
+$100$ of the first stage to keep the best few.
+
+\section{Evaluation}
+\begin{itemize}
+    \item \textbf{retrieval}: $recall@k$ (share of the relevant chunks found in the top $k$),
+        $precision@k$, MRR and nDCG for the quality of the ranking;
+    \item \textbf{generation}: \emph{faithfulness} (is the answer supported by the retrieved
+        chunks?) and \emph{relevance} (does it answer the question?).
+\end{itemize}
+The two stages must be evaluated separately, to know whether a wrong answer comes from a
+retrieval miss or from the generation.
+
+\section{Failure Modes}
+\begin{itemize}
+    \item the relevant chunk is \tB{not retrieved} (bad chunking, vocabulary mismatch);
+    \item irrelevant chunks \uB{distract} the model, which may follow them;
+    \item \emph{lost in the middle}: models use information at the beginning and at the end
+        of a long context better than in the middle, so the order of the chunks matters;
+    \item \textbf{prompt injection}: a retrieved document can contain instructions, which the
+        model may treat as if they came from the user.
+\end{itemize}
+
+\section{RAG, Fine-tuning and Long Context}
+\begin{itemize}
+    \item \textbf{RAG}: for facts that change or are private, with citations. The model does
+        not learn a new style or skill;
+    \item \textbf{fine-tuning}: for behavior, format and style, not for storing many facts;
+    \item \textbf{long context}: put all the documents in the prompt when they fit, without
+        an index, at a cost that grows with the length (attention is $O(n^{2})$) and with the
+        risk of lost-in-the-middle.
+\end{itemize}

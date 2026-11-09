@@ -1,0 +1,61 @@
+\section{Tokenization}
+\paragraph{Purpose}
+A neural network takes numbers as input. The text is cut into \tB{tokens} taken from a
+fixed vocabulary of size $V$, and each token is replaced by its integer id.
+\begin{itemize}
+    \item \textbf{characters}: tiny vocabulary, but very long sequences, and attention costs
+        $O(n^{2})$ in the length $n$;
+    \item \textbf{words}: short sequences, but a huge vocabulary, out-of-vocabulary words,
+        and no sharing between ``run'' and ``running'';
+    \item \textbf{subwords}: the compromise used by LLMs. Frequent words are one token,
+        rare words are split into several pieces, and nothing is out of vocabulary.
+\end{itemize}
+
+\paragraph{Byte Pair Encoding (BPE)}
+\begin{enumerate}
+    \item start from a vocabulary of base symbols (characters, or the 256 bytes);
+    \item count all the pairs of adjacent symbols in the training corpus;
+    \item \uB{merge the most frequent pair} into a new symbol and add it to the vocabulary;
+    \item repeat until the vocabulary has the desired size.
+\end{enumerate}
+Example on the string \texttt{aaabdaaabac}: the most frequent pair \texttt{aa} becomes
+\texttt{Z} (\texttt{ZabdZabac}), then \texttt{ab} becomes \texttt{Y} (\texttt{ZYdZYac}),
+then \texttt{ZY} becomes \texttt{X} (\texttt{XdXac}).\\
+To encode a new text, the learned merges are applied in the order in which they were
+learned. With \textbf{byte-level} BPE the base alphabet is the 256 bytes, so any string
+can be encoded (GPT-2: $V=50\,257$, that is 256 bytes, $50\,000$ merges and one special
+token).
+
+\paragraph{Consequences}
+\begin{itemize}
+    \item the model sees tokens, not letters: spelling, counting letters or reversing a
+        word are harder than they look;
+    \item numbers are split into pieces, which complicates arithmetic;
+    \item code and languages that are rare in the corpus need \tB{more tokens per word}:
+        higher cost and shorter effective context;
+    \item \textbf{special tokens} mark the beginning or the end of a text, or the roles in a
+        chat;
+    \item the context length and the prices are counted in tokens (for English, a token
+        is roughly three quarters of a word).
+\end{itemize}
+
+\section{Embeddings}
+\paragraph{Purpose}
+Token ids are categorical values with no notion of similarity. An \tB{embedding} maps each
+token to a dense vector of $\mathbb{R}^{d_{model}}$ in which similar tokens can be close.
+
+\paragraph{Theory}
+The embedding matrix $\bm{E}\in\mathcal{M}(\mathbb{R})_{V,d_{model}}$ has one row per token:
+the vector of the token $i$ is $\bm{e}_{i}^{T}\bm{E}$, where $\bm{e}_{i}$ is the one-hot
+vector of $i$, that is simply \uB{a table lookup} of the row $i$.\\
+$\bm{E}$ is learned jointly with the rest of the network by back-propagation, the gradient
+being non-zero only for the rows of the tokens present in the batch.\\
+The idea comes from the \emph{distributional hypothesis}: the meaning of a word is given by
+the contexts in which it appears (word2vec, 2013, trained such vectors from co-occurrences).
+
+\paragraph{Static versus contextual}
+The lookup does not depend on the context: ``bank'' has the same vector in ``river bank''
+and ``bank account''. The layers of the Transformer transform these static vectors into
+\tB{contextual representations} through attention. The position is added separately (see
+positional encoding), and the same matrix $\bm{E}$ can be reused as output layer (weight
+tying).

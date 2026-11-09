@@ -101,8 +101,163 @@ $
 \bm{P}_{i}^{Q}\in\mathcal{M}(\mathbb{R})_{d_{model},d_{k}}\\
 \bm{P}_{i}^{K}\in\mathcal{M}(\mathbb{R})_{d_{model},d_{k}}\\ 
 \bm{P}_{i}^{V}\in\mathcal{M}(\mathbb{R})_{d_{model},d_{v}}\\
-\bm{P}_{i}^{Q}\in\mathcal{M}(\mathbb{R})_{h\times d_{v},d_{model}}
+\bm{P}^{O}\in\mathcal{M}(\mathbb{R})_{h\times d_{v},d_{model}}
 \end{cases}
 $
 
-The final projection allows the heads to interact and combine their information.
+The final projection allows the heads to interact and combine their information.\\
+Each head works in a different subspace of dimension $d_{k}$, so the model can attend to
+different kinds of relations at the same time, for the same total cost as one head of
+dimension $d_{model}$.
+
+\paragraph{Three uses of attention in the Transformer}
+\begin{itemize}
+    \item \textbf{encoder self-attention}: $\bm{Q},\bm{K},\bm{V}$ all come from the previous
+        encoder layer, each position attends to all the input positions;
+    \item \textbf{masked decoder self-attention}: same, but with a causal mask (see below);
+    \item \textbf{encoder-decoder (cross) attention}: $\bm{Q}$ comes from the decoder,
+        $\bm{K}$ and $\bm{V}$ from the encoder output, so that each target position can look
+        at every source position. It is the attention of Bahdanau et al., which removes the
+        fixed-size bottleneck of the RNN encoder-decoder.
+\end{itemize}
+
+\subsection{Masking}
+\paragraph{Causal mask} To generate text, position $i$ must not see the positions $j>i$,
+otherwise the model could copy the answer during training. Before the softmax, a mask
+$\bm{M}\in\mathbb{R}^{n\times n}$ is added to the scores, with $M_{ij}=0$ if $j\leq i$ and
+$M_{ij}=-\infty$ otherwise:
+\begin{center}
+    \fr{$Attention\left(\bm{Q},\bm{K},\bm{V}\right)=\text{softmax}\left(
+    \dfrac{\bm{Q}\bm{K}^{T}}{\sqrt{d_{k}}} + \bm{M}\right)\bm{V}$}
+\end{center}
+As $e^{-\infty}=0$, the attention weights on future positions are exactly zero and each row
+still sums to one. Thanks to the mask, \uB{all the $n$ next-token predictions of a sequence
+are computed and trained in parallel in a single pass} (teacher forcing), whereas
+generation at inference is still one token at a time.
+
+\paragraph{Padding mask} Sequences of a batch are padded to the same length, and the padded
+positions are masked the same way, so that no position attends to them.
+
+\subsection{Positional Encoding}
+\paragraph{Purpose} Self-attention is \tB{permutation-equivariant}: without extra
+information, shuffling the tokens only shuffles the outputs the same way, so
+``the cat sat'' and ``sat cat the'' are not distinguished. The order is injected by adding a
+position vector to each token embedding, at the bottom of the encoder and decoder stacks.
+
+\paragraph{Sinusoidal encoding} In the original paper, for position $pos$ and dimension
+index $i\in\inter{0}{\frac{d_{model}}{2}-1}$:
+\begin{center}
+    \frB{$PE_{(pos,2i)} = \sin\left(\dfrac{pos}{10000^{2i/d_{model}}}\right),\qquad
+    PE_{(pos,2i+1)} = \cos\left(\dfrac{pos}{10000^{2i/d_{model}}}\right)$}
+\end{center}
+Each dimension is a sinusoid whose wavelength goes from $2\pi$ to $10000\cdot2\pi$
+(geometric progression). For a fixed offset $k$, $PE_{pos+k}$ is a \uB{linear function of
+$PE_{pos}$} (a rotation of each $(\sin,\cos)$ pair), which makes relative positions easy to
+learn, and the encoding is defined for lengths not seen in training.
+
+\paragraph{Alternatives}
+\begin{itemize}
+    \item \textbf{learned} position embeddings, one trainable vector per position: the paper
+        reports nearly identical results, but the length is then limited to the training
+        maximum;
+    \item \textbf{relative} methods used in recent LLMs: \emph{rotary} embeddings (RoPE)
+        rotate $\bm{q}$ and $\bm{k}$ by an angle proportional to their position so that
+        $\bm{q}^{T}\bm{k}$ depends on the distance $i-j$, and ALiBi adds a penalty
+        proportional to the distance to the scores.
+\end{itemize}
+
+\subsection{Residual Connections and Layer Normalization}
+\paragraph{Residual connection} $\bm{x}\mapsto\bm{x}+Sublayer(\bm{x})$ gives the gradient a
+direct path to the lower layers, the same idea as the additive state of the LSTM. It is what
+makes stacks of dozens of layers trainable. All the sub-layers output vectors of dimension
+$d_{model}$ so that the sum is defined.
+
+\paragraph{Layer normalization} For one token with representation $\bm{x}\in\mathbb{R}^{d}$,
+the statistics are computed over the \tB{feature dimension} of that single token:
+\begin{center}
+    \fr{$LayerNorm(\bm{x}) = \bm{\gamma}\odot\dfrac{\bm{x}-\mu}{\sqrt{\sigma^{2}+\varepsilon}}
+    + \bm{\beta}$},\qquad $\mu=\dfrac{1}{d}\su{k=1}{d}x_{k},\quad
+    \sigma^{2}=\dfrac{1}{d}\su{k=1}{d}\left(x_{k}-\mu\right)^{2}$
+\end{center}
+with learned scale $\bm{\gamma}$ and shift $\bm{\beta}$. Unlike batch normalization, it does
+not depend on the other examples of the batch nor on the sequence length, which suits
+variable-length sequences and one-token-at-a-time generation.
+
+\paragraph{Post-LN and Pre-LN}
+\begin{itemize}
+    \item \textbf{Post-LN} (original paper): $LayerNorm\left(\bm{x}+Sublayer(\bm{x})\right)$.
+        It needs a learning-rate warmup to train stably.
+    \item \textbf{Pre-LN} (most recent LLMs): $\bm{x}+Sublayer\left(LayerNorm(\bm{x})\right)$.
+        The residual path stays an identity from the input to the output, gradients are
+        better behaved and training is more stable, often with a final LayerNorm before the
+        output layer. RMSNorm, a cheaper variant without mean and shift, is common.
+\end{itemize}
+
+\subsection{Feed-Forward Sub-layer}
+The position-wise $FFN(\bm{x}) = \max\left(0,\bm{x}\bm{W}_{1}+\bm{b}_{1}\right)\bm{W}_{2}
++\bm{b}_{2}$ is a two-layer MLP applied identically to every token, with an inner dimension
+$d_{ff}=4\,d_{model}$ (2048 for $d_{model}=512$). Attention \uB{mixes information between
+positions}, the FFN \uB{transforms each position independently}, and it holds about
+two thirds of the parameters of a layer. Recent models replace ReLU by GELU (GPT, BERT) or
+by a gated variant, \textbf{SwiGLU}:
+\begin{center}
+    $FFN_{SwiGLU}(\bm{x}) = \left(\mathrm{Swish}(\bm{x}\bm{W}_{1})\odot\bm{x}\bm{W}_{3}\right)
+    \bm{W}_{2},\qquad \mathrm{Swish}(u)=u\,\sigma(u)$
+\end{center}
+
+\subsection{Embeddings and Output Layer}
+Input tokens are mapped to vectors of $\mathbb{R}^{d_{model}}$ by a learned embedding matrix
+(multiplied by $\sqrt{d_{model}}$ in the paper). At the top, a linear layer followed by a
+softmax over the vocabulary gives the probability of the next token. The paper \tB{shares}
+the weight matrix between the input embedding and this pre-softmax layer (\emph{weight
+tying}), which saves parameters.
+
+\subsection{Why Self-Attention instead of Recurrence}
+$n$ is the sequence length, $d$ the representation dimension.
+\begin{center}
+\begin{tabular}{|l|c|c|c|}
+    \hline
+    Layer type & Complexity per layer & Sequential operations & Max path length\\
+    \hline
+    Self-attention & $O(n^{2}d)$ & $O(1)$ & $O(1)$\\
+    Recurrent & $O(nd^{2})$ & $O(n)$ & $O(n)$\\
+    \hline
+\end{tabular}
+\end{center}
+\begin{itemize}
+    \item the \uB{path length} between any two positions is constant, so long-range
+        dependencies are as easy to learn as short ones;
+    \item the $O(1)$ sequential operations allow the \uB{parallelization over positions} that
+        RNNs lack;
+    \item the price is the \tB{quadratic cost $O(n^{2})$ in the sequence length}, in time and
+        in memory for the score matrix, which limits the context length.
+\end{itemize}
+
+\subsection{Training Recipe of the Original Paper}
+\begin{itemize}
+    \item \textbf{Adam} with $\beta_{1}=0.9$, $\beta_{2}=0.98$, $\varepsilon=10^{-9}$ (see the
+        optimizers section);
+    \item learning rate with \emph{warmup} then inverse-square-root decay, with
+        $warmup=4000$ steps:
+        \[lr = d_{model}^{-0.5}\cdot\min\left(step^{-0.5},\ step\cdot warmup^{-1.5}\right)\]
+    \item dropout $P_{drop}=0.1$ on each sub-layer output (before the residual sum) and on
+        the sums of embeddings and positional encodings;
+    \item \textbf{label smoothing} $\varepsilon_{ls}=0.1$: the target distribution puts
+        $1-\varepsilon_{ls}$ on the true token and spreads the rest over the others, which
+        hurts perplexity but improves accuracy.
+\end{itemize}
+
+\subsection{Model Families}
+The same blocks give three families, depending on the stacks kept and the mask:
+\begin{center}
+\begin{tabular}{|l|l|l|}
+    \hline
+    Family & Stacks and attention & Examples\\
+    \hline
+    Encoder-decoder & encoder + decoder with cross-attention & original Transformer, T5\\
+    Encoder-only & bidirectional self-attention, no mask & BERT\\
+    Decoder-only & causal self-attention only & GPT, LLaMA\\
+    \hline
+\end{tabular}
+\end{center}
+Large language models are decoder-only models trained to predict the next token.

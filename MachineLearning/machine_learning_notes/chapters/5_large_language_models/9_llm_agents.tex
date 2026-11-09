@@ -1,0 +1,104 @@
+\section{From a Model to an Agent}
+\paragraph{Purpose}
+A language model only produces text. An \textbf{agent} is an LLM placed \tB{in a loop} with
+\tB{tools} (search, code execution, files, APIs) that acts on an environment over several
+steps to reach a goal, using the results of its actions to decide the next one.\\
+Distinction: in a \textbf{workflow} the steps are fixed by the code (the LLM fills each
+step), in an \textbf{agent} the LLM itself \uB{decides the steps and the tools}. The agent is
+more flexible but slower, more expensive and less predictable, so the simplest solution
+(a single call, possibly with retrieval) should be tried first.
+
+\section{Tool Use}
+\paragraph{Theory}
+Each tool is described to the model by a \emph{name}, a \emph{description} and a
+\emph{schema} of its parameters (JSON), placed in the prompt.
+\begin{enumerate}
+    \item the model decides to call a tool and outputs a \tB{structured call}: the name and
+        the arguments;
+    \item the \uB{application, not the model}, validates and executes it;
+    \item the result is appended to the conversation, and the model continues.
+\end{enumerate}
+The model never executes anything: this is the point where permissions, validation and
+sandboxing are enforced. The behavior is learned by fine-tuning on examples of calls
+(Toolformer trained a model to insert API calls in text by itself), and standards such as
+the Model Context Protocol (MCP) describe how tools and data sources are connected to
+models.
+
+\paragraph{Weaknesses} The model may call a tool that does not exist, give invalid or
+invented arguments, or misread the result: calls must be validated, and errors returned to
+the model so that it can correct itself.
+
+\section{The Agent Loop: ReAct}
+\paragraph{Theory}
+ReAct (Yao et al., 2022) interleaves \emph{reasoning} and \emph{acting}: the model writes a
+thought, an action, receives an observation, and repeats.
+\begin{center}
+\fbox{\parbox{.9\textwidth}{
+\texttt{context} $\leftarrow$ goal + tool descriptions\\
+\textbf{repeat} until a final answer or a maximum number of steps:\\
+\hspace*{1em}\texttt{output} $\leftarrow$ LLM(\texttt{context})\\
+\hspace*{1em}\textbf{if} \texttt{output} is a tool call: \texttt{result} $\leftarrow$ execute it;
+append \texttt{output} and \texttt{result} to \texttt{context}\\
+\hspace*{1em}\textbf{else}: return \texttt{output}
+}}
+\end{center}
+
+\paragraph{Reinforcement learning view}
+This is the setting of the RL chapter: the \emph{state} is the history in the context, the
+\emph{action} is a text or a tool call, the \emph{observation} is the tool output, and the
+\emph{policy} is the LLM. The state is only partially observed (the world is not entirely in
+the context), and the reward arrives at the end (the task is solved or not). Training the
+model with verifiable rewards on such tasks is an application of the GRPO or PPO methods.
+
+\section{Planning, Reflection and Multiple Agents}
+\begin{itemize}
+    \item \textbf{planning}: decompose the goal in sub-tasks, either first (plan then
+        execute) or step by step, and revise the plan from the observations;
+    \item \textbf{reflection}: the model critiques its own result or the error message, and
+        tries again;
+    \item \textbf{orchestrator and workers}: a main agent delegates sub-tasks to other
+        calls, each one with its own short context, and collects their results.
+\end{itemize}
+
+\section{Memory and Context}
+\begin{itemize}
+    \item \textbf{short-term memory}: the context window, limited to $n_{ctx}$ tokens. Every
+        step sends the whole history again, and the \uB{KV cache} of the common prefix avoids
+        recomputing it;
+    \item \textbf{long-term memory}: notes or documents stored outside and retrieved when
+        needed (see RAG);
+    \item when the window fills, the old steps are \emph{summarized} or the large tool
+        outputs are removed: a bad summary loses information the agent will need.
+\end{itemize}
+
+\section{Reliability and Evaluation}
+\paragraph{Errors compound}
+If each step succeeds with probability $p$ independently, a task of $n$ steps succeeds with
+probability about $p^{n}$: for $p=0.95$ and $n=20$ it is $0.95^{20}\approx0.36$. Long
+horizons need reliable steps, checks and recovery.
+
+\paragraph{Metrics}
+\begin{itemize}
+    \item the \textbf{success rate} on tasks with an automatic check (tests that pass, the
+        final state of the environment);
+    \item $pass@k$: the probability that at least one of $k$ attempts succeeds. From $n$
+        attempts of which $c$ succeed, the unbiased estimate is
+        $1-\binom{n-c}{k}\Big/\binom{n}{k}$;
+    \item the \textbf{cost}: tokens, number of steps and tool calls, latency.
+\end{itemize}
+Typical failure modes are loops without progress, a wrong tool or arguments, a hallucinated
+result, and an error early in the run that propagates.
+
+\section{Safety}
+\begin{itemize}
+    \item \textbf{indirect prompt injection}: instructions hidden in a web page, a file or a
+        tool output are read by the model as if they were legitimate, and can make it take
+        actions the user did not want. The text of tool results must be treated as
+        \tB{data, not as instructions};
+    \item \textbf{least privilege}: give the agent only the tools and the permissions the
+        task needs, and run the code in a sandbox;
+    \item \textbf{human in the loop} before irreversible or external actions (sending, paying,
+        deleting);
+    \item limits on the number of steps and on the budget, and logs of every call to audit
+        what the agent did.
+\end{itemize}

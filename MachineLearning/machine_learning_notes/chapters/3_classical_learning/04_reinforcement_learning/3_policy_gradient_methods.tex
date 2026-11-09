@@ -1,0 +1,62 @@
+\subsection{Purpose}
+Instead of learning values and deriving a policy, \tB{parameterize the policy itself},
+$\pi_{\bm{\theta}}(a|s)$ (a neural network with a softmax output for discrete actions), and
+do gradient ascent on the expected return $J(\bm{\theta})$. It works with large or
+continuous action spaces, and the policy can be stochastic.
+
+\subsection{Policy Gradient Theorem}
+\paragraph{Log-derivative trick}
+With $p_{\bm{\theta}}(\tau)$ the probability of a trajectory and $R(\tau)$ its return:
+\begin{center}
+    $\nabla_{\bm{\theta}}J=\nabla_{\bm{\theta}}\Su{}{}p_{\bm{\theta}}(\tau)R(\tau)d\tau
+    =\Su{}{}p_{\bm{\theta}}(\tau)\,\nabla_{\bm{\theta}}\log p_{\bm{\theta}}(\tau)\,
+    R(\tau)d\tau=\mathbb{E}_{\tau\sim\pi_{\bm{\theta}}}\left[\nabla_{\bm{\theta}}\log
+    p_{\bm{\theta}}(\tau)\,R(\tau)\right]$
+\end{center}
+using $\nabla p=p\,\nabla\log p$. The trajectory probability factorizes as
+$p_{\bm{\theta}}(\tau)=p(s_{0})\prd{t}{}\pi_{\bm{\theta}}(a_{t}|s_{t})P(s_{t+1}|s_{t},a_{t})$,
+and the \uB{unknown dynamics $P$ do not depend on $\bm{\theta}$}: their terms vanish in the
+gradient of the log, so the model is not needed.
+
+\paragraph{REINFORCE}
+\begin{center}
+    \frB{$\nabla_{\bm{\theta}}J=\mathbb{E}_{\tau\sim\pi_{\bm{\theta}}}\left[\su{t}{}
+    \nabla_{\bm{\theta}}\log\pi_{\bm{\theta}}(a_{t}|s_{t})\,G_{t}\right]$}
+\end{center}
+Here the full return is replaced by the \emph{reward-to-go} $G_{t}$, since an action cannot
+change the rewards that came before it. It is estimated by sampling trajectories with the
+current policy, which makes the method \tB{on-policy}.\\
+Interpretation: it is the gradient of the log-likelihood of the sampled actions, \uB{weighted
+by the return}. Good trajectories become more probable, bad ones less probable. With
+$G_{t}=1$ for the data we want to imitate, it is exactly the maximum likelihood gradient of
+supervised learning.
+
+\subsection{Variance Reduction}
+\paragraph{Baseline} The estimator is unbiased but very noisy. Subtracting a baseline
+$b(s_{t})$ that does not depend on the action leaves the expectation unchanged:
+\begin{center}
+    $\mathbb{E}_{a\sim\pi_{\bm{\theta}}}\left[\nabla_{\bm{\theta}}\log\pi_{\bm{\theta}}(a|s)
+    \,b(s)\right]=b(s)\su{a}{}\nabla_{\bm{\theta}}\pi_{\bm{\theta}}(a|s)
+    =b(s)\nabla_{\bm{\theta}}\su{a}{}\pi_{\bm{\theta}}(a|s)=b(s)\nabla_{\bm{\theta}}1=0$
+\end{center}
+The natural choice is $b(s)=V^{\pi}(s)$, and $G_{t}-V^{\pi}(s_{t})$ estimates the
+\textbf{advantage} $A^{\pi}(s_{t},a_{t})$: the action is reinforced only if it is better than
+average.
+
+\paragraph{Actor-critic} Learn a second network, the \textbf{critic} $V_{\bm{\phi}}(s)$, by
+regression on the returns or by TD, and use it to compute the advantage for the
+\textbf{actor} $\pi_{\bm{\theta}}$:
+\begin{center}
+    $\hat{A}_{t}=\delta_{t}=r_{t+1}+\gamma V_{\bm{\phi}}(s_{t+1})-V_{\bm{\phi}}(s_{t})$
+\end{center}
+\textbf{Generalized advantage estimation} (GAE) averages the TD errors of several steps,
+$\hat{A}_{t}=\su{l=0}{\infty}(\gamma\lambda)^{l}\delta_{t+l}$, and $\lambda$ trades bias
+(small $\lambda$, like TD) against variance (large $\lambda$, like Monte Carlo).
+
+\paragraph{Weaknesses}
+\begin{itemize}
+    \item high variance and \tB{sample inefficiency}, as the data is used for one update
+        then discarded;
+    \item a step in parameter space can change the policy much more than expected, and a
+        bad update can collapse performance: this motivates PPO.
+\end{itemize}

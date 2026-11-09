@@ -1,0 +1,67 @@
+\section{Autoregressive Decoding}
+\paragraph{Theory}
+At inference there is no target text, the model's own output is fed back:
+\begin{enumerate}
+    \item feed the prompt $x_{1},\dots,x_{n}$ and read the logits $\bm{z}_{n}$ of the last
+        position;
+    \item choose a token $x_{n+1}$ from $\mathrm{softmax}(\bm{z}_{n})$ (strategies below);
+    \item append it to the sequence and repeat, until an end-of-text token or a maximum
+        length.
+\end{enumerate}
+Contrary to training, each token needs the previous one: generation is \uB{inherently
+sequential}.
+
+\section{Decoding Strategies}
+\paragraph{Greedy and beam search}
+\begin{itemize}
+    \item \textbf{greedy}: always take $\arg\max_{k}p_{k}$. Fast and deterministic, but not
+        the most probable sequence overall;
+    \item \textbf{beam search}: keep the $B$ partial sequences with the highest total
+        log-probability. Good when there is a single right answer (translation), but for
+        open-ended text it gives repetitive and dull outputs.
+\end{itemize}
+
+\paragraph{Sampling}
+Draw the next token at random from the distribution, which gives varied outputs.
+\begin{itemize}
+    \item \textbf{temperature} $T>0$ rescales the logits before the softmax:
+        \begin{center}
+            \fr{$p_{k}=\dfrac{\exp\left(z_{k}/T\right)}{\su{j}{}\exp\left(z_{j}/T\right)}$}
+        \end{center}
+        $T=1$ is the model's distribution, $T\to0$ tends to greedy decoding, and
+        $T\to\infty$ tends to the uniform distribution. A small $T$ is more deterministic,
+        a large $T$ more random;
+    \item \textbf{top-$k$}: keep only the $k$ most probable tokens, renormalize, then sample;
+    \item \textbf{top-$p$ (nucleus)}: keep the smallest set of tokens whose cumulative
+        probability reaches $p$, renormalize, then sample. The size of the set
+        \uB{adapts}: a few tokens when the model is confident, many when it is not.
+\end{itemize}
+These are often combined, and they make the output \tB{non-deterministic}: the same prompt
+can give different answers.
+
+\section{KV Cache}
+\paragraph{Purpose}
+In the causal self-attention, the keys and values of the previous positions do not change
+when a token is appended. Recomputing them at every step would repeat the same work.
+
+\paragraph{Theory}
+For each layer, the matrices $\bm{K}$ and $\bm{V}$ of the past positions are stored.
+To generate a new token, only its own $\bm{q},\bm{k},\bm{v}$ are computed, $\bm{k}$ and
+$\bm{v}$ are appended to the cache, and $\bm{q}$ attends to the whole cache. The attention
+cost of a new token falls from $O(n^{2})$ to $O(n)$.\\
+The cache memory per sequence is about
+\begin{center}
+    $2\times N\times n\times d_{model}\times\text{(bytes per value)}$
+\end{center}
+(keys and values, for each layer and each position): it \uB{grows linearly with the
+context} and with the batch size, and becomes the memory bottleneck for long contexts.
+Multi-query and grouped-query attention reduce it by sharing the keys and values among
+several heads.
+
+\paragraph{Two phases}
+\begin{itemize}
+    \item \textbf{prefill}: the prompt is processed in one parallel pass, which fills the
+        cache and is limited by computation;
+    \item \textbf{decode}: the tokens are produced one at a time, each step reading the
+        whole cache and all the weights, which is limited by memory bandwidth.
+\end{itemize}

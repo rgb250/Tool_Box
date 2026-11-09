@@ -1,0 +1,58 @@
+\section{Architecture}
+\paragraph{Purpose}
+A GPT-style model keeps \tB{only the decoder stack of the Transformer, without the
+cross-attention} (there is no encoder to attend to), and is trained for next-token
+prediction.
+
+\paragraph{Theory}
+Let $\bm{H}^{(0)}\in\mathcal{M}(\mathbb{R})_{n,d_{model}}$ be the token embeddings plus the
+positional information of the $n$ input tokens. Each of the $N$ identical blocks applies, in
+the pre-LN form:
+\begin{center}
+    \frB{$\bm{H}\leftarrow\bm{H}+MHA_{causal}\left(LayerNorm(\bm{H})\right),\qquad
+    \bm{H}\leftarrow\bm{H}+FFN\left(LayerNorm(\bm{H})\right)$}
+\end{center}
+After the last block, a final layer normalization and the \emph{unembedding} give the
+logits of every position, and the softmax the next-token distribution:
+\begin{center}
+    $\bm{Z} = LayerNorm\left(\bm{H}^{(N)}\right)\bm{E}^{T}\in\mathcal{M}(\mathbb{R})_{n,V},
+    \qquad \mathbb{P}\left(x_{t+1}\,|\,x_{\leq t}\right) = \mathrm{softmax}\left(
+    \bm{Z}_{t}\right)$
+\end{center}
+where $\bm{E}$ is the embedding matrix (weight tying). The hyper-parameters are the number of
+layers $N$, the width $d_{model}$, the number of heads $h$ (with $d_{k}=d_{model}/h$), the
+inner size of the FFN ($d_{ff}=4\,d_{model}$) and the context length $n_{ctx}$, that is the
+maximum number of tokens the model can read.
+
+\section{Number of Parameters}
+Per block, with $h\,d_{k}=d_{model}=d$:
+\begin{itemize}
+    \item attention: $\bm{W}_{Q},\bm{W}_{K},\bm{W}_{V},\bm{W}_{O}$, four matrices of size
+        $d\times d$, that is $4d^{2}$;
+    \item FFN: $d\times 4d$ and $4d\times d$, that is $8d^{2}$;
+    \item the biases and the layer-norm parameters are negligible.
+\end{itemize}
+\begin{center}
+    \frB{$P\approx 12\,N\,d^{2} + V\,d$}
+\end{center}
+(plus $n_{ctx}\,d$ if the positions are learned). The block terms dominate for large
+models.
+\begin{center}
+\begin{tabular}{|l|c|c|c|c|}
+    \hline
+    Model & $N$ & $d_{model}$ & $V$ & $P$ (formula)\\
+    \hline
+    GPT-2 small & 12 & 768 & $50\,257$ & $\approx 124$M\\
+    GPT-3 & 96 & 12\,288 & $50\,257$ & $\approx 175$B\\
+    \hline
+\end{tabular}
+\end{center}
+For GPT-2 small: $12\cdot12\cdot768^{2}\approx85$M for the blocks and $50\,257\cdot768
+\approx39$M for the embeddings. The attention scores add \uB{no parameter} but cost
+$O(n^{2})$ in time and memory.
+
+\section{Parameters versus Context}
+The parameters $P$ are fixed after training, and they are shared by all the positions. The
+\tB{context window} $n_{ctx}$ limits how many tokens the model can attend to at once, and
+anything outside it is invisible to the model. The cost of attention grows quadratically
+with the number of tokens in the context.

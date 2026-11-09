@@ -1,0 +1,48 @@
+\section{Pretraining}
+\paragraph{Purpose}
+Train the model from scratch on a very large corpus (web pages, books, code) with the
+next-token objective of the language modeling chapter. It is self-supervised, and the result
+is a \tB{base model}: it continues a text very well, but it is not yet an assistant that
+follows instructions.
+
+\paragraph{Ingredients}
+\begin{itemize}
+    \item \textbf{data}: collection, filtering and \uB{deduplication}. The quality of the
+        data matters as much as its quantity;
+    \item the texts are tokenized and cut into windows of $n_{ctx}$ tokens, batches contain
+        millions of tokens;
+    \item \textbf{AdamW} with warmup, cosine decay and gradient clipping (see the
+        optimizers section), in reduced precision (bfloat16);
+    \item the model and the batches are spread over thousands of accelerators
+        (data, tensor and pipeline parallelism).
+\end{itemize}
+
+\paragraph{Compute}
+For a model with $N$ parameters trained on $D$ tokens, the forward pass costs about $2ND$
+FLOPs and the backward pass about twice more:
+\begin{center}
+    \frB{$C\approx 6\,N\,D$ FLOPs}
+\end{center}
+Example: GPT-3, $N=175\cdot10^{9}$ and $D\approx300\cdot10^{9}$, gives
+$C\approx3\cdot10^{23}$ FLOPs.
+
+\section{Scaling Laws}
+\paragraph{Observation} (Kaplan et al., 2020) The test loss decreases as a \uB{power law}
+of the number of parameters $N$, of the data $D$ and of the compute $C$, smoothly over many
+orders of magnitude, as long as none of them is the bottleneck. It makes the loss of a large
+training run \tB{predictable from small runs}.
+
+\paragraph{Compute-optimal training} (Hoffmann et al., ``Chinchilla'', 2022) For a fixed
+budget $C=6ND$, there is a best split between $N$ and $D$. They found that the parameters and
+the tokens should \tB{grow together}, with about \uB{20 tokens per parameter}. Previous large
+models were undertrained (GPT-3: about 2 tokens per parameter): a 70B model trained on 1.4T
+tokens outperformed larger models trained with the same compute.
+
+\paragraph{Caveats}
+\begin{itemize}
+    \item the optimum above only accounts for the \emph{training} cost. A model that will
+        answer a very large number of requests costs more at inference when it is bigger, so
+        it is worth training a smaller model on more tokens than the Chinchilla rule;
+    \item the laws predict the loss, not directly the performance on a given downstream task;
+    \item the data is finite, repeating it many times brings less and less.
+\end{itemize}

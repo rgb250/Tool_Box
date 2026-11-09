@@ -1,0 +1,50 @@
+\paragraph{Purpose}
+Policy gradient methods take noisy steps, and one step that is too large may ruin the
+policy, after which the data collected is bad too. PPO (Schulman et al., 2017) lets us
+\tB{reuse the same batch for several gradient steps while keeping the new policy close to the
+policy that collected the data}, with a simple first-order objective.
+
+\paragraph{Theory}
+Let $\pi_{old}$ be the policy that generated the batch, and the probability ratio
+\begin{center}
+    $r_{t}(\bm{\theta})=\dfrac{\pi_{\bm{\theta}}(a_{t}|s_{t})}{\pi_{old}(a_{t}|s_{t})}$
+\end{center}
+(importance weight, $r_{t}=1$ at the start). The clipped objective to maximize is
+\begin{center}
+    \frB{$L^{CLIP}(\bm{\theta})=\mathbb{E}_{t}\left[\min\left(r_{t}(\bm{\theta})\hat{A}_{t},\
+    \mathrm{clip}\left(r_{t}(\bm{\theta}),1-\varepsilon,1+\varepsilon\right)\hat{A}_{t}
+    \right)\right]$}
+\end{center}
+with $\varepsilon\approx0.2$.
+\begin{itemize}
+    \item if $\hat{A}_{t}>0$ (good action), the objective grows with $r_{t}$ only up to
+        $1+\varepsilon$: no incentive to make the action much more probable;
+    \item if $\hat{A}_{t}<0$ (bad action), it is the symmetric case, the gradient vanishes
+        once $r_{t}<1-\varepsilon$;
+    \item the $\min$ makes the objective a \uB{pessimistic bound}: the clipping only removes
+        the incentive to move further, it never hides a harmful move.
+\end{itemize}
+
+\paragraph{Algorithm}
+\begin{enumerate}
+    \item collect trajectories with $\pi_{old}$ and compute the advantages $\hat{A}_{t}$
+        (critic and GAE);
+    \item for several epochs, on mini-batches, maximize
+        $L^{CLIP}-c_{1}\,L^{value}+c_{2}\,H\left[\pi_{\bm{\theta}}\right]$, with
+        $L^{value}$ the squared error of the critic and $H$ an entropy bonus that keeps
+        some exploration;
+    \item set $\pi_{old}\leftarrow\pi_{\bm{\theta}}$ and repeat.
+\end{enumerate}
+
+\paragraph{Strengths and weaknesses}
+\begin{itemize}
+    \item simple, stable, and the default policy-gradient algorithm for a decade, including
+        the training of language models from human feedback;
+    \item it needs a critic (a second network of the size of the policy for LLMs) and
+        several hyper-parameters, and it remains sensitive to implementation details.
+\end{itemize}
+
+\paragraph{From RL to language models} A language model is a policy: the \emph{state} is the
+prompt and the tokens generated so far, the \emph{action} is the next token, the episode ends
+at the end-of-text token, and a reward arrives for the complete answer
+(see the alignment chapter).

@@ -1,6 +1,7 @@
 \subsection{Recurrent Neural Networks}
-\paragraph{Architecture}, let's consider a \emph{computational graph} to compute the
-training loss of a recurrent neural network that maps an input sequence of $\bm{L}$ to 
+\paragraph{Architecture}
+Let's consider a \emph{computational graph} to compute the
+training loss of a recurrent neural network that maps an input sequence of $\bm{x}$ values to
 a corresponding sequence of output $\bm{o}$ values. A loss $\bm{L}$ measures how far each
 $\bm{o}$ is from the corresponding  training target $\bm{y}$
 \begin{figure}[H]
@@ -11,6 +12,22 @@ $\bm{o}$ is from the corresponding  training target $\bm{y}$
     \label{fig:03_rnn}
 \end{figure}
 
+\paragraph{Theory}
+With input-to-hidden weights $\bm{U}$, hidden-to-hidden weights $\bm{W}$ and
+hidden-to-output weights $\bm{V}$ (as in Figure~\ref{fig:03_rnn}), at each time step $t$:
+\begin{center}
+    \frB{$\bm{h}^{(t)} = \tanh\left(\bm{b} + \bm{W}\bm{h}^{(t-1)} + \bm{U}\bm{x}^{(t)}\right),
+    \qquad \bm{o}^{(t)} = \bm{c} + \bm{V}\bm{h}^{(t)},
+    \qquad \hat{\bm{y}}^{(t)} = \mathrm{softmax}\left(\bm{o}^{(t)}\right)$}
+\end{center}
+The total loss is the sum of the losses over time steps. The \tB{same parameters
+$\bm{U}, \bm{V}, \bm{W}$ are shared across all time steps}, which allows to process
+sequences of any length. The hidden state $\bm{h}^{(t)}$ is a lossy summary of the past
+inputs $\bm{x}^{(1)},\dots,\bm{x}^{(t)}$.\\
+Training applies back-propagation to the graph unrolled over time (\emph{back-propagation
+through time}, BPTT): the gradient with respect to a shared parameter is the sum of its
+contributions at each time step. As the computation of $\bm{h}^{(t)}$ needs
+$\bm{h}^{(t-1)}$, it is \uB{inherently sequential} and cannot be parallelized over time.
 
 \subsection{Encoder-Decoder Sequence-to-Sequence Architectures}
 
@@ -26,7 +43,11 @@ RNN that generates} the output sequence.
 
 The \tR{final hidden state of the encoder RNN is used to compute a generally fixed-size
 context variable $C$ representing a semantic summary of the input sequence}, then is
-given as input to the decoder RNN.
+given as input to the decoder RNN.\\
+Only $C$ is given to the decoder, the intermediate encoder states being discarded:
+\tB{this fixed-size vector is a bottleneck}, information is lost for long sequences
+and the decoder cannot look back at specific input words. This is the motivation of the
+attention mechanism (see Transformer networks).
 
 \subsection{The Challenge of Long-Term Dependencies}
 \paragraph{The basic problem} is that \uB{gradients propagated over many stages tend to
@@ -34,19 +55,21 @@ either vanish or explode}.\\
 Consider a very simple recurrent neural network network lacking a nonlinear function:
 $\bm{h}_{t} = \bm{W}^{T}\bm{h}_{t-1}$, if we admits an eigen-decomposition of the form
 $\bm{W} = \bm{Q}\bm{\Lambda}\bm{Q}^{T}$ with orthogonal $\bm{Q}$ the recurrence may be
-simplified further to $\bm{h}_{t} = \bm{Q}^{T}\bm{\Lambda}^{t}\bm{Q}\bm{h}_{0}$.
+simplified further to $\bm{h}_{t} = \bm{Q}\bm{\Lambda}^{t}\bm{Q}^{T}\bm{h}_{0}$.
 \uB{The eigenvalues are raised to the power of $t$ causing the eigenvalues with
-magnitude lesser than one to decay to zero and eigenvalues with magnitude greater than 
-one to explode}.
+magnitude lesser than one to decay to zero and eigenvalues with magnitude greater than
+one to explode}.\\
+The same repeated product appears in the backward pass of BPTT, where the gradient
+is multiplied at each step by $\bm{W}^{T}$ and by the derivative of the activation function.
 
 \subsection{Leaky Units}
 \paragraph{Purpose} dealing with long-term dependencies by designing a model operating
-at multiple time scales, allowing to \uB{let some parts of the model operating at 
+at multiple time scales, allowing to \uB{let some parts of the model operating at
 fine-grained time scales to handle small details while other parts operate at coarse
-time scales and transfer information from the distant past to the present more 
+time scales and transfer information from the distant past to the present more
 efficiently}.
 
-\subparagraph{Adding Skip Connections through Time} consists in \uB{adding direct 
+\subparagraph{Adding Skip Connections through Time} consists in \uB{adding direct
 connections from variables in the distant past to variables in the present}.\\
 By introducing recurrent connections with a time-delay of $d$ to mitigate,
 \tB{Gradients now diminish exponentially as a function of $\frac{\tau}{d}$ rather than
@@ -60,7 +83,7 @@ When we accumulate a running average $\mu_{t}$ of some value $v_{t}$ by applying
 $\mu_{t} \leftarrow \alpha\mu_{t-1} + (1-\alpha)v_{t}$ the $\alpha$ parameter is an
 example of linear self connection from $\mu_{t-1}$ to $\mu_{t}$.\\
 \tB{When $\alpha$ is near one, the running average remembers information about the past
-for a long time, and when $\alpha$ is near zero, information about the past is 
+for a long time, and when $\alpha$ is near zero, information about the past is
 rapidly discarded}.
 
 
@@ -69,14 +92,14 @@ rapidly discarded}.
 \paragraph{Purpose}
 going further with the idea of self-loops, by making the weight of the self-loop
 conditioned on the context rather than fixed.\\
-\tB{Self-loops produce paths where the grdient can flow for long duration}.
+\tB{Self-loops produce paths where the gradient can flow for long duration}.
 
 \begin{figure}[H]
     \begin{center}
         \includegraphics[width=.5\textwidth]{chapters/4_deep_learning/3_types_of_neural_networks/images/04_lstm_rnn_cell.png}
     \end{center}
     \caption{Block diagram of the LSTM recurrent neural network \emph{cell}}
-    \label{fig:label}
+    \label{fig:04_lstm_rnn_cell}
 \end{figure}
 
 Cells are connected recurrently to each other replacing the usual hidden units of
@@ -86,10 +109,48 @@ ordinary recurrent networks.
 The \textbf{forget gate} unit $f_{i}^{(t)}$ for time step $t$ and cell $i$ that sets
 the weight to a value between 0 and 1
 \begin{center}
-    \frB{$f_{i}^{t} = \sigma\left(b_{i}^{f} + \su{j}{}U_{i,j}^{f}x_{j}^{(t)} +
+    \frB{$f_{i}^{(t)} = \sigma\left(b_{i}^{f} + \su{j}{}U_{i,j}^{f}x_{j}^{(t)} +
     \su{j}{}W_{i,j}^{f}h_{j}^{(t-1)}\right)$}
 \end{center}
-with $\bm{x}^{(t)}$ the current input vector, $\bm{h}^{t}$ the current hidden layer vector
+with $\bm{x}^{(t)}$ the current input vector, $\bm{h}^{(t)}$ the current hidden layer vector
 containing the outputs of all the LSTM cells, and $\bm{b}^{f},~\bm{U}^{f},~\bm{W}^{f}$ are
 respectively biases, input weights and recurrent weights for the forget gates.
+
+The \textbf{external input gate} $g_{i}^{(t)}$ and the \textbf{output gate} $q_{i}^{(t)}$ are
+computed the same way, with their own parameters $\bm{b}^{g},\bm{U}^{g},\bm{W}^{g}$ and
+$\bm{b}^{o},\bm{U}^{o},\bm{W}^{o}$:
+\begin{center}
+    $g_{i}^{(t)} = \sigma\left(b_{i}^{g} + \su{j}{}U_{i,j}^{g}x_{j}^{(t)} +
+    \su{j}{}W_{i,j}^{g}h_{j}^{(t-1)}\right)$,\qquad
+    $q_{i}^{(t)} = \sigma\left(b_{i}^{o} + \su{j}{}U_{i,j}^{o}x_{j}^{(t)} +
+    \su{j}{}W_{i,j}^{o}h_{j}^{(t-1)}\right)$
+\end{center}
+The internal \textbf{state} $s_{i}^{(t)}$ has a linear self-loop whose weight is the forget
+gate, and the cell output is gated by $q_{i}^{(t)}$:
+\begin{center}
+    \frB{$s_{i}^{(t)} = f_{i}^{(t)}s_{i}^{(t-1)} + g_{i}^{(t)}\sigma\left(b_{i} +
+    \su{j}{}U_{i,j}x_{j}^{(t)} + \su{j}{}W_{i,j}h_{j}^{(t-1)}\right),\qquad
+    h_{i}^{(t)} = \tanh\left(s_{i}^{(t)}\right)q_{i}^{(t)}$}
+\end{center}
+The state is updated \uB{additively}: when $f_{i}^{(t)}\approx 1$ and $g_{i}^{(t)}\approx 0$
+the information is copied unchanged, and the gradient flows through $s_{i}$ without being
+multiplied by a weight matrix at each step. This mitigates, but does not remove,
+the vanishing gradient problem.
+
+\paragraph{Gated Recurrent Unit (GRU)}
+A simpler variant with no separate state, and two gates: the \textbf{update gate}
+$\bm{z}^{(t)}$ and the \textbf{reset gate} $\bm{r}^{(t)}$:
+\begin{center}
+    $\bm{z}^{(t)} = \sigma\left(\bm{U}^{z}\bm{x}^{(t)} + \bm{W}^{z}\bm{h}^{(t-1)} +
+    \bm{b}^{z}\right),\qquad
+    \bm{r}^{(t)} = \sigma\left(\bm{U}^{r}\bm{x}^{(t)} + \bm{W}^{r}\bm{h}^{(t-1)} +
+    \bm{b}^{r}\right)$\\[1ex]
+    \frB{$\tilde{\bm{h}}^{(t)} = \tanh\left(\bm{U}\bm{x}^{(t)} + \bm{W}\left(
+    \bm{r}^{(t)}\odot\bm{h}^{(t-1)}\right) + \bm{b}\right),\qquad
+    \bm{h}^{(t)} = \bm{z}^{(t)}\odot\bm{h}^{(t-1)} +
+    \left(1-\bm{z}^{(t)}\right)\odot\tilde{\bm{h}}^{(t)}$}
+\end{center}
+A single gate $\bm{z}$ both forgets and writes (it plays the role of the forget and input
+gates together), so the GRU has fewer parameters than the LSTM and similar performance on
+many tasks.
 

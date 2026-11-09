@@ -1,0 +1,23 @@
+\section{Early Stopping}
+\paragraph{Purpose}
+With a model large enough to overfit, the training error keeps decreasing while the
+validation error eventually starts to rise again. \tB{Stop training when the validation
+error stops improving} and return the parameters of the best epoch.
+
+\paragraph{Theory}
+\begin{enumerate}
+    \item evaluate the validation error every few steps;
+    \item keep a copy of the parameters each time it improves;
+    \item stop after $\text{patience}$ evaluations without improvement and return the
+        saved parameters.
+\end{enumerate}
+The number of training steps is treated as a hyper-parameter chosen on the validation
+set. For a quadratic objective with gradient descent, it can be shown to be equivalent to
+$L^{2}$ regularization, the number of steps playing the role of $\frac{1}{\alpha}$.
+
+\paragraph{Strengths}
+Very cheap, requires no change to the model or to the objective.
+
+\paragraph{Weaknesses}
+Requires held-out data. Once the number of steps is known, the model can be retrained on
+the training and validation sets together for the same number of steps.

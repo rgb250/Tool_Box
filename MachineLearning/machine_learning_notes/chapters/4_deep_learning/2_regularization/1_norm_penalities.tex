@@ -3,4 +3,24 @@
 to drives the weight closer to the origin.
 
 \paragraph{Theory}
-$\Omega(\bm{\theta}) = \dfrac{1}{2}\norm{\bm{w}}^{2}_{2}$
+$\Omega(\bm{\theta}) = \dfrac{1}{2}\norm{\bm{w}}^{2}_{2}$\\
+Then $\nabla_{\bm{w}}\tilde{J} = \alpha\bm{w} + \nabla_{\bm{w}}J$ and a gradient step of
+size $\varepsilon$ becomes
+\begin{center}
+    $\bm{w} \leftarrow \left(1 - \varepsilon\alpha\right)\bm{w}
+    - \varepsilon\nabla_{\bm{w}}J$
+\end{center}
+that is, the weights are \uB{shrunk by a constant factor} before each usual update.
+Only the weights are penalized, the biases usually are not.\\
+This is the MAP estimate with a Gaussian prior $\mathcal{N}\left(\bm{0},
+\frac{1}{\alpha}\bm{I}\right)$ on the weights.
+
+\subsection{$L^{1}$ parameter regularization}
+\paragraph{Purpose}: it yields \tB{sparse} solutions, many weights being driven exactly to
+zero.
+
+\paragraph{Theory}
+$\Omega(\bm{\theta}) = \norm{\bm{w}}_{1} = \su{i}{}\left|w_{i}\right|$, so that
+$\nabla_{\bm{w}}\tilde{J} = \alpha\,\mathrm{sign}(\bm{w}) + \nabla_{\bm{w}}J$: the
+penalty gradient has a \uB{constant magnitude}, whatever the size of the weight.\\
+This is the MAP estimate with a Laplace prior on the weights.

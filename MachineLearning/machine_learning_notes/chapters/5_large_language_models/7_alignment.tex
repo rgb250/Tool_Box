@@ -1,0 +1,112 @@
+\section{Why Human Feedback}
+\paragraph{Purpose}
+For open-ended tasks, it is hard to write the best answer, but \tB{easy to say which of two
+answers is better}. Preference data is a set of triples $(x,y_{w},y_{l})$: a prompt $x$ and
+two answers sampled from the model, with $y_{w}$ preferred to $y_{l}$ by a human annotator.
+RLHF (reinforcement learning from human feedback) has three stages: SFT, a reward model
+learned from preferences, then RL against this reward model.
+
+\section{Reward Model}
+\paragraph{Theory}
+A network $r_{\bm{\phi}}(x,y)\in\mathbb{R}$ is built from the SFT model, replacing the output
+layer by a linear layer that gives one scalar from the last token. The preferences are
+modeled by \textbf{Bradley-Terry}:
+\begin{center}
+    $\mathbb{P}\left(y_{w}\succ y_{l}\,|\,x\right)=\sigma\left(r_{\bm{\phi}}(x,y_{w})-
+    r_{\bm{\phi}}(x,y_{l})\right)$
+\end{center}
+and it is trained by maximum likelihood:
+\begin{center}
+    \frB{$\mathcal{L}(\bm{\phi})=-\mathbb{E}_{(x,y_{w},y_{l})}\left[\log\sigma\left(
+    r_{\bm{\phi}}(x,y_{w})-r_{\bm{\phi}}(x,y_{l})\right)\right]$}
+\end{center}
+It is a logistic regression on the \uB{difference of the scores}, so the reward is defined
+up to a constant for each prompt.
+
+\section{RL Fine-Tuning with PPO}
+\paragraph{Theory}
+The policy $\pi_{\bm{\theta}}$ is the language model, initialized from the SFT model, and
+$\pi_{ref}$ is a frozen copy of it (see the RL chapter, with the prompt and the tokens
+generated as state, and the next token as action). The objective is
+\begin{center}
+    \frB{$\max_{\bm{\theta}}\ \mathbb{E}_{x\sim\mathcal{D},\,y\sim\pi_{\bm{\theta}}(\cdot|x)}
+    \left[r_{\bm{\phi}}(x,y)\right]-\beta\,\mathbb{E}_{x}\left[\mathrm{KL}\left(
+    \pi_{\bm{\theta}}(\cdot|x)\,\|\,\pi_{ref}(\cdot|x)\right)\right]$}
+\end{center}
+\textbf{Why the KL penalty}: the reward model is only reliable close to the data it was
+trained on. Without the penalty, the policy finds answers that \tB{exploit its errors}
+(\emph{reward hacking}) and drifts to text that scores high but is bad or incoherent. The
+penalty keeps the model close to the SFT one, and $\beta$ sets the trade-off.
+
+\paragraph{Implementation}
+\begin{itemize}
+    \item the KL is estimated on the sampled tokens, with $\log\frac{\pi_{\bm{\theta}}(y_{t}|
+        x,y_{<t})}{\pi_{ref}(y_{t}|x,y_{<t})}$, and is usually given as a \emph{per-token
+        reward} $-\beta\log\frac{\pi_{\bm{\theta}}}{\pi_{ref}}$, while $r_{\bm{\phi}}(x,y)$
+        is added at the last token;
+    \item the loop is the PPO one: sample prompts, generate answers, score them, compute the
+        advantages with a critic, and update with the clipped objective;
+    \item \tB{four models} must be held in memory: the policy, the reference, the reward
+        model and the critic, and generation makes each step expensive.
+\end{itemize}
+
+\section{Direct Preference Optimization (DPO)}
+\paragraph{Purpose}
+Obtain the result of the KL-regularized objective \uB{without a reward model and without RL},
+with a loss on the preference data only (Rafailov et al., 2023).
+
+\paragraph{Theory}
+The objective above has a closed-form optimal policy:
+$\pi^{*}(y|x)=\frac{1}{Z(x)}\pi_{ref}(y|x)\exp\left(\frac{r(x,y)}{\beta}\right)$.
+Inverting it:
+\begin{center}
+    $r(x,y)=\beta\log\dfrac{\pi^{*}(y|x)}{\pi_{ref}(y|x)}+\beta\log Z(x)$
+\end{center}
+In the Bradley-Terry model only the difference of rewards appears, and \tB{the term $Z(x)$
+cancels}. Replacing $\pi^{*}$ by $\pi_{\bm{\theta}}$ and maximizing the likelihood of the
+preferences:
+\begin{center}
+    \frB{$\mathcal{L}_{DPO}(\bm{\theta})=-\mathbb{E}_{(x,y_{w},y_{l})}\left[\log\sigma\left(
+    \beta\log\dfrac{\pi_{\bm{\theta}}(y_{w}|x)}{\pi_{ref}(y_{w}|x)}-
+    \beta\log\dfrac{\pi_{\bm{\theta}}(y_{l}|x)}{\pi_{ref}(y_{l}|x)}\right)\right]$}
+\end{center}
+It increases the probability of the preferred answer relative to the reference and
+decreases that of the rejected one. The language model plays the role of the reward model,
+with the implicit reward $\hat{r}=\beta\log\frac{\pi_{\bm{\theta}}}{\pi_{ref}}$.
+
+\paragraph{Strengths and weaknesses}
+\begin{itemize}
+    \item simple: a supervised-like loss, two models (policy and frozen reference), no
+        sampling and no critic;
+    \item it is \tB{offline}: it learns from a fixed dataset of answers, not from the
+        model's own new samples, so it explores less than PPO;
+    \item sensitive to the quality of the preferences and to $\beta$.
+\end{itemize}
+
+\section{Verifiable Rewards and GRPO}
+\paragraph{Purpose}
+When the answer can be checked automatically (the final result of a math problem, the unit
+tests of a program), the reward is computed \uB{without a learned reward model}, for example
+$r=1$ if the answer is correct and $0$ otherwise.
+
+\paragraph{GRPO} (Group Relative Policy Optimization, DeepSeekMath 2024) For each prompt,
+sample a group of $G$ answers with rewards $r_{1},\dots,r_{G}$, and use as advantage of
+answer $i$ its reward normalized within the group, shared by all its tokens:
+\begin{center}
+    $\hat{A}_{i}=\dfrac{r_{i}-\mathrm{mean}(r_{1},\dots,r_{G})}{\mathrm{std}(r_{1},\dots,r_{G})}$
+\end{center}
+The update is the clipped PPO objective plus a KL penalty to the reference. The group mean
+plays the role of the baseline, so \tB{no critic network} is needed, which reduces the
+memory compared to PPO. This kind of training is used to obtain models that reason with long
+chains of thought.
+
+\section{Limitations}
+\begin{itemize}
+    \item \textbf{reward hacking} (Goodhart's law): optimizing a proxy too long degrades the
+        real quality, hence the KL term and early stopping on held-out evaluations;
+    \item the preferences are \tB{noisy} and reflect the biases of the annotators;
+    \item \textbf{sycophancy} and \textbf{verbosity}: humans tend to prefer answers that
+        agree with them and longer answers, and the model learns it;
+    \item the alignment shapes the behavior but gives no guarantee on the truthfulness of
+        the answers.
+\end{itemize}

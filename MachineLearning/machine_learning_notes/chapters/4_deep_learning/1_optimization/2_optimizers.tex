@@ -1,0 +1,72 @@
+\subsection{Purpose}
+Back-propagation only computes the gradient $\bm{g}_{t}=\nabla_{\bm{\theta}}J\left(
+\bm{\theta}_{t}\right)$ on a mini-batch. The \tB{optimizer} decides how to use it to update
+the parameters. Plain stochastic gradient descent (see the optimization methods of the
+classical learning part) is
+\begin{center}
+    $\bm{\theta}_{t+1} = \bm{\theta}_{t} - \eta\,\bm{g}_{t}$
+\end{center}
+with $\eta$ the learning rate. Its weaknesses: a single learning rate for all the
+parameters, slow progress in ravines (steep in one direction, flat in another), and noisy
+mini-batch gradients.
+
+\subsection{Momentum}
+Keep an exponential moving average of the past gradients, which damps the oscillations and
+accelerates along consistent directions:
+\begin{center}
+    $\bm{v}_{t} = \mu\bm{v}_{t-1} + \bm{g}_{t},\qquad
+    \bm{\theta}_{t+1} = \bm{\theta}_{t} - \eta\,\bm{v}_{t}$ \quad ($\mu=0.9$ typically)
+\end{center}
+
+\subsection{Adaptive learning rates: RMSProp and Adam}
+\paragraph{RMSProp} divides the step of each parameter by a running average of its recent
+squared gradients, so that parameters with large gradients take smaller steps and
+parameters with small gradients take larger ones:
+$\bm{s}_{t} = \beta\bm{s}_{t-1} + (1-\beta)\bm{g}_{t}^{2}$, then
+$\bm{\theta}_{t+1} = \bm{\theta}_{t} - \eta\,\bm{g}_{t}/\left(\sqrt{\bm{s}_{t}}+
+\varepsilon\right)$ (all operations are element-wise).
+
+\paragraph{Adam} combines momentum (first moment) and RMSProp (second moment):
+\begin{center}
+    \frB{$\begin{aligned}
+        \bm{m}_{t} &= \beta_{1}\bm{m}_{t-1} + (1-\beta_{1})\bm{g}_{t}\\
+        \bm{v}_{t} &= \beta_{2}\bm{v}_{t-1} + (1-\beta_{2})\bm{g}_{t}^{2}\\
+        \hat{\bm{m}}_{t} &= \dfrac{\bm{m}_{t}}{1-\beta_{1}^{t}},\qquad
+        \hat{\bm{v}}_{t} = \dfrac{\bm{v}_{t}}{1-\beta_{2}^{t}}\\
+        \bm{\theta}_{t+1} &= \bm{\theta}_{t} - \eta\,
+        \dfrac{\hat{\bm{m}}_{t}}{\sqrt{\hat{\bm{v}}_{t}}+\varepsilon}
+    \end{aligned}$}
+\end{center}
+Defaults: $\beta_{1}=0.9$, $\beta_{2}=0.999$, $\varepsilon=10^{-8}$. The moments are
+initialized at $\bm{0}$, so they are biased towards zero in the first steps: the
+\uB{bias correction} (division by $1-\beta^{t}$) fixes it. Adam is the usual choice for
+Transformers (the original paper uses $\beta_{2}=0.98$ instead of $0.999$).
+
+\paragraph{AdamW} With SGD, adding the $L^{2}$ penalty $\frac{\lambda}{2}\norm{\bm{\theta}}^{2}$
+to the loss is the same as weight decay. \tB{With Adam it is not}, because the penalty
+gradient $\lambda\bm{\theta}$ goes through the adaptive rescaling. AdamW \uB{decouples} the
+decay from the gradient step:
+\begin{center}
+    $\bm{\theta}_{t+1} = \bm{\theta}_{t} - \eta\left(
+    \dfrac{\hat{\bm{m}}_{t}}{\sqrt{\hat{\bm{v}}_{t}}+\varepsilon} + \lambda\bm{\theta}_{t}
+    \right)$
+\end{center}
+It is the standard optimizer for training LLMs.
+
+\subsection{Learning-rate schedules}
+The learning rate is not kept constant:
+\begin{itemize}
+    \item \textbf{warmup}: increase linearly from $0$ during the first steps. At the
+        beginning the second-moment estimates of Adam are unreliable and the gradients are
+        large, so full-size steps can destabilize training;
+    \item \textbf{decay} afterwards: inverse square root (original Transformer), or
+        \emph{cosine} decay down to a small fraction of the peak value (common for LLMs).
+\end{itemize}
+
+\subsection{Gradient clipping}
+Against exploding gradients (see the long-term dependencies of recurrent networks), the
+gradient is rescaled when its norm exceeds a threshold $c$:
+\begin{center}
+    $\bm{g}\leftarrow\bm{g}\cdot\min\left(1,\dfrac{c}{\norm{\bm{g}}_{2}}\right)$
+\end{center}
+The direction is kept, only the step size is limited. A threshold $c=1$ is typical for LLMs.

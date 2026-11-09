@@ -1,0 +1,67 @@
+\paragraph{Purpose}
+A feed-forward network (or \emph{multi-layer perceptron}, MLP) defines a mapping
+$\bm{y} = f(\bm{x};\bm{\theta})$ and learns the parameters $\bm{\theta}$ that give the best
+approximation of an unknown function $f^{*}$. \tB{Information flows from the input to the
+output with no feedback connection}, otherwise the network would be recurrent.
+
+\paragraph{Theory}
+The network is a composition of $l$ layers, $f = f_{l}\circ\cdots\circ f_{1}$, each one
+being an affine map followed by a non-linear activation function $g$ applied element-wise:
+\begin{center}
+    \frB{$\bm{h}_{k} = g\left(\bm{W}_{k}\bm{h}_{k-1} + \bm{b}_{k}\right),\quad
+    \bm{h}_{0} = \bm{x},\quad \hat{\bm{y}} = \bm{h}_{l}$}
+\end{center}
+Without the non-linearity, the composition of affine maps collapses into a \uB{single
+affine map}, so depth would bring nothing.
+
+\paragraph{Universal approximation theorem}
+A feed-forward network with \uB{one hidden layer}, a non-polynomial activation function and
+enough hidden units can approximate any continuous function on a compact set
+(Cybenko 1989, Hornik 1991). The theorem says nothing about \tB{how many units are
+needed}, nor about whether gradient descent can \tB{find} the right parameters.
+
+\paragraph{Activation functions}
+\begin{center}
+\begin{tabular}{|l|c|l|}
+    \hline
+    Name & $g(x)$ & Remark\\
+    \hline
+    Sigmoid & $\sigma(x) = \dfrac{1}{1+e^{-x}}$ & saturates, $\sigma'\leq\frac{1}{4}$: gradients vanish\\
+    Tanh & $\tanh(x)$ & zero-centered, but also saturates\\
+    ReLU & $\max(0, x)$ & gradient $0$ or $1$, cheap, units can ``die''\\
+    GELU & $x\,\Phi(x)$ & smooth ReLU, used in GPT and BERT\\
+    \hline
+\end{tabular}
+\end{center}
+($\Phi$ is the cdf of the standard normal distribution.) Saturating activations multiply
+gradients by factors smaller than one at each layer in the backward pass, which is the same
+phenomenon as in the long-term dependencies of recurrent networks.
+
+\paragraph{Output layer and loss}
+The last layer and the loss are chosen from the probabilistic model of the target,
+the loss being the negative log-likelihood:
+\begin{center}
+\begin{tabular}{|l|l|l|}
+    \hline
+    Task & Output layer & Loss\\
+    \hline
+    Regression & linear & squared error (Gaussian likelihood)\\
+    Binary classification & sigmoid & binary cross-entropy (Bernoulli)\\
+    Multi-class classification & softmax & cross-entropy (categorical)\\
+    \hline
+\end{tabular}
+\end{center}
+
+\paragraph{Weaknesses}
+\begin{itemize}
+    \item no parameter sharing: the number of parameters grows with the input size;
+    \item fixed input size and no notion of order or locality, which motivates
+        convolutional networks (grids) and recurrent networks or Transformers (sequences).
+\end{itemize}
+
+\paragraph{Relationships with other methods}
+\begin{itemize}
+    \item with no hidden layer, a sigmoid (resp. softmax) output gives logistic regression;
+    \item the position-wise feed-forward sub-layer of the Transformer is a two-layer MLP
+        applied independently to each token.
+\end{itemize}

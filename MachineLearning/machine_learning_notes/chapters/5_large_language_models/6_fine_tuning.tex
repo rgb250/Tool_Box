@@ -1,0 +1,50 @@
+\section{Supervised Fine-Tuning (SFT)}
+\paragraph{Purpose}
+Turn a base model into an assistant by training it on \tB{demonstrations}: pairs
+(prompt, desired answer) written or curated by humans (\emph{instruction tuning}).
+
+\paragraph{Theory}
+It is the same next-token cross-entropy as in pretraining, with two differences:
+\begin{itemize}
+    \item the loss is computed \uB{only on the tokens of the answer}, the prompt tokens being
+        masked out;
+    \item the conversation is formatted with a template of special tokens marking the roles
+        (system, user, assistant).
+\end{itemize}
+The dataset is orders of magnitude smaller than the pretraining corpus, and the learning rate
+is lower. The model mostly learns the \emph{format and behavior} expected, using
+capabilities that pretraining already gave.
+
+\paragraph{Weaknesses}
+It is imitation: the model can only be as good as the demonstrations, writing good ones is
+expensive, and it cannot express that one correct answer is \emph{better} than another.
+
+\section{Parameter-Efficient Fine-Tuning: LoRA}
+\paragraph{Purpose}
+Updating all the parameters requires a gradient and the two Adam moments for each of them, a
+few times the memory of the weights, and a full copy of the model for each task. LoRA
+(Hu et al., 2021) \tB{freezes the pretrained weights and learns a low-rank correction}.
+
+\paragraph{Theory}
+For a frozen weight matrix $\bm{W}_{0}\in\mathcal{M}(\mathbb{R})_{d,k}$:
+\begin{center}
+    \frB{$\bm{h}=\bm{W}_{0}\bm{x}+\dfrac{\alpha}{r}\bm{B}\bm{A}\bm{x},\qquad
+    \bm{B}\in\mathcal{M}(\mathbb{R})_{d,r},\ \bm{A}\in\mathcal{M}(\mathbb{R})_{r,k},\
+    r\ll\min(d,k)$}
+\end{center}
+$\bm{A}$ is initialized randomly (Gaussian) and $\bm{B}$ at zero, so that the update
+$\Delta\bm{W}=\bm{B}\bm{A}$ is zero at the start. Only $\bm{A}$ and $\bm{B}$ are trained:
+$r(d+k)$ parameters instead of $dk$. For $d=k=4096$ and $r=8$: $65\,536$ instead of about
+$16.8$M, that is $0.4\%$. It is typically applied to the attention matrices.
+
+\paragraph{Strengths}
+\begin{itemize}
+    \item far less memory for the gradients and the optimizer states;
+    \item after training, $\bm{W}=\bm{W}_{0}+\frac{\alpha}{r}\bm{B}\bm{A}$ can be merged: \uB{no
+        extra latency at inference};
+    \item one small adapter per task on top of a shared base model.
+\end{itemize}
+
+\paragraph{Weaknesses}
+The hypothesis is that the useful update has a low intrinsic rank. For a task far from the
+pretraining distribution, it can learn less than full fine-tuning.
