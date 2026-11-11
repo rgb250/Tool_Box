@@ -23,7 +23,7 @@ hidden-to-output weights $\bm{V}$ (as in Figure~\ref{fig:03_rnn}), at each time 
 The total loss is the sum of the losses over time steps. The \tB{same parameters
 $\bm{U}, \bm{V}, \bm{W}$ are shared across all time steps}, which allows to process
 sequences of any length. The hidden state $\bm{h}^{(t)}$ is a lossy summary of the past
-inputs $\bm{x}^{(1)},\dots,\bm{x}^{(t)}$.\\
+inputs $\bm{x}^{(1:t)}$.\\
 Training applies back-propagation to the graph unrolled over time (\emph{back-propagation
 through time}, BPTT): the gradient with respect to a shared parameter is the sum of its
 contributions at each time step. As the computation of $\bm{h}^{(t)}$ needs

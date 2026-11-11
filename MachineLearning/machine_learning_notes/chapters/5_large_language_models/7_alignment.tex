@@ -90,10 +90,10 @@ tests of a program), the reward is computed \uB{without a learned reward model},
 $r=1$ if the answer is correct and $0$ otherwise.
 
 \paragraph{GRPO} (Group Relative Policy Optimization, DeepSeekMath 2024) For each prompt,
-sample a group of $G$ answers with rewards $r_{1},\dots,r_{G}$, and use as advantage of
+sample a group of $G$ answers with rewards $r_{1:G}$, and use as advantage of
 answer $i$ its reward normalized within the group, shared by all its tokens:
 \begin{center}
-    $\hat{A}_{i}=\dfrac{r_{i}-\mathrm{mean}(r_{1},\dots,r_{G})}{\mathrm{std}(r_{1},\dots,r_{G})}$
+    $\hat{A}_{i}=\dfrac{r_{i}-\mathrm{mean}(r_{1:G})}{\mathrm{std}(r_{1:G})}$
 \end{center}
 The update is the clipped PPO objective plus a KL penalty to the reference. The group mean
 plays the role of the baseline, so \tB{no critic network} is needed, which reduces the

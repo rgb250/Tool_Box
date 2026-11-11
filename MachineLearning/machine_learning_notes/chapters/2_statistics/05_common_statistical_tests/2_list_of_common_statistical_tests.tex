@@ -1026,7 +1026,7 @@ Using \uB{uniform (Jeffreys) priors with hyperparameter $\alpha = 1/2$}, the Bay
         \begin{center}
             \frB{$BF_{01} = \dfrac{n!}{(n_{1\cdot})!(n_{2\cdot})!} \cdot \dfrac{(n_{\cdot 1})!(n_{\cdot 2})!}{n!} \cdot \dfrac{B(n_{1\cdot} + \frac{1}{2}, n_{2\cdot} + \frac{1}{2}) \cdot B(n_{\cdot 1} + \frac{1}{2}, n_{\cdot 2} + \frac{1}{2})}{B(n_{11} + \frac{1}{2}, n_{12} + \frac{1}{2}, n_{21} + \frac{1}{2}, n_{22} + \frac{1}{2})}$}
         \end{center}
-        where $B(\cdot)$ is the multivariate beta function: $B(a_1, \ldots, a_k) = \dfrac{\prod_{i=1}^{k}\Gamma(a_i)}{\Gamma(\sum_{i=1}^{k}a_i)}$
+        where $B(\cdot)$ is the multivariate beta function: $B(a_{1:k}) = \dfrac{\prod_{i=1}^{k}\Gamma(a_i)}{\Gamma(\sum_{i=1}^{k}a_i)}$
 
     \item \textbf{Independent multinomial sampling} (row margins fixed):
         \begin{center}
@@ -1164,7 +1164,7 @@ to the \emph{Mann-Whitney U test}, covered separately.
 
 \subparagraph{One-sample test}:
 
-Let $x_1, \ldots, x_n$ be a sample from a continuous distribution with median $\theta$.
+Let $x_{1:n}$ be a sample from a continuous distribution with median $\theta$.
 
 $\begin{cases}
     H_{0}: \theta = \theta_0 \text{ (median equals hypothesized value)} \\

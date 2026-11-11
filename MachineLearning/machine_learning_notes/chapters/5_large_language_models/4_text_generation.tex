@@ -2,7 +2,7 @@
 \paragraph{Theory}
 At inference there is no target text, the model's own output is fed back:
 \begin{enumerate}
-    \item feed the prompt $x_{1},\dots,x_{n}$ and read the logits $\bm{z}_{n}$ of the last
+    \item feed the prompt $x_{1:n}$ and read the logits $\bm{z}_{n}$ of the last
         position;
     \item choose a token $x_{n+1}$ from $\mathrm{softmax}(\bm{z}_{n})$ (strategies below);
     \item append it to the sequence and repeat, until an end-of-text token or a maximum

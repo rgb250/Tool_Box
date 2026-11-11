@@ -1,10 +1,10 @@
 \section{Autoregressive Factorization}
 \paragraph{Purpose}
 A language model is a probability distribution over sequences of tokens
-$\bm{x}=(x_{1},\dots,x_{n})$. By the chain rule of probability, \uB{with no approximation}:
+$\bm{x}=x_{1:n}$. By the chain rule of probability, \uB{with no approximation}:
 \begin{center}
-    \frB{$\mathbb{P}\left(x_{1},\dots,x_{n}\right) = \prd{t=1}{n}
-    \mathbb{P}\left(x_{t}\,|\,x_{1},\dots,x_{t-1}\right)$}
+    \frB{$\mathbb{P}\left(x_{1:n}\right) = \prd{t=1}{n}
+    \mathbb{P}\left(x_{t}\,|\,x_{1:t-1}\right)$}
 \end{center}
 so it is enough to model the distribution of the \tB{next token given the previous ones}.
 The network outputs a vector of logits $\bm{z}_{t}\in\mathbb{R}^{V}$ and
@@ -30,8 +30,8 @@ cross-entropy) applied at every position, with a vocabulary of $V$ classes.
 \begin{itemize}
     \item it is \textbf{self-supervised}: the labels are the text itself, shifted by one
         position, so no annotation is needed;
-    \item with the causal mask, the inputs $x_{1},\dots,x_{n-1}$ give the $n-1$ predictions
-        of $x_{2},\dots,x_{n}$ in \uB{one parallel pass} (\emph{teacher forcing}: the true
+    \item with the causal mask, the inputs $x_{1:n-1}$ give the $n-1$ predictions
+        of $x_{2:n}$ in \uB{one parallel pass} (\emph{teacher forcing}: the true
         prefix is fed, not the model's own predictions);
     \item for the data distribution $p$: $H(p,q_{\bm{\theta}}) = H(p) + KL\left(p\,\|\,
         q_{\bm{\theta}}\right)$, so minimizing the cross-entropy minimizes the KL
