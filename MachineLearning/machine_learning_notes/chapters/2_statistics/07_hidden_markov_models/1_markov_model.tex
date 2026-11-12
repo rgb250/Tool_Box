@@ -1,5 +1,8 @@
 \subsection{Markov Models}
 \paragraph{Definition}
+Andrey Markov introduced these models in 1906 to extend the law of large numbers beyond fully
+independent variables, by keeping only a \tB{weaker form of independence}: the future is independent
+of the past once the present is known.\\
 It \tB{assumes that $X_{t}$ captures all the relevant information for predicting the future}.
 If we assume discrete time steps the \tB{joint distribution} is:
 \begin{center}
@@ -12,6 +15,36 @@ models are called \tB{\textbf{stochastic process}}.
 \paragraph{Assumptions}
 \tB{$x_{t+1} \perp x_{1:t-1}|x_{t}$, meaning the future is independent of the past 
 given the present}, is called the \emph{first order Markov assumption.}
+
+\paragraph{Choosing the order}
+An order-$m$ model assumes $X_{t}$ depends only on $X_{t-m:t-1}$ and needs $K^{m+1}$ parameters.
+\begin{center}
+\begin{tabularx}{\textwidth}{|l|X|X|}
+    \hline
+    & \textbf{Order too low} & \textbf{Order too high} \\
+    \hline
+    \textbf{Error type} & Bias (underfitting) & Variance (overfitting) \\
+    \hline
+    \textbf{Assumption made} & Dependent events treated as independent beyond the last $m$ states
+        & Noise in the counts treated as real dependence \\
+    \hline
+    \textbf{Model capacity} & Too small: different histories are merged into one state
+        & Contains all lower orders, but needs $K^{m+1}$ parameters \\
+    \hline
+    \textbf{Effect on data} & Long-range context is lost
+        & Contexts rarely or never seen, unreliable estimates (0 or 1 probabilities) \\
+    \hline
+    \textbf{Symptom} & Locally plausible but incoherent sequences
+        & Memorized, verbatim sequences and poor generalization \\
+    \hline
+    \textbf{Fix} & Raise the order
+        & Lower the order, smooth (backoff, interpolation) or regularize \\
+    \hline
+    \textbf{Order selection} & \multicolumn{2}{X|}{Choose $m$ by validation likelihood or AIC/BIC:
+        take the smallest order whose validation score stops improving.} \\
+    \hline
+\end{tabularx}
+\end{center}
 
 \paragraph{Transition matrix}
 \uB{When $X_{t}$ is discrete} the conditional distribution $\prob{X_{t}|X_{t-1}}$ can be written as 
@@ -28,6 +61,23 @@ X_{t-1}=i}$ being the probability of going from state $i$ to $j$}. Each row of t
 The $n$-step transition matrix $\bm{A}(n)$ is defined as \tB{$\bm{A}_{ij}(n)=\prob{X_{t+n}=j|
 X_{t}=i}$}\\
 For a steps $m+n$ , \tB{$\bm{A}(m+n) = \bm{A}(m) \cdot \bm{A}(n)$}
+
+\paragraph{Transition matrix for higher orders}
+For an order-$m$ model, \tB{define the augmented state $Y_{t}=X_{t-m+1:t}$}, which takes
+$K^{m}$ values. Since $Y_{t}$ depends only on $Y_{t-1}$, \uB{$Y$ is a first-order chain} with a
+$K^{m}\times K^{m}$ transition matrix. For $m=2$:
+\begin{center}
+    \fr{$\prob{Y_{t}=(j,k)|Y_{t-1}=(i,j)} = \prob{X_{t}=k|X_{t-2}=i,X_{t-1}=j}$}
+\end{center}
+\begin{itemize}
+    \item \tB{the matrix is sparse}: from $(i,j)$ one can only reach the states whose first component is $j$,
+        so each row has at most $K$ non-zero entries out of $K^{m}$
+    \item each row still sums to one, so it is a stochastic matrix
+    \item everything above (n-step matrix, stationary distribution, MLE by counting) applies to $Y$
+    \item only $K^{m+1}$ of its $K^{2m}$ entries can be non-zero, which is the parameter count of the model
+\end{itemize}
+\emph{Example}: with $K=2$ and $m=2$ the states are $00,01,10,11$ and the matrix is $4\times4$;
+state $01$ can only go to $10$ or $11$, and state $00$ only to $00$ or $01$.
 
 \paragraph{Application}
 \begin{itemize}
