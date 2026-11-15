@@ -50,7 +50,8 @@ An order-$m$ model assumes $X_{t}$ depends only on $X_{t-m:t-1}$ and needs $K^{m
 \uB{When $X_{t}$ is discrete} the conditional distribution $\prob{X_{t}|X_{t-1}}$ can be written as 
 $K\times K$ matrix known as \tB{\textbf{transition matrix} $\bm{A}$, where $A_{ij} = \prob{X_{t}=j|
 X_{t-1}=i}$ being the probability of going from state $i$ to $j$}. Each row of the matrix sums to one
-\tB{$\Sigma_{j}A_{ij}=1$} so it is called \emph{stochastic matrix}.
+\tB{$\Sigma_{j}A_{ij}=1$} so it is called \emph{stochastic matrix}: $\displaystyle\sum_{j}\prob{X_{t}=j|X_{t-1}=i}=1$ for
+each fixed $i$.
 \begin{figure}[H]
     \begin{center}
         \includegraphics[width=.5\textwidth]{chapters/2_statistics/07_hidden_markov_models/1_images/1_state_transition_diagrams.png}
@@ -60,24 +61,56 @@ X_{t-1}=i}$ being the probability of going from state $i$ to $j$}. Each row of t
 \end{figure}
 The $n$-step transition matrix $\bm{A}(n)$ is defined as \tB{$\bm{A}_{ij}(n)=\prob{X_{t+n}=j|
 X_{t}=i}$}\\
-For a steps $m+n$ , \tB{$\bm{A}(m+n) = \bm{A}(m) \cdot \bm{A}(n)$}
+For a steps $m+n$ , \tB{$\bm{A}(m+n) = \bm{A}(m) \cdot \bm{A}(n)$}\\
+Why (\emph{Chapman-Kolmogorov}): marginalize over the state $k$ reached after $m$ steps, apply the chain
+rule $\prob{a,b|c}=\prob{a|b,c}\prob{b|c}$, then drop $X_{t}$ by the Markov property:
+\begin{center}
+    $A_{ij}(m+n)=\displaystyle\sum_{k}\prob{X_{t+m+n}=j|X_{t+m}=k,\cancel{X_{t}=i}}
+    \prob{X_{t+m}=k|X_{t}=i}=\sum_{k}A_{ik}(m)A_{kj}(n)$
+\end{center}
+Hence $\bm{A}(n)=\bm{A}^{n}$.
 
 \paragraph{Transition matrix for higher orders}
-For an order-$m$ model, \tB{define the augmented state $Y_{t}=X_{t-m+1:t}$}, which takes
-$K^{m}$ values. Since $Y_{t}$ depends only on $Y_{t-1}$, \uB{$Y$ is a first-order chain} with a
-$K^{m}\times K^{m}$ transition matrix. For $m=2$:
+For an order-$m$ model, \tB{define the augmented state $Y_{t}=X_{t-m+1:t}$}, a tuple of $m$
+consecutive states. Each slot takes $K$ values, so $Y_{t}$ takes $K\times\dots\times K=K^{m}$ values.
+Since $Y_{t}$ depends only on $Y_{t-1}$, \uB{$Y$ is a first-order chain} with a
+$K^{m}\times K^{m}$ transition matrix.\\
+Why: $Y_{t-1}$ and $Y_{t}$ share $m-1$ components, so $Y_{t}$ is $Y_{t-1}$ shifted by one
+(deterministic) plus the new $X_{t}$, which depends only on $Y_{t-1}$ by the order-$m$ assumption.\\
+Proof: let $Y_{t-1}=\bm{a}=\left(a_{i}\right)_{1\leq i\leq m}$ and
+$\bm{b}=\left(b_{i}\right)_{1\leq i\leq m}$ a candidate value of $Y_{t}$. Component $i$ of $Y_{t-1}$ is
+$X_{t-1-m+i}$ and component $i$ of $Y_{t}$ is $X_{t-m+i}$, so $Y_{t,i}=Y_{t-1,i+1}$ for $i<m$ and
+$Y_{t,m}=X_{t}$.\\
+The two tuples \tB{share the variables $X_{t-m+1:t-1}$}: $Y_{t-1}=\bm{a}$ says they equal
+$\left(a_{i+1}\right)_{1\leq i\leq m-1}$ (the sub-tuple of $\bm{a}$ without $a_{1}$) while
+$Y_{t}=\bm{b}$ says they equal $\left(b_{i}\right)_{1\leq i\leq m-1}$ (the sub-tuple of $\bm{b}$
+without $b_{m}$).
+\begin{itemize}
+    \item if $b_{i}\neq a_{i+1}$ for some $i<m$, the same variable $X_{t-m+i}$ would have to take two
+        different values, so $\{Y_{t-1}=\bm{a}\}\cap\{Y_{t}=\bm{b}\}=\emptyset$ and
+        $\prob{Y_{t}=\bm{b}|Y_{1:t-1}}=0=\prob{Y_{t}=\bm{b}|Y_{t-1}}$
+    \item if $b_{i}=a_{i+1}$ for all $i<m$, the conditions $Y_{t,i}=b_{i}$ for $i<m$ already hold
+        given $Y_{t-1}=\bm{a}$, so $\{Y_{t}=\bm{b}\}$ reduces to $\{X_{t}=b_{m}\}$. Since $Y_{1:t-1}$
+        contains $X_{t-m:t-1}=\bm{a}$ plus older variables that drop out by the order-$m$ assumption:
+        \begin{center}
+            $\prob{Y_{t}=\bm{b}|Y_{1:t-1}}=\prob{X_{t}=b_{m}|X_{t-m:t-1}=\bm{a}}=
+            \prob{Y_{t}=\bm{b}|Y_{t-1}}$
+        \end{center}
+\end{itemize}
+For $m=3$:
 \begin{center}
-    \fr{$\prob{Y_{t}=(j,k)|Y_{t-1}=(i,j)} = \prob{X_{t}=k|X_{t-2}=i,X_{t-1}=j}$}
+    \fr{$\prob{Y_{t}=(j,k,l)|Y_{t-1}=(i,j,k)} = \prob{X_{t}=l|X_{t-3}=i,X_{t-2}=j,X_{t-1}=k}$}
 \end{center}
 \begin{itemize}
-    \item \tB{the matrix is sparse}: from $(i,j)$ one can only reach the states whose first component is $j$,
-        so each row has at most $K$ non-zero entries out of $K^{m}$
+    \item \tB{the matrix is sparse}: from $(i,j,k)$ one can only reach the states whose first two
+        components are $(j,k)$, so each row has at most $K$ non-zero entries out of $K^{m}$
     \item each row still sums to one, so it is a stochastic matrix
     \item everything above (n-step matrix, stationary distribution, MLE by counting) applies to $Y$
     \item only $K^{m+1}$ of its $K^{2m}$ entries can be non-zero, which is the parameter count of the model
 \end{itemize}
-\emph{Example}: with $K=2$ and $m=2$ the states are $00,01,10,11$ and the matrix is $4\times4$;
-state $01$ can only go to $10$ or $11$, and state $00$ only to $00$ or $01$.
+\emph{Example}: with $K=2$ and $m=3$ there are $2^{3}=8$ states (from $000$ to $111$) and the
+matrix is $8\times8$ with $2^{4}=16$ non-zero entries; state $011$ can only go to $110$ or $111$,
+and state $000$ only to $000$ or $001$.
 
 \paragraph{Application}
 \begin{itemize}
