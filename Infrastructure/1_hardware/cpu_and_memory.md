@@ -47,40 +47,9 @@ There are $2^n$ addresses; the largest one is $2^n-1$ (counting starts at $0$).
 
 ### Picture: bulbs
 
-Think of each bit as a bulb, on ($\bullet=1$) or off ($\circ=0$).
-
-**Memory** is a long column of rows, one row of 8 bulbs (one byte) per address. It is like
-a building with $2^n$ apartments: the contents are the 8 bulbs inside, the address is
-the number on the door.
-
-```text
- address   contents (1 byte)
- 0         ○ ○ ● ○ ● ○ ● ○     (0x2A)
- 1         ○ ○ ○ ○ ○ ○ ○ ○
- ...       ...
- 2^n - 1   ○ ● ○ ○ ● ● ○ ●
-```
-
-Total: $8\times2^n$ bulbs. An 8×8 grid is therefore only 8 bytes.
-
-**An address** (a pointer in a register) is a separate set of $n$ bulbs whose pattern is
-read as a number: it is not stored in the row it selects, it *chooses* the row. A 64-bit
-value is 8 rows of 8 bulbs, for example the pointer `0x0000_7FFF_FFFF_FFFF`:
-
-```text
- byte 7  00   ○ ○ ○ ○ ○ ○ ○ ○
- byte 6  00   ○ ○ ○ ○ ○ ○ ○ ○     <- top 16 bits: all off
- byte 5  7F   ○ ● ● ● ● ● ● ●     <- bit 47 (leftmost bulb of this byte): off
- byte 4  FF   ● ● ● ● ● ● ● ●
- byte 3  FF   ● ● ● ● ● ● ● ●
- byte 2  FF   ● ● ● ● ● ● ● ●
- byte 1  FF   ● ● ● ● ● ● ● ●
- byte 0  FF   ● ● ● ● ● ● ● ●
-```
-
-Small machine, $n=3$: $2^3=8$ rows, so $8\times8=64$ memory bulbs, and each address is 3
-bulbs (`000` selects row 0, `101` selects row 5). A pointer stored *in* memory occupies 8
-consecutive rows: its 64 data bulbs encode the door number of another row.
+Each bit can be pictured as a bulb, on or off: memory is a column of rows of 8 bulbs
+(one per address), and an address is a separate set of $n$ bulbs that selects a row. See
+the [bulb picture](memory_and_addresses.md#picture-bulbs) in `memory_and_addresses.md`.
 
 ### Addresses: 64 bits, 48 used
 
@@ -121,7 +90,8 @@ offset (see [virtual memory](../3_operating_systems/virtual_memory.md#multi-leve
 ### Types as pairs
 
 A **pair** $(a,b)$ is two objects grouped in a fixed order (like a Python tuple of
-length 2). A **type** $\tau$ is the pair
+length 2). To *read* a value, a **type** $\tau$ needs two ingredients, a pair (a third one,
+the legal operations $\Omega_\tau$, is in [`memory_and_addresses.md`](memory_and_addresses.md#type)):
 
 $$\tau = (\ell_\tau,\ d_\tau)$$
 
@@ -135,7 +105,7 @@ $$\tau = (\ell_\tau,\ d_\tau)$$
 | `float64` | 8 | IEEE 754 double |
 
 Reading a value of type $\tau$ at address $a$ means taking the bytes
-$M(a),\dots,M(a+\ell_\tau-1)$ and applying $d_\tau$ (see `Computer/notes.md`). The bytes
+$M(a),\dots,M(a+\ell_\tau-1)$ and applying $d_\tau$ (see [`memory_and_addresses.md`](memory_and_addresses.md)). The bytes
 `2A 00 00 00` are the integer $42$ as `int32`, but just the character `'*'` if read
 as a one-byte `char`: memory is the same, only $\tau$ changes the meaning.
 

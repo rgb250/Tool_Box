@@ -29,6 +29,6 @@ See [`timeline.md`](timeline.md) for a one-page history of each layer, linked to
 
 ## Related notes in this repository
 
-- `Computer/notes.md`: memory, addresses and types
+- [`1_hardware/memory_and_addresses.md`](1_hardware/memory_and_addresses.md): memory, addresses, types and the bulb picture
 - `Linux/`: shell, Ubuntu, file system hierarchy
 - `Virtualization/docker/`: containers
