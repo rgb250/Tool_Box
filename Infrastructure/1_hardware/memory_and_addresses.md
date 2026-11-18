@@ -33,13 +33,36 @@ sequence of bytes. Let $\mathcal{T}$ be the set of types; a type $\tau\in\mathca
 - **which operations are legal**: a set $\Omega_\tau$ (for an `int32`: $+,-,\times,\dots$; for
   a string: concatenation, ...).
 
+A **pair** $(a,b)$ is two objects grouped in a fixed order (like a Python tuple of
+length 2); a **triple** groups three. So a type is the triple
+
 $$\tau=(\ell_\tau,\ d_\tau,\ \Omega_\tau), \qquad
 \text{value of type }\tau\text{ at }a \;=\; d_\tau\big(\mathcal{M}(a),\dots,\mathcal{M}(a+\ell_\tau-1)\big)$$
 
+| Type $\tau$ | Length $\ell_\tau$ | Decoding $d_\tau$ | Legal operations $\Omega_\tau$ (examples) |
+|-------------|--------------------|-------------------|-------------------------------------------|
+| `char` | 1 | byte as a character code | comparison, conversion |
+| `int32` | 4 | little-endian, two's complement | $+,-,\times,\div,\bmod$, bitwise, comparison |
+| `float64` | 8 | IEEE 754 double | $+,-,\times,\div$ (IEEE rules), comparison, `sqrt` |
+
 Example: the bytes `2A 00 00 00` at address $a$ are the integer $42$ as an `int32`
-($\ell=4$) but the character `'*'` as a `char` ($\ell=1$). The operations matter too: the same
+($\ell=4$) but the character `'*'` as a `char` ($\ell=1$): memory is the same, only $\tau$
+changes the meaning. The operations matter too: the same
 bit patterns are added by a different CPU instruction for integers (`add`) and for floats
 (`addsd`), which is why the compiler must know the type of every value.
+
+### Byte order (endianness)
+
+A value longer than one byte occupies consecutive addresses, so the bytes need an order.
+A $k$-byte unsigned integer stored at $a$ is, in **little-endian** (x86, usually ARM), the
+least significant byte first:
+
+$$x = \sum_{i=0}^{k-1} \mathcal{M}(a+i)\, 256^{\,i}$$
+
+and in **big-endian** the most significant byte first, with weight $256^{\,k-1-i}$. The
+`int32` $42$ is stored `2A 00 00 00` in little-endian and `00 00 00 2A` in big-endian.
+Network protocols use big-endian ("network byte order"), so programs convert at the
+boundary (`htons`, `htonl`; `int.from_bytes(b, "big")` in Python).
 
 ## Picture: bulbs
 

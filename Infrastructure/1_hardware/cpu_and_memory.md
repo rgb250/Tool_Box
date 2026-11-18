@@ -87,34 +87,11 @@ offset (see [virtual memory](../3_operating_systems/virtual_memory.md#multi-leve
 256 TiB was plenty when x86-64 appeared (2003); recent CPUs offer 5 levels (57 bits,
 128 PiB) for very large servers.
 
-### Types as pairs
+### Types and byte order
 
-A **pair** $(a,b)$ is two objects grouped in a fixed order (like a Python tuple of
-length 2). To *read* a value, a **type** $\tau$ needs two ingredients, a pair (a third one,
-the legal operations $\Omega_\tau$, is in [`memory_and_addresses.md`](memory_and_addresses.md#type)):
-
-$$\tau = (\ell_\tau,\ d_\tau)$$
-
-- $\ell_\tau\in\mathbb{N}$: the **length**, i.e. how many bytes the type occupies;
-- $d_\tau$: the **decoding map**, turning those bytes into a value.
-
-| Type $\tau$ | $\ell_\tau$ | Decoding $d_\tau$ |
-|-------------|-------------|-------------------|
-| `char` | 1 | byte as a character code |
-| `int32` | 4 | little-endian, two's complement |
-| `float64` | 8 | IEEE 754 double |
-
-Reading a value of type $\tau$ at address $a$ means taking the bytes
-$M(a),\dots,M(a+\ell_\tau-1)$ and applying $d_\tau$ (see [`memory_and_addresses.md`](memory_and_addresses.md)). The bytes
-`2A 00 00 00` are the integer $42$ as `int32`, but just the character `'*'` if read
-as a one-byte `char`: memory is the same, only $\tau$ changes the meaning.
-
-A $k$-byte unsigned integer stored at $a$ is, in **little-endian** (x86, usually
-ARM), the least significant byte first:
-
-$$x = \sum_{i=0}^{k-1} M(a+i)\, 256^{\,i}$$
-
-(big-endian: $256^{\,k-1-i}$).
+How bytes are turned into values (types, their length, decoding and legal operations) and
+the order of the bytes of a number (little- or big-endian) are explained in
+[`memory_and_addresses.md`](memory_and_addresses.md#type).
 
 ## Integers and overflow
 
