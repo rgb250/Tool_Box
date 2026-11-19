@@ -1,0 +1,36 @@
+{
+  "$schema": "https://app.kilo.ai/config.json",
+  // Global rules, versioned in the Tool_Box repo. "~" is expanded by Kilo.
+  "instructions": ["~/OneDrive - Groupe BPCE/Documents/Workspace/Tool_Box/AiHelper/AGENTS.md"],
+  "permission": {
+    // Access to paths outside the session's starting directory.
+    // Broad rule first, specific override after (last match wins).
+    "external_directory": {
+      "*": "ask",
+      "~/OneDrive - Groupe BPCE/Documents/Workspace": "allow",
+      "~/OneDrive - Groupe BPCE/Documents/Workspace/**": "allow"
+    },
+    "bash": {
+      "*": "allow",
+      // Destructive commands always require confirmation, in any directory.
+      "rm *": "ask",
+      "rmdir *": "ask",
+      "del *": "ask",
+      "rd *": "ask",
+      "erase *": "ask",
+      "Remove-Item *": "ask",
+      "git rm *": "ask",
+      "git clean *": "ask",
+      "git reset --hard*": "ask",
+      "git checkout -- *": "ask",
+      "git restore *": "ask",
+      "git stash drop*": "ask",
+      "git branch -D *": "ask",
+      "git push --force*": "ask",
+      "git push -f*": "ask",
+      "find * -delete*": "ask",
+      "mv *": "ask",
+      "move *": "ask"
+    }
+  }
+}
