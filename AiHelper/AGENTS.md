@@ -1,4 +1,5 @@
 Before each tool call, write one sentence explaining the intent and add what you concluded from the previous result.
+In each reply, show the shell commands you ran (in a code block) so the user can see how the information was obtained.
 
 Never delete, overwrite or move files or folders unless they are tracked by git with no uncommitted changes.
 Before any deletion, run `git status` and check that the target is tracked and clean.
