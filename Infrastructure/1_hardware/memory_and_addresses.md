@@ -7,18 +7,25 @@
 
 `Memory` is a large array of **bytes**. Formally it is a function from addresses to bytes:
 
-$$\mathcal{M} : \{0,\dots,N-1\} \to \{0,\dots,2^{8}-1\}, \qquad N = 2^{n}$$
+$$\mathcal{M} : \{0,\dots,2^{n}-1\} \to \{0,\dots,2^{8}-1\}$$
 
-where $n$ is the address width. On a 64-bit machine $n=64$, so $N=2^{64}$ in theory (in
-practice 48 bits are used, see [addresses](cpu_and_memory.md#addresses-64-bits-48-used)).
-A byte is 8 bits, so it holds $2^8=256$ distinct values.
+where $n$ is the address width. On a 64-bit machine $n=64$, so there are $2^{64}$
+addresses in theory (in practice 48 bits are used, see
+[addresses](cpu_and_memory.md#addresses-64-bits-48-used)). A byte is 8 bits, so it holds
+$2^8=256$ distinct values.
+
+$\mathcal{M}$ is a function, not a bijection: there are far more addresses than byte values,
+so many addresses hold the same byte (it is **not injective**), and nothing forces every
+byte value to appear (it is not necessarily **surjective**: a freshly zeroed memory maps
+every address to $0$). Also, this description is only valid at a **given moment**: the
+program keeps writing bytes, so strictly $\mathcal{M}=\mathcal{M}_t$ depends on the time $t$.
 
 A program only touches a small fraction of this array at a time, usually a few
 **consecutive** bytes (4 for an `int32`, 8 for a `float64`...), not the whole of it.
 
 ## Address
 
-An `Address` is an **index** $a\in\{0,\dots,N-1\}$: the position of a byte in `Memory`. It is
+An `Address` is an **index** $a\in\{0,\dots,2^{n}-1\}$: the position of a byte in `Memory`. It is
 not the content: $\mathcal{M}(a)$ is the byte *stored at* $a$. A *pointer* is a variable whose
 value is an address.
 
