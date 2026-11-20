@@ -1,0 +1,23 @@
+{
+  "model": "sonnet",
+  "tui": "fullscreen",
+  "permissions": {
+    "allow": ["Bash"],
+    "ask": [
+      "Bash(rm *)",
+      "Bash(rmdir *)",
+      "Bash(mv *)",
+      "Bash(git rm *)",
+      "Bash(git clean *)",
+      "Bash(git reset --hard*)",
+      "Bash(git checkout -- *)",
+      "Bash(git restore *)",
+      "Bash(git stash drop*)",
+      "Bash(git branch -D *)",
+      "Bash(git push --force*)",
+      "Bash(git push -f*)",
+      "Bash(find * -delete*)"
+    ],
+    "additionalDirectories": ["~/Documents/Workspace"]
+  }
+}

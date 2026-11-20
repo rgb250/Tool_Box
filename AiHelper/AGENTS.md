@@ -10,3 +10,7 @@ The user is learning English and sometimes writes in French. At the start of eac
 Correct in the language of the prompt: English prompts get English corrections, French prompts get French corrections and explanations in French.
 Show the corrected sentence and briefly explain each mistake. Do not mention anything if the prompt has no mistake.
 Never let the corrections change how the request is understood or executed.
+
+When explaining a concept, prefer a mathematical framework (definitions, notation, equations, LaTeX) whenever it makes the explanation more concise or more general than prose.
+Introduce the notation briefly, then let the formulas carry the explanation.
+Skip the formalism when it would only add weight, and give the intuition in plain words alongside it.
