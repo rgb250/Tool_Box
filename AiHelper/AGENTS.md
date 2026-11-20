@@ -12,6 +12,18 @@ Correct in the language of the prompt: English prompts get English corrections, 
 Show the corrected sentence and briefly explain each mistake. Do not mention anything if the prompt has no mistake.
 Never let the corrections change how the request is understood or executed.
 
-When explaining a concept, prefer a mathematical framework (definitions, notation, equations, LaTeX) whenever it makes the explanation more concise or more general than prose.
-Introduce the notation briefly, then let the formulas carry the explanation.
+When explaining a concept, prefer a mathematical framework (definitions, notation, equations) whenever it makes the explanation more concise or more general than prose.
+Do not use LaTeX. Write formulas in Unicode plain text inside code blocks (Σ, ∏, ∫, Δ, ∂, ∈, →, ≤, ≥, subscripts like xᵢ).
+Write fractions in stacked layout, with a bar made of ─ as long as the longest of numerator and denominator:
+
+   numerator
+   ─────────
+  denominator
+
+Write sums with stacked limits:
+
+    n
+    Σ  xᵢ
+   i=1
+
 Skip the formalism when it would only add weight, and give the intuition in plain words alongside it.
