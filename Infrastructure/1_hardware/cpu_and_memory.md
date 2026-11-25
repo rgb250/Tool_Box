@@ -29,7 +29,8 @@ APIs) is software layered on top of this loop.
 ## Formal model
 
 A computer is a **deterministic state machine**. Its state is
-$s = (R, M, pc)$ with registers $R$, memory $M$ and program counter $pc$, and
+$s = (R, \mathcal{M}, pc)$ with registers $R$,
+[memory](memory_and_addresses.md#memory) $\mathcal{M}$ and program counter $pc$, and
 running a program is iterating a transition function:
 
 $$s_{t+1} = \delta(s_t), \qquad \delta = \text{execute}\circ\text{decode}\circ\text{fetch}$$
@@ -37,61 +38,11 @@ $$s_{t+1} = \delta(s_t), \qquad \delta = \text{execute}\circ\text{decode}\circ\t
 Everything else in `Infrastructure/` (code execution, OS, network, APIs) is a layer
 that builds a richer $\delta$ out of this one.
 
-## Memory as a function
+## Memory and addresses
 
-With $n$-bit addresses, memory is a map from addresses to bytes:
-
-$$M : \{0,\dots,2^{n}-1\} \to \{0,\dots,255\}$$
-
-There are $2^n$ addresses; the largest one is $2^n-1$ (counting starts at $0$).
-
-### Picture: bulbs
-
-Each bit can be pictured as a bulb, on or off: memory is a column of rows of 8 bulbs
-(one per address), and an address is a separate set of $n$ bulbs that selects a row. See
-the [bulb picture](memory_and_addresses.md#picture-bulbs) in `memory_and_addresses.md`.
-
-### Addresses: 64 bits, 48 used
-
-A 64-bit machine has 64-bit pointers ($n=64$), but the CPU only translates the lower
-**48 bits**, so $2^{48}$ bytes $=256$ TiB are addressable. The top 16 bits are not
-free: they must be copies of bit 47 (**canonical address**), which splits the space in
-two halves:
-
-```text
- 0xFFFF_FFFF_FFFF_FFFF  ┐  upper half: top 16 bits all 1 (128 TiB, kernel)
- 0xFFFF_8000_0000_0000  ┘
-   non-canonical addresses in between: using one raises a fault
- 0x0000_7FFF_FFFF_FFFF  ┐  lower half: top 16 bits all 0 (128 TiB, user programs)
- 0x0000_0000_0000_0000  ┘
-```
-
-How to read it: an address is 16 hex digits and each hex digit is 4 bits, so the
-**top 16 bits** are the 4 leftmost hex digits. "All 1" means `FFFF` ($1111\,1111\,1111\,1111$)
-and "all 0" means `0000`. The rule is: bits $63..48$ must equal bit 47.
-
-| Address | Top 16 bits | Bit 47 | Valid? |
-|---------|-------------|--------|--------|
-| `0x0000_7FFF_FFFF_FFFF` | `0000` | 0 (`7`=`0111`) | yes, last user address |
-| `0xFFFF_8000_0000_0000` | `FFFF` | 1 (`8`=`1000`) | yes, first kernel address |
-| `0x0000_8000_0000_0000` | `0000` | 1 | no: top bits differ from bit 47 |
-
-This is **sign extension**, as for two's complement
-([integers](#integers-and-overflow)): a canonical address is a 48-bit signed number
-copied into 64 bits, in $[-2^{47},\,2^{47}-1]$. Non-negative values form the user
-half, negative values the kernel half.
-
-Why not use all 64 bits? Each address bit makes the page tables and translation
-hardware bigger and slower: $48=4\times9+12$ is four page-table levels plus a 12-bit
-offset (see [virtual memory](../3_operating_systems/virtual_memory.md#multi-level-page-tables)).
-256 TiB was plenty when x86-64 appeared (2003); recent CPUs offer 5 levels (57 bits,
-128 PiB) for very large servers.
-
-### Types and byte order
-
-How bytes are turned into values (types, their length, decoding and legal operations) and
-the order of the bytes of a number (little- or big-endian) are explained in
-[`memory_and_addresses.md`](memory_and_addresses.md#type).
+The formal definition of memory, addresses (including why only 48 of the 64 bits are
+used), types, byte order and the bulb picture are in
+[`memory_and_addresses.md`](memory_and_addresses.md).
 
 ## Integers and overflow
 

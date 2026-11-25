@@ -7,12 +7,21 @@
 
 `Memory` is a large array of **bytes**. Formally it is a function from addresses to bytes:
 
-$$\mathcal{M} : \{0,\dots,2^{n}-1\} \to \{0,\dots,2^{8}-1\}$$
+$$
+\mathcal{M} : \left\{
+\begin{array}{ccc}
+[\![0,\,2^{n}-1]\!] & \to & [\![0,\,2^{8}-1]\!] \\
+a & \mapsto & b
+\end{array}
+\right.
+$$
 
-where $n$ is the address width. On a 64-bit machine $n=64$, so there are $2^{64}$
-addresses in theory (in practice 48 bits are used, see
-[addresses](cpu_and_memory.md#addresses-64-bits-48-used)). A byte is 8 bits, so it holds
-$2^8=256$ distinct values.
+Here $[\![p,q]\!]$ is the set of all integers from $p$ to $q$, both included, $a$ is an
+address, $b$ is the byte stored at that address, and $n$ is the address width. There are
+$2^n$ addresses; the largest one is $2^n-1$ (counting starts at $0$). On a 64-bit machine
+$n=64$, so there are $2^{64}$ addresses in theory (in practice fewer are usable, see
+[addresses](#addresses-64-bits-48-used)). A byte is 8 bits, so it holds $2^8=256$
+distinct values.
 
 $\mathcal{M}$ is a function, not a bijection: there are far more addresses than byte values,
 so many addresses hold the same byte (it is **not injective**), and nothing forces every
@@ -23,11 +32,72 @@ program keeps writing bytes, so strictly $\mathcal{M}=\mathcal{M}_t$ depends on 
 A program only touches a small fraction of this array at a time, usually a few
 **consecutive** bytes (4 for an `int32`, 8 for a `float64`...), not the whole of it.
 
+**Why consecutive?** One byte holds only 256 values, so larger values need several bytes.
+Keeping them consecutive has three advantages:
+
+- **One address is enough.** A value of length $\ell$ bytes (see [type](#type)) stored at
+  $a$ occupies the addresses $[\![a,\,a+\ell-1]\!]$. For an `int32` ($\ell=4$) at address
+  $1000$, these are $1000$ to $1003$. If the 4 bytes were scattered, finding them could
+  take 4 separate addresses: $4\times8=32$ bytes on a 64-bit machine.
+- **Direct access in arrays.** If elements of the same length $\ell$ follow one another
+  from address $a$, element $i$ (counting from $0$) starts at
+
+  $$a_i = a + i\,\ell$$
+
+  In an `int32` array starting at $1000$, element $5$ is at $1000+5\times4=1020$: there
+  is no need to read the previous elements.
+- **Faster hardware.** The CPU can usually load several consecutive bytes with one
+  instruction. It also copies memory into its cache by blocks called **cache lines**
+  (typically 64 bytes, see the
+  [memory hierarchy](cpu_and_memory.md#the-memory-hierarchy)), so reading neighbouring
+  bytes next is usually fast.
+
+This applies to **one value**, or to one contiguous block such as an array, not to all the
+data of a program: the nodes of a linked list can be far apart. Also, consecutive
+**virtual** addresses are not always neighbours in physical RAM, since they can cross from
+one [memory page](../3_operating_systems/virtual_memory.md) into another.
+
 ## Address
 
-An `Address` is an **index** $a\in\{0,\dots,2^{n}-1\}$: the position of a byte in `Memory`. It is
+An `Address` is an **index** $a\in[\![0,\,2^{n}-1]\!]$: the position of a byte in `Memory`. It is
 not the content: $\mathcal{M}(a)$ is the byte *stored at* $a$. A *pointer* is a variable whose
 value is an address.
+
+### Addresses: 64 bits, 48 used
+
+A 64-bit machine has 64-bit pointers ($n=64$), so each address is stored on 8 bytes. With
+4-level paging, however, the CPU only translates the lower **48 bits**, so $2^{48}$ bytes
+$=256$ TiB are addressable. The top 16 bits are not free: they must be copies of bit 47
+(**canonical address**), which splits the space in two halves (x86-64):
+
+```text
+ 0xFFFF_FFFF_FFFF_FFFF  ┐  upper half: top 16 bits all 1 (128 TiB, kernel)
+ 0xFFFF_8000_0000_0000  ┘
+   non-canonical addresses in between: using one raises a fault
+ 0x0000_7FFF_FFFF_FFFF  ┐  lower half: top 16 bits all 0 (128 TiB, user programs)
+ 0x0000_0000_0000_0000  ┘
+```
+
+How to read it: an address is 16 hex digits and each hex digit is 4 bits, so the
+**top 16 bits** are the 4 leftmost hex digits. "All 1" means `FFFF` ($1111\,1111\,1111\,1111$)
+and "all 0" means `0000`. The rule is: bits $63..48$ must equal bit 47.
+
+| Address | Top 16 bits | Bit 47 | Valid? |
+|---------|-------------|--------|--------|
+| `0x0000_7FFF_FFFF_FFFF` | `0000` | 0 (`7`=`0111`) | yes, last user address |
+| `0xFFFF_8000_0000_0000` | `FFFF` | 1 (`8`=`1000`) | yes, first kernel address |
+| `0x0000_8000_0000_0000` | `0000` | 1 | no: top bits differ from bit 47 |
+
+This is **sign extension**, as for two's complement
+([integers](cpu_and_memory.md#integers-and-overflow)): a canonical address is a 48-bit
+signed number copied into 64 bits, in $[\![-2^{47},\,2^{47}-1]\!]$. Non-negative values
+form the user half, negative values the kernel half.
+
+Why not use all 64 bits? Each address bit makes the page tables and translation
+hardware bigger and slower: $48=4\times9+12$ is four page-table levels plus a 12-bit
+offset (see [virtual memory](../3_operating_systems/virtual_memory.md#multi-level-page-tables)).
+256 TiB was plenty when x86-64 appeared (2003); recent CPUs offer 5 levels (57 bits,
+128 PiB) for very large servers.
 
 ## Type
 
